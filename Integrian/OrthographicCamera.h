@@ -7,7 +7,7 @@
 #define ENGINE_CAMERA_H
 
 #include "pch.h"
-namespace Engine
+namespace Integrian
 {
 	class OrthographicCamera
 	{

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Utility Functions.h"
-void Engine::DrawRectangle(const Rectf& rect)
+void Integrian::DrawRectangle(const Rectf& rect)
 {
 	glBegin(GL_LINE_LOOP);
 	{
@@ -11,7 +11,7 @@ void Engine::DrawRectangle(const Rectf& rect)
 	}
 	glEnd();
 }
-void Engine::DrawRectangle(const Rectf& rect, const RGBColour& colour)
+void Integrian::DrawRectangle(const Rectf& rect, const RGBColour& colour)
 {
 	glColor3f(colour.r, colour.g, colour.b);
 	glBegin(GL_LINE_LOOP);
@@ -23,7 +23,7 @@ void Engine::DrawRectangle(const Rectf& rect, const RGBColour& colour)
 	}
 	glEnd();
 }
-void Engine::DrawFilledRectangle(const Rectf& rect)
+void Integrian::DrawFilledRectangle(const Rectf& rect)
 {
 	glBegin(GL_POLYGON);
 	{
@@ -34,7 +34,7 @@ void Engine::DrawFilledRectangle(const Rectf& rect)
 	}
 	glEnd();
 }
-void Engine::DrawFilledRectangle(const Rectf& rect, const RGBColour& colour)
+void Integrian::DrawFilledRectangle(const Rectf& rect, const RGBColour& colour)
 {
 	glColor3f(colour.r, colour.g, colour.b);
 	glBegin(GL_POLYGON);
@@ -46,7 +46,7 @@ void Engine::DrawFilledRectangle(const Rectf& rect, const RGBColour& colour)
 	}
 	glEnd();
 }
-void Engine::DrawCircle(const Circlef& circle)
+void Integrian::DrawCircle(const Circlef& circle)
 {
 	glBegin(GL_POINTS);
 	{
@@ -57,7 +57,7 @@ void Engine::DrawCircle(const Circlef& circle)
 	}
 	glEnd();
 }
-void Engine::DrawFilledCircle(const Circlef& circle, const RGBColour& colour)
+void Integrian::DrawFilledCircle(const Circlef& circle, const RGBColour& colour)
 {
 	glColor3f(colour.r, colour.g, colour.b);
 	glBegin(GL_POLYGON);
@@ -69,7 +69,7 @@ void Engine::DrawFilledCircle(const Circlef& circle, const RGBColour& colour)
 	}
 	glEnd();
 }
-void Engine::DrawTriangle(const Point2f& top, const Point2f& left, const Point2f& right)
+void Integrian::DrawTriangle(const Point2f& top, const Point2f& left, const Point2f& right)
 {
 	glBegin(GL_LINE_LOOP);
 	{
@@ -79,7 +79,7 @@ void Engine::DrawTriangle(const Point2f& top, const Point2f& left, const Point2f
 	}
 	glEnd();
 }
-void Engine::DrawFilledTriangle(const Point2f& top, const Point2f& left, const Point2f& right)
+void Integrian::DrawFilledTriangle(const Point2f& top, const Point2f& left, const Point2f& right)
 {
 	glBegin(GL_TRIANGLES);
 	{
@@ -89,7 +89,7 @@ void Engine::DrawFilledTriangle(const Point2f& top, const Point2f& left, const P
 	}
 	glEnd();
 }
-void Engine::DrawLine(const Point2f& start, const Point2f& end, const RGBColour& colour, const float lineWidth)
+void Integrian::DrawLine(const Point2f& start, const Point2f& end, const RGBColour& colour, const float lineWidth)
 {
 	glColor3f(colour.r, colour.g, colour.b);
 	glLineWidth(lineWidth);

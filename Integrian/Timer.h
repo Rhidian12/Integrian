@@ -7,7 +7,7 @@
 #define ENGINE_TIMER_H
 
 #include <chrono>
-namespace Engine
+namespace Integrian
 {
 	class Timer
 	{

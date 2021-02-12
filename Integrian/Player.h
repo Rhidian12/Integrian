@@ -18,7 +18,7 @@ class Level;
 class Player final
 {
 public:
-	Player(const Engine::Point2f& startPosition);
+	Player(const Integrian::Point2f& startPosition);
 	~Player() = default;
 
 	void Render() const;
@@ -34,24 +34,24 @@ public:
 
 	const float GetMaxGrappleRange() const;
 	const float GetMaxSpeed() const;
-	const Engine::Rectf& GetPlayerAvatar() const;
+	const Integrian::Rectf& GetPlayerAvatar() const;
 
 private:
 	void HandleMouseMotion();
 	void HandleMovement(const float elapsedSeconds, const std::unique_ptr<Level>& pLevel);
-	void CheckLevelBorders(const Engine::Rectf& levelBoundaries, const Engine::Rectf& ground);
+	void CheckLevelBorders(const Integrian::Rectf& levelBoundaries, const Integrian::Rectf& ground);
 	void CheckCollisions(const std::unique_ptr<Level>& pLevel);
 	void HandleGrappleHookMovement(const std::unique_ptr<Level>& pLevel, const float elapsedSeconds);
 	void HandleGrappleHookMovementOnTheGround();
 	void HandleGrappleHookMovementInTheAir(const std::unique_ptr<Level>& pLevel, const float elapsedSeconds);
 	bool IsPlayerOnGround(const std::unique_ptr<Level>& pLevel);
-	bool IsPlayerOnBlock(const Engine::Point2f& center, const Engine::Point2f& bot, Engine::HitInfo& hitInfo, const Engine::Rectf& block);
-	bool IsGrappleHookOnBlock(const Engine::Point2f& startPoint, const Engine::Point2f& endpoint, Engine::HitInfo& hitInfo, const Engine::Rectf& block) const;
+	bool IsPlayerOnBlock(const Integrian::Point2f& center, const Integrian::Point2f& bot, Integrian::HitInfo& hitInfo, const Integrian::Rectf& block);
+	bool IsGrappleHookOnBlock(const Integrian::Point2f& startPoint, const Integrian::Point2f& endpoint, Integrian::HitInfo& hitInfo, const Integrian::Rectf& block) const;
 	bool IsPlayerInTheAir(const std::unique_ptr<Level>& pLevel);
 	void DrawGrappleHook() const;
 	void UpdateGrappleHook(const float elapsedSeconds, const std::unique_ptr<Level>& pLevel);
 
-	Engine::Rectf m_PlayerAvatar;
+	Integrian::Rectf m_PlayerAvatar;
 	PlayerState m_PlayerState;
 	const float m_Gravity;
 	float m_Acceleration;
@@ -66,11 +66,11 @@ private:
 	float m_GrappleHookAnimTime;
 	float m_GrappleHookAnimSpeed;
 	float m_GrappleHookDistanceSquared;
-	Engine::Point2f m_MousePosition;
-	Engine::Point2f m_GrappleHookEndPoint;
-	Engine::Point2f m_GrappleHookAnimPoint;
-	Engine::Vector2f m_TotalDirection;
-	Engine::Vector2f m_CurrentDirection;
+	Integrian::Point2f m_MousePosition;
+	Integrian::Point2f m_GrappleHookEndPoint;
+	Integrian::Point2f m_GrappleHookAnimPoint;
+	Integrian::Vector2f m_TotalDirection;
+	Integrian::Vector2f m_CurrentDirection;
 };
 
 #endif // !APP_GRAPPLE_HOOK_PLAYER_H

@@ -13,17 +13,17 @@ Level::Level(const uint32_t windowWidth, const uint32_t windowHeight, const std:
 	, m_MaxDistanceBetweenBlocksToGrappleOn{ pPlayer->GetMaxGrappleRange() }
 	, m_MaxDistancePlayerCanTravel{ pPlayer->GetMaxGrappleRange() + pPlayer->GetMaxSpeed() }
 {
-	m_LevelBoundaries = Engine::Rectf{ m_Ground.leftBottom.x,m_Ground.leftBottom.y,m_Ground.width,800.f };
+	m_LevelBoundaries = Integrian::Rectf{ m_Ground.leftBottom.x,m_Ground.leftBottom.y,m_Ground.width,800.f };
 	GenerateBlocksToGrappleOn();
 }
 void Level::Render() const
 {
-	Engine::DrawFilledRectangle(m_Ground, Engine::RGBColour{ 0.f,0.f,0.f });
+	Integrian::DrawFilledRectangle(m_Ground, Integrian::RGBColour{ 0.f,0.f,0.f });
 	m_pBackground->Draw();
 
-	for (const Engine::Rectf& block : m_BlocksToGrappleOn)
+	for (const Integrian::Rectf& block : m_BlocksToGrappleOn)
 	{
-		Engine::DrawFilledRectangle(block, Engine::RGBColour{ 0.f,255.f,0.f });
+		Integrian::DrawFilledRectangle(block, Integrian::RGBColour{ 0.f,255.f,0.f });
 	}
 }
 void Level::GenerateBlocksToGrappleOn()
@@ -34,14 +34,14 @@ void Level::GenerateBlocksToGrappleOn()
 	const float maxDistanceBetweenBlocks{ m_MaxDistancePlayerCanTravel };
 	for (int i{}; i < numberOfBlocksToGenerate; ++i)
 	{
-		Engine::Rectf block{};
+		Integrian::Rectf block{};
 		block.width = 20.f;
 		block.height = 10.f;
 		bool isRandomPositionValid{};
 
 		do
 		{
-			const float randomXPos{ Engine::RandomNumber(m_LevelBoundaries.leftBottom.x,m_LevelBoundaries.width) };
+			const float randomXPos{ Integrian::RandomNumber(m_LevelBoundaries.leftBottom.x,m_LevelBoundaries.width) };
 			// == Make Sure X Position Is In Bounds ==
 			if (randomXPos + block.width >= m_LevelBoundaries.width || randomXPos <= m_LevelBoundaries.leftBottom.x)
 				continue;
@@ -51,23 +51,23 @@ void Level::GenerateBlocksToGrappleOn()
 			{
 				// Y position must be between the current block and the Max Grapple Range
 				const float minimumYPos{ (m_BlocksToGrappleOn.size() + 1) * block.height + m_Ground.height };
-				randomYPos = Engine::RandomNumber(minimumYPos, minimumYPos + maxDistanceBetweenBlocks);
+				randomYPos = Integrian::RandomNumber(minimumYPos, minimumYPos + maxDistanceBetweenBlocks);
 			}
 			else
 			{
 				const float minimumYPos{ m_BlocksToGrappleOn[uint64_t(i) - 1].leftBottom.y };
-				randomYPos = Engine::RandomNumber(minimumYPos + block.height, minimumYPos + block.height + maxDistanceBetweenBlocks);
+				randomYPos = Integrian::RandomNumber(minimumYPos + block.height, minimumYPos + block.height + maxDistanceBetweenBlocks);
 			}
 
-			const Engine::Point2f randomPosition{ randomXPos,randomYPos };
+			const Integrian::Point2f randomPosition{ randomXPos,randomYPos };
 			// Make Sure That Random Position Is Not Too Far Away From Any Block
 			// If There Are No Other Blocks, Make Sure That The Block Is Not Too Far Away From Ground
 			// The Block Must Also Go A Bit Up
 			if (m_BlocksToGrappleOn.empty())
 			{
 				// == Check With The Ground ==
-				const Engine::Point2f pointOnGround{ randomXPos,m_Ground.height };
-				if (Engine::DistanceSquared(randomPosition, pointOnGround) <= Engine::Square(maxDistanceBetweenBlocks))
+				const Integrian::Point2f pointOnGround{ randomXPos,m_Ground.height };
+				if (Integrian::DistanceSquared(randomPosition, pointOnGround) <= Integrian::Square(maxDistanceBetweenBlocks))
 				{
 					block.leftBottom = randomPosition;
 					isRandomPositionValid = true;
@@ -76,7 +76,7 @@ void Level::GenerateBlocksToGrappleOn()
 			else
 			{
 				// == Check With Other Blocks ==
-				if (Engine::DistanceSquared(randomPosition, m_BlocksToGrappleOn[uint64_t(i) - 1].leftBottom) <= Engine::Square(maxDistanceBetweenBlocks))
+				if (Integrian::DistanceSquared(randomPosition, m_BlocksToGrappleOn[uint64_t(i) - 1].leftBottom) <= Integrian::Square(maxDistanceBetweenBlocks))
 				{
 					block.leftBottom = randomPosition;
 					isRandomPositionValid = true;
@@ -89,16 +89,16 @@ void Level::GenerateBlocksToGrappleOn()
 		m_BlocksToGrappleOn.push_back(block);
 	}
 }
-const Engine::Rectf& Level::GetGround() const
+const Integrian::Rectf& Level::GetGround() const
 {
 	return m_Ground;
 }
-const Engine::Rectf& Level::GetLevelBoundaries() const
+const Integrian::Rectf& Level::GetLevelBoundaries() const
 {
 	return m_LevelBoundaries;
 }
 
-const std::vector<Engine::Rectf>& Level::GetBlocks() const
+const std::vector<Integrian::Rectf>& Level::GetBlocks() const
 {
 	return m_BlocksToGrappleOn;
 }

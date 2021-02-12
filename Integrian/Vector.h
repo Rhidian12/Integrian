@@ -7,7 +7,7 @@
 #define ENGINE_VECTOR_H
 
 #include <math.h>
-namespace Engine
+namespace Integrian
 {
 	template<int V, typename Type>
 	struct Vector

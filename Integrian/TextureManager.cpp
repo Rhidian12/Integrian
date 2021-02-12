@@ -16,7 +16,7 @@ TextureManager* TextureManager::GetInstance()
 }
 TextureManager::~TextureManager()
 {
-	for (std::pair<std::string, Engine::Texture*> pPair : m_pTextures)
+	for (std::pair<std::string, Integrian::Texture*> pPair : m_pTextures)
 		SAFE_DELETE(pPair.second);
 }
 void TextureManager::CleanUp()
@@ -26,13 +26,13 @@ void TextureManager::CleanUp()
 }
 void TextureManager::AddTexture(const std::string& name, const std::string& path)
 {
-	if (!m_pTextures.insert(std::make_pair(name, new Engine::Texture{ path })).second)
+	if (!m_pTextures.insert(std::make_pair(name, new Integrian::Texture{ path })).second)
 	{
 		// == If The Insertion Failed, .second Will Be False ==
 		std::cout << name << " was not inserted! Check " << path << std::endl;
 	}
 }
-const std::unordered_map<std::string, Engine::Texture*>& TextureManager::GetTextures() const
+const std::unordered_map<std::string, Integrian::Texture*>& TextureManager::GetTextures() const
 {
 	return m_pTextures;
 }

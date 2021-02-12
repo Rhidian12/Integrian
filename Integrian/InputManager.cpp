@@ -27,6 +27,10 @@ void InputManager::Cleanup()
 
 void InputManager::HandleInput(const float dt)
 {
+	int x{}, y{};
+	const Uint32 mouseState = SDL_GetMouseState(&x, &y);
+	m_MousePosition = Integrian::Point2f{ float(x),float(m_WindowHeight - y) };
+	
 	SDL_Event e;
 	while (SDL_PollEvent(&e) > 0)
 	{
@@ -47,32 +51,32 @@ void InputManager::HandleInput(const float dt)
 				switch (functionWrapper.first)
 				{
 				case MouseButton::LMB:
-					if (SDL_BUTTON(1))
+					if constexpr (SDL_BUTTON(1) == SDL_BUTTON_LEFT)
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::MMB:
-					if (SDL_BUTTON(2))
+					if constexpr (SDL_BUTTON(2) == SDL_BUTTON_MIDDLE)
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::RMB:
-					if (SDL_BUTTON(3))
+					if constexpr (SDL_BUTTON(3) == SDL_BUTTON_RIGHT)
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::LMBAndMMB:
-					if (SDL_BUTTON(1) & SDL_BUTTON(2))
+					if constexpr ((SDL_BUTTON(1) == SDL_BUTTON_LEFT) && (SDL_BUTTON(2) == SDL_BUTTON_MIDDLE))
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::LMBAndRMB:
-					if (SDL_BUTTON(1) & SDL_BUTTON(3))
+					if constexpr ((SDL_BUTTON(1) == SDL_BUTTON_LEFT) && (SDL_BUTTON(3) == SDL_BUTTON_RIGHT))
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::RMBandMMB:
-					if (SDL_BUTTON(2) & SDL_BUTTON(3))
+					if constexpr ((SDL_BUTTON(2) == SDL_BUTTON_MIDDLE) && (SDL_BUTTON(3) == SDL_BUTTON_RIGHT))
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
@@ -87,32 +91,32 @@ void InputManager::HandleInput(const float dt)
 				switch (functionWrapper.first)
 				{
 				case MouseButton::LMB:
-					if (SDL_BUTTON(1))
+					if constexpr (SDL_BUTTON(1) == SDL_BUTTON_LEFT)
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::MMB:
-					if (SDL_BUTTON(2))
+					if constexpr (SDL_BUTTON(2) == SDL_BUTTON_MIDDLE)
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::RMB:
-					if (SDL_BUTTON(3))
+					if constexpr (SDL_BUTTON(3) == SDL_BUTTON_RIGHT)
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::LMBAndMMB:
-					if (SDL_BUTTON(1) & SDL_BUTTON(2))
+					if constexpr ((SDL_BUTTON(1) == SDL_BUTTON_LEFT) && (SDL_BUTTON(2) == SDL_BUTTON_MIDDLE))
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::LMBAndRMB:
-					if (SDL_BUTTON(1) & SDL_BUTTON(3))
+					if constexpr ((SDL_BUTTON(1) == SDL_BUTTON_LEFT) && (SDL_BUTTON(3) == SDL_BUTTON_RIGHT))
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
 				case MouseButton::RMBandMMB:
-					if (SDL_BUTTON(2) & SDL_BUTTON(3))
+					if constexpr ((SDL_BUTTON(2) == SDL_BUTTON_MIDDLE) && (SDL_BUTTON(3) == SDL_BUTTON_RIGHT))
 						for (const MouseFunction& function : functionWrapper.second)
 							function();
 					break;
@@ -123,11 +127,7 @@ void InputManager::HandleInput(const float dt)
 		}
 	}
 
-	int x{}, y{};
-	Uint32 mouseState = SDL_GetMouseState(&x, &y);
-	m_MousePosition = Engine::Point2f{ float(x),m_WindowHeight - float(y) };
-
-	const Uint8* pStates = SDL_GetKeyboardState(NULL);
+	const Uint8* const pStates = SDL_GetKeyboardState(nullptr);
 
 	for (const KeybindFunctionWrapperPair& functionwrapper : m_KeyDownKeybindFunctions)
 		if (pStates[functionwrapper.first])
@@ -141,7 +141,7 @@ void InputManager::SetWindowSize(const uint32_t width, const uint32_t height)
 	m_WindowHeight = height;
 }
 
-const Engine::Point2f& InputManager::GetMousePosition() const
+const Integrian::Point2f& InputManager::GetMousePosition() const
 {
 	return m_MousePosition;
 }

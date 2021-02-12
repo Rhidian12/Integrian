@@ -7,7 +7,7 @@
 #include "InputManager.h"
 Grapple_Hook_App::Grapple_Hook_App()
 	// == Make Sure The Player Is Initialized Before The Level ==
-	: m_pPlayer{ std::make_unique<Player>(Player{Engine::Point2f{320.f,50.f} }) }
+	: m_pPlayer{ std::make_unique<Player>(Player{Integrian::Point2f{320.f,50.f} }) }
 	, m_pLevel{}
 {
 }
@@ -35,12 +35,12 @@ void Grapple_Hook_App::Update(const float elapsedSeconds)
 	m_pPlayer->Update(elapsedSeconds, m_pLevel);
 }
 
-const Engine::Rectf Grapple_Hook_App::GetLevelBoundaries() const
+const Integrian::Rectf Grapple_Hook_App::GetLevelBoundaries() const
 {
 	return m_pLevel->GetLevelBoundaries();
 }
 
-const Engine::Rectf Grapple_Hook_App::GetTarget() const
+const Integrian::Rectf Grapple_Hook_App::GetTarget() const
 {
 	return m_pPlayer->GetPlayerAvatar();
 }

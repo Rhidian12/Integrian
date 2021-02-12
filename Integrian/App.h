@@ -9,7 +9,7 @@
 #include "pch.h"
 #include <memory>
 
-namespace Engine
+namespace Integrian
 {
 	class OrthographicCamera;
 	class Timer;
@@ -35,8 +35,8 @@ namespace Engine
 		void TransformCameraAndRender() const;
 		void UpdateApplication(const float elapsedSeconds);
 
-		virtual const Engine::Rectf GetLevelBoundaries() const = 0;
-		virtual const Engine::Rectf GetTarget() const = 0;
+		virtual const Rectf GetLevelBoundaries() const = 0;
+		virtual const Rectf GetTarget() const = 0;
 		const uint32_t GetWindowWidth() const;
 		const uint32_t GetWindowHeight() const;
 

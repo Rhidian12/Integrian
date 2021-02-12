@@ -1,36 +1,43 @@
 #pragma once
-// ====================================
-// This class was created by Kevin Hoefman and Marleen De Wandel
-// Professors at Howest Digital Arts and Entertainment
-// ====================================
-#ifndef ENGINE_TEXTURE_H
-#define ENGINE_TEXTURE_H
+#ifndef INTEGRIAN_TEXTURE_H
+#define INTEGRIAN_TEXTURE_H
 
-#include "pch.h"
 #include <string>
-struct SDL_Surface;
-namespace Engine
+
+namespace Integrian
 {
-	class Texture
+	class Texture final
 	{
 	public:
-		Texture(const std::string& path);
+		explicit Texture(const std::string& imagePath);
+		explicit Texture(const std::string& text, const std::string& fontPath, int ptSize, const RGBColour& textColor);
+		Texture(const Texture& other) = delete;
+		Texture& operator=(const Texture& other) = delete;
+		Texture(Texture&& other) noexcept;
+		Texture& operator=(Texture&& other) noexcept;
 		~Texture();
 
-		void Draw(const Rectf& destRect = Rectf{}, const Rectf& srcRect = Rectf{}) const;
+		void Draw(const Point2f& dstBottomLeft = {}, const Rectf& srcRect = Rectf{}) const;
+		void Draw(const Rectf& dstRect, const Rectf& srcRect = Rectf{}) const;
 
-		const float GetWidth() const;
-		const float GetHeight() const;
+		[[nodiscard]] float GetWidth() const;
+		[[nodiscard]] float GetHeight() const;
+		[[nodiscard]] bool IsCreationOk() const;
 
 	private:
+		//DATA MEMBERS
 		GLuint m_Id;
-		bool m_CreationOk;
 		float m_Width;
 		float m_Height;
+		bool m_CreationOk;
 
-		void CreateImageFromString(const std::string& path);
+		// FUNCTIONS
+		void CreateFromImage(const std::string& path);
+		void CreateFromString(const std::string& text, TTF_Font* pFont, const RGBColour& textColor);
+		void CreateFromString(const std::string& text, const std::string& fontPath, int ptSize, const RGBColour& textColor);
 		void CreateFromSurface(SDL_Surface* pSurface);
+		void DrawFilledRect(const Rectf& dstRect) const;
 	};
 }
 
-#endif // !ENGINE_TEXTURE_H
+#endif // INTEGRIAN_TEXTURE_H

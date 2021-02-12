@@ -9,7 +9,7 @@
 #include "pch.h"
 #include <vector>
 #include <memory>
-namespace Engine
+namespace Integrian
 {
 	class Texture;
 }
@@ -25,20 +25,20 @@ public:
 
 	void GenerateBlocksToGrappleOn();
 
-	const Engine::Rectf& GetGround() const;
-	const Engine::Rectf& GetLevelBoundaries() const;
-	const std::vector<Engine::Rectf>& GetBlocks() const;
+	const Integrian::Rectf& GetGround() const;
+	const Integrian::Rectf& GetLevelBoundaries() const;
+	const std::vector<Integrian::Rectf>& GetBlocks() const;
 
 private:
-	Engine::Texture* m_pBackground;
+	Integrian::Texture* m_pBackground;
 	uint32_t m_AmountOfVertices;
 	uint32_t m_WindowWidth;
 	uint32_t m_WindowHeight;
 	float m_MaxDistanceBetweenBlocksToGrappleOn;
 	float m_MaxDistancePlayerCanTravel;
-	std::vector<Engine::Rectf> m_BlocksToGrappleOn;
-	Engine::Rectf m_Ground;
-	Engine::Rectf m_LevelBoundaries;
+	std::vector<Integrian::Rectf> m_BlocksToGrappleOn;
+	Integrian::Rectf m_Ground;
+	Integrian::Rectf m_LevelBoundaries;
 };
 
 #endif // !APP_GRAPPLE_HOOK_LEVEL_H

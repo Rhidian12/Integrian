@@ -8,7 +8,7 @@
 
 #include "pch.h"
 #include <cstdlib> // rand()
-namespace Engine
+namespace Integrian
 {
 	// == Draw Functions ==
 	void DrawRectangle(const Rectf& rect);

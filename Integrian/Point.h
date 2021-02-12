@@ -9,7 +9,7 @@
 #include "pch.h"
 #include <math.h>
 #include "Vector.h"
-namespace Engine
+namespace Integrian
 {
 	template<int P, typename Type>
 	struct Point

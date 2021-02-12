@@ -10,7 +10,7 @@
 #include "TypeDefines.h"
 #include <limits>
 #include <vector>
-namespace Engine
+namespace Integrian
 {
 #pragma region General Math Functions
 	// == General Math Functions ==

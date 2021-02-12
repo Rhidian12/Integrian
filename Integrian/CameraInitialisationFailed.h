@@ -6,7 +6,7 @@
 #ifndef ENGINE_CAMERAINITIALISATIONFAILEDEXCEPTION_H
 #define ENGINE_CAMERAINITIALISATIONFAILEDEXCEPTION_H
 
-namespace Engine
+namespace Integrian
 {
 	class CameraInitialisationFailedException final
 	{

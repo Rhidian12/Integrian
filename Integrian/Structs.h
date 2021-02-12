@@ -9,7 +9,7 @@
 #include <math.h>
 #include "Point.h"
 #include "Vector.h"
-namespace Engine
+namespace Integrian
 {
 	// == Structs ==
 	struct Rectf
@@ -97,15 +97,18 @@ namespace Engine
 	struct RGBColour
 	{
 		explicit RGBColour()
-			: r{}
-			, g{}
-			, b{}
+			: RGBColour{ 255.f,255.f,255.f }
 		{
 		}
 		explicit RGBColour(const float r, const float g, const float b)
+			: RGBColour{ r,g,b,1.f }
+		{
+		}
+		explicit RGBColour(const float r, const float g, const float b, const float a)
 			: r{ r }
 			, g{ g }
 			, b{ b }
+			, a{ a }
 		{
 		}
 
@@ -118,6 +121,8 @@ namespace Engine
 				return false;
 			if (fabs(static_cast<double>(b) - other.b) > epsilon)
 				return false;
+			if (fabs(static_cast<double>(a) - other.a) > epsilon)
+				return false;
 			return true;
 		}
 		void operator=(const RGBColour& other)
@@ -125,9 +130,10 @@ namespace Engine
 			r = other.r;
 			g = other.g;
 			b = other.b;
+			a = other.a;
 		}
 
-		float r, g, b;
+		float r, g, b, a;
 	};
 	struct TextureLocation
 	{

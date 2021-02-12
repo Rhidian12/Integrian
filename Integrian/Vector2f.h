@@ -9,7 +9,7 @@
 #include "Vector.h"
 #include "Point.h"
 #include <iostream>
-namespace Engine
+namespace Integrian
 {
 	// == Vector2f (Vector specialisation) ==
 	template<typename Type>

@@ -1,15 +1,15 @@
 #include "OrthographicCamera.h"
 #include <assert.h>
-Engine::OrthographicCamera::OrthographicCamera(const uint32_t windowWidth, const uint32_t windowHeight, const Rectf& levelBoundaries)
+Integrian::OrthographicCamera::OrthographicCamera(const uint32_t windowWidth, const uint32_t windowHeight, const Rectf& levelBoundaries)
 	: m_WindowWidth{ windowWidth }
 	, m_WindowHeight{ windowHeight }
 	, m_LevelBoundaries{ levelBoundaries }
 {
 }
-Engine::Point2f Engine::OrthographicCamera::Transform(const Engine::Rectf& target)
+Integrian::Point2f Integrian::OrthographicCamera::Transform(const Integrian::Rectf& target)
 {
 	// == Track Target And Make Sure Camera Does Not Leave LevelBoundaries ==
-	Engine::Point2f camPosition{ Track(target) };
+	Integrian::Point2f camPosition{ Track(target) };
 	Clamp(camPosition);
 
 	// == Translate The World ==
@@ -17,11 +17,11 @@ Engine::Point2f Engine::OrthographicCamera::Transform(const Engine::Rectf& targe
 
 	// == Draw Camera View For Debugging Purposes ==
 	glColor3f(0.f, 0.f, 1.f);
-	Engine::DrawRectangle(Engine::Rectf{ camPosition, float(m_WindowWidth), float(m_WindowHeight) });
+	Integrian::DrawRectangle(Integrian::Rectf{ camPosition, float(m_WindowWidth), float(m_WindowHeight) });
 	
 	return camPosition;
 }
-Engine::Point2f Engine::OrthographicCamera::Track(const Engine::Rectf& target)
+Integrian::Point2f Integrian::OrthographicCamera::Track(const Integrian::Rectf& target)
 {
 	// == Get The Center Coordinates Of The Target ==
 	float x = target.leftBottom.x + (target.width / 2);
@@ -30,10 +30,10 @@ Engine::Point2f Engine::OrthographicCamera::Track(const Engine::Rectf& target)
 	// == Return The Center Of The Target - Center Of The Screen ==
 	return Point2f{ x - m_WindowWidth / 2,y - m_WindowHeight / 2 };
 }
-void Engine::OrthographicCamera::Clamp(Engine::Point2f& bottomLeftPos) const
+void Integrian::OrthographicCamera::Clamp(Integrian::Point2f& bottomLeftPos) const
 {
 	// == Check If The LevelBoundaries Are Initialised ==
-	assert(m_LevelBoundaries != Engine::Rectf{});
+	assert(m_LevelBoundaries != Integrian::Rectf{});
 
 	// == Check Level Boundaries ==
 	if (bottomLeftPos.x <= m_LevelBoundaries.leftBottom.x)
@@ -48,7 +48,7 @@ void Engine::OrthographicCamera::Clamp(Engine::Point2f& bottomLeftPos) const
 	if (bottomLeftPos.y + m_WindowHeight >= m_LevelBoundaries.leftBottom.y + m_LevelBoundaries.height)
 		bottomLeftPos.y = m_LevelBoundaries.leftBottom.y + m_LevelBoundaries.height - m_WindowHeight;
 }
-void Engine::OrthographicCamera::SetLevelBoundaries(const Engine::Rectf& levelBoundaries)
+void Integrian::OrthographicCamera::SetLevelBoundaries(const Integrian::Rectf& levelBoundaries)
 {
 	m_LevelBoundaries = levelBoundaries;
 }

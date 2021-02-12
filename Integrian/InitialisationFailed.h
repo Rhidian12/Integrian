@@ -6,7 +6,7 @@
 #ifndef ENGINE_INITIALISATIONFAILEDEXCEPTION_H
 #define ENGINE_INITIALISATIONFAILEDEXCEPTION_H
 
-namespace Engine
+namespace Integrian
 {
 	class InitialisationFailedException final
 	{

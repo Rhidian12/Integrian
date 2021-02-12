@@ -59,7 +59,7 @@ public:
 
 	void SetWindowSize(const uint32_t width, const uint32_t height);
 
-	const Engine::Point2f& GetMousePosition() const;
+	const Integrian::Point2f& GetMousePosition() const;
 
 private:
 	InputManager() = default;
@@ -70,7 +70,7 @@ private:
 	std::unordered_map<MouseButton, std::vector<MouseFunction>> m_MouseDownMouseFunctions;
 	std::unordered_map<MouseButton, std::vector<MouseFunction>> m_MouseUpMouseFunctions;
 	
-	Engine::Point2f m_MousePosition{};
+	Integrian::Point2f m_MousePosition{};
 	uint32_t m_WindowWidth{};
 	uint32_t m_WindowHeight{};
 };

@@ -4,7 +4,7 @@
 extern bool g_IsUpdateFixed;
 extern float g_TimePerFrame;
 
-Engine::Timer::Timer()
+Integrian::Timer::Timer()
 	: m_MaxElapsedSeconds{ 0.1f }
 	, m_ElapsedSeconds{}
 	, m_TotalElapsedSeconds{}
@@ -17,13 +17,13 @@ Engine::Timer::Timer()
 	Start();
 }
 
-void Engine::Timer::Start()
+void Integrian::Timer::Start()
 {
 	//m_CurrentTimepoint = std::chrono::steady_clock::now();
 	m_PreviousTimepoint = std::chrono::steady_clock::now();
 }
 
-void Engine::Timer::Update()
+void Integrian::Timer::Update()
 {
 	m_StartTimepoint = std::chrono::steady_clock::now();
 	m_ElapsedSeconds = std::chrono::duration<float>(m_StartTimepoint - m_PreviousTimepoint).count();
@@ -39,12 +39,12 @@ void Engine::Timer::Update()
 	}
 }
 
-int Engine::Timer::GetFPS() const
+int Integrian::Timer::GetFPS() const
 {
 	return m_FPS;
 }
 
-const float Engine::Timer::GetElapsedSeconds() const
+const float Integrian::Timer::GetElapsedSeconds() const
 {
 	return m_ElapsedSeconds;
 }

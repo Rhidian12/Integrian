@@ -26,7 +26,7 @@ int main(int argc, char* args[])
 	(void)args;
 
 	// == Make the application ==
-	Engine::App* pApplication{};
+	Integrian::App* pApplication{};
 
 	try
 	{

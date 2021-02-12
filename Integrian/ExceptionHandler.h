@@ -48,13 +48,13 @@ public:
 		{
 			std::cerr << "EXCEPTION: " << e.what() << std::endl;
 		}
-		catch (const Engine::InitialisationFailedException&)
+		catch (const Integrian::InitialisationFailedException&)
 		{
 		}
-		catch (const Engine::RuntimeInitialisationFailed&)
+		catch (const Integrian::RuntimeInitialisationFailed&)
 		{
 		}
-		catch (const Engine::CameraInitialisationFailedException&)
+		catch (const Integrian::CameraInitialisationFailedException&)
 		{
 		}
 		catch (...)

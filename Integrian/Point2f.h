@@ -8,7 +8,7 @@
 
 #include "Point.h"
 #include "Vector.h"
-namespace Engine
+namespace Integrian
 {
 	// == Point2f (Point Specialisation) ==
 	template<typename Type>

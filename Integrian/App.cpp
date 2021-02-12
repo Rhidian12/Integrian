@@ -9,13 +9,13 @@ extern bool g_IsLooping;
 extern bool g_IsUpdateFixed;
 extern float g_TimePerFrame;
 
-Engine::App::App()
+Integrian::App::App()
 {
 	if (!Initialize())
 		throw InitialisationFailedException{};
 }
 
-Engine::App::~App()
+Integrian::App::~App()
 {
 	SAFE_DELETE(m_pCamera);
 
@@ -25,7 +25,7 @@ Engine::App::~App()
 	ShutDown();
 }
 
-//void Engine::App::Start()
+//void Integrian::App::Start()
 //{
 //	if (!InitializeCamera())
 //		throw InitialisationFailedException{};
@@ -33,7 +33,7 @@ Engine::App::~App()
 //	m_HasStarted = true;
 //}
 
-bool Engine::App::Initialize()
+bool Integrian::App::Initialize()
 {
 	uint32_t width = 600;
 	uint32_t height = 400;
@@ -101,13 +101,13 @@ bool Engine::App::Initialize()
 	return true;
 }
 
-bool Engine::App::InitializeCamera()
+bool Integrian::App::InitializeCamera()
 {
 	m_pCamera = new OrthographicCamera{ m_WindowWidth,m_WindowHeight,GetLevelBoundaries() };
 	return m_pCamera != nullptr;
 }
 
-void Engine::App::FinishInitialisationOfApp()
+void Integrian::App::FinishInitialisationOfApp()
 {
 	Start();
 	if (!InitializeCamera())
@@ -117,13 +117,13 @@ void Engine::App::FinishInitialisationOfApp()
 	m_HasStarted = true;
 }
 
-void Engine::App::ShutDown()
+void Integrian::App::ShutDown()
 {
 	SDL_DestroyWindow(m_pWindow);
 	SDL_Quit();
 }
 
-void Engine::App::Run()
+void Integrian::App::Run()
 {
 	if (!m_IsInitialisationFinished)
 		FinishInitialisationOfApp();
@@ -180,7 +180,7 @@ void Engine::App::Run()
 	}
 }
 
-void Engine::App::TransformCameraAndRender() const
+void Integrian::App::TransformCameraAndRender() const
 {
 	ClearBackground();
 	// == YOU CAN CHANGE THE TYPE OF THE CAMERA ==
@@ -196,7 +196,7 @@ void Engine::App::TransformCameraAndRender() const
 	SDL_GL_SwapWindow(m_pWindow);
 }
 
-void Engine::App::UpdateApplication(const float elapsedSeconds)
+void Integrian::App::UpdateApplication(const float elapsedSeconds)
 {
 	Update(elapsedSeconds);
 
@@ -204,23 +204,23 @@ void Engine::App::UpdateApplication(const float elapsedSeconds)
 	m_Target = GetTarget();
 }
 
-void Engine::App::SetWindowSize(const uint32_t windowWidth, const uint32_t windowHeight)
+void Integrian::App::SetWindowSize(const uint32_t windowWidth, const uint32_t windowHeight)
 {
 	m_WindowWidth = windowWidth;
 	m_WindowHeight = windowHeight;
 }
 
-const uint32_t Engine::App::GetWindowWidth() const
+const uint32_t Integrian::App::GetWindowWidth() const
 {
 	return m_WindowWidth;
 }
 
-const uint32_t Engine::App::GetWindowHeight() const
+const uint32_t Integrian::App::GetWindowHeight() const
 {
 	return m_WindowHeight;
 }
 
-void Engine::App::ClearBackground() const
+void Integrian::App::ClearBackground() const
 {
 	glClearColor(192.f / 255.f, 192.f / 255.f, 192.f / 255.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);

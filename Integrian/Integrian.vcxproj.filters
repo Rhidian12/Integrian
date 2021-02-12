@@ -13,129 +13,198 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\App">
+      <UniqueIdentifier>{bb642079-5c3d-47b8-9e61-d82783af799a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Exceptions">
+      <UniqueIdentifier>{01d64eb1-7d4d-4787-a5e5-007e12dfd568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{96c973c9-427a-4cbe-ab05-98a20a20910b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers\InputManager">
+      <UniqueIdentifier>{5b19ebdd-bf51-4245-92ec-da2b5a590a21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{dfcbf49c-03f8-49dc-8e5f-9ec5ca648bfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Camera">
+      <UniqueIdentifier>{46380302-f99d-49c9-8e3a-46a06f5db3f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Camera\Ortographic Camera">
+      <UniqueIdentifier>{63e7ca23-b6fa-4f7f-98a6-324c1f26608a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{1bf60374-4386-459c-a1d9-810de5439d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Timer">
+      <UniqueIdentifier>{7134e41f-659b-4d08-a020-7ce0d4b144de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Texture">
+      <UniqueIdentifier>{bbea522f-fa4e-44d3-bad2-ba0246cdf7e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers\TextureManager">
+      <UniqueIdentifier>{f80a89d1-63dc-42d3-a8e5-a4e03f7a8a33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{f665b6c5-199e-4856-855a-74ae8953ed51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Component">
+      <UniqueIdentifier>{626e0259-9363-4969-9290-11b8b35a4153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Logger">
+      <UniqueIdentifier>{ce24a8db-96b5-4be2-b4f0-ce2ccce49d0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\TextComponent">
+      <UniqueIdentifier>{feaefe3c-e772-46a8-81d2-2d006b668e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\TextComponent\Printer">
+      <UniqueIdentifier>{8fb8a57c-17aa-41b1-a1b2-ede8581757d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObject">
+      <UniqueIdentifier>{f0c763d4-5487-4b7d-a2dc-2bd08e0147f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Benchmark_App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Grapple_Hook_App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LinkedList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MathFunctions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OrthographicCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Header Files\Managers\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Header Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="OrthographicCamera.cpp">
+      <Filter>Header Files\Camera\Ortographic Camera</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\Managers\TextureManager</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MathFunctions.cpp">
+      <Filter>Header Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="Utility Functions.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Header Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Header Files\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Header Files\Components\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>Header Files\Components\TextComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Printer.cpp">
+      <Filter>Header Files\Components\TextComponent\Printer</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Header Files\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Header Files\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="App.h">
+    <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="ExceptionHandler.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="InitialisationFailed.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\Managers\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraInitialisationFailed.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="MathFunctions.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="OrthographicCamera.h">
+      <Filter>Header Files\Camera\Ortographic Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2f.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Structs.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeDefines.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2f.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility Functions.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeInitFailed.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files\Managers\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grapple_Hook_App.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="App_Selector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Benchmark_App.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Component.h">
+      <Filter>Header Files\Components\Component</Filter>
     </ClInclude>
-    <ClInclude Include="CameraInitialisationFailed.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="TextComponent.h">
+      <Filter>Header Files\Components\TextComponent</Filter>
     </ClInclude>
-    <ClInclude Include="ExceptionHandler.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Printer.h">
+      <Filter>Header Files\Components\TextComponent\Printer</Filter>
     </ClInclude>
-    <ClInclude Include="Grapple_Hook_App.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files\Logger</Filter>
     </ClInclude>
-    <ClInclude Include="InitialisationFailed.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LinkedList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MathFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OrthographicCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Point.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Point2f.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RuntimeInitFailed.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Structs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeDefines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility Functions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2f.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

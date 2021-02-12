@@ -3,7 +3,7 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
-const float Engine::CalculateAngle(const Point2f& line1Start, const Point2f& line1End, const Point2f& line2Start, const Point2f& line2End)
+const float Integrian::CalculateAngle(const Point2f& line1Start, const Point2f& line1End, const Point2f& line2Start, const Point2f& line2End)
 {
 	const float slopeLine1{ line1End.y - line1Start.y / line1End.x - line1Start.x };
 	const float slopeLine2{ line2End.y - line2Start.y / line2End.x - line2Start.x };
@@ -11,32 +11,32 @@ const float Engine::CalculateAngle(const Point2f& line1Start, const Point2f& lin
 	const float inclineLine2{ atan(slopeLine2) };
 	return abs(inclineLine1 - inclineLine2);
 }
-const float Engine::ToDegrees(const float radians)
+const float Integrian::ToDegrees(const float radians)
 {
 	return radians * 180.f / float(M_PI);
 }
-const double Engine::ToDegrees(const double radians)
+const double Integrian::ToDegrees(const double radians)
 {
 	return radians * 180.0 / M_PI;
 }
-const float Engine::ToRadians(const float degrees)
+const float Integrian::ToRadians(const float degrees)
 {
 	return degrees * float(M_PI) / 180.f;
 }
-const double Engine::ToRadians(const double degrees)
+const double Integrian::ToRadians(const double degrees)
 {
 	return degrees * M_PI / 180.0;
 }
-bool Engine::AreEqual(const float a, const float b, const float epsilon)
+bool Integrian::AreEqual(const float a, const float b, const float epsilon)
 {
 	return abs(a - b) <= epsilon;
 }
-bool Engine::AreEqual(const double a, const double b, const double epsilon)
+bool Integrian::AreEqual(const double a, const double b, const double epsilon)
 {
 	return abs(a - b) <= epsilon;
 }
 
-bool Engine::IsOverlapping(const Rectf& r1, const Rectf& r2)
+bool Integrian::IsOverlapping(const Rectf& r1, const Rectf& r2)
 {
 	// If one rectangle is on left side of the other
 	if ((r1.leftBottom.x + r1.width) < r2.leftBottom.x || (r2.leftBottom.x + r2.width) < r1.leftBottom.x)
@@ -49,7 +49,7 @@ bool Engine::IsOverlapping(const Rectf& r1, const Rectf& r2)
 	return true;
 }
 
-bool Engine::IsPointOnLineSegment(const Point2f& p, const Point2f& a, const Point2f& b)
+bool Integrian::IsPointOnLineSegment(const Point2f& p, const Point2f& a, const Point2f& b)
 {
 	Vector2f ap{ a, p }, bp{ b, p };
 	// If not on same line, return false
@@ -67,7 +67,7 @@ bool Engine::IsPointOnLineSegment(const Point2f& p, const Point2f& a, const Poin
 	return true;
 }
 
-bool Engine::IntersectLineSegments(const Point2f& p1, const Point2f& p2, const Point2f& q1, const Point2f& q2, float& outLambda1, float& outLambda2, float epsilon)
+bool Integrian::IntersectLineSegments(const Point2f& p1, const Point2f& p2, const Point2f& q1, const Point2f& q2, float& outLambda1, float& outLambda2, float epsilon)
 {
 	bool intersecting{ false };
 
@@ -105,10 +105,10 @@ bool Engine::IntersectLineSegments(const Point2f& p1, const Point2f& p2, const P
 		// Check the 4 conditions
 		outLambda1 = 0;
 		outLambda2 = 0;
-		if (Engine::IsPointOnLineSegment(p1, q1, q2) ||
-			Engine::IsPointOnLineSegment(p2, q1, q2) ||
-			Engine::IsPointOnLineSegment(q1, p1, p2) ||
-			Engine::IsPointOnLineSegment(q2, p1, p2))
+		if (Integrian::IsPointOnLineSegment(p1, q1, q2) ||
+			Integrian::IsPointOnLineSegment(p2, q1, q2) ||
+			Integrian::IsPointOnLineSegment(q1, p1, p2) ||
+			Integrian::IsPointOnLineSegment(q2, p1, p2))
 		{
 			intersecting = true;
 		}
@@ -116,12 +116,12 @@ bool Engine::IntersectLineSegments(const Point2f& p1, const Point2f& p2, const P
 	return intersecting;
 }
 
-bool Engine::Raycast(const std::vector<Point2f>& vertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo)
+bool Integrian::Raycast(const std::vector<Point2f>& vertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo)
 {
-	return Engine::Raycast(vertices.data(), vertices.size(), rayP1, rayP2, hitInfo);
+	return Integrian::Raycast(vertices.data(), vertices.size(), rayP1, rayP2, hitInfo);
 }
 
-bool Engine::Raycast(const Point2f* vertices, const size_t nrVertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo)
+bool Integrian::Raycast(const Point2f* vertices, const size_t nrVertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo)
 {
 	if (nrVertices == 0)
 	{

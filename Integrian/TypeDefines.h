@@ -10,7 +10,7 @@
 #include "Point2f.h"
 #include "Vector.h"
 #include "Vector2f.h"
-namespace Engine
+namespace Integrian
 {
 	typedef Vector<2, float> Vector2f;
 	typedef Point<2, float> Point2f;

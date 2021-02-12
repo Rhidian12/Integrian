@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-Player::Player(const Engine::Point2f& startPosition)
+Player::Player(const Integrian::Point2f& startPosition)
 // == These Values Seem To Work Fine ==
 	: m_PlayerAvatar{ startPosition,10.f,10.f }
 	, m_PlayerState{ PlayerState::None }
@@ -32,7 +32,7 @@ Player::Player(const Engine::Point2f& startPosition)
 void Player::Render() const
 {
 	DrawGrappleHook();
-	Engine::DrawFilledRectangle(m_PlayerAvatar, Engine::RGBColour{ 255.f,0.f,0.f });
+	Integrian::DrawFilledRectangle(m_PlayerAvatar, Integrian::RGBColour{ 255.f,0.f,0.f });
 }
 void Player::Update(const float elapsedSeconds, const std::unique_ptr<Level>& pLevel)
 {
@@ -54,17 +54,17 @@ void Player::Update(const float elapsedSeconds, const std::unique_ptr<Level>& pL
 }
 void Player::MoveRight(const float dt)
 {
-	const Engine::Vector2f previousVector{ m_TotalDirection };
+	const Integrian::Vector2f previousVector{ m_TotalDirection };
 	m_TotalDirection.x = previousVector.x + dt * m_Acceleration; // Vt = DeltaT * a + VorigeSnelheid
 }
 void Player::MoveLeft(const float dt)
 {
-	const Engine::Vector2f previousVector{ m_TotalDirection };
+	const Integrian::Vector2f previousVector{ m_TotalDirection };
 	m_TotalDirection.x = previousVector.x - dt * m_Acceleration; // Vt = DeltaT * a + VorigeSnelheid
 }
 void Player::Jump(const float dt)
 {
-	const Engine::Vector2f previousVector{ m_TotalDirection };
+	const Integrian::Vector2f previousVector{ m_TotalDirection };
 	if (!m_HasJumped)
 	{
 		m_TotalDirection.y = previousVector.y + dt * m_JumpSpeed; // Vt = DeltaT * a + VorigeSnelheid
@@ -75,29 +75,29 @@ void Player::Jump(const float dt)
 void Player::HandleMovement(const float elapsedSeconds, const std::unique_ptr<Level>& pLevel)
 {
 	// == Speed Check ==
-	m_TotalDirection.x = Engine::Clamp(m_TotalDirection.x, -m_MaxSpeed, m_MaxSpeed);
-	if (Engine::AreEqual(m_TotalDirection.x, 0.f)) // == Set Speed to 0 if it is basically 0 (Makes Debugging Easier) ==
+	m_TotalDirection.x = Integrian::Clamp(m_TotalDirection.x, -m_MaxSpeed, m_MaxSpeed);
+	if (Integrian::AreEqual(m_TotalDirection.x, 0.f)) // == Set Speed to 0 if it is basically 0 (Makes Debugging Easier) ==
 		m_TotalDirection.x = 0.f;
 
-	m_TotalDirection.y = Engine::Clamp(m_TotalDirection.y, -m_MaxSpeed, m_MaxSpeed);
-	if (Engine::AreEqual(m_TotalDirection.y, 0.f)) // == Set Speed to 0 if it is basically 0 (Makes Debugging Easier) ==
+	m_TotalDirection.y = Integrian::Clamp(m_TotalDirection.y, -m_MaxSpeed, m_MaxSpeed);
+	if (Integrian::AreEqual(m_TotalDirection.y, 0.f)) // == Set Speed to 0 if it is basically 0 (Makes Debugging Easier) ==
 		m_TotalDirection.y = 0.f;
 
 	// == Apply Gravity If Player Is In The Air ==
 	if (IsPlayerInTheAir(pLevel))
 	{
 		m_TotalDirection.y -= elapsedSeconds * m_Gravity; // == Doing This Makes Mass 1 kg ==
-		m_TotalDirection.y = Engine::Clamp(m_TotalDirection.y, -m_Gravity, m_MaxSpeed);
+		m_TotalDirection.y = Integrian::Clamp(m_TotalDirection.y, -m_Gravity, m_MaxSpeed);
 	}
 	else
 	{
-		const Engine::Point2f rightPlayerCenter{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
-		const Engine::Point2f rightPlayerBot{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y };
-		const Engine::Point2f leftPlayerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
-		const Engine::Point2f leftPlayerBot{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y };
-		Engine::HitInfo hitInfo{};
+		const Integrian::Point2f rightPlayerCenter{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+		const Integrian::Point2f rightPlayerBot{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y };
+		const Integrian::Point2f leftPlayerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+		const Integrian::Point2f leftPlayerBot{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y };
+		Integrian::HitInfo hitInfo{};
 		bool isPlayerOnBlock{};
-		for (const Engine::Rectf& block : pLevel->GetBlocks())
+		for (const Integrian::Rectf& block : pLevel->GetBlocks())
 		{
 			if (IsPlayerOnBlock(rightPlayerCenter, rightPlayerBot, hitInfo, block) || IsPlayerOnBlock(leftPlayerCenter, leftPlayerBot, hitInfo, block))
 			{
@@ -132,9 +132,9 @@ void Player::HandleMovement(const float elapsedSeconds, const std::unique_ptr<Le
 bool Player::IsPlayerOnGround(const std::unique_ptr<Level>& pLevel)
 {
 	// == Check If We're On The Ground ==
-	const Engine::Rectf groundHitBox{ pLevel->GetGround().leftBottom, pLevel->GetGround().width, pLevel->GetGround().height };
+	const Integrian::Rectf groundHitBox{ pLevel->GetGround().leftBottom, pLevel->GetGround().width, pLevel->GetGround().height };
 
-	if (Engine::IsOverlapping(m_PlayerAvatar, groundHitBox))
+	if (Integrian::IsOverlapping(m_PlayerAvatar, groundHitBox))
 	{
 		return true;
 	}
@@ -144,44 +144,44 @@ bool Player::IsPlayerOnGround(const std::unique_ptr<Level>& pLevel)
 		return false;
 	}
 }
-bool Player::IsPlayerOnBlock(const Engine::Point2f& center, const Engine::Point2f& bot, Engine::HitInfo& hitInfo, const Engine::Rectf& block)
+bool Player::IsPlayerOnBlock(const Integrian::Point2f& center, const Integrian::Point2f& bot, Integrian::HitInfo& hitInfo, const Integrian::Rectf& block)
 {
-	std::vector<Engine::Point2f> blockPoints
+	std::vector<Integrian::Point2f> blockPoints
 	{
-		Engine::Point2f{block.leftBottom.x + block.width, block.leftBottom.y + block.height},
-		Engine::Point2f{block.leftBottom.x, block.leftBottom.y + block.height},
+		Integrian::Point2f{block.leftBottom.x + block.width, block.leftBottom.y + block.height},
+		Integrian::Point2f{block.leftBottom.x, block.leftBottom.y + block.height},
 	};
-	return (Engine::Raycast(blockPoints, center, bot, hitInfo) && m_TotalDirection.y <= 0.f);
+	return (Integrian::Raycast(blockPoints, center, bot, hitInfo) && m_TotalDirection.y <= 0.f);
 }
-bool Player::IsGrappleHookOnBlock(const Engine::Point2f& startPoint, const Engine::Point2f& endpoint, Engine::HitInfo& hitInfo, const Engine::Rectf& block) const
+bool Player::IsGrappleHookOnBlock(const Integrian::Point2f& startPoint, const Integrian::Point2f& endpoint, Integrian::HitInfo& hitInfo, const Integrian::Rectf& block) const
 {
-	std::vector<Engine::Point2f> blockPoints
+	std::vector<Integrian::Point2f> blockPoints
 	{
 		block.leftBottom,
-		Engine::Point2f{block.leftBottom.x + block.width, block.leftBottom.y},
-		Engine::Point2f{block.leftBottom.x + block.width, block.leftBottom.y + block.height},
-		Engine::Point2f{block.leftBottom.x, block.leftBottom.y + block.height},
+		Integrian::Point2f{block.leftBottom.x + block.width, block.leftBottom.y},
+		Integrian::Point2f{block.leftBottom.x + block.width, block.leftBottom.y + block.height},
+		Integrian::Point2f{block.leftBottom.x, block.leftBottom.y + block.height},
 	};
-	return Engine::Raycast(blockPoints, startPoint, endpoint, hitInfo);
+	return Integrian::Raycast(blockPoints, startPoint, endpoint, hitInfo);
 }
 bool Player::IsPlayerInTheAir(const std::unique_ptr<Level>& pLevel)
 {
-	const Engine::Rectf groundHitBox{ pLevel->GetGround().leftBottom, pLevel->GetGround().width, pLevel->GetGround().height };
-	if (Engine::IsOverlapping(m_PlayerAvatar, groundHitBox))
+	const Integrian::Rectf groundHitBox{ pLevel->GetGround().leftBottom, pLevel->GetGround().width, pLevel->GetGround().height };
+	if (Integrian::IsOverlapping(m_PlayerAvatar, groundHitBox))
 		return false;
 
-	const Engine::Point2f rightPlayerCenter{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y };
-	const Engine::Point2f rightPlayerBot{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y };
-	const Engine::Point2f leftPlayerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
-	const Engine::Point2f leftPlayerBot{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y };
-	Engine::HitInfo hitInfo{};
-	for (const Engine::Rectf& block : pLevel->GetBlocks())
+	const Integrian::Point2f rightPlayerCenter{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y };
+	const Integrian::Point2f rightPlayerBot{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y };
+	const Integrian::Point2f leftPlayerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+	const Integrian::Point2f leftPlayerBot{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y };
+	Integrian::HitInfo hitInfo{};
+	for (const Integrian::Rectf& block : pLevel->GetBlocks())
 		if (IsPlayerOnBlock(rightPlayerCenter, rightPlayerBot, hitInfo, block) || IsPlayerOnBlock(leftPlayerCenter, leftPlayerBot, hitInfo, block))
 			return false;
 
 	return true;
 }
-void Player::CheckLevelBorders(const Engine::Rectf& levelBoundaries, const Engine::Rectf& ground)
+void Player::CheckLevelBorders(const Integrian::Rectf& levelBoundaries, const Integrian::Rectf& ground)
 {
 	// == Boundary Checks ==
 	if (m_PlayerAvatar.leftBottom.x < levelBoundaries.leftBottom.x)
@@ -200,13 +200,13 @@ void Player::CheckLevelBorders(const Engine::Rectf& levelBoundaries, const Engin
 }
 void Player::CheckCollisions(const std::unique_ptr<Level>& pLevel)
 {
-	const Engine::Point2f rightPlayerCenter{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
-	const Engine::Point2f rightPlayerBot{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y };
-	const Engine::Point2f leftPlayerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
-	const Engine::Point2f leftPlayerBot{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y };
-	for (const Engine::Rectf& block : pLevel->GetBlocks())
+	const Integrian::Point2f rightPlayerCenter{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+	const Integrian::Point2f rightPlayerBot{ m_PlayerAvatar.leftBottom.x, m_PlayerAvatar.leftBottom.y };
+	const Integrian::Point2f leftPlayerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+	const Integrian::Point2f leftPlayerBot{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width, m_PlayerAvatar.leftBottom.y };
+	for (const Integrian::Rectf& block : pLevel->GetBlocks())
 	{
-		Engine::HitInfo hitInfo{};
+		Integrian::HitInfo hitInfo{};
 		if (IsPlayerOnBlock(rightPlayerCenter, rightPlayerBot, hitInfo, block) || IsPlayerOnBlock(leftPlayerCenter, leftPlayerBot, hitInfo, block))
 		{
 			//m_PlayerAvatar.leftBottom.y = block.leftBottom.y + block.height + 0.5f;
@@ -229,10 +229,10 @@ void Player::HandleGrappleHookMovement(const std::unique_ptr<Level>& pLevel, con
 }
 void Player::HandleGrappleHookMovementOnTheGround()
 {
-	const Engine::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
-	if (Engine::DistanceSquared(playerCenter, m_GrappleHookAnimPoint) >= m_GrappleHookDistanceSquared)
+	const Integrian::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+	if (Integrian::DistanceSquared(playerCenter, m_GrappleHookAnimPoint) >= m_GrappleHookDistanceSquared)
 	{
-		if (!Engine::AreEqual(m_TotalDirection.x, 0.f))
+		if (!Integrian::AreEqual(m_TotalDirection.x, 0.f))
 		{
 			if (m_TotalDirection.x > 0.f)
 				m_PlayerAvatar.leftBottom.x -= 1.f;
@@ -245,10 +245,11 @@ void Player::HandleGrappleHookMovementOnTheGround()
 }
 void Player::HandleGrappleHookMovementInTheAir(const std::unique_ptr<Level>& pLevel, const float elapsedSeconds)
 {
-	const Engine::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
-	if (Engine::DistanceSquared(playerCenter, m_GrappleHookAnimPoint) >= m_GrappleHookDistanceSquared)
+	(void)pLevel;
+	const Integrian::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+	if (Integrian::DistanceSquared(playerCenter, m_GrappleHookAnimPoint) >= m_GrappleHookDistanceSquared)
 	{
-		if (!Engine::AreEqual(m_TotalDirection.x, 0.f))
+		if (!Integrian::AreEqual(m_TotalDirection.x, 0.f))
 		{
 			if (m_TotalDirection.x > 0.f)
 				m_TotalDirection.x = m_TotalDirection.x - elapsedSeconds * m_Acceleration;
@@ -256,7 +257,7 @@ void Player::HandleGrappleHookMovementInTheAir(const std::unique_ptr<Level>& pLe
 				m_TotalDirection.x = m_TotalDirection.x + elapsedSeconds * m_Acceleration;
 		}
 
-		if (!Engine::AreEqual(m_TotalDirection.y, 0.f))
+		if (!Integrian::AreEqual(m_TotalDirection.y, 0.f))
 		{
 			if (m_TotalDirection.y < 0.f) // == The Only Force That Can Work Downward Is Gravity ==
 				m_TotalDirection.y = 0.f;
@@ -276,10 +277,10 @@ void Player::HandleGrappleHookShot()
 		// == Left Mouse Button Is Pressed ==
 
 		// == Make Sure The End Point Of The Grapple Hook Is Within Range ==
-		const Engine::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
-		if (Engine::DistanceSquared(playerCenter, m_MousePosition) >= m_GrappleRange * m_GrappleRange)
+		const Integrian::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+		if (Integrian::DistanceSquared(playerCenter, m_MousePosition) >= m_GrappleRange * m_GrappleRange)
 		{
-			const Engine::Vector2f direction{ Engine::GetNormalized(Engine::Vector2f{playerCenter,m_MousePosition}) };
+			const Integrian::Vector2f direction{ Integrian::GetNormalized(Integrian::Vector2f{playerCenter,m_MousePosition}) };
 			m_GrappleHookEndPoint = playerCenter + direction * m_GrappleRange;
 		}
 		else
@@ -290,7 +291,7 @@ void Player::HandleGrappleHookShot()
 		m_IsLMBPressed = true;
 		m_IsGrappleHookTargetSet = true;
 		m_GrappleHookAnimTime = 0.f;
-		m_GrappleHookDistanceSquared = Engine::DistanceSquared(playerCenter, m_GrappleHookEndPoint);
+		m_GrappleHookDistanceSquared = Integrian::DistanceSquared(playerCenter, m_GrappleHookEndPoint);
 	}
 }
 
@@ -315,21 +316,21 @@ void Player::DrawGrappleHook() const
 {
 	if (m_IsLMBPressed && (!m_IsGrappleAnimationDone || m_IsGrappleHookAttached))
 	{
-		const Engine::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
-		Engine::DrawLine(playerCenter, m_GrappleHookAnimPoint, Engine::RGBColour{ 255.f,0.f,255.f }, 3.f);
+		const Integrian::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+		Integrian::DrawLine(playerCenter, m_GrappleHookAnimPoint, Integrian::RGBColour{ 255.f,0.f,255.f }, 3.f);
 	}
 }
 
 void Player::UpdateGrappleHook(const float elapsedSeconds, const std::unique_ptr<Level>& pLevel)
 {
-	const Engine::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
+	const Integrian::Point2f playerCenter{ m_PlayerAvatar.leftBottom.x + m_PlayerAvatar.width / 2.f, m_PlayerAvatar.leftBottom.y + m_PlayerAvatar.height / 2.f };
 	if (m_IsLMBPressed)
 	{
 		if (!m_IsGrappleHookAttached)
 		{
-			for (const Engine::Rectf& block : pLevel->GetBlocks())
+			for (const Integrian::Rectf& block : pLevel->GetBlocks())
 			{
-				Engine::HitInfo hitInfo{};
+				Integrian::HitInfo hitInfo{};
 				if (IsGrappleHookOnBlock(playerCenter, m_GrappleHookAnimPoint, hitInfo, block))
 				{
 					m_IsGrappleAnimationDone = true;
@@ -344,10 +345,10 @@ void Player::UpdateGrappleHook(const float elapsedSeconds, const std::unique_ptr
 		if (!m_IsGrappleAnimationDone)
 		{
 			m_GrappleHookAnimTime += m_GrappleHookAnimSpeed * elapsedSeconds;
-			const Engine::Vector2f direction{ Engine::GetNormalized(Engine::Vector2f{playerCenter,m_GrappleHookEndPoint}) };
+			const Integrian::Vector2f direction{ Integrian::GetNormalized(Integrian::Vector2f{playerCenter,m_GrappleHookEndPoint}) };
 			m_GrappleHookAnimPoint = playerCenter + direction * (m_GrappleRange * m_GrappleHookAnimTime);
 
-			if (Engine::AreEqual(Engine::DistanceSquared(playerCenter, m_GrappleHookAnimPoint), m_GrappleHookDistanceSquared, 10.f * 10.f))
+			if (Integrian::AreEqual(Integrian::DistanceSquared(playerCenter, m_GrappleHookAnimPoint), m_GrappleHookDistanceSquared, 10.f * 10.f))
 			{
 				// == Reset Animation ==
 				m_GrappleHookAnimTime = 0.f;
@@ -358,7 +359,7 @@ void Player::UpdateGrappleHook(const float elapsedSeconds, const std::unique_ptr
 	}
 }
 
-const Engine::Rectf& Player::GetPlayerAvatar() const
+const Integrian::Rectf& Player::GetPlayerAvatar() const
 {
 	return m_PlayerAvatar;
 }

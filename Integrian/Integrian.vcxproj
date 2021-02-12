@@ -96,10 +96,11 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,16 +153,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="Benchmark_App.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Grapple_Hook_App.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Level.cpp" />
-    <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Printer.cpp" />
+    <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -170,22 +174,25 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
-    <ClInclude Include="Benchmark_App.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="ExceptionHandler.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grapple_Hook_App.h" />
     <ClInclude Include="InitialisationFailed.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="MathFunctions.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Point2f.h" />
+    <ClInclude Include="Printer.h" />
     <ClInclude Include="RuntimeInitFailed.h" />
     <ClInclude Include="Structs.h" />
+    <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Timer.h" />
