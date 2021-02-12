@@ -64,6 +64,9 @@
     <Filter Include="Header Files\GameObject">
       <UniqueIdentifier>{f0c763d4-5487-4b7d-a2dc-2bd08e0147f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\TransformComponent">
+      <UniqueIdentifier>{060d5f29-adcb-4216-a4de-14539dc72d2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Grapple_Hook_App.cpp">
@@ -119,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Header Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Header Files\Components\TransformComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\Components\TransformComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

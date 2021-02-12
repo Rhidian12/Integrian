@@ -3,8 +3,7 @@
 #include "Printer.h"
 
 Integrian::TextComponent::TextComponent(const std::string& textToBeRendered)
-	: Component{ "TextComponent" }
-	, m_TextToBeRendered{ textToBeRendered }
+	: m_TextToBeRendered{ textToBeRendered }
 	, m_pPrinter{ new Printer{textToBeRendered} }
 {
 }
