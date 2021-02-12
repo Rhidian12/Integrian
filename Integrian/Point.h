@@ -6,7 +6,6 @@
 #ifndef ENGINE_POINT_H
 #define ENGINE_POINT_H
 
-#include "pch.h"
 #include <math.h>
 #include "Vector.h"
 namespace Integrian

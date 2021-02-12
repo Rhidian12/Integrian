@@ -6,9 +6,9 @@
 #ifndef ENGINE_STRUCTS_H
 #define ENGINE_STRUCTS_H
 
-#include <math.h>
-#include "Point.h"
-#include "Vector.h"
+#include "TypeDefines.h"
+#include <cmath>
+
 namespace Integrian
 {
 	// == Structs ==
@@ -57,7 +57,7 @@ namespace Integrian
 			height = other.height;
 		}
 
-		Point2f leftBottom;
+		Integrian::Point2f leftBottom;
 		float width;
 		float height;
 	};
@@ -91,7 +91,7 @@ namespace Integrian
 			radius = other.radius;
 		}
 
-		Point2f center;
+		Integrian::Point2f center;
 		float radius;
 	};
 	struct RGBColour
@@ -148,7 +148,7 @@ namespace Integrian
 		{
 		}
 
-		Rectf destRect, srcRect;
+		Integrian::Rectf destRect, srcRect;
 	};
 
 	// == Non-Member Struct Operators ==
