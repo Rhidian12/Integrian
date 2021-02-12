@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{82fac5da-5499-4e9f-9223-df4aa5e68905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Projects">
+      <UniqueIdentifier>{7ff959c8-0e10-4d9c-b9ef-a01e49b36b41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Projects\App_GrappleHook">
+      <UniqueIdentifier>{b88e3a79-a269-4626-854b-0d06f3408a4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Projects\App_BenchMark">
+      <UniqueIdentifier>{d4a0f77f-56a8-4129-a25e-19838b1c35c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\App">
+      <UniqueIdentifier>{9c0f328b-90dd-4930-846a-b31c4dee1d0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Managers">
+      <UniqueIdentifier>{86f23ac7-4f6f-4b71-9266-33695d3cff4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Managers\InputManager">
+      <UniqueIdentifier>{4b2aacd2-ad28-49e7-9154-c4391a0d0a79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Math">
+      <UniqueIdentifier>{a4a8944e-361f-4c05-8073-9759380adaa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Camera">
+      <UniqueIdentifier>{d21cd484-ec0a-413e-9d9b-b02a1b1add81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Texture">
+      <UniqueIdentifier>{21f64c95-40d8-4f58-baa7-14fe4d704342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Managers\TextureManager">
+      <UniqueIdentifier>{a329b670-98ad-46b5-875f-c6df342b2879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Timer">
+      <UniqueIdentifier>{96530ab2-85c8-4471-a972-0465e066fb22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Utilities">
+      <UniqueIdentifier>{02ac4f77-47b7-48a8-b95e-8870af7e0a2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\ExceptionHandler">
+      <UniqueIdentifier>{9cde4dc9-77e3-4179-a803-3db3f9686683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\App\Exceptions">
+      <UniqueIdentifier>{4695694b-be93-487f-8f01-de660276539b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Grapple_Hook_App.cpp">
+      <Filter>Source Files\Projects\App_GrappleHook</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmark_App.cpp">
+      <Filter>Source Files\Projects\App_BenchMark</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Source Files\Engine\App</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Engine\Managers\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>Source Files\Projects\App_BenchMark</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Projects\App_GrappleHook</Filter>
+    </ClCompile>
+    <ClCompile Include="MathFunctions.cpp">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="OrthographicCamera.cpp">
+      <Filter>Source Files\Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Projects\App_GrappleHook</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Engine\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\Engine\Managers\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Engine\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility Functions.cpp">
+      <Filter>Source Files\Engine\Utilities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h">
+      <Filter>Source Files\Engine\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Grapple_Hook_App.h">
+      <Filter>Source Files\Projects\App_GrappleHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Source Files\Projects\App_GrappleHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files\Projects\App_GrappleHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Benchmark_App.h">
+      <Filter>Source Files\Projects\App_BenchMark</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Source Files\Projects\App_BenchMark</Filter>
+    </ClInclude>
+    <ClInclude Include="App_Selector.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Source Files\Engine\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Source Files\Engine\Managers\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Source Files\Engine\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeDefines.h">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MathFunctions.h">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Source Files\Engine\Managers\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="OrthographicCamera.h">
+      <Filter>Source Files\Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility Functions.h">
+      <Filter>Source Files\Engine\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="ExceptionHandler.h">
+      <Filter>Source Files\Engine\ExceptionHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2f.h">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Structs.h">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2f.h">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="InitialisationFailed.h">
+      <Filter>Source Files\Engine\App\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeInitFailed.h">
+      <Filter>Source Files\Engine\App\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraInitialisationFailed.h">
+      <Filter>Source Files\Engine\App\Exceptions</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
