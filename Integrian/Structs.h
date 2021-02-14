@@ -58,7 +58,7 @@ namespace Integrian
 			height = other.height;
 		}
 
-		Integrian::Point2f leftBottom;
+		Point2f leftBottom;
 		float width;
 		float height;
 	};
@@ -92,7 +92,7 @@ namespace Integrian
 			radius = other.radius;
 		}
 
-		Integrian::Point2f center;
+		Point2f center;
 		float radius;
 	};
 	struct RGBColour
@@ -111,8 +111,37 @@ namespace Integrian
 			, b{ b }
 			, a{ a }
 		{
+			if (this->a > 1.f)
+				this->a = 1.f;
+			else if (this->a < 0.f)
+				this->a = 0.f;
 		}
 
+#pragma region Compound Assignment Operators
+		inline RGBColour& operator*=(const RGBColour& other)
+		{
+			r *= other.r;
+			g *= other.g;
+			b *= other.b;
+			return *this;
+		}
+		inline RGBColour& operator/=(const RGBColour& other)
+		{
+			r /= other.r;
+			g /= other.g;
+			b /= other.b;
+			return *this;
+		}
+		inline RGBColour& operator/=(const float f)
+		{
+			const float inverse{ 1.f / f };
+			r *= inverse;
+			g *= inverse;
+			b *= inverse;
+			return *this;
+		}
+#pragma endregion
+		
 		bool operator==(const RGBColour& other) const
 		{
 			const float epsilon{ 0.1f };
@@ -137,6 +166,11 @@ namespace Integrian
 		{
 			std::string temp{ std::to_string(r) + std::to_string(g) + std::to_string(b) + std::to_string(a) };
 			return temp;
+		}
+		inline void MaxToOne()
+		{
+			const float max{ std::max({ r ,g ,b }) };
+			*this /= max;
 		}
 
 		float r, g, b, a;

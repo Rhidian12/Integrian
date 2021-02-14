@@ -38,7 +38,7 @@ namespace Integrian
 
 		// FUNCTIONS
 		void CreateFromImage(const std::string& path);
-		void CreateFromString(const std::string& text, TTF_Font* pFont, const RGBColour& textColor);
+		void CreateFromString(const std::string& text, TTF_Font* pFont, RGBColour textColor);
 		void CreateFromString(const std::string& text, const std::string& fontPath, int ptSize, const RGBColour& textColor);
 		void CreateFromSurface(SDL_Surface* pSurface);
 		void DrawFilledRect(const Rectf& dstRect) const;

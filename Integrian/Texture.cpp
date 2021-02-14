@@ -84,7 +84,7 @@ void Integrian::Texture::CreateFromString(const std::string& text, const std::st
 	TTF_CloseFont(pFont);
 }
 
-void Integrian::Texture::CreateFromString(const std::string& text, TTF_Font* pFont, const RGBColour& color)
+void Integrian::Texture::CreateFromString(const std::string& text, TTF_Font* pFont, RGBColour color)
 {
 	m_CreationOk = true;
 	if (pFont == nullptr)
@@ -96,6 +96,7 @@ void Integrian::Texture::CreateFromString(const std::string& text, TTF_Font* pFo
 
 	// Render text surface
 	SDL_Color textColor{};
+	color.MaxToOne();
 	textColor.r = Uint8(color.r * 255);
 	textColor.g = Uint8(color.g * 255);
 	textColor.b = Uint8(color.b * 255);
