@@ -67,17 +67,17 @@
     <Filter Include="Header Files\Components\TransformComponent">
       <UniqueIdentifier>{060d5f29-adcb-4216-a4de-14539dc72d2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Singleton">
+      <UniqueIdentifier>{6e908afa-26c4-47f3-a0b4-feb256bd994e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test_App">
+      <UniqueIdentifier>{750c1981-6cc9-4638-a1e6-303b343ad768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\TextureComponent">
+      <UniqueIdentifier>{ad1c1c1b-c3fc-43c8-a85d-2b4507d45f40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Grapple_Hook_App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Header Files\Managers\InputManager</Filter>
     </ClCompile>
@@ -125,6 +125,12 @@
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Header Files\Components\TransformComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_App.cpp">
+      <Filter>Source Files\Test_App</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureComponent.cpp">
+      <Filter>Header Files\Components\TextureComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,15 +191,6 @@
     <ClInclude Include="TextureManager.h">
       <Filter>Header Files\Managers\TextureManager</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Grapple_Hook_App.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="App_Selector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -203,9 +200,6 @@
     <ClInclude Include="TextComponent.h">
       <Filter>Header Files\Components\TextComponent</Filter>
     </ClInclude>
-    <ClInclude Include="Printer.h">
-      <Filter>Header Files\Components\TextComponent\Printer</Filter>
-    </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Header Files\Logger</Filter>
     </ClInclude>
@@ -214,6 +208,21 @@
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Header Files\Components\TransformComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Test_App.h">
+      <Filter>Source Files\Test_App</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureComponent.h">
+      <Filter>Header Files\Components\TextureComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="PossibleCharacters.h">
+      <Filter>Header Files\Components\TextComponent\Printer</Filter>
+    </ClInclude>
+    <ClInclude Include="Printer.h">
+      <Filter>Header Files\Components\TextComponent\Printer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

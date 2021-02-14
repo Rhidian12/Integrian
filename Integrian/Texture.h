@@ -3,7 +3,12 @@
 #define INTEGRIAN_TEXTURE_H
 
 #include <string>
+#include "TypeDefines.h"
+#include "Structs.h"
+#include <SDL_opengl.h>
+#include <SDL_ttf.h>
 
+struct SDL_Surface;
 namespace Integrian
 {
 	class Texture final

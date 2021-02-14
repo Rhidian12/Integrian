@@ -11,13 +11,12 @@
 #ifdef BENCHMARK_APP
 #include "Benchmark_App.h"
 #endif
+#ifdef TEST_APP
+#include "Test_App.h"
+#endif
 
 // == Global Variables ==
 bool g_IsLooping{ true };
-
-// == Should Update Be Fixed? ==
-bool g_IsUpdateFixed{ true };
-float g_TimePerFrame{ 1.f / 144.f };
 
 int main(int argc, char* args[])
 {
@@ -36,6 +35,9 @@ int main(int argc, char* args[])
 #endif
 #ifdef BENCHMARK_APP
 		pApplication = new Benchmark_App{};
+#endif
+#ifdef TEST_APP
+		pApplication = new Integrian::Test_App{};
 #endif
 	}
 	catch (...)

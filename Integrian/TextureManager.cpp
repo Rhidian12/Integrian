@@ -2,37 +2,35 @@
 #include "TextureManager.h"
 #include "Texture.h"
 #include <iostream>
-TextureManager* TextureManager::m_pInstance{ nullptr };
-TextureManager::TextureManager()
+Integrian::TextureManager::TextureManager()
 {
-	AddTexture("small", "Images/small.png");
-	AddTexture("Background", "Images/Background/Background.png");
 }
-TextureManager* TextureManager::GetInstance()
+
+Integrian::TextureManager::~TextureManager()
 {
-	if (m_pInstance == nullptr)
-		m_pInstance = new TextureManager{};
-	return m_pInstance;
-}
-TextureManager::~TextureManager()
-{
-	for (std::pair<std::string, Integrian::Texture*> pPair : m_pTextures)
+	for (std::pair<std::string, Texture*> pPair : m_pTextures)
 		SAFE_DELETE(pPair.second);
 }
-void TextureManager::CleanUp()
+
+void Integrian::TextureManager::AddTexture(const std::string& name, const std::string& path)
 {
-	delete m_pInstance;
-	m_pInstance = nullptr;
-}
-void TextureManager::AddTexture(const std::string& name, const std::string& path)
-{
-	if (!m_pTextures.insert(std::make_pair(name, new Integrian::Texture{ path })).second)
+	if (!m_pTextures.insert(std::make_pair(name, new Texture{ path })).second)
 	{
+		// TODO: Turn this into a Logger thing
 		// == If The Insertion Failed, .second Will Be False ==
 		std::cout << name << " was not inserted! Check " << path << std::endl;
 	}
 }
-const std::unordered_map<std::string, Integrian::Texture*>& TextureManager::GetTextures() const
+
+void Integrian::TextureManager::AddTexture(const std::string& name, const std::string& path, const std::string& textToRender, const int size, const RGBColour& colour)
+{
+	if(!m_pTextures.insert(std::make_pair(name, new Texture{textToRender,path,size,colour})).second)
+	{
+		// TODO: Logger thingie
+	}
+}
+
+const std::unordered_map<std::string, Integrian::Texture*>& Integrian::TextureManager::GetTextures() const
 {
 	return m_pTextures;
 }

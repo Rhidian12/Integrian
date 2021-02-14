@@ -10,10 +10,15 @@ namespace Integrian
 	class TransformComponent final : public Component
 	{
 	public:
+		TransformComponent();
+		TransformComponent(const Point2f& position);
+		~TransformComponent() = default;
 
+		void SetPosition(const Point2f& position);
+		const Point2f& GetPosition() const;
 
 	private:
-		
+		Point2f m_Position;
 	};
 };
 

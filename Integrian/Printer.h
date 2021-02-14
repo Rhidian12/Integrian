@@ -18,9 +18,14 @@ namespace Integrian
 
 		void Render(const Point2f& leftBottom) const;
 
+		void SetTextToRender(const std::string& string);
+
 	private:
+		Rectf GetSourceRect(const char c) const;
+		
 		//std::unique_ptr<Texture> m_pFont; // TODO: Figure out why I cannot forward declare Texture in a unique pointer
 		Texture* m_pFont;
+		std::string m_TextToRender;
 	};
 }
 

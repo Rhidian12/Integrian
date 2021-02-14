@@ -3,6 +3,7 @@
 #define INTEGRIAN_GAMEOBJECT_H
 
 #include <unordered_map>
+#include "TransformComponent.h"
 
 namespace Integrian
 {
@@ -11,9 +12,15 @@ namespace Integrian
 	{
 	public:
 		GameObject() = default;
-		~GameObject() = default;
+		~GameObject();
 
 		void AddComponent(const std::string& name, Component* pComponent);
+
+		void Update(const float elapsedSeconds);
+		void FixedUpdate(const float elapsedSeconds);
+		void LateUpdate(const float elapsedSeconds);
+		
+		void Render() const;
 
 		template<typename Type>
 		inline Type* GetComponentByType() const
@@ -38,8 +45,11 @@ namespace Integrian
 			// TODO: Make Logger print a message saying this returned nothing
 			return nullptr;
 		}
+		
 		[[nodiscard]] const std::unordered_map<std::string, Component*>& GetComponents() const; // TODO: Check if this is necessary, if not, remove it
 
+		TransformComponent transform{};
+	
 	private:
 		std::unordered_map<std::string, Component*> m_pComponents;
 	};

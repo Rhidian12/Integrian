@@ -2,7 +2,8 @@
 #ifndef APP_SELECTOR_H
 #define APP_SELECTOR_H
 
-#define GRAPPLE_HOOK_APP
+//#define GRAPPLE_HOOK_APP
 //#define BENCHMARK_APP
+#define TEST_APP
 
 #endif // !APP_SELECTOR_H

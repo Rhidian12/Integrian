@@ -13,7 +13,13 @@ Integrian::TextComponent::~TextComponent()
 	SAFE_DELETE(m_pPrinter);
 }
 
-void Integrian::TextComponent::Render() const
+void Integrian::TextComponent::Render(const Point2f& pos) const
 {
-	m_pPrinter->Render(Point2f{});
+	m_pPrinter->Render(pos);
+}
+
+void Integrian::TextComponent::SetTextToRender(const std::string& string)
+{
+	m_TextToBeRendered = string;
+	m_pPrinter->SetTextToRender(m_TextToBeRendered);
 }

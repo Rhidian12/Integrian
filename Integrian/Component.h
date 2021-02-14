@@ -2,8 +2,7 @@
 #ifndef INTEGRIAN_COMPONENT_H
 #define INTEGRIAN_COMPONENT_H
 
-#include <string>
-#include <vector>
+#include "TypeDefines.h"
 
 namespace Integrian
 {
@@ -13,7 +12,11 @@ namespace Integrian
 		Component() = default;
 		virtual ~Component() = default;
 
-		virtual void Render() const {}
+		virtual void Update(const float) {}
+		virtual void FixedUpdate(const float) {}
+		virtual void LateUpdate(const float) {}
+		
+		virtual void Render(const Point2f& pos) const {}
 
 	protected:
 

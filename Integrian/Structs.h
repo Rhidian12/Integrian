@@ -8,6 +8,7 @@
 
 #include "TypeDefines.h"
 #include <cmath>
+#include <string>
 
 namespace Integrian
 {
@@ -131,6 +132,11 @@ namespace Integrian
 			g = other.g;
 			b = other.b;
 			a = other.a;
+		}
+		[[nodiscard]] inline std::string ToString() const
+		{
+			std::string temp{ std::to_string(r) + std::to_string(g) + std::to_string(b) + std::to_string(a) };
+			return temp;
 		}
 
 		float r, g, b, a;

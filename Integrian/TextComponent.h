@@ -15,7 +15,9 @@ namespace Integrian
 		// Resourcemanager should take ownership of fonts 
 		~TextComponent();
 
-		virtual void Render() const override;
+		virtual void Render(const Point2f& pos) const override;
+
+		void SetTextToRender(const std::string& string);
 
 	private:
 		std::string m_TextToBeRendered;

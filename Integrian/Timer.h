@@ -3,36 +3,43 @@
 // Author: Rhidian De Wit
 // January 2021 ---- Last Edited: January 2021
 // ====================================
-#ifndef ENGINE_TIMER_H
-#define ENGINE_TIMER_H
+#ifndef INTEGRIAN_TIMER_H
+#define INTEGRIAN_TIMER_H
 
+#include "Singleton.h"
 #include <chrono>
+
 namespace Integrian
 {
-	class Timer
+	class Timer final : public Singleton<Timer>
 	{
 	public:
-		Timer();
 		~Timer() = default;
 
 		void Start();
 
 		void Update();
-		int GetFPS() const;
 
-		const float GetElapsedSeconds() const;
-
+		[[nodiscard]] int GetFPS() const;
+		[[nodiscard]] float GetElapsedSeconds() const;
+		[[nodiscard]] float GetTimePerFrame() const;
+		[[nodiscard]] float GetTotalElapsedSeconds() const;
+	
 	private:
-		static Timer* m_pInstance;
+		Timer();
+		friend class Singleton<Timer>;
+		
 		const float m_MaxElapsedSeconds;
 		float m_ElapsedSeconds;
 		float m_TotalElapsedSeconds;
 		int m_FPS;
 		int m_FPSCounter;
 		float m_FPSTimer;
+		float m_TimePerFrame;
+
 		std::chrono::steady_clock::time_point m_StartTimepoint;
 		std::chrono::steady_clock::time_point m_PreviousTimepoint;
 	};
 }
 
-#endif // !ENGINE_TIMER_H
+#endif // !INTEGRIAN_TIMER_H
