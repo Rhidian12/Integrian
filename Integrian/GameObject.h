@@ -46,8 +46,6 @@ namespace Integrian
 			return nullptr;
 		}
 		
-		[[nodiscard]] const std::unordered_map<std::string, Component*>& GetComponents() const; // TODO: Check if this is necessary, if not, remove it
-
 		TransformComponent transform{};
 	
 	private:

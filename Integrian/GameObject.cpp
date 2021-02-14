@@ -39,8 +39,3 @@ void Integrian::GameObject::Render() const
 	for (const std::pair<std::string, Component*>& pair : m_pComponents)
 		pair.second->Render(transform.GetPosition());
 }
-
-const std::unordered_map<std::string, Integrian::Component*>& Integrian::GameObject::GetComponents() const
-{
-	return m_pComponents;
-}

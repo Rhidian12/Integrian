@@ -16,7 +16,7 @@ namespace Integrian
 		virtual void FixedUpdate(const float) {}
 		virtual void LateUpdate(const float) {}
 		
-		virtual void Render(const Point2f& pos) const {}
+		virtual void Render(const Point2f&) const {}
 
 	protected:
 

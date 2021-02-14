@@ -14,9 +14,9 @@ namespace Integrian
 
 		virtual void Start() override;
 
-		virtual void Update(const float elapsedSeconds) override;
-		virtual void FixedUpdate(const float elapsedSeconds) override {};
-		virtual void LateUpdate(const float elapsedSeconds) override {};
+		virtual void Update(const float) override {};
+		virtual void FixedUpdate(const float) override {};
+		virtual void LateUpdate(const float) override {};
 
 		virtual void Render() const override;
 

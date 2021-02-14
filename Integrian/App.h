@@ -47,7 +47,7 @@ namespace Integrian
 		bool m_IsInitializationFinished{};
 
 		std::unique_ptr<OrthographicCamera> m_pCamera;
-		std::vector<GameObject*> m_pGameObjects;
+		std::vector<GameObject*> m_pGameObjects; // TODO: Turn this into a std::unordered_map
 
 		// make the constructor protected, so only children can make an app
 		App();

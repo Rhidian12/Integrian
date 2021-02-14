@@ -1,6 +1,7 @@
 #include "App.h"
 #include "OrthographicCamera.h"
 #include "InputManager.h"
+#include "TextComponent.h"
 #include "TextureManager.h"
 #include "Timer.h"
 
@@ -106,6 +107,11 @@ void Integrian::App::FinishInitializationOfApp()
 	if (!InitializeCamera())
 		throw InitialisationFailedException{};
 
+	GameObject* pGameObject = new GameObject{};
+	pGameObject->AddComponent("FPSCounter", new TextComponent{ "FPS: ",10,RGBColour{0.f,255.f,0.f} });
+	pGameObject->transform = Point2f{ 10.f,float(m_WindowHeight) - 30.f };
+	m_pGameObjects.push_back(std::move(pGameObject));
+
 	m_IsInitializationFinished = true;
 	m_HasStarted = true;
 }
@@ -186,6 +192,12 @@ void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
 	}
 	
 	Update(timer.GetElapsedSeconds());
+	for (GameObject* pGameObject : m_pGameObjects)
+	{
+		TextComponent* pTextComponent{ static_cast<TextComponent*>(pGameObject->GetComponentByName("FPSCounter")) };
+		if (pTextComponent)
+			pTextComponent->SetTextToRender("FPS: " + std::to_string(Timer::GetInstance().GetFPS()));
+	}
 
 	LateUpdate(timer.GetElapsedSeconds());
 

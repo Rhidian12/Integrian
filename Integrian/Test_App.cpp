@@ -18,24 +18,9 @@ void Integrian::Test_App::Start()
 	m_pGameObjects.push_back(std::move(pGameObject));
 
 	pGameObject = new GameObject{};
-	pGameObject->AddComponent("FPSCounter", new TextComponent{ "FPS: ",10,RGBColour{0.f,255.f,0.f} });
-	pGameObject->transform = Point2f{ 10.f,float(m_WindowHeight) - 30.f };
-	m_pGameObjects.push_back(std::move(pGameObject));
-
-	pGameObject = new GameObject{};
 	pGameObject->AddComponent("Title", new TextComponent{ "Programming 4 Assignment",30,RGBColour{255.f,0.f,0.f} });
 	pGameObject->transform = Point2f{ 100.f, float(m_WindowHeight) - 70.f };
 	m_pGameObjects.push_back(std::move(pGameObject));
-}
-
-void Integrian::Test_App::Update(const float elapsedSeconds)
-{
-	for (GameObject* pGameObject : m_pGameObjects)
-	{
-		TextComponent* pTextComponent{ static_cast<TextComponent*>(pGameObject->GetComponentByName("FPSCounter")) };
-		if (pTextComponent)
-			pTextComponent->SetTextToRender("FPS: " + std::to_string( Timer::GetInstance().GetFPS()));
-	}
 }
 
 void Integrian::Test_App::Render() const
