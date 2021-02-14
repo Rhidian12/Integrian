@@ -25,15 +25,15 @@ Integrian::App::~App()
 
 bool Integrian::App::Initialize()
 {
-	uint32_t width = 600;
-	uint32_t height = 400;
+	uint32_t width = 640;
+	uint32_t height = 480;
 
 #pragma region SDL Stuff
 	//Create window + surfaces
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_pWindow = SDL_CreateWindow(
-		"Grapple Hook - Rhidian De Wit",
+		"Programming 4 Assignment - Rhidian De Wit",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		width, height,
@@ -87,6 +87,9 @@ bool Integrian::App::Initialize()
 	// == Set Window Size == 
 	m_WindowWidth = width;
 	m_WindowHeight = height;
+
+	// Initialise Datapath
+	TextureManager::GetInstance().Init("Data/");
 
 	return true;
 }

@@ -40,14 +40,14 @@ public:
 			m_KeyUpKeybindFunctions[key].push_back(std::bind(pMemberFunction, pObject, std::placeholders::_1));
 	}
 	template<typename Type>
-	inline void AddMemberFunctionWrapper(const MouseButton& key, Type* pObject, void(Type::* pMemberFunction)(), bool mouseDown)
+	inline void AddMemberFunctionWrapper(const MouseButton key, Type* pObject, void(Type::* pMemberFunction)(), bool mouseDown)
 	{
 		if (mouseDown)
 			m_MouseDownMouseFunctions[key].push_back(std::bind(pMemberFunction, pObject));
 		else
 			m_MouseUpMouseFunctions[key].push_back(std::bind(pMemberFunction, pObject));
 	}
-	inline void AddFunctionWrapper(const Uint8& key, void function(const float), bool continousCall)
+	inline void AddFunctionWrapper(const Uint8 key, void function(const float), bool continousCall)
 	{
 		if(continousCall)
 			m_KeyDownKeybindFunctions[key].push_back(function);
@@ -59,7 +59,7 @@ public:
 
 	void SetWindowSize(const uint32_t width, const uint32_t height);
 
-	const Integrian::Point2f& GetMousePosition() const;
+	[[nodiscard]] const Integrian::Point2f& GetMousePosition() const;
 
 private:
 	InputManager() = default;

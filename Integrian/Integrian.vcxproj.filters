@@ -76,6 +76,9 @@
     <Filter Include="Header Files\Components\TextureComponent">
       <UniqueIdentifier>{ad1c1c1b-c3fc-43c8-a85d-2b4507d45f40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Managers\PrinterManager">
+      <UniqueIdentifier>{62783429-e0b0-45b9-a454-49f8a4e4ebdb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -131,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Header Files\Components\TextureComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterManager.cpp">
+      <Filter>Header Files\Managers\PrinterManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="Printer.h">
       <Filter>Header Files\Components\TextComponent\Printer</Filter>
+    </ClInclude>
+    <ClInclude Include="PrinterManager.h">
+      <Filter>Header Files\Managers\PrinterManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

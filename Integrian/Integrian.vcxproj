@@ -162,6 +162,7 @@
     <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Printer.cpp" />
+    <ClCompile Include="PrinterManager.cpp" />
     <ClCompile Include="Test_App.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Point2f.h" />
     <ClInclude Include="PossibleCharacters.h" />
     <ClInclude Include="Printer.h" />
+    <ClInclude Include="PrinterManager.h" />
     <ClInclude Include="RuntimeInitFailed.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Structs.h" />

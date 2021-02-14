@@ -8,23 +8,23 @@
 namespace Integrian
 {
 	class Texture;
-	class Printer final // TODO: Put this in a manager which checks if this particular printer has already been made
+	class Printer final
 	{
 	public:
-		Printer(const std::string& textToRender);
-		Printer(const std::string& filePath, const std::string& textToRender);
-		Printer(const std::string& filePath, const std::string& textToRender, const int size, const RGBColour& colour);
-		~Printer() = default;
-
 		void Render(const Point2f& leftBottom) const;
 
 		void SetTextToRender(const std::string& string);
 
+		[[nodiscard]] Texture* GetTexture() const;
+
 	private:
-		Rectf GetSourceRect(const char c) const;
-		
-		//std::unique_ptr<Texture> m_pFont; // TODO: Figure out why I cannot forward declare Texture in a unique pointer
+		friend class PrinterManager;
+		Printer(Texture* pFont, const std::string& textToRender);
+		~Printer() = default;
+		[[nodiscard]] Rectf GetSourceRect(const char c) const;
+
 		Texture* m_pFont;
+		const float m_CharWidth;
 		std::string m_TextToRender;
 	};
 }

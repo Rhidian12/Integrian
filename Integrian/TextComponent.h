@@ -7,17 +7,21 @@
 namespace Integrian
 {
 	class Printer;
+	class Texture;
 	class TextComponent final : public Component  // NOLINT(cppcoreguidelines-special-member-functions)
 	{
 	public:
+		TextComponent();
+		TextComponent(const int size, const RGBColour& colour);
 		TextComponent(const std::string& textToBeRendered);
-		// TODO: Add constructor that just takes component name and text to be renderered and transform
-		// Resourcemanager should take ownership of fonts 
-		~TextComponent();
+		TextComponent(const std::string& textToRender, const int size, const RGBColour& colour);
+		~TextComponent() = default;
 
 		virtual void Render(const Point2f& pos) const override;
 
 		void SetTextToRender(const std::string& string);
+
+		[[nodiscard]] float GetHeight() const;
 
 	private:
 		std::string m_TextToBeRendered;

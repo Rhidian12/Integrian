@@ -15,6 +15,8 @@ namespace Integrian
 	class TextureManager final : public Singleton<TextureManager>
 	{
 	public:
+		void Init(const std::string& path);
+		
 		// == CleanUp ==
 		virtual	~TextureManager();
 
@@ -28,7 +30,7 @@ namespace Integrian
 		TextureManager();
 		friend class Singleton<TextureManager>;
 
-
+		std::string m_DataPath;
 		std::unordered_map<std::string, Texture*> m_pTextures;
 	};
 }

@@ -5,12 +5,6 @@
 #include "App.h"
 
 // == Include correct application == 
-#ifdef GRAPPLE_HOOK_APP
-#include "Grapple_Hook_App.h"
-#endif
-#ifdef BENCHMARK_APP
-#include "Benchmark_App.h"
-#endif
 #ifdef TEST_APP
 #include "Test_App.h"
 #endif
