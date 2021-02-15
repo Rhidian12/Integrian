@@ -6,6 +6,8 @@
 #ifndef ENGINE_RUNTIMEINITIALISATIONFAILEDEXCEPTION_H
 #define ENGINE_RUNTIMEINITIALISATIONFAILEDEXCEPTION_H
 
+#include "Logger.h"
+
 namespace Integrian
 {
 	class RuntimeInitialisationFailed final
@@ -13,7 +15,7 @@ namespace Integrian
 	public:
 		RuntimeInitialisationFailed()
 		{
-			std::cerr << "EXCEPTION: Something went wrong in App::FinishInitialisationOfApp()";
+			Logger::GetInstance().Log("EXCEPTION: Something went wrong in App::FinishInitialisationOfApp()", ErrorLevel::severeError);
 		}
 	};
 }

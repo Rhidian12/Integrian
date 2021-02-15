@@ -36,6 +36,11 @@ void Integrian::TextComponent::SetTextToRender(const std::string& string)
 	m_pPrinter->SetTextToRender(m_TextToBeRendered);
 }
 
+float Integrian::TextComponent::GetWidth() const
+{
+	return m_pPrinter->GetTexture()->GetWidth();
+}
+
 float Integrian::TextComponent::GetHeight() const
 {
 	return m_pPrinter->GetTexture()->GetHeight();

@@ -16,8 +16,8 @@ Integrian::App::App()
 
 Integrian::App::~App()
 {
-	for (GameObject* pGameObject : m_pGameObjects)
-		SAFE_DELETE(pGameObject);
+	for (std::pair<std::string, GameObject*> pair : m_pGameObjects)
+		SAFE_DELETE(pair.second);
 	
 	InputManager::GetInstance()->Cleanup();
 
@@ -107,10 +107,7 @@ void Integrian::App::FinishInitializationOfApp()
 	if (!InitializeCamera())
 		throw InitialisationFailedException{};
 
-	GameObject* pGameObject = new GameObject{};
-	pGameObject->AddComponent("FPSCounter", new TextComponent{ "FPS: ",10,RGBColour{0.f,255.f,0.f} });
-	pGameObject->transform = Point2f{ 10.f,float(m_WindowHeight) - 30.f };
-	m_pGameObjects.push_back(std::move(pGameObject));
+	Logger::GetInstance().Log("Initialisation finished!\n", ErrorLevel::noWarning);
 
 	m_IsInitializationFinished = true;
 	m_HasStarted = true;
@@ -132,7 +129,7 @@ void Integrian::App::Run()
 
 	Timer& timer = Timer::GetInstance();
 
-	float fpsTimer{};
+	//float fpsTimer{};
 	float timeSinceLastUpdate{};
 
 	// == Event Loop ==
@@ -152,16 +149,16 @@ void Integrian::App::Run()
 		TransformCameraAndRender();
 
 		// == Count FPS ==
-		fpsTimer += dt;
+		//fpsTimer += dt;
 		timeSinceLastUpdate += dt;
 
-		if (fpsTimer >= 1.f)
-		{
-			// one second has passed, so we can print how many frames we have
-			std::cout << "Timer FPS: " << timer.GetFPS() << std::endl;
-			fpsTimer = 0.f;
-			timeSinceLastUpdate = 0.f;
-		}
+		//if (fpsTimer >= 1.f)
+		//{
+		//	// one second has passed, so we can print how many frames we have
+		//	std::cout << "Timer FPS: " << timer.GetFPS() << std::endl;
+		//	fpsTimer = 0.f;
+		//	timeSinceLastUpdate = 0.f;
+		//}
 	}
 }
 
@@ -192,12 +189,10 @@ void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
 	}
 	
 	Update(timer.GetElapsedSeconds());
-	for (GameObject* pGameObject : m_pGameObjects)
-	{
-		TextComponent* pTextComponent{ static_cast<TextComponent*>(pGameObject->GetComponentByName("FPSCounter")) };
-		if (pTextComponent)
-			pTextComponent->SetTextToRender("FPS: " + std::to_string(Timer::GetInstance().GetFPS()));
-	}
+
+	TextComponent* pTextComponent{ m_pGameObjects.find("FPSCounter")->second->GetComponentByType<TextComponent>() };
+	if(pTextComponent)
+		pTextComponent->SetTextToRender("FPS: " + std::to_string(timer.GetFPS()));
 
 	LateUpdate(timer.GetElapsedSeconds());
 

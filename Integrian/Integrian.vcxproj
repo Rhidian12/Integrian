@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="CameraInitialisationFailed.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ExceptionHandler.h" />
+    <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InitialisationFailed.h" />
     <ClInclude Include="InputManager.h" />

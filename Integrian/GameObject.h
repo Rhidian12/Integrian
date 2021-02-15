@@ -34,14 +34,12 @@ namespace Integrian
 			// TODO: Make Logger print a message saying this returned nothing
 			return nullptr;
 		}
-		inline void* GetComponentByName(const std::string& name) const
+		inline Component* GetComponentByName(const std::string& name) const
 		{
-			for (const std::pair<std::string, Component*>& pair : m_pComponents)
-			{
-				if (pair.first == name)
-					return pair.second;
-			}
-
+			std::unordered_map<std::string, Component*>::const_iterator it{ m_pComponents.find(name) };
+			if (it != m_pComponents.end())
+				return it->second;
+			
 			// TODO: Make Logger print a message saying this returned nothing
 			return nullptr;
 		}

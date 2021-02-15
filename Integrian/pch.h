@@ -30,6 +30,7 @@
 #include "MathFunctions.h"
 #include "Utility Functions.h"
 #include "ExceptionHandler.h"
+#include "Logger.h"
 
 #define SAFE_DELETE(p) if(p) {delete (p); (p) = nullptr;}
 

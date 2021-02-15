@@ -14,7 +14,7 @@ namespace Integrian
 
 		virtual void Start() override;
 
-		virtual void Update(const float) override {};
+		virtual void Update(const float dt) override;
 		virtual void FixedUpdate(const float) override {};
 		virtual void LateUpdate(const float) override {};
 

@@ -79,6 +79,9 @@
     <Filter Include="Header Files\Managers\PrinterManager">
       <UniqueIdentifier>{62783429-e0b0-45b9-a454-49f8a4e4ebdb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\FPSComponent">
+      <UniqueIdentifier>{ca95a5fd-9d8f-4535-8169-de93e82d7036}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -137,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="PrinterManager.cpp">
       <Filter>Header Files\Managers\PrinterManager</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSComponent.cpp">
+      <Filter>Header Files\Components\FPSComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="PrinterManager.h">
       <Filter>Header Files\Managers\PrinterManager</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSComponent.h">
+      <Filter>Header Files\Components\FPSComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

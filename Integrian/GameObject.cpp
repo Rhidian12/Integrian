@@ -12,7 +12,7 @@ void Integrian::GameObject::AddComponent(const std::string& name, Component* pCo
 {
 	if (!m_pComponents.insert(std::make_pair(name, pComponent)).second)
 	{
-		// TODO: Make the Logger print a message that this component was already added
+		Logger::GetInstance().Log(name + "was already added!", ErrorLevel::warning);
 	}
 }
 

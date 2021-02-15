@@ -6,6 +6,8 @@
 #ifndef ENGINE_INITIALISATIONFAILEDEXCEPTION_H
 #define ENGINE_INITIALISATIONFAILEDEXCEPTION_H
 
+#include "Logger.h"
+
 namespace Integrian
 {
 	class InitialisationFailedException final
@@ -13,7 +15,7 @@ namespace Integrian
 	public:
 		InitialisationFailedException()
 		{
-			std::cerr << "EXCEPTION: Initialisation of app failed" << std::endl;
+			Logger::GetInstance().Log("ERROR: Initialisation Failed", ErrorLevel::severeError);
 		}
 	};
 }

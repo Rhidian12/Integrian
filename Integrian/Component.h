@@ -3,6 +3,7 @@
 #define INTEGRIAN_COMPONENT_H
 
 #include "TypeDefines.h"
+#include "Structs.h"
 
 namespace Integrian
 {

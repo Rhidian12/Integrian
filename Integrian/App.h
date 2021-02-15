@@ -5,7 +5,7 @@
 #include "pch.h"
 #include <memory>
 #include "GameObject.h"
-#include "Component.h"
+#include <unordered_map>
 
 namespace Integrian
 {
@@ -47,7 +47,7 @@ namespace Integrian
 		bool m_IsInitializationFinished{};
 
 		std::unique_ptr<OrthographicCamera> m_pCamera;
-		std::vector<GameObject*> m_pGameObjects; // TODO: Turn this into a std::unordered_map
+		std::unordered_map<std::string, GameObject*> m_pGameObjects;
 
 		// make the constructor protected, so only children can make an app
 		App();
