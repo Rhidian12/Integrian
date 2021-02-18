@@ -15,7 +15,7 @@ namespace Integrian
 	public:
 		InitialisationFailedException()
 		{
-			Logger::GetInstance().Log("ERROR: Initialisation Failed", ErrorLevel::severeError);
+			Logger::GetInstance().Log("ERROR: Initialisation Failed\n", ErrorLevel::severeError);
 		}
 	};
 }

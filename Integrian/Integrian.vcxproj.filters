@@ -82,6 +82,24 @@
     <Filter Include="Header Files\Components\FPSComponent">
       <UniqueIdentifier>{ca95a5fd-9d8f-4535-8169-de93e82d7036}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\ActorComponent">
+      <UniqueIdentifier>{a14b7102-0a1f-4457-b612-f3c24ec66b9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PossibleInputs">
+      <UniqueIdentifier>{ce408f37-0268-477d-a252-ea36c43bc673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test_App\Commands">
+      <UniqueIdentifier>{12bc12a6-23ce-4fd9-85e0-7aed466818ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Command">
+      <UniqueIdentifier>{53027966-f14b-4234-82a2-dd483ffa2191}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test_App\Commands\ResetFPSCommand">
+      <UniqueIdentifier>{70db4155-9b6c-4248-b8df-a0881b136d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers\CommandManager">
+      <UniqueIdentifier>{7e462b2f-1c2d-4126-9c6f-603973bf39f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -143,6 +161,15 @@
     </ClCompile>
     <ClCompile Include="FPSComponent.cpp">
       <Filter>Header Files\Components\FPSComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Header Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetFPSCommand.cpp">
+      <Filter>Source Files\Test_App\Commands\ResetFPSCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandManager.cpp">
+      <Filter>Header Files\Managers\CommandManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +268,18 @@
     </ClInclude>
     <ClInclude Include="FPSComponent.h">
       <Filter>Header Files\Components\FPSComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="PossibleInputs.h">
+      <Filter>Header Files\PossibleInputs</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="ResetFPSCommand.h">
+      <Filter>Source Files\Test_App\Commands\ResetFPSCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandManager.h">
+      <Filter>Header Files\Managers\CommandManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

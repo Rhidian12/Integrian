@@ -27,14 +27,7 @@ void Integrian::Timer::Update()
 	
 	m_PreviousTimepoint = m_StartTimepoint;
 
-	++m_FPSCounter;
-	m_FPSTimer += m_ElapsedSeconds;
-	if (m_FPSTimer >= 1.f)
-	{
-		m_FPS = m_FPSCounter;
-		m_FPSCounter = 0;
-		m_FPSTimer = 0.f;
-	}
+	m_FPS = int(1.f / m_ElapsedSeconds);
 }
 
 int Integrian::Timer::GetFPS() const

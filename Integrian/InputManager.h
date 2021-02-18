@@ -3,76 +3,76 @@
 // Author: Rhidian De Wit
 // January 2021
 // ====================================
-#ifndef INPUTMANAGER_H
-#define INPUTMANAGER_H
+#ifndef INTEGRIAN_INPUTMANAGER_H
+#define INTEGRIAN_INPUTMANAGER_H
 
 #include <unordered_map>
 #include <vector>
 #include <functional>
 #include <iostream>
+
+#include "Command.h"
+#include "Timer.h"
+#include "PossibleInputs.h"
 // Reference: https://stackoverflow.com/questions/25963966/c-function-pointer-callback-without-inheritance
-enum class MouseButton
+
+namespace Integrian
 {
-	LMB = 0,
-	MMB = 1,
-	RMB = 2,
-	LMBAndRMB = 3,
-	LMBAndMMB = 4,
-	RMBandMMB = 5,
-};
-class InputManager final
-{
-	using KeybindFunction = std::function<void(const float)>;
-	using MouseFunction = std::function<void()>;
-	using KeybindFunctionWrapperPair = std::pair<Uint8, std::vector<KeybindFunction>>;
-	using MouseFunctionWrapperPair = std::pair<MouseButton, std::vector<MouseFunction>>;
-public:
-	static InputManager* GetInstance();
-	~InputManager();
-	static void Cleanup();
-
-	template<typename Type>
-	inline void AddMemberFunctionWrapper(const Uint8 key, Type* pObject, void(Type::* pMemberFunction)(const float), bool continuousCall)
-	{
-		if (continuousCall)
-			m_KeyDownKeybindFunctions[key].push_back(std::bind(pMemberFunction, pObject, std::placeholders::_1));
-		else
-			m_KeyUpKeybindFunctions[key].push_back(std::bind(pMemberFunction, pObject, std::placeholders::_1));
-	}
-	template<typename Type>
-	inline void AddMemberFunctionWrapper(const MouseButton key, Type* pObject, void(Type::* pMemberFunction)(), bool mouseDown)
-	{
-		if (mouseDown)
-			m_MouseDownMouseFunctions[key].push_back(std::bind(pMemberFunction, pObject));
-		else
-			m_MouseUpMouseFunctions[key].push_back(std::bind(pMemberFunction, pObject));
-	}
-	inline void AddFunctionWrapper(const Uint8 key, void function(const float), bool continousCall)
-	{
-		if(continousCall)
-			m_KeyDownKeybindFunctions[key].push_back(function);
-		else
-			m_KeyUpKeybindFunctions[key].push_back(function);
-	}
-
-	void HandleInput(const float dt);
-
-	void SetWindowSize(const uint32_t width, const uint32_t height);
-
-	[[nodiscard]] const Integrian::Point2f& GetMousePosition() const;
-
-private:
-	InputManager() = default;
-	static InputManager* m_pInstance;
-
-	std::unordered_map<Uint8, std::vector<KeybindFunction>> m_KeyDownKeybindFunctions;
-	std::unordered_map<Uint8, std::vector<KeybindFunction>> m_KeyUpKeybindFunctions;
-	std::unordered_map<MouseButton, std::vector<MouseFunction>> m_MouseDownMouseFunctions;
-	std::unordered_map<MouseButton, std::vector<MouseFunction>> m_MouseUpMouseFunctions;
+	class Command;
 	
-	Integrian::Point2f m_MousePosition{};
-	uint32_t m_WindowWidth{};
-	uint32_t m_WindowHeight{};
-};
+	enum class MouseButton
+	{
+		LMB = 0,
+		MMB = 1,
+		RMB = 2,
+		LMBAndRMB = 3,
+		LMBAndMMB = 4,
+		RMBandMMB = 5,
+	};
 
-#endif // !INPUTMANAGER_H
+	class InputManager final : public Singleton<InputManager>
+	{
+		using KeybindFunctionWrapperPair	= std::pair<Uint8, std::vector<Command*>>;
+		using MouseFunctionWrapperPair		= std::pair<MouseButton, std::vector<Command*>>;
+	public:
+		virtual ~InputManager();
+
+		template<typename Type>
+		inline void AddCommand(const Uint8 key, Type* pObject, void(Type::* pCommand)(), bool keyDown)
+		{
+			if (keyDown)
+				m_KeyDownKeybindCommands[key].push_back(std::bind(pObject, pCommand));
+			else
+				m_KeyUpKeybindCommands[key].push_back(std::bind(pObject, pCommand));
+		}
+		template<typename Type>
+		inline void AddCommand(const MouseButton key, Type* pObject, void(Type::* pCommand)(), bool mouseDown)
+		{
+			if (mouseDown)
+				m_MouseDownMouseCommands[key].push_back(std::bind(pObject, pCommand));
+			else
+				m_MouseUpMouseCommands[key].push_back(std::bind(pObject, pCommand));
+		}
+
+		void HandleInput();
+
+		void SetWindowSize(const uint32_t width, const uint32_t height);
+
+		[[nodiscard]] const Point2f& GetMousePosition() const;
+
+	private:
+		InputManager();
+		friend class Singleton<InputManager>;
+
+		std::unordered_map<Uint8,		std::vector<Command*>>	m_KeyDownKeybindCommands;
+		std::unordered_map<Uint8,		std::vector<Command*>>	m_KeyUpKeybindCommands;
+		std::unordered_map<MouseButton, std::vector<Command*>>	m_MouseDownMouseCommands;
+		std::unordered_map<MouseButton, std::vector<Command*>>	m_MouseUpMouseCommands;
+
+		Point2f m_MousePosition;
+		uint32_t m_WindowWidth;
+		uint32_t m_WindowHeight;
+	};
+}
+
+#endif // !INTEGRIAN_INPUTMANAGER_H

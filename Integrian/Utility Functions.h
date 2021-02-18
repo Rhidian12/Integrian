@@ -8,6 +8,8 @@
 
 #include "pch.h"
 #include <cstdlib> // rand()
+#include <random>
+
 namespace Integrian
 {
 	// == Draw Functions ==
@@ -23,15 +25,32 @@ namespace Integrian
 
 	// == Templated Utility Functions ==
 	template<typename Type>
-	Type RandomNumber(const Type& min, const Type& max)
+	Type GetRandomNumber(const Type min, const Type max)
 	{
 		return static_cast<Type>(rand() % (int(max) - int(min) + 1) + int(min));
 	}
+	template<>
+	inline float GetRandomNumber<float>(const float min, const float max)
+	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		const std::uniform_real_distribution<float> dis(min, max);
+		return dis(gen);
+	}
+	template<>
+	inline double GetRandomNumber<double>(const double min, const double max)
+	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		const std::uniform_real_distribution<> dis(min, max);
+		return dis(gen);
+	}
+
 	template<typename Type>
 	Type Clamp(const Type& clamp, const Type& min, const Type& max)
 	{
 		Type clampedValue{ clamp };
-		if(clampedValue < min)
+		if (clampedValue < min)
 			clampedValue += (min - clampedValue);
 		if (clampedValue > max)
 			clampedValue -= (clampedValue - max);

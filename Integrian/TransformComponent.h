@@ -15,7 +15,7 @@ namespace Integrian
 		~TransformComponent() = default;
 
 		void SetPosition(const Point2f& position);
-		const Point2f& GetPosition() const;
+		[[nodiscard]] const Point2f& GetPosition() const;
 
 	private:
 		Point2f m_Position;

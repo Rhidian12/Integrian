@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Utility Functions.h"
+
+#pragma region DrawFunctions
 void Integrian::DrawRectangle(const Rectf& rect)
 {
 	glBegin(GL_LINE_LOOP);
@@ -11,6 +13,7 @@ void Integrian::DrawRectangle(const Rectf& rect)
 	}
 	glEnd();
 }
+
 void Integrian::DrawRectangle(const Rectf& rect, const RGBColour& colour)
 {
 	glColor3f(colour.r, colour.g, colour.b);
@@ -23,6 +26,7 @@ void Integrian::DrawRectangle(const Rectf& rect, const RGBColour& colour)
 	}
 	glEnd();
 }
+
 void Integrian::DrawFilledRectangle(const Rectf& rect)
 {
 	glBegin(GL_POLYGON);
@@ -46,6 +50,7 @@ void Integrian::DrawFilledRectangle(const Rectf& rect, const RGBColour& colour)
 	}
 	glEnd();
 }
+
 void Integrian::DrawCircle(const Circlef& circle)
 {
 	glBegin(GL_POINTS);
@@ -57,6 +62,7 @@ void Integrian::DrawCircle(const Circlef& circle)
 	}
 	glEnd();
 }
+
 void Integrian::DrawFilledCircle(const Circlef& circle, const RGBColour& colour)
 {
 	glColor3f(colour.r, colour.g, colour.b);
@@ -69,6 +75,7 @@ void Integrian::DrawFilledCircle(const Circlef& circle, const RGBColour& colour)
 	}
 	glEnd();
 }
+
 void Integrian::DrawTriangle(const Point2f& top, const Point2f& left, const Point2f& right)
 {
 	glBegin(GL_LINE_LOOP);
@@ -79,6 +86,7 @@ void Integrian::DrawTriangle(const Point2f& top, const Point2f& left, const Poin
 	}
 	glEnd();
 }
+
 void Integrian::DrawFilledTriangle(const Point2f& top, const Point2f& left, const Point2f& right)
 {
 	glBegin(GL_TRIANGLES);
@@ -89,6 +97,7 @@ void Integrian::DrawFilledTriangle(const Point2f& top, const Point2f& left, cons
 	}
 	glEnd();
 }
+
 void Integrian::DrawLine(const Point2f& start, const Point2f& end, const RGBColour& colour, const float lineWidth)
 {
 	glColor3f(colour.r, colour.g, colour.b);
@@ -100,3 +109,4 @@ void Integrian::DrawLine(const Point2f& start, const Point2f& end, const RGBColo
 	}
 	glEnd();
 }
+#pragma endregion

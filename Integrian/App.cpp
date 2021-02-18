@@ -1,9 +1,9 @@
 #include "App.h"
 #include "OrthographicCamera.h"
 #include "InputManager.h"
-#include "TextComponent.h"
 #include "TextureManager.h"
 #include "Timer.h"
+#include "Logger.h"
 
 // == Global Variables ==
 extern bool g_IsLooping;
@@ -19,8 +19,6 @@ Integrian::App::~App()
 	for (std::pair<std::string, GameObject*> pair : m_pGameObjects)
 		SAFE_DELETE(pair.second);
 	
-	InputManager::GetInstance()->Cleanup();
-
 	ShutDown();
 }
 
@@ -28,6 +26,8 @@ bool Integrian::App::Initialize()
 {
 	uint32_t width = 640;
 	uint32_t height = 480;
+
+	Logger& logger{ Logger::GetInstance() };
 
 #pragma region SDL Stuff
 	//Create window + surfaces
@@ -42,13 +42,21 @@ bool Integrian::App::Initialize()
 
 	if (!m_pWindow)
 	{
-		std::cerr << "Error: m_pWindow failed" << std::endl;
+		logger.Log("Error: m_pWindow failed in App::Initialize()\n", ErrorLevel::severeError);
 		return false;
 	}
 
 	SDL_GLContext context = SDL_GL_CreateContext(m_pWindow);
 	if (context == nullptr)
-		std::cerr << "Error: App.cpp CreateContext() failed" << std::endl;
+		logger.Log("App::Initialize() CreateContext() failed\n", ErrorLevel::severeError);
+
+	if (SDL_GL_SetSwapInterval(1) < 0)
+	{
+		logger.Log("App::Initialize() error when calling SDL_GL_SetSwapInterval ", ErrorLevel::error);
+		logger.Log(SDL_GetError(), ErrorLevel::error);
+		logger.Log("\n", ErrorLevel::error);
+		return false;
+	}
 
 	// Set the Projection matrix to the identity matrix
 	glMatrixMode(GL_PROJECTION);
@@ -73,14 +81,14 @@ bool Integrian::App::Initialize()
 	const int pngFlags{ IMG_INIT_PNG };
 	const int jpgFlags{ IMG_INIT_JPG };
 	if (!(IMG_Init(pngFlags) & pngFlags) || !(IMG_Init(jpgFlags) & jpgFlags))
-		std::cout << "SDL_image could not initialize! SDL_image Error: %s\n" << std::endl;
+		logger.Log("SDL_image could not initialize! SDL_image Error: %s\n", ErrorLevel::severeError);
 
 	if (TTF_Init() != 0)
-		std::cout << SDL_GetError() << std::endl;
+		logger.Log(SDL_GetError(), ErrorLevel::severeError);
 #pragma endregion
 
 	// == Set Window Size For InputManager ==
-	InputManager::GetInstance()->SetWindowSize(width, height);
+	InputManager::GetInstance().SetWindowSize(width, height);
 
 	// == Seed rand() ==
 	srand(static_cast<unsigned int>(time(nullptr)));
@@ -129,7 +137,6 @@ void Integrian::App::Run()
 
 	Timer& timer = Timer::GetInstance();
 
-	//float fpsTimer{};
 	float timeSinceLastUpdate{};
 
 	// == Event Loop ==
@@ -140,7 +147,7 @@ void Integrian::App::Run()
 		const float dt{ timer.GetElapsedSeconds() };
 
 		// == Handle Input ==
-		InputManager::GetInstance()->HandleInput(dt);
+		InputManager::GetInstance().HandleInput();
 
 		// == Update ==
 		UpdateApplication(timeSinceLastUpdate);
@@ -148,17 +155,8 @@ void Integrian::App::Run()
 		// == Render ==
 		TransformCameraAndRender();
 
-		// == Count FPS ==
-		//fpsTimer += dt;
+		// == Update The Timer For The Fixed Update ==
 		timeSinceLastUpdate += dt;
-
-		//if (fpsTimer >= 1.f)
-		//{
-		//	// one second has passed, so we can print how many frames we have
-		//	std::cout << "Timer FPS: " << timer.GetFPS() << std::endl;
-		//	fpsTimer = 0.f;
-		//	timeSinceLastUpdate = 0.f;
-		//}
 	}
 }
 
@@ -189,10 +187,6 @@ void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
 	}
 	
 	Update(timer.GetElapsedSeconds());
-
-	TextComponent* pTextComponent{ m_pGameObjects.find("FPSCounter")->second->GetComponentByType<TextComponent>() };
-	if(pTextComponent)
-		pTextComponent->SetTextToRender("FPS: " + std::to_string(timer.GetFPS()));
 
 	LateUpdate(timer.GetElapsedSeconds());
 

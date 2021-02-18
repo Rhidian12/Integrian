@@ -12,3 +12,8 @@ void Integrian::FPSComponent::Update(const float)
 {
 	m_pTextComponent->SetTextToRender("FPS: " + std::to_string(Timer::GetInstance().GetFPS()));
 }
+
+void Integrian::FPSComponent::SetFPS(const int value)
+{
+	m_pTextComponent->SetTextToRender("FPS: " + std::to_string(value));
+}

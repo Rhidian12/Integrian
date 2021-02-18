@@ -3,18 +3,26 @@
 #define INTEGRIAN_GAMEOBJECT_H
 
 #include <unordered_map>
+#include <vector>
 #include "TransformComponent.h"
+#include "Logger.h"
+#include "PossibleInputs.h"
+
+// http://scottmeyers.blogspot.com/2015/09/should-you-be-using-something-instead.html
+// I dont think this will ever be necessary
 
 namespace Integrian
 {
 	class Component;
+	class Command;
 	class GameObject final  // NOLINT(cppcoreguidelines-special-member-functions)
 	{
 	public:
 		GameObject() = default;
 		~GameObject();
 
-		void AddComponent(const std::string& name, Component* pComponent);
+		void AddComponent(Component* pComponent);
+		//void AddCommand(Command* pCommand);
 
 		void Update(const float elapsedSeconds);
 		void FixedUpdate(const float elapsedSeconds);
@@ -23,31 +31,35 @@ namespace Integrian
 		void Render() const;
 
 		template<typename Type>
-		inline Type* GetComponentByType() const
+		inline [[nodiscard]] Type* GetComponentByType() const
 		{
-			for (const std::pair<std::string, Component*>& pair : m_pComponents)
+			for (Component* pComponent : m_pComponents)
 			{
-				if (typeid(*pair.second) == typeid(Type))
-					return static_cast<Type*>(pair.second);
+				if (typeid(*pComponent) == typeid(Type))
+					return static_cast<Type*>(pComponent);
 			}
 
-			// TODO: Make Logger print a message saying this returned nothing
+			Logger::GetInstance().Log("GetComponentByType returned a nullptr\n", ErrorLevel::warning);
 			return nullptr;
 		}
-		inline Component* GetComponentByName(const std::string& name) const
-		{
-			std::unordered_map<std::string, Component*>::const_iterator it{ m_pComponents.find(name) };
-			if (it != m_pComponents.end())
-				return it->second;
-			
-			// TODO: Make Logger print a message saying this returned nothing
-			return nullptr;
-		}
+		//template<typename Type>
+		//inline [[nodiscard]] Type* GetCommandByType() const
+		//{
+		//	for (Command* pCommand : m_pCommands)
+		//	{
+		//		if (typeid(*pCommand) == typeid(Type))
+		//			return static_cast<Type*>(pCommand);
+		//	}
+
+		//	Logger::GetInstance().Log("GetCommandByType returned a nullptr", ErrorLevel::warning);
+		//	return nullptr;
+		//}
 		
 		TransformComponent transform{};
 	
 	private:
-		std::unordered_map<std::string, Component*> m_pComponents;
+		std::vector<Component*> m_pComponents;
+		//std::vector<Command*> m_pCommands;
 	};
 }
 #endif // INTEGRIAN_GAMEOBJECT_H

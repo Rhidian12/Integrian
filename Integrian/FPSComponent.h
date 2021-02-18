@@ -16,6 +16,8 @@ namespace Integrian
 
 		virtual void Update(const float) override;
 
+		void SetFPS(const int value);
+
 	private:
 		TextComponent* m_pTextComponent;
 	};
