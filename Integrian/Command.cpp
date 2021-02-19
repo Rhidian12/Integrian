@@ -1,11 +1,11 @@
 #include "Command.h"
 
 Integrian::Command::Command()
-	: Command{ GameObject{} }
+	: Command{ nullptr }
 {
 }
 
-Integrian::Command::Command(const GameObject& actor)
+Integrian::Command::Command(GameObject* actor)
 	: m_Actor{ actor }
 {
 }

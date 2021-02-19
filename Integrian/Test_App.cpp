@@ -6,6 +6,7 @@
 #include "Timer.h"
 #include "ResetFPSCommand.h"
 #include "InputManager.h"
+#include "CommandManager.h"
 
 void Integrian::Test_App::Start()
 {
@@ -31,6 +32,10 @@ void Integrian::Test_App::Start()
 	pGameObject->transform = Point2f{ 10.f,float(m_WindowHeight) - 30.f };
 	//pGameObject->AddCommand("ResetFPS", new ResetFPSCommand{ pGameObject->GetComponentByType<FPSComponent>() });
 	//InputManager::GetInstance().AddCommand(SDL_SCANCODE_SPACE, pGameObject->GetCommandByType<ResetFPSCommand>(), &ResetFPSCommand::Execute, false);
+	Command* pCommand = new ResetFPSCommand{ pGameObject->GetComponentByType<FPSComponent>() };
+	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::A }, pCommand, State::OnPress);
+	CommandManager::GetInstance().AddCommand(pCommand);
+	// TODO: Clean this code up and make Command Manager actually create the command
 	m_pGameObjects.insert(std::move(std::make_pair("FPSCounter", pGameObject)));
 }
 

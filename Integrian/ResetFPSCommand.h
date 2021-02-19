@@ -10,7 +10,7 @@ namespace Integrian
 	class ResetFPSCommand final : public Command
 	{
 	public:
-		ResetFPSCommand(FPSComponent* pFPSComponent, const GameObject& actor);
+		ResetFPSCommand(FPSComponent* pFPSComponent);
 		virtual ~ResetFPSCommand() = default;
 
 		virtual void Execute() override;
