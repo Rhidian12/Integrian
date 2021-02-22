@@ -9,13 +9,13 @@ namespace Integrian
 	class Command abstract
 	{
 	public:
-		Command();
 		Command(GameObject* actor);
 		virtual ~Command() = default;
 
 		virtual void Execute() = 0;
 		
 	protected:
+		Command();
 		GameObject* m_Actor;
 	};
 }

@@ -1,285 +1,324 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\App">
+    <Filter Include="Engine">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Engine\App">
       <UniqueIdentifier>{bb642079-5c3d-47b8-9e61-d82783af799a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Exceptions">
+    <Filter Include="Engine\Exceptions">
       <UniqueIdentifier>{01d64eb1-7d4d-4787-a5e5-007e12dfd568}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Managers">
+    <Filter Include="Engine\Managers">
       <UniqueIdentifier>{96c973c9-427a-4cbe-ab05-98a20a20910b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Managers\InputManager">
+    <Filter Include="Engine\Managers\InputManager">
       <UniqueIdentifier>{5b19ebdd-bf51-4245-92ec-da2b5a590a21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Math">
-      <UniqueIdentifier>{dfcbf49c-03f8-49dc-8e5f-9ec5ca648bfb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Camera">
-      <UniqueIdentifier>{46380302-f99d-49c9-8e3a-46a06f5db3f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Camera\Ortographic Camera">
-      <UniqueIdentifier>{63e7ca23-b6fa-4f7f-98a6-324c1f26608a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utilities">
-      <UniqueIdentifier>{1bf60374-4386-459c-a1d9-810de5439d62}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Timer">
-      <UniqueIdentifier>{7134e41f-659b-4d08-a020-7ce0d4b144de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Texture">
-      <UniqueIdentifier>{bbea522f-fa4e-44d3-bad2-ba0246cdf7e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Managers\TextureManager">
+    <Filter Include="Engine\Managers\TextureManager">
       <UniqueIdentifier>{f80a89d1-63dc-42d3-a8e5-a4e03f7a8a33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{f665b6c5-199e-4856-855a-74ae8953ed51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\Component">
-      <UniqueIdentifier>{626e0259-9363-4969-9290-11b8b35a4153}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Logger">
-      <UniqueIdentifier>{ce24a8db-96b5-4be2-b4f0-ce2ccce49d0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\TextComponent">
-      <UniqueIdentifier>{feaefe3c-e772-46a8-81d2-2d006b668e05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\TextComponent\Printer">
-      <UniqueIdentifier>{8fb8a57c-17aa-41b1-a1b2-ede8581757d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObject">
-      <UniqueIdentifier>{f0c763d4-5487-4b7d-a2dc-2bd08e0147f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\TransformComponent">
-      <UniqueIdentifier>{060d5f29-adcb-4216-a4de-14539dc72d2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Singleton">
-      <UniqueIdentifier>{6e908afa-26c4-47f3-a0b4-feb256bd994e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Test_App">
-      <UniqueIdentifier>{750c1981-6cc9-4638-a1e6-303b343ad768}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\TextureComponent">
-      <UniqueIdentifier>{ad1c1c1b-c3fc-43c8-a85d-2b4507d45f40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Managers\PrinterManager">
+    <Filter Include="Engine\Managers\PrinterManager">
       <UniqueIdentifier>{62783429-e0b0-45b9-a454-49f8a4e4ebdb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\FPSComponent">
+    <Filter Include="Engine\Math">
+      <UniqueIdentifier>{dfcbf49c-03f8-49dc-8e5f-9ec5ca648bfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Camera">
+      <UniqueIdentifier>{46380302-f99d-49c9-8e3a-46a06f5db3f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Camera\Ortographic Camera">
+      <UniqueIdentifier>{63e7ca23-b6fa-4f7f-98a6-324c1f26608a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utilities">
+      <UniqueIdentifier>{1bf60374-4386-459c-a1d9-810de5439d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Timer">
+      <UniqueIdentifier>{7134e41f-659b-4d08-a020-7ce0d4b144de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Texture">
+      <UniqueIdentifier>{bbea522f-fa4e-44d3-bad2-ba0246cdf7e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components">
+      <UniqueIdentifier>{f665b6c5-199e-4856-855a-74ae8953ed51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components\Component">
+      <UniqueIdentifier>{626e0259-9363-4969-9290-11b8b35a4153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components\TextComponent">
+      <UniqueIdentifier>{feaefe3c-e772-46a8-81d2-2d006b668e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components\TextComponent\Printer">
+      <UniqueIdentifier>{8fb8a57c-17aa-41b1-a1b2-ede8581757d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components\TransformComponent">
+      <UniqueIdentifier>{060d5f29-adcb-4216-a4de-14539dc72d2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components\TextureComponent">
+      <UniqueIdentifier>{ad1c1c1b-c3fc-43c8-a85d-2b4507d45f40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Components\FPSComponent">
       <UniqueIdentifier>{ca95a5fd-9d8f-4535-8169-de93e82d7036}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\ActorComponent">
+    <Filter Include="Engine\Components\ActorComponent">
       <UniqueIdentifier>{a14b7102-0a1f-4457-b612-f3c24ec66b9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\PossibleInputs">
+    <Filter Include="Engine\Logger">
+      <UniqueIdentifier>{ce24a8db-96b5-4be2-b4f0-ce2ccce49d0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject">
+      <UniqueIdentifier>{f0c763d4-5487-4b7d-a2dc-2bd08e0147f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Singleton">
+      <UniqueIdentifier>{6e908afa-26c4-47f3-a0b4-feb256bd994e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\PossibleInputs">
       <UniqueIdentifier>{ce408f37-0268-477d-a252-ea36c43bc673}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Test_App\Commands">
-      <UniqueIdentifier>{12bc12a6-23ce-4fd9-85e0-7aed466818ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Command">
+    <Filter Include="Engine\Command">
       <UniqueIdentifier>{53027966-f14b-4234-82a2-dd483ffa2191}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Test_App\Commands\ResetFPSCommand">
+    <Filter Include="Applications">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Applications\Test_App">
+      <UniqueIdentifier>{750c1981-6cc9-4638-a1e6-303b343ad768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Applications\Test_App\Commands">
+      <UniqueIdentifier>{12bc12a6-23ce-4fd9-85e0-7aed466818ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Applications\Test_App\Commands\ResetFPSCommand">
       <UniqueIdentifier>{70db4155-9b6c-4248-b8df-a0881b136d8f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Managers\CommandManager">
-      <UniqueIdentifier>{7e462b2f-1c2d-4126-9c6f-603973bf39f8}</UniqueIdentifier>
+    <Filter Include="Engine\ImGui">
+      <UniqueIdentifier>{f1afba84-eddb-4304-9f68-b8ae79755c45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Header Files\Managers\InputManager</Filter>
+      <Filter>Engine\Managers\InputManager</Filter>
     </ClCompile>
     <ClCompile Include="App.cpp">
-      <Filter>Header Files\App</Filter>
+      <Filter>Engine\App</Filter>
     </ClCompile>
     <ClCompile Include="OrthographicCamera.cpp">
-      <Filter>Header Files\Camera\Ortographic Camera</Filter>
+      <Filter>Engine\Camera\Ortographic Camera</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
-      <Filter>Header Files\Managers\TextureManager</Filter>
+      <Filter>Engine\Managers\TextureManager</Filter>
     </ClCompile>
     <ClCompile Include="MathFunctions.cpp">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Engine\Math</Filter>
     </ClCompile>
     <ClCompile Include="Utility Functions.cpp">
-      <Filter>Header Files\Utilities</Filter>
+      <Filter>Engine\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>Header Files\Texture</Filter>
+      <Filter>Engine\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Header Files\Timer</Filter>
+      <Filter>Engine\Timer</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>Header Files\Components\Component</Filter>
+      <Filter>Engine\Components\Component</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
-      <Filter>Header Files\Components\TextComponent</Filter>
+      <Filter>Engine\Components\TextComponent</Filter>
     </ClCompile>
     <ClCompile Include="Printer.cpp">
-      <Filter>Header Files\Components\TextComponent\Printer</Filter>
+      <Filter>Engine\Components\TextComponent\Printer</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
-      <Filter>Header Files\Logger</Filter>
+      <Filter>Engine\Logger</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Engine\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
-      <Filter>Header Files\Components\TransformComponent</Filter>
+      <Filter>Engine\Components\TransformComponent</Filter>
     </ClCompile>
     <ClCompile Include="Test_App.cpp">
-      <Filter>Source Files\Test_App</Filter>
+      <Filter>Applications\Test_App</Filter>
     </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
-      <Filter>Header Files\Components\TextureComponent</Filter>
+      <Filter>Engine\Components\TextureComponent</Filter>
     </ClCompile>
     <ClCompile Include="PrinterManager.cpp">
-      <Filter>Header Files\Managers\PrinterManager</Filter>
+      <Filter>Engine\Managers\PrinterManager</Filter>
     </ClCompile>
     <ClCompile Include="FPSComponent.cpp">
-      <Filter>Header Files\Components\FPSComponent</Filter>
+      <Filter>Engine\Components\FPSComponent</Filter>
     </ClCompile>
     <ClCompile Include="Command.cpp">
-      <Filter>Header Files\Command</Filter>
+      <Filter>Engine\Command</Filter>
     </ClCompile>
-    <ClCompile Include="ResetFPSCommand.cpp">
-      <Filter>Source Files\Test_App\Commands\ResetFPSCommand</Filter>
+    <ClCompile Include="TestCommand.cpp">
+      <Filter>Applications\Test_App\Commands\ResetFPSCommand</Filter>
     </ClCompile>
-    <ClCompile Include="CommandManager.cpp">
-      <Filter>Header Files\Managers\CommandManager</Filter>
+    <ClCompile Include="Libraries\imgui-master\imgui.cpp">
+      <Filter>Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imgui-master\imgui_demo.cpp">
+      <Filter>Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imgui-master\imgui_draw.cpp">
+      <Filter>Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imgui-master\imgui_tables.cpp">
+      <Filter>Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imgui-master\imgui_widgets.cpp">
+      <Filter>Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_opengl2.cpp">
+      <Filter>Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_sdl.cpp">
+      <Filter>Engine\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
+      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="App.h">
-      <Filter>Header Files\App</Filter>
+      <Filter>Engine\App</Filter>
     </ClInclude>
     <ClInclude Include="ExceptionHandler.h">
-      <Filter>Header Files\Exceptions</Filter>
+      <Filter>Engine\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="InitialisationFailed.h">
-      <Filter>Header Files\Exceptions</Filter>
+      <Filter>Engine\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Header Files\Managers\InputManager</Filter>
+      <Filter>Engine\Managers\InputManager</Filter>
     </ClInclude>
     <ClInclude Include="CameraInitialisationFailed.h">
-      <Filter>Header Files\Exceptions</Filter>
+      <Filter>Engine\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="MathFunctions.h">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="OrthographicCamera.h">
-      <Filter>Header Files\Camera\Ortographic Camera</Filter>
+      <Filter>Engine\Camera\Ortographic Camera</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="Point2f.h">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="Structs.h">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="TypeDefines.h">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="Vector2f.h">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="Vector.h">
-      <Filter>Header Files\Math</Filter>
+      <Filter>Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="Utility Functions.h">
-      <Filter>Header Files\Utilities</Filter>
+      <Filter>Engine\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>Header Files\Timer</Filter>
+      <Filter>Engine\Timer</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Header Files\Texture</Filter>
+      <Filter>Engine\Texture</Filter>
     </ClInclude>
     <ClInclude Include="RuntimeInitFailed.h">
-      <Filter>Header Files\Exceptions</Filter>
+      <Filter>Engine\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
-      <Filter>Header Files\Managers\TextureManager</Filter>
+      <Filter>Engine\Managers\TextureManager</Filter>
     </ClInclude>
     <ClInclude Include="App_Selector.h">
-      <Filter>Header Files</Filter>
+      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Header Files\Components\Component</Filter>
+      <Filter>Engine\Components\Component</Filter>
     </ClInclude>
     <ClInclude Include="TextComponent.h">
-      <Filter>Header Files\Components\TextComponent</Filter>
+      <Filter>Engine\Components\TextComponent</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
-      <Filter>Header Files\Logger</Filter>
+      <Filter>Engine\Logger</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files\Components\TransformComponent</Filter>
+      <Filter>Engine\Components\TransformComponent</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
-      <Filter>Header Files\Singleton</Filter>
+      <Filter>Engine\Singleton</Filter>
     </ClInclude>
     <ClInclude Include="Test_App.h">
-      <Filter>Source Files\Test_App</Filter>
+      <Filter>Applications\Test_App</Filter>
     </ClInclude>
     <ClInclude Include="TextureComponent.h">
-      <Filter>Header Files\Components\TextureComponent</Filter>
+      <Filter>Engine\Components\TextureComponent</Filter>
     </ClInclude>
     <ClInclude Include="PossibleCharacters.h">
-      <Filter>Header Files\Components\TextComponent\Printer</Filter>
+      <Filter>Engine\Components\TextComponent\Printer</Filter>
     </ClInclude>
     <ClInclude Include="Printer.h">
-      <Filter>Header Files\Components\TextComponent\Printer</Filter>
+      <Filter>Engine\Components\TextComponent\Printer</Filter>
     </ClInclude>
     <ClInclude Include="PrinterManager.h">
-      <Filter>Header Files\Managers\PrinterManager</Filter>
+      <Filter>Engine\Managers\PrinterManager</Filter>
     </ClInclude>
     <ClInclude Include="FPSComponent.h">
-      <Filter>Header Files\Components\FPSComponent</Filter>
+      <Filter>Engine\Components\FPSComponent</Filter>
     </ClInclude>
     <ClInclude Include="PossibleInputs.h">
-      <Filter>Header Files\PossibleInputs</Filter>
+      <Filter>Engine\PossibleInputs</Filter>
     </ClInclude>
     <ClInclude Include="Command.h">
-      <Filter>Header Files\Command</Filter>
+      <Filter>Engine\Command</Filter>
     </ClInclude>
-    <ClInclude Include="ResetFPSCommand.h">
-      <Filter>Source Files\Test_App\Commands\ResetFPSCommand</Filter>
+    <ClInclude Include="TestCommand.h">
+      <Filter>Applications\Test_App\Commands\ResetFPSCommand</Filter>
     </ClInclude>
-    <ClInclude Include="CommandManager.h">
-      <Filter>Header Files\Managers\CommandManager</Filter>
+    <ClInclude Include="Libraries\imgui-master\imconfig.h">
+      <Filter>Engine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui-master\imgui.h">
+      <Filter>Engine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui-master\imgui_internal.h">
+      <Filter>Engine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui-master\imstb_rectpack.h">
+      <Filter>Engine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui-master\imstb_textedit.h">
+      <Filter>Engine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui-master\imstb_truetype.h">
+      <Filter>Engine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_opengl2.h">
+      <Filter>Engine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_sdl.h">
+      <Filter>Engine\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

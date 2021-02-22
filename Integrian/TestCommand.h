@@ -7,11 +7,11 @@
 namespace Integrian
 {
 	class FPSComponent;
-	class ResetFPSCommand final : public Command
+	class TestCommand final : public Command
 	{
 	public:
-		ResetFPSCommand(FPSComponent* pFPSComponent);
-		virtual ~ResetFPSCommand() = default;
+		TestCommand(FPSComponent* pFPSComponent);
+		virtual ~TestCommand() = default;
 
 		virtual void Execute() override;
 

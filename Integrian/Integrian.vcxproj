@@ -62,24 +62,28 @@
     <Import Project="SDLWin32.props" />
     <Import Project="VLDx32.props" />
     <Import Project="C++17.props" />
+    <Import Project="ImGui.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="SDLWin32.props" />
     <Import Project="VLDx32.props" />
     <Import Project="C++17.props" />
+    <Import Project="ImGui.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="SDLx64.props" />
     <Import Project="VLDx64.props" />
     <Import Project="C++17.props" />
+    <Import Project="ImGui.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="SDLx64.props" />
     <Import Project="VLDx64.props" />
     <Import Project="C++17.props" />
+    <Import Project="ImGui.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -157,11 +161,17 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Command.cpp" />
-    <ClCompile Include="CommandManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_sdl.cpp" />
+    <ClCompile Include="Libraries\imgui-master\imgui.cpp" />
+    <ClCompile Include="Libraries\imgui-master\imgui_demo.cpp" />
+    <ClCompile Include="Libraries\imgui-master\imgui_draw.cpp" />
+    <ClCompile Include="Libraries\imgui-master\imgui_tables.cpp" />
+    <ClCompile Include="Libraries\imgui-master\imgui_widgets.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
@@ -169,7 +179,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Printer.cpp" />
     <ClCompile Include="PrinterManager.cpp" />
-    <ClCompile Include="ResetFPSCommand.cpp" />
+    <ClCompile Include="TestCommand.cpp" />
     <ClCompile Include="Test_App.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -184,13 +194,20 @@
     <ClInclude Include="App_Selector.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />
     <ClInclude Include="Command.h" />
-    <ClInclude Include="CommandManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ExceptionHandler.h" />
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InitialisationFailed.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_opengl2.h" />
+    <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_sdl.h" />
+    <ClInclude Include="Libraries\imgui-master\imconfig.h" />
+    <ClInclude Include="Libraries\imgui-master\imgui.h" />
+    <ClInclude Include="Libraries\imgui-master\imgui_internal.h" />
+    <ClInclude Include="Libraries\imgui-master\imstb_rectpack.h" />
+    <ClInclude Include="Libraries\imgui-master\imstb_textedit.h" />
+    <ClInclude Include="Libraries\imgui-master\imstb_truetype.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MathFunctions.h" />
     <ClInclude Include="OrthographicCamera.h" />
@@ -201,7 +218,7 @@
     <ClInclude Include="PossibleInputs.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="PrinterManager.h" />
-    <ClInclude Include="ResetFPSCommand.h" />
+    <ClInclude Include="TestCommand.h" />
     <ClInclude Include="RuntimeInitFailed.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Structs.h" />

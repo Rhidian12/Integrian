@@ -8,8 +8,8 @@
 
 #include <unordered_map>
 #include <vector>
-#include <functional>
 #include <iostream>
+#include <array>
 
 #include "Command.h"
 #include "Timer.h"
@@ -18,13 +18,13 @@
 
 // Henri-Thibault Huyghe came up with the idea of a superclass game input enum class
 // and subclassed inputs for mouse and keyboard
-// Rhidian De Wit made the implementation regarding the enum classes being stored in a union
+// Rhidian De Wit made the implementation regarding the enum classes being stored in a struct
 // We will most likely still have a different implementation, but it was worth mentioning, before either of us
 // get seen as having plagiarized eachother's code
 
 namespace Integrian
 {
-	union GameInput
+	struct GameInput final
 	{
 		explicit GameInput(const ControllerInput controllerInput)
 			: controllerInput{ controllerInput }
@@ -39,17 +39,17 @@ namespace Integrian
 		{
 		}
 
-		ControllerInput controllerInput;
-		KeyboardInput keyboardInput;
-		MouseButton mouseButton;
+		ControllerInput controllerInput{ ControllerInput::INVALID };
+		KeyboardInput keyboardInput{ KeyboardInput::INVALID };
+		MouseButton mouseButton{ MouseButton::INVALID };
 
-		uint32_t id{ GetRandomNumber(uint32_t(0), std::numeric_limits<uint32_t>::max()) };
+		uint64_t id{ GetRandomNumber(uint64_t(0), std::numeric_limits<uint64_t>::max()) };
 	};
 
 	enum class State
 	{
 		OnHeld = 0,
-		OnPress = 1 // Press and Release are the same
+		OnRelease = 1 // Press and Release are the same
 	};
 
 	class Command;
@@ -58,12 +58,15 @@ namespace Integrian
 	public:
 		virtual ~InputManager();
 
-		void AddCommand(const GameInput gameInput, Command* pCommand, const State keyState);
+		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState);
 
 		void HandleInput();
 
 		void SetWindowSize(const uint32_t width, const uint32_t height);
 
+		[[nodiscard]] bool IsKeyboardKeyPressed(const KeyboardInput gameInput) const;
+		[[nodiscard]] bool IsMouseButtonPressed(const MouseButton gameInput) const;
+		[[nodiscard]] bool IsControllerButtonPressed(const ControllerInput gameInput, const uint32_t index) const;
 		[[nodiscard]] const Point2f& GetMousePosition() const;
 
 	private:
@@ -77,7 +80,7 @@ namespace Integrian
 				, keyState{ keyState }
 			{
 			}
-			
+
 			Command* pCommand;
 			State keyState;
 		};
@@ -97,20 +100,16 @@ namespace Integrian
 			}
 		};
 
-		//std::unordered_map<Uint8, std::vector<Command*>>	m_KeyDownKeybindCommands;
-		//std::unordered_map<Uint8, std::vector<Command*>>	m_KeyUpKeybindCommands;
-		//std::unordered_map<MouseButton, std::vector<Command*>>	m_MouseDownMouseCommands;
-		//std::unordered_map<MouseButton, std::vector<Command*>>	m_MouseUpMouseCommands;
-
 		std::unordered_map<GameInput, std::vector<CommandAndButton>, GameInputKey, GameInputComparer> m_pCommands{};
+		using InputCommandPair = std::pair<GameInput, std::vector<CommandAndButton>>;
 
 		Point2f m_MousePosition;
 		uint32_t m_WindowWidth;
 		uint32_t m_WindowHeight;
+		uint32_t m_AmountOfControllers;
+		inline static constexpr uint16_t m_MaxAmountOfControllers{ 4 };
 
-		//using KeybindFunctionWrapperPair = std::pair<Uint8, std::vector<Command*>>;
-		//using MouseFunctionWrapperPair = std::pair<MouseButton, std::vector<Command*>>;
-		using InputCommandPair = std::pair<GameInput, std::vector<CommandAndButton>>;
+		std::array<SDL_GameController*, m_MaxAmountOfControllers> m_pControllers;
 	};
 }
 

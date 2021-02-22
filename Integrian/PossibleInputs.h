@@ -112,17 +112,18 @@ namespace Integrian
 		// 0000 0001 << ((1) - 1) ===> 0000 0001 << (0) ===> 0000 0001		// SDL_BUTTON(SDL_BUTTON_LEFT) == 1
 		// 0000 0001 << ((2) - 1) ===> 0000 0001 << (1) ===> 0000 0010		// SDL_BUTTON(SDL_BUTTON_MIDDLE) == 2
 		// 0000 0001 << ((3) - 1) ===> 0000 0001 << (2) ===> 0000 0100		// SDL_BUTTON(SDL_BUTTON_RIGHT) == 4
-		
+		INVALID		= std::numeric_limits<Uint8>::max(), // internal usage
 		LMB			= SDL_BUTTON(SDL_BUTTON_LEFT), // 0x0001 
 		MMB			= SDL_BUTTON(SDL_BUTTON_MIDDLE), // 0x0002
 		RMB			= SDL_BUTTON(SDL_BUTTON_RIGHT), // 0x0004
-		LMBAndMMB	= SDL_BUTTON(SDL_BUTTON_LEFT) | SDL_BUTTON(SDL_BUTTON_MIDDLE), // 0x0003
-		LMBAndRMB	= SDL_BUTTON(SDL_BUTTON_LEFT) | SDL_BUTTON(SDL_BUTTON_RIGHT), // 0x0005
-		RMBandMMB	= SDL_BUTTON(SDL_BUTTON_RIGHT) | SDL_BUTTON(SDL_BUTTON_MIDDLE), // 0x0006
+		LMBAndMMB	= SDL_BUTTON(SDL_BUTTON_LEFT)	| SDL_BUTTON(SDL_BUTTON_MIDDLE), // 0x0003
+		LMBAndRMB	= SDL_BUTTON(SDL_BUTTON_LEFT)	| SDL_BUTTON(SDL_BUTTON_RIGHT), // 0x0005
+		RMBandMMB	= SDL_BUTTON(SDL_BUTTON_RIGHT)	| SDL_BUTTON(SDL_BUTTON_MIDDLE), // 0x0006
 	};
 
 	enum class KeyboardInput : Uint8
 	{
+		INVALID				= std::numeric_limits<Uint8>::max(), // internal usage
 		A					= SDL_SCANCODE_A,
 		B					= SDL_SCANCODE_B,
 		C					= SDL_SCANCODE_C,
@@ -203,6 +204,7 @@ namespace Integrian
 
 	enum class ControllerInput : Uint8
 	{
+		INVALID				= std::numeric_limits<Uint8>::max(), // internal usage
 		ButtonA				= SDL_CONTROLLER_BUTTON_A,
 		ButtonB				= SDL_CONTROLLER_BUTTON_B,
 		ButtonX				= SDL_CONTROLLER_BUTTON_X,

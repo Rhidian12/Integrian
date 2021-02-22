@@ -27,7 +27,10 @@ namespace Integrian
 	template<typename Type>
 	Type GetRandomNumber(const Type min, const Type max)
 	{
-		return static_cast<Type>(rand() % (int(max) - int(min) + 1) + int(min));
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		const std::uniform_int_distribution<Type> dis(min, max);
+		return dis(gen);
 	}
 	template<>
 	inline float GetRandomNumber<float>(const float min, const float max)

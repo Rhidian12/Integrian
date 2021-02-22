@@ -16,8 +16,13 @@ Integrian::App::App()
 
 Integrian::App::~App()
 {
-	for (std::pair<std::string, GameObject*> pair : m_pGameObjects)
-		SAFE_DELETE(pair.second);
+	for (GameObject* pGameObject : m_pGameObjects)
+		SAFE_DELETE(pGameObject);
+	m_pGameObjects.clear();
+
+	for (Command* pCommand : m_pCommands)
+		SAFE_DELETE(pCommand);
+	m_pCommands.clear();
 	
 	ShutDown();
 }
@@ -31,7 +36,7 @@ bool Integrian::App::Initialize()
 
 #pragma region SDL Stuff
 	//Create window + surfaces
-	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
 
 	m_pWindow = SDL_CreateWindow(
 		"Programming 4 Assignment - Rhidian De Wit",
@@ -87,6 +92,13 @@ bool Integrian::App::Initialize()
 		logger.Log(SDL_GetError(), ErrorLevel::severeError);
 #pragma endregion
 
+#pragma region ImGui
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui_ImplSDL2_InitForOpenGL(m_pWindow, SDL_GL_GetCurrentContext());
+	ImGui_ImplOpenGL2_Init();
+#pragma endregion
+
 	// == Set Window Size For InputManager ==
 	InputManager::GetInstance().SetWindowSize(width, height);
 
@@ -123,6 +135,10 @@ void Integrian::App::FinishInitializationOfApp()
 
 void Integrian::App::ShutDown()
 {
+	ImGui_ImplOpenGL2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
 	SDL_DestroyWindow(m_pWindow);
 	SDL_Quit();
 }
@@ -165,12 +181,19 @@ void Integrian::App::TransformCameraAndRender() const
 	ClearBackground();
 	// == YOU CAN CHANGE THE TYPE OF THE CAMERA ==
 	// == DO NOT CHANGE THE IMPLENTATION OF THIS FUNCTION UNLESS YOU EXPLICITLY WANT TO CHANGE HOW THE CAMERA WORKS ==
+	ImGui_ImplOpenGL2_NewFrame();
+	ImGui_ImplSDL2_NewFrame(m_pWindow);
+	ImGui::NewFrame();
+
 	glPushMatrix();
 	{
 		m_pCamera->Transform(m_Target);
 		Render();
 	}
 	glPopMatrix();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 	// == Swap back- and frontbuffer ==
 	SDL_GL_SwapWindow(m_pWindow);
