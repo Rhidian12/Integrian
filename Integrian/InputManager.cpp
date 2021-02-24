@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "InputManager.h"
-#include <optional>
+#include <algorithm>
+#include "GameController.h"
+#include "Keyboard.h"
+#include "Mouse.h"
 
 extern bool g_IsLooping;
 
@@ -8,53 +11,51 @@ Integrian::InputManager::InputManager()
 	: m_MousePosition{}
 	, m_WindowWidth{}
 	, m_WindowHeight{}
-	, m_AmountOfControllers{ uint32_t(SDL_NumJoysticks()) }
+	, m_AmountOfControllers{ uint8_t(SDL_NumJoysticks()) }
 	, m_pControllers{}
 {
-	for(uint32_t i{}; i < m_AmountOfControllers; ++i)
-	{
-		if (SDL_IsGameController(i))
-		{
-			m_pControllers[i] = SDL_GameControllerOpen(i);
+	for (uint32_t i{}; i < m_MaxAmountOfControllers; ++i)
+		m_pControllers[i] = new GameController{ uint8_t(i) };
 
-			if (!m_pControllers[i])
-			{
-				Logger::GetInstance().Log("Error in controllers: ", ErrorLevel::error);
-				Logger::GetInstance().Log(SDL_GetError(), ErrorLevel::error);
-			}
-		}
-	}
+	m_pKeyboard = new Keyboard{};
+
+	m_pMouse = new Mouse{};
 }
-
 
 Integrian::InputManager::~InputManager()
 {
-	m_pCommands.clear();
-	// Below code SHOULD work, but does not work. Throws read access violations, even though this is the exact
-	// way SDL defines this
-	// TODO: figure out why this is happening
-	/*for (SDL_GameController* pController : m_pControllers) 
-		if (pController)
-		{
-			SDL_GameControllerClose(pController);
-			pController = nullptr;
-		}*/
+	for (GameController* pGameController : m_pControllers)
+		SAFE_DELETE(pGameController);
+
+	SAFE_DELETE(m_pKeyboard);
+
+	SAFE_DELETE(m_pMouse);
 }
 
-void Integrian::InputManager::AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState)
+void Integrian::InputManager::AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex)
 {
-	m_pCommands[gameInput].push_back(CommandAndButton{ pCommand,keyState });
+	if (gameInput.controllerInput != ControllerInput::INVALID)
+		m_pControllers[controllerIndex]->AddCommand(gameInput.controllerInput, keyState, pCommand);
+
+	else if (gameInput.mouseButton != MouseButton::INVALID)
+		m_pMouse->AddCommand(gameInput.mouseButton, keyState, pCommand);
+
+	else /*if (gameInput.keyboardInput != KeyboardInput::INVALID)*/
+		m_pKeyboard->AddCommand(gameInput.keyboardInput, keyState, pCommand);
 }
 
 void Integrian::InputManager::HandleInput()
 {
 	// http://scottmeyers.blogspot.com/2015/09/should-you-be-using-something-instead.html
 	// Searching linearly through an unsorted vector is faster than a map / unordered map
-	
+
 	int x{}, y{};
 	const Uint32 mouseState = SDL_GetMouseState(&x, &y);
 
 	m_MousePosition = Point2f{ float(x),float(m_WindowHeight - y) };
+
+	// does not actually work surprisingly enough
+	//m_AmountOfControllers = uint8_t(SDL_NumJoysticks()); // check if controllers have been added / removed
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e) > 0)
@@ -65,54 +66,30 @@ void Integrian::InputManager::HandleInput()
 			g_IsLooping = false;
 			break;
 		case SDL_KEYUP:
-			for (const InputCommandPair& inputCommandPair : m_pCommands)
-				for (const CommandAndButton& commandAndButton : inputCommandPair.second)
-					if (commandAndButton.keyState == State::OnRelease)
-						if (inputCommandPair.first.keyboardInput != KeyboardInput::INVALID && static_cast<SDL_Scancode>(inputCommandPair.first.keyboardInput) == e.key.keysym.scancode)
-							commandAndButton.pCommand->Execute();
+			m_pKeyboard->ExecuteCommands(State::OnRelease, e.key.keysym.scancode);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			for (const InputCommandPair& inputCommandPair : m_pCommands)
-				for (const CommandAndButton& commandAndButton : inputCommandPair.second)
-					if (commandAndButton.keyState == State::OnHeld)
-						if (inputCommandPair.first.mouseButton != MouseButton::INVALID && static_cast<std::underlying_type<MouseButton>::type>(inputCommandPair.first.mouseButton) & mouseState)
-							commandAndButton.pCommand->Execute();
+			m_pMouse->ExecuteCommands(mouseState, State::OnHeld);
 			break;
 		case SDL_MOUSEBUTTONUP:
-			for (const InputCommandPair& inputCommandPair : m_pCommands)
-				for (const CommandAndButton& commandAndButton : inputCommandPair.second)
-					if (commandAndButton.keyState == State::OnRelease)
-						if (inputCommandPair.first.mouseButton != MouseButton::INVALID && static_cast<std::underlying_type<MouseButton>::type>(inputCommandPair.first.mouseButton) & mouseState)
-							commandAndButton.pCommand->Execute();
+			m_pMouse->ExecuteCommands(mouseState, State::OnRelease);
 			break;
 		case SDL_JOYBUTTONUP:
-			for(SDL_GameController* pController : m_pControllers)
-				for (const InputCommandPair& inputCommandPair : m_pCommands)
-					for (const CommandAndButton& commandAndButton : inputCommandPair.second)
-						if (commandAndButton.keyState == State::OnRelease)
-							if (inputCommandPair.first.controllerInput != ControllerInput::INVALID && SDL_GameControllerGetButton(pController, static_cast<SDL_GameControllerButton>(inputCommandPair.first.controllerInput)))
-								commandAndButton.pCommand->Execute();
+			for (uint32_t i{}; i < m_AmountOfControllers; ++i)
+				m_pControllers[i]->ExecuteCommands(State::OnRelease);
 			break;
 		default:
 			break;
 		}
 	}
 
-	const Uint8* const pStates = SDL_GetKeyboardState(nullptr);
+	m_pKeyboard->ExecuteCommands(SDL_GetKeyboardState(nullptr), State::OnHeld); // SDL_KEYDOWN
 
-	for (const InputCommandPair& inputCommandPair : m_pCommands)
-		for (const CommandAndButton& commandAndButton : inputCommandPair.second)
-			if (commandAndButton.keyState == State::OnHeld)
-				if (inputCommandPair.first.keyboardInput != KeyboardInput::INVALID && pStates[static_cast<SDL_Scancode>(inputCommandPair.first.keyboardInput)])
-					commandAndButton.pCommand->Execute();
+	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
+		m_pControllers[i]->ExecuteTriggers();
 
-
-	for (SDL_GameController* pController : m_pControllers)
-		for (const InputCommandPair& inputCommandPair : m_pCommands)
-			for (const CommandAndButton& commandAndButton : inputCommandPair.second)
-				if (commandAndButton.keyState == State::OnHeld)
-					if (inputCommandPair.first.controllerInput != ControllerInput::INVALID && SDL_GameControllerGetButton(pController, static_cast<SDL_GameControllerButton>(inputCommandPair.first.controllerInput)))
-						commandAndButton.pCommand->Execute();
+	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
+		m_pControllers[i]->ExecuteCommands(State::OnHeld);
 }
 
 void Integrian::InputManager::SetWindowSize(const uint32_t width, const uint32_t height)
@@ -123,15 +100,15 @@ void Integrian::InputManager::SetWindowSize(const uint32_t width, const uint32_t
 
 bool Integrian::InputManager::IsKeyboardKeyPressed(const KeyboardInput gameInput) const
 {
-	return SDL_GetKeyboardState(nullptr)[static_cast<SDL_Scancode>(gameInput)];
+	return m_pKeyboard->IsKeyboardKeyPressed(gameInput);
 }
 bool Integrian::InputManager::IsMouseButtonPressed(const MouseButton gameInput) const
 {
-	return static_cast<std::underlying_type<MouseButton>::type>(gameInput) & SDL_GetMouseState(NULL, NULL);
+	return m_pMouse->IsMouseButtonPressed(gameInput);
 }
-bool Integrian::InputManager::IsControllerButtonPressed(const ControllerInput gameInput, const uint32_t index) const
+bool Integrian::InputManager::IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex) const
 {
-	return SDL_GameControllerGetButton(m_pControllers[index], static_cast<SDL_GameControllerButton>(gameInput));
+	return m_pControllers[playerIndex]->IsControllerButtonPressed(gameInput);
 }
 
 const Integrian::Point2f& Integrian::InputManager::GetMousePosition() const

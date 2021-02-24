@@ -30,7 +30,6 @@
 // 14 = very light yellow
 // 15 = intense white
 
-// ReSharper disable once CppMemberFunctionMayBeStatic
 void Integrian::Logger::Log(const std::string& message, const ErrorLevel level) const
 {
 	const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

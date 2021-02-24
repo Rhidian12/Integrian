@@ -27,13 +27,16 @@ void Integrian::Test_App::Start()
 
 	pGameObject = new GameObject{};
 	pGameObject->AddComponent(new TextComponent{ "FPS: ",10,RGBColour{0.f,255.f,0.f} });
-	pGameObject->AddComponent(new FPSComponent{ static_cast<TextComponent*>(pGameObject->GetComponentByType<TextComponent>()) });
+	pGameObject->AddComponent(new FPSComponent{ pGameObject->GetComponentByType<TextComponent>() });
 	pGameObject->transform = Point2f{ 10.f,float(m_WindowHeight) - 30.f };
 
 	Command* pCommand = new TestCommand{ pGameObject->GetComponentByType<FPSComponent>() };
 	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::A }, pCommand, State::OnRelease);
-	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::ButtonA }, pCommand, State::OnHeld);
+	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::Z }, pCommand, State::OnHeld);
 	InputManager::GetInstance().AddCommand(GameInput{ MouseButton::LMB }, pCommand, State::OnRelease);
+	//InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::ButtonA }, pCommand, State::OnHeld);
+	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::RightTrigger }, pCommand, State::OnRelease);
+	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::LeftTrigger }, pCommand, State::OnHeld);
 	m_pCommands.push_back(std::move(pCommand));
 
 	m_pGameObjects.push_back(std::move(pGameObject));

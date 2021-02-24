@@ -163,8 +163,10 @@
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_opengl2.cpp" />
     <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_sdl.cpp" />
     <ClCompile Include="Libraries\imgui-master\imgui.cpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Printer.cpp" />
@@ -197,9 +200,12 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ExceptionHandler.h" />
     <ClInclude Include="FPSComponent.h" />
+    <ClInclude Include="GameController.h" />
+    <ClInclude Include="GameInput.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InitialisationFailed.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_opengl2.h" />
     <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_sdl.h" />
     <ClInclude Include="Libraries\imgui-master\imconfig.h" />
@@ -210,6 +216,7 @@
     <ClInclude Include="Libraries\imgui-master\imstb_truetype.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MathFunctions.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Point.h" />

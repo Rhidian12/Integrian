@@ -100,6 +100,18 @@
     <Filter Include="Engine\ImGui">
       <UniqueIdentifier>{f1afba84-eddb-4304-9f68-b8ae79755c45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameController">
+      <UniqueIdentifier>{986a990f-de91-4311-9196-7ce84168a7ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameInput">
+      <UniqueIdentifier>{fb7edb13-6810-4170-a0bf-4a3003aaf1a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\KeyboardInput">
+      <UniqueIdentifier>{2e04a266-46a7-4b85-8f5f-45c791b403d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Mouse">
+      <UniqueIdentifier>{dc34fe7a-86f8-47e3-a0b0-30c8ef9590f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -188,6 +200,15 @@
     </ClCompile>
     <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_sdl.cpp">
       <Filter>Engine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameController.cpp">
+      <Filter>Engine\GameController</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Engine\KeyboardInput</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Engine\Mouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +340,18 @@
     </ClInclude>
     <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_sdl.h">
       <Filter>Engine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController.h">
+      <Filter>Engine\GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInput.h">
+      <Filter>Engine\GameInput</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Engine\KeyboardInput</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Engine\Mouse</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

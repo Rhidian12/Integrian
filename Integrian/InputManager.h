@@ -14,6 +14,7 @@
 #include "Command.h"
 #include "Timer.h"
 #include "PossibleInputs.h"
+#include "GameInput.h"
 // Reference: https://stackoverflow.com/questions/25963966/c-function-pointer-callback-without-inheritance
 
 // Henri-Thibault Huyghe came up with the idea of a superclass game input enum class
@@ -24,41 +25,16 @@
 
 namespace Integrian
 {
-	struct GameInput final
-	{
-		explicit GameInput(const ControllerInput controllerInput)
-			: controllerInput{ controllerInput }
-		{
-		}
-		explicit GameInput(const KeyboardInput keyboardInput)
-			: keyboardInput{ keyboardInput }
-		{
-		}
-		explicit GameInput(const MouseButton mouseButton)
-			: mouseButton{ mouseButton }
-		{
-		}
-
-		ControllerInput controllerInput{ ControllerInput::INVALID };
-		KeyboardInput keyboardInput{ KeyboardInput::INVALID };
-		MouseButton mouseButton{ MouseButton::INVALID };
-
-		uint64_t id{ GetRandomNumber(uint64_t(0), std::numeric_limits<uint64_t>::max()) };
-	};
-
-	enum class State
-	{
-		OnHeld = 0,
-		OnRelease = 1 // Press and Release are the same
-	};
-
 	class Command;
+	class GameController;
+	class Keyboard;
+	class Mouse;
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
 		virtual ~InputManager();
 
-		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState);
+		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex = 0);
 
 		void HandleInput();
 
@@ -66,50 +42,22 @@ namespace Integrian
 
 		[[nodiscard]] bool IsKeyboardKeyPressed(const KeyboardInput gameInput) const;
 		[[nodiscard]] bool IsMouseButtonPressed(const MouseButton gameInput) const;
-		[[nodiscard]] bool IsControllerButtonPressed(const ControllerInput gameInput, const uint32_t index) const;
+		[[nodiscard]] bool IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex = 0) const;
 		[[nodiscard]] const Point2f& GetMousePosition() const;
 
 	private:
 		InputManager();
 		friend class Singleton<InputManager>;
 
-		struct CommandAndButton final
-		{
-			CommandAndButton(Command* pCommand, const State keyState)
-				: pCommand{ pCommand }
-				, keyState{ keyState }
-			{
-			}
-
-			Command* pCommand;
-			State keyState;
-		};
-
-		struct GameInputKey final
-		{
-			size_t operator()(const GameInput input) const
-			{
-				return input.id;
-			}
-		};
-		struct GameInputComparer final
-		{
-			bool operator()(const GameInput a, const GameInput b) const
-			{
-				return a.id == b.id;
-			}
-		};
-
-		std::unordered_map<GameInput, std::vector<CommandAndButton>, GameInputKey, GameInputComparer> m_pCommands{};
-		using InputCommandPair = std::pair<GameInput, std::vector<CommandAndButton>>;
-
 		Point2f m_MousePosition;
 		uint32_t m_WindowWidth;
 		uint32_t m_WindowHeight;
-		uint32_t m_AmountOfControllers;
-		inline static constexpr uint16_t m_MaxAmountOfControllers{ 4 };
+		uint8_t m_AmountOfControllers;
+		inline static constexpr uint8_t m_MaxAmountOfControllers{ 4 };
 
-		std::array<SDL_GameController*, m_MaxAmountOfControllers> m_pControllers;
+		std::array<GameController*, m_MaxAmountOfControllers> m_pControllers;
+		Keyboard* m_pKeyboard;
+		Mouse* m_pMouse;
 	};
 }
 

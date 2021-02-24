@@ -8,11 +8,17 @@
 // !!!!!!!!!!!!!!!!!!!
 // !!!!!!!!!!!!!!!!!!!
 // !!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!
 // Do NOT auto-reformat this file
 // Rhidian
 // Don't
 // I swear to god I'll kill you
 // ~ Rhidian
+// !!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!
 // !!!!!!!!!!!!!!!!!!!
 // !!!!!!!!!!!!!!!!!!!
 // !!!!!!!!!!!!!!!!!!!
@@ -220,7 +226,7 @@ namespace Integrian
 		DPAD_Left			= SDL_CONTROLLER_BUTTON_DPAD_LEFT,
 		DPAD_Right			= SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
 		LeftTrigger, // There are no SDL_Scancodes for this
-		RightTrigger 
+		RightTrigger // There are no SDL_Scancodes for this
 	};
 }
 

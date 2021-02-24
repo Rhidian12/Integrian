@@ -160,7 +160,6 @@ void Integrian::App::Run()
 	{
 		// == Update Timer ==
 		timer.Update();
-		const float dt{ timer.GetElapsedSeconds() };
 
 		// == Handle Input ==
 		InputManager::GetInstance().HandleInput();
@@ -172,7 +171,7 @@ void Integrian::App::Run()
 		TransformCameraAndRender();
 
 		// == Update The Timer For The Fixed Update ==
-		timeSinceLastUpdate += dt;
+		timeSinceLastUpdate += timer.GetElapsedSeconds();
 	}
 }
 
@@ -209,9 +208,11 @@ void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
 		timeSinceLastUpdate -= timer.GetTimePerFrame();
 	}
 	
-	Update(timer.GetElapsedSeconds());
+	const float dt{ timer.GetElapsedSeconds() };
 
-	LateUpdate(timer.GetElapsedSeconds());
+	Update(dt);
+
+	LateUpdate(dt);
 
 	// == THE UPDATE NEEDS m_Target TO BE SET AT THE END FOR THE CAMERA POSITIONING ==
 	m_Target = GetTarget();
