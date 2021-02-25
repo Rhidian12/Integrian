@@ -25,6 +25,11 @@
 #include <SDL_video.h>
 #include <GL\GLU.h>
 
+// ImGui
+#include "imgui.h"
+#include "backends/imgui_impl_opengl2.h"
+#include "backends/imgui_impl_sdl.h"
+
 #include "TypeDefines.h"
 #include "Structs.h"
 #include "MathFunctions.h"

@@ -5,9 +5,7 @@
 #include "pch.h"
 #include <memory>
 #include "GameObject.h"
-#include "imgui.h"
-#include "backends/imgui_impl_opengl2.h"
-#include "backends/imgui_impl_sdl.h"
+
 
 namespace Integrian
 {
