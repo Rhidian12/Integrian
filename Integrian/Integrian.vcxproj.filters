@@ -124,6 +124,9 @@
     <Filter Include="Applications\HealthComponent">
       <UniqueIdentifier>{6684b9eb-1a55-439c-9020-7459598c25d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Components\InputComponent">
+      <UniqueIdentifier>{18acb3b5-f53c-4161-b08e-ef9b32c01b68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -230,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Applications\HealthComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="InputComponent.cpp">
+      <Filter>Engine\Components\InputComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Applications\HealthComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="InputComponent.h">
+      <Filter>Engine\Components\InputComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
