@@ -20,6 +20,7 @@ namespace Integrian
 		virtual void Render(const Point2f& pos) const override;
 
 		void SetTextToRender(const std::string& string);
+		const std::string& GetTextToRender() const;
 
 		[[nodiscard]] float GetWidth() const;
 		[[nodiscard]] float GetHeight() const;
