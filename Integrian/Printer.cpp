@@ -4,25 +4,19 @@
 #include "TextureManager.h"
 #include "PossibleCharacters.h"
 
-Integrian::Printer::Printer(Texture* pFont, const std::string& textToRender)
+Integrian::Printer::Printer(Texture* pFont)
 	: m_pFont(pFont)
 	, m_CharWidth{ (m_pFont->GetWidth() / PossibleCharacters::sizeOfPossibleChars) }
-	, m_TextToRender{ textToRender }
 {
 }
 
-void Integrian::Printer::Render(const Point2f& leftBottom) const
+void Integrian::Printer::Render(const Point2f& leftBottom, const std::string& textToRender) const
 {
-	for (size_t i{}; i < m_TextToRender.size(); ++i)
+	for (size_t i{}; i < textToRender.size(); ++i)
 	{
 		const Rectf destRect{ leftBottom.x + m_CharWidth * i,leftBottom.y,m_CharWidth,m_pFont->GetHeight() };
-		m_pFont->Draw(destRect, GetSourceRect(m_TextToRender[i]));
+		m_pFont->Draw(destRect, GetSourceRect(textToRender[i]));
 	}
-}
-
-void Integrian::Printer::SetTextToRender(const std::string& string)
-{
-	m_TextToRender = string;
 }
 
 Integrian::Texture* Integrian::Printer::GetTexture() const

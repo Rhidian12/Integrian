@@ -11,21 +11,18 @@ namespace Integrian
 	class Printer final
 	{
 	public:
-		void Render(const Point2f& leftBottom) const;
-
-		void SetTextToRender(const std::string& string);
+		void Render(const Point2f& leftBottom, const std::string& textToRender) const;
 
 		[[nodiscard]] Texture* GetTexture() const;
 
 	private:
 		friend class PrinterManager;
-		Printer(Texture* pFont, const std::string& textToRender);
+		Printer(Texture* pFont);
 		~Printer() = default;
 		[[nodiscard]] Rectf GetSourceRect(const char c) const;
 
 		Texture* m_pFont;
 		const float m_CharWidth;
-		std::string m_TextToRender;
 	};
 }
 

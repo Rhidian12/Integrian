@@ -11,14 +11,14 @@ Integrian::PrinterManager::~PrinterManager()
 		SAFE_DELETE(pPrinter);
 }
 
-Integrian::Printer* Integrian::PrinterManager::AddPrinter(const std::string& textToRender, const int size, const RGBColour& colour)
+Integrian::Printer* Integrian::PrinterManager::AddPrinter(const int size, const RGBColour& colour)
 {
 	const std::string name{ m_FilePath + std::to_string(size) + colour.ToString() };
 	const std::unordered_map<std::string, Texture*>::const_iterator hasPrinterBeenMade =  TextureManager::GetInstance().GetTextures().find(name);
 	if (hasPrinterBeenMade == TextureManager::GetInstance().GetTextures().cend())
 	{
 		TextureManager::GetInstance().AddTexture(name, m_FilePath, PossibleCharacters::possibleChars, size, colour);
-		Printer* pPrinter{ new Printer{TextureManager::GetInstance().GetTextures().find(name)->second, textToRender} };
+		Printer* pPrinter{ new Printer{TextureManager::GetInstance().GetTextures().find(name)->second} };
 		m_pPrinters.push_back(pPrinter);
 		return pPrinter;
 	}

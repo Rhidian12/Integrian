@@ -40,7 +40,7 @@ void Integrian::Test_App::Start()
 
 	pGameObject = new GameObject{};
 
-	TextComponent* pText{ new TextComponent{10, RGBColour{255.f,0.f,0.f}} };
+	TextComponent* pText{ new TextComponent{30, RGBColour{255.f,0.f,0.f}} };
 	HealthComponent* pHealth{ new HealthComponent{3,3,pText} };
 	ActorComponent* pActor{ new ActorComponent{} };
 	KillCommand* pKillCommand{ new KillCommand{pActor} };

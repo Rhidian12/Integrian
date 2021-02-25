@@ -13,7 +13,7 @@ namespace Integrian
 	public:
 		virtual ~PrinterManager();
 
-		Printer* AddPrinter(const std::string& textToRender, const int size, const RGBColour& colour);
+		Printer* AddPrinter(const int size, const RGBColour& colour);
 
 	private:
 		PrinterManager() = default;
