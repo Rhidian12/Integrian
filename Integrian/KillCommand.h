@@ -7,6 +7,7 @@
 namespace Integrian
 {
 	class ActorComponent;
+	class TextComponent;
 	class KillCommand final : public Command
 	{
 	public:

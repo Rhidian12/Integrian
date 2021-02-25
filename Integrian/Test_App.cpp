@@ -40,12 +40,19 @@ void Integrian::Test_App::Start()
 
 	pGameObject = new GameObject{};
 
-	HealthComponent* pHealth{ new HealthComponent{3} };
+	TextComponent* pText{ new TextComponent{10, RGBColour{255.f,0.f,0.f}} };
+	HealthComponent* pHealth{ new HealthComponent{3,3,pText} };
 	ActorComponent* pActor{ new ActorComponent{} };
 	KillCommand* pKillCommand{ new KillCommand{pActor} };
-	pActor->AddCommand(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
+	pActor->AddObserver(pHealth->GetObserver());
+	pActor->AddCommand(GameInput{ KeyboardInput::A }, pKillCommand, State::OnRelease);
 	pGameObject->AddComponent(std::move(pActor));
 	pGameObject->AddComponent(std::move(pHealth));
+	pGameObject->AddComponent(std::move(pText));
+	pGameObject->transform = Point2f{ 150.f,150.f };
+
+	m_pGameObjects.push_back(std::move(pGameObject));
+	m_pCommands.push_back(std::move(pKillCommand));
 }
 
 void Integrian::Test_App::Update(const float dt)

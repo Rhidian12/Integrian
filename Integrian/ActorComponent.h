@@ -18,7 +18,7 @@ namespace Integrian
 		virtual ~ActorComponent() = default;
 
 		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex = 0);
-		void AddObserver(std::weak_ptr<Observer> pObserver);
+		void AddObserver(Observer* pObserver);
 		void Invoke(const std::string& event);
 
 	private:

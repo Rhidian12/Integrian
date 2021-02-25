@@ -12,7 +12,7 @@ void Integrian::ActorComponent::AddCommand(const GameInput& gameInput, Command* 
 	InputManager::GetInstance().AddCommand(gameInput, pCommand, keyState, controllerIndex);
 }
 
-void Integrian::ActorComponent::AddObserver(std::weak_ptr<Observer> pObserver)
+void Integrian::ActorComponent::AddObserver(Observer* pObserver)
 {
 	m_pSubject->AddObserver(pObserver);
 }

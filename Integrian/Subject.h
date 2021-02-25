@@ -4,7 +4,6 @@
 
 #include "pch.h"
 #include <vector>
-#include <memory>
 #include "Observer.h"
 
 namespace Integrian
@@ -15,16 +14,16 @@ namespace Integrian
 	public:
 		Subject() = default;
 		~Subject() = default;
-		void AddObserver(std::weak_ptr<Observer> pObserver);
+		void AddObserver(Observer* pObserver);
 		
 		void Notify(const std::string& event)
 		{
-			for (std::weak_ptr<Observer> pObserver : m_pObservers)
-				pObserver.lock()->OnNotify(event);
+			for (Observer* pObserver : m_pObservers)
+				pObserver->OnNotify(event);
 		}
 
 	private:
-		std::vector<std::weak_ptr<Observer>> m_pObservers;
+		std::vector<Observer*> m_pObservers;
 	};
 }
 
