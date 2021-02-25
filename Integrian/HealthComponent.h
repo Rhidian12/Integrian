@@ -14,7 +14,7 @@ namespace Integrian
 		HealthComponent(const uint64_t maxHealth);
 		HealthComponent(const uint64_t maxHealth, const uint64_t currentHealth);
 
-		void OnLifeDepleted();
+		void OnKill();
 		std::weak_ptr<Observer> GetObserver() const;
 
 	private:

@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -166,9 +167,9 @@
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
-    <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="KillCommand.cpp" />
     <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_opengl2.cpp" />
     <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_sdl.cpp" />
     <ClCompile Include="Libraries\imgui-master\imgui.cpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="Utility Functions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />
@@ -210,9 +212,9 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="InitialisationFailed.h" />
-    <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="KillCommand.h" />
     <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_opengl2.h" />
     <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_sdl.h" />
     <ClInclude Include="Libraries\imgui-master\imconfig.h" />

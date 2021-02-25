@@ -6,6 +6,9 @@
 #include "Timer.h"
 #include "TestCommand.h"
 #include "InputManager.h"
+#include "ActorComponent.h"
+#include "HealthComponent.h"
+#include "KillCommand.h"
 
 void Integrian::Test_App::Start()
 {
@@ -31,15 +34,18 @@ void Integrian::Test_App::Start()
 	pGameObject->transform = Point2f{ 10.f,float(m_WindowHeight) - 30.f };
 
 	Command* pCommand = new TestCommand{ pGameObject->GetComponentByType<FPSComponent>() };
-	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::A }, pCommand, State::OnRelease);
-	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::Z }, pCommand, State::OnHeld);
-	InputManager::GetInstance().AddCommand(GameInput{ MouseButton::LMB }, pCommand, State::OnRelease);
-	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::ButtonA }, pCommand, State::OnHeld);
-	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::RightTrigger }, pCommand, State::OnRelease);
-	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::LeftTrigger }, pCommand, State::OnHeld);
 	m_pCommands.push_back(std::move(pCommand));
 
 	m_pGameObjects.push_back(std::move(pGameObject));
+
+	pGameObject = new GameObject{};
+
+	HealthComponent* pHealth{ new HealthComponent{3} };
+	ActorComponent* pActor{ new ActorComponent{} };
+	KillCommand* pKillCommand{ new KillCommand{pActor} };
+	pActor->AddCommand(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
+	pGameObject->AddComponent(std::move(pActor));
+	pGameObject->AddComponent(std::move(pHealth));
 }
 
 void Integrian::Test_App::Update(const float dt)

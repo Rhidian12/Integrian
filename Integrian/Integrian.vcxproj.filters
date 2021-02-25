@@ -124,8 +124,8 @@
     <Filter Include="Applications\HealthComponent">
       <UniqueIdentifier>{6684b9eb-1a55-439c-9020-7459598c25d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Components\InputComponent">
-      <UniqueIdentifier>{18acb3b5-f53c-4161-b08e-ef9b32c01b68}</UniqueIdentifier>
+    <Filter Include="Applications\Test_App\Commands\KillCommand">
+      <UniqueIdentifier>{7c981eff-3e84-481d-ad93-94fbed8964a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -234,8 +234,11 @@
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Applications\HealthComponent</Filter>
     </ClCompile>
-    <ClCompile Include="InputComponent.cpp">
-      <Filter>Engine\Components\InputComponent</Filter>
+    <ClCompile Include="KillCommand.cpp">
+      <Filter>Applications\Test_App\Commands\KillCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorComponent.cpp">
+      <Filter>Engine\Components\ActorComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -392,8 +395,11 @@
     <ClInclude Include="HealthComponent.h">
       <Filter>Applications\HealthComponent</Filter>
     </ClInclude>
-    <ClInclude Include="InputComponent.h">
-      <Filter>Engine\Components\InputComponent</Filter>
+    <ClInclude Include="KillCommand.h">
+      <Filter>Applications\Test_App\Commands\KillCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorComponent.h">
+      <Filter>Engine\Components\ActorComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
