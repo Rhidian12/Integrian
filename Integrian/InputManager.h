@@ -22,6 +22,7 @@
 // Rhidian De Wit made the implementation regarding the enum classes being stored in a struct
 // We will most likely still have a different implementation, but it was worth mentioning, before either of us
 // get seen as having plagiarized eachother's code
+// update, the implementation was very much changed, but we still came up with this concept together
 
 namespace Integrian
 {

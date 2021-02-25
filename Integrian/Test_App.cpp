@@ -34,7 +34,7 @@ void Integrian::Test_App::Start()
 	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::A }, pCommand, State::OnRelease);
 	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::Z }, pCommand, State::OnHeld);
 	InputManager::GetInstance().AddCommand(GameInput{ MouseButton::LMB }, pCommand, State::OnRelease);
-	//InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::ButtonA }, pCommand, State::OnHeld);
+	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::ButtonA }, pCommand, State::OnHeld);
 	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::RightTrigger }, pCommand, State::OnRelease);
 	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::LeftTrigger }, pCommand, State::OnHeld);
 	m_pCommands.push_back(std::move(pCommand));

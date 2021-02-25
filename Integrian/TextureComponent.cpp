@@ -1,5 +1,4 @@
 #include "TextureComponent.h"
-
 #include "Texture.h"
 
 Integrian::TextureComponent::TextureComponent()

@@ -4,6 +4,7 @@
 
 #include "Component.h"
 #include "TypeDefines.h"
+#include <memory>
 
 namespace Integrian
 {

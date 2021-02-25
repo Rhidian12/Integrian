@@ -112,6 +112,18 @@
     <Filter Include="Engine\Mouse">
       <UniqueIdentifier>{dc34fe7a-86f8-47e3-a0b0-30c8ef9590f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Observer">
+      <UniqueIdentifier>{9081933a-cff0-48b2-8395-c88ae1aa48d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Subject">
+      <UniqueIdentifier>{ee02623b-b158-4c83-9720-661085125f95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events">
+      <UniqueIdentifier>{0d42fa4b-f710-4d2e-b0fa-5b9fc6e5e0f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Applications\HealthComponent">
+      <UniqueIdentifier>{6684b9eb-1a55-439c-9020-7459598c25d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -209,6 +221,15 @@
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>Engine\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Engine\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Engine\Subject</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Applications\HealthComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +373,18 @@
     </ClInclude>
     <ClInclude Include="Mouse.h">
       <Filter>Engine\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Engine\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Engine\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Applications\HealthComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

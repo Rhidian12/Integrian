@@ -165,6 +165,7 @@
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_opengl2.cpp" />
@@ -178,10 +179,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathFunctions.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Printer.cpp" />
     <ClCompile Include="PrinterManager.cpp" />
+    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TestCommand.cpp" />
     <ClCompile Include="Test_App.cpp" />
     <ClCompile Include="TextComponent.cpp" />
@@ -198,11 +201,13 @@
     <ClInclude Include="CameraInitialisationFailed.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Events.h" />
     <ClInclude Include="ExceptionHandler.h" />
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="GameInput.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="InitialisationFailed.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
@@ -217,6 +222,7 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MathFunctions.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Point.h" />
@@ -225,6 +231,7 @@
     <ClInclude Include="PossibleInputs.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="PrinterManager.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="TestCommand.h" />
     <ClInclude Include="RuntimeInitFailed.h" />
     <ClInclude Include="Singleton.h" />
