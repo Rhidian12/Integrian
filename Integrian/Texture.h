@@ -1,4 +1,7 @@
 #pragma once
+// ===========================
+// Bart Uyttenhove, professor at DAE created this class
+// ===========================
 #ifndef INTEGRIAN_TEXTURE_H
 #define INTEGRIAN_TEXTURE_H
 
