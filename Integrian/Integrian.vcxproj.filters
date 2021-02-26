@@ -121,13 +121,13 @@
     <Filter Include="Applications\Test_App\Commands\KillCommand">
       <UniqueIdentifier>{7c981eff-3e84-481d-ad93-94fbed8964a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Applications\Components">
+    <Filter Include="Applications\Test_App\Components">
       <UniqueIdentifier>{e4649bea-8811-401a-af57-b6b626a336e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Applications\Components\HealthDisplayComponent">
+    <Filter Include="Applications\Test_App\Components\HealthDisplayComponent">
       <UniqueIdentifier>{6684b9eb-1a55-439c-9020-7459598c25d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Applications\Components\HealthComponent">
+    <Filter Include="Applications\Test_App\Components\HealthComponent">
       <UniqueIdentifier>{cbc5b3a0-673e-4b77-acf3-d3ae61fc67f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -238,10 +238,10 @@
       <Filter>Engine\Components\ActorComponent</Filter>
     </ClCompile>
     <ClCompile Include="HealthDisplayComponent.cpp">
-      <Filter>Applications\Components\HealthDisplayComponent</Filter>
+      <Filter>Applications\Test_App\Components\HealthDisplayComponent</Filter>
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
-      <Filter>Applications\Components\HealthComponent</Filter>
+      <Filter>Applications\Test_App\Components\HealthComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -399,10 +399,10 @@
       <Filter>Engine\Components\ActorComponent</Filter>
     </ClInclude>
     <ClInclude Include="HealthDisplayComponent.h">
-      <Filter>Applications\Components\HealthDisplayComponent</Filter>
+      <Filter>Applications\Test_App\Components\HealthDisplayComponent</Filter>
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
-      <Filter>Applications\Components\HealthComponent</Filter>
+      <Filter>Applications\Test_App\Components\HealthComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

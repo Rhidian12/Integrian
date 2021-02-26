@@ -14,8 +14,10 @@ namespace Integrian
 	public:
 		Subject() = default;
 		~Subject() = default;
+
 		void AddObserver(Observer* pObserver);
-		
+		void RemoveObserver(Observer* pObserver);
+
 		void Notify(const std::string& event)
 		{
 			for (Observer* pObserver : m_pObservers)
