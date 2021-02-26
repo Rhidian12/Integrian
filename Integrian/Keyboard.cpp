@@ -12,25 +12,45 @@ void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const St
 	m_pKeyboardCommands[keyboardInput].push_back(CommandAndButton{ pCommand,keyState });
 }
 
-void Integrian::Keyboard::ExecuteCommands(const State currentHandledKeyState, const SDL_Scancode currentKey)
+void Integrian::Keyboard::ExecuteCommands()
 {
-	for(const CommandPair& commandPair : m_pKeyboardCommands)
-		for (const CommandAndButton& commandAndButton : commandPair.second)
-			if (commandAndButton.keyState == currentHandledKeyState)
-				if (static_cast<SDL_Scancode>(commandPair.first) == currentKey)
-					commandAndButton.pCommand->Execute();
+	for (std::pair<const KeyboardInput, std::vector<CommandAndButton>>& commandPair : m_pKeyboardCommands)
+	{
+		for (CommandAndButton& commandAndButton : commandPair.second)
+		{
+			const State currentKeystate{ GetKeystate(commandPair.first, commandAndButton.previousKeystate) };
+			if (currentKeystate == commandAndButton.wantedKeystate)
+			{
+				commandAndButton.pCommand->Execute();
+			}
+			commandAndButton.previousKeystate = currentKeystate;
+		}
+	}
 }
 
-void Integrian::Keyboard::ExecuteCommands(const Uint8* const pStates, const State currentHandledKeyState)
-{
-	for (const CommandPair& commandPair : m_pKeyboardCommands)
-		for (const CommandAndButton& commandAndButton : commandPair.second)
-			if (commandAndButton.keyState == currentHandledKeyState)
-				if (pStates[static_cast<SDL_Scancode>(commandPair.first)])
-					commandAndButton.pCommand->Execute();
-}
-
-bool Integrian::Keyboard::IsKeyboardKeyPressed(const KeyboardInput gameInput) const
+bool Integrian::Keyboard::IsPressed(const KeyboardInput gameInput) const
 {
 	return SDL_GetKeyboardState(nullptr)[static_cast<SDL_Scancode>(gameInput)];
+}
+
+bool Integrian::Keyboard::WasPressed(const State previousState) const
+{
+	return (previousState == State::OnPress || previousState == State::OnHeld);
+}
+
+Integrian::State Integrian::Keyboard::GetKeystate(const KeyboardInput keyboardInput, const State previousState) const
+{
+	if (WasPressed(previousState))
+	{
+		if (IsPressed(keyboardInput))
+			return State::OnHeld;
+
+		else
+			return State::OnRelease;
+	}
+
+	if (IsPressed(keyboardInput))
+		return State::OnPress;
+
+	return State::NotPressed;
 }

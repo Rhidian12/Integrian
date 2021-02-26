@@ -20,13 +20,15 @@ namespace Integrian
 		Keyboard& operator=(Keyboard&&) = delete;
 
 		void AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand);
-		void ExecuteCommands(const State currentHandledKeyState, const SDL_Scancode currentKey);
-		void ExecuteCommands(const Uint8* const pStates, const State currentHandledKeyState);
-		[[nodiscard]] bool IsKeyboardKeyPressed(const KeyboardInput gameInput) const;
+		void ExecuteCommands();
+		[[nodiscard]] bool IsPressed(const KeyboardInput gameInput) const;
 
 	private:
 		Keyboard() = default;
 		friend class InputManager;
+
+		bool WasPressed(const State previousState) const;
+		State GetKeystate(const KeyboardInput keyboardInput, const State previousState) const;
 
 		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_pKeyboardCommands{};
 

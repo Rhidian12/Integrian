@@ -65,9 +65,6 @@ void Integrian::InputManager::HandleInput()
 		case SDL_QUIT:
 			g_IsLooping = false;
 			break;
-		case SDL_KEYUP:
-			m_pKeyboard->ExecuteCommands(State::OnRelease, e.key.keysym.scancode);
-			break;
 		case SDL_MOUSEBUTTONDOWN:
 			m_pMouse->ExecuteCommands(mouseState, State::OnHeld);
 			break;
@@ -79,7 +76,7 @@ void Integrian::InputManager::HandleInput()
 		}
 	}
 
-	m_pKeyboard->ExecuteCommands(SDL_GetKeyboardState(nullptr), State::OnHeld); // SDL_KEYDOWN
+	m_pKeyboard->ExecuteCommands();
 
 	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
 		m_pControllers[i]->ExecuteCommands();
