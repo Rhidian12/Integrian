@@ -2,10 +2,6 @@
 #include "Keyboard.h"
 #include "Command.h"
 
-Integrian::Keyboard::Keyboard(const Keyboard& other)
-{
-	m_KeyboardCommands = other.m_KeyboardCommands;
-}
 Integrian::Keyboard::Keyboard(Keyboard&& other)
 {
 	m_KeyboardCommands = other.m_KeyboardCommands;

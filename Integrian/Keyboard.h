@@ -21,9 +21,9 @@ namespace Integrian
 
 	private:
 		Keyboard() = default;
-		Keyboard(const Keyboard& other);
+		Keyboard(const Keyboard&) = delete;
 		Keyboard(Keyboard&& other);
-		Keyboard& operator=(const Keyboard& other);
+		Keyboard& operator=(const Keyboard&) = delete;
 		Keyboard& operator=(Keyboard&& other);
 		friend class InputManager;
 
@@ -34,10 +34,6 @@ namespace Integrian
 
 		using CommandPair = std::pair<KeyboardInput, std::vector<CommandAndButton>>;
 
-		inline Keyboard& operator=(const Integrian::Keyboard& other)
-		{
-			m_KeyboardCommands = other.m_KeyboardCommands;
-		}
 		inline Keyboard& operator=(Integrian::Keyboard&& other)
 		{
 			m_KeyboardCommands = other.m_KeyboardCommands;
