@@ -32,7 +32,7 @@ namespace Integrian
 
 		using CommandPair = std::pair<MouseButton, std::vector<CommandAndButton>>;
 	
-		inline Mouse& operator=(Mouse&& other)
+		inline Mouse& operator=(Mouse&& other) noexcept
 		{
 			m_MouseCommands = other.m_MouseCommands;
 			other.m_MouseCommands.clear();

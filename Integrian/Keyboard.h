@@ -33,7 +33,7 @@ namespace Integrian
 
 		using CommandPair = std::pair<KeyboardInput, std::vector<CommandAndButton>>;
 
-		inline Keyboard& operator=(Integrian::Keyboard&& other)
+		inline Keyboard& operator=(Integrian::Keyboard&& other) noexcept
 		{
 			m_KeyboardCommands = other.m_KeyboardCommands;
 			other.m_KeyboardCommands.clear();

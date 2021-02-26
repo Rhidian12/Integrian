@@ -38,7 +38,7 @@ namespace Integrian
 
 		using CommandPair = std::pair<ControllerInput, std::vector<CommandAndButton>>;
 
-		inline GameController& operator=(GameController&& other)
+		inline GameController& operator=(GameController&& other) noexcept
 		{
 			m_pCommands = other.m_pCommands;
 			m_pSDLGameController = other.m_pSDLGameController;
