@@ -133,6 +133,9 @@
     <Filter Include="Applications\Test_App\Components\ScoreDisplayComponent">
       <UniqueIdentifier>{260060a5-2f22-4609-b009-3f46a620c2eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Applications\Test_App\Components\ScoreComponent">
+      <UniqueIdentifier>{6402a466-1582-4249-8973-880cfcdb1c08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -248,6 +251,9 @@
     </ClCompile>
     <ClCompile Include="ScoreDisplayComponent.cpp">
       <Filter>Applications\Test_App\Components\ScoreDisplayComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Applications\Test_App\Components\ScoreComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -412,6 +418,9 @@
     </ClInclude>
     <ClInclude Include="ScoreDisplayComponent.h">
       <Filter>Applications\Test_App\Components\ScoreDisplayComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Applications\Test_App\Components\ScoreComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
