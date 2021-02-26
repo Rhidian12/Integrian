@@ -1,12 +1,12 @@
 #include "KillCommand.h"
-#include "ActorComponent.h"
+#include "HealthComponent.h"
 
-Integrian::KillCommand::KillCommand(ActorComponent* pActor)
-	: m_pActor{ pActor }
+Integrian::KillCommand::KillCommand(HealthComponent* pHealth)
+	: m_pHealthComponent{ pHealth }
 {
 }
 
 void Integrian::KillCommand::Execute()
 {
-	m_pActor->Invoke("Kill");
+	m_pHealthComponent->DecreaseLivesByValue(1);
 }

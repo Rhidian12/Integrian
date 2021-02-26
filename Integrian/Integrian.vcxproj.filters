@@ -94,9 +94,6 @@
     <Filter Include="Applications\Test_App\Commands">
       <UniqueIdentifier>{12bc12a6-23ce-4fd9-85e0-7aed466818ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Applications\Test_App\Commands\ResetFPSCommand">
-      <UniqueIdentifier>{70db4155-9b6c-4248-b8df-a0881b136d8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\ImGui">
       <UniqueIdentifier>{f1afba84-eddb-4304-9f68-b8ae79755c45}</UniqueIdentifier>
     </Filter>
@@ -121,11 +118,17 @@
     <Filter Include="Engine\Events">
       <UniqueIdentifier>{0d42fa4b-f710-4d2e-b0fa-5b9fc6e5e0f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Applications\HealthComponent">
-      <UniqueIdentifier>{6684b9eb-1a55-439c-9020-7459598c25d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Applications\Test_App\Commands\KillCommand">
       <UniqueIdentifier>{7c981eff-3e84-481d-ad93-94fbed8964a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Applications\Components">
+      <UniqueIdentifier>{e4649bea-8811-401a-af57-b6b626a336e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Applications\Components\HealthDisplayComponent">
+      <UniqueIdentifier>{6684b9eb-1a55-439c-9020-7459598c25d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Applications\Components\HealthComponent">
+      <UniqueIdentifier>{cbc5b3a0-673e-4b77-acf3-d3ae61fc67f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +195,6 @@
     <ClCompile Include="Command.cpp">
       <Filter>Engine\Command</Filter>
     </ClCompile>
-    <ClCompile Include="TestCommand.cpp">
-      <Filter>Applications\Test_App\Commands\ResetFPSCommand</Filter>
-    </ClCompile>
     <ClCompile Include="Libraries\imgui-master\imgui.cpp">
       <Filter>Engine\ImGui</Filter>
     </ClCompile>
@@ -231,14 +231,17 @@
     <ClCompile Include="Subject.cpp">
       <Filter>Engine\Subject</Filter>
     </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Applications\HealthComponent</Filter>
-    </ClCompile>
     <ClCompile Include="KillCommand.cpp">
       <Filter>Applications\Test_App\Commands\KillCommand</Filter>
     </ClCompile>
     <ClCompile Include="ActorComponent.cpp">
       <Filter>Engine\Components\ActorComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthDisplayComponent.cpp">
+      <Filter>Applications\Components\HealthDisplayComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Applications\Components\HealthComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,9 +347,6 @@
     <ClInclude Include="Command.h">
       <Filter>Engine\Command</Filter>
     </ClInclude>
-    <ClInclude Include="TestCommand.h">
-      <Filter>Applications\Test_App\Commands\ResetFPSCommand</Filter>
-    </ClInclude>
     <ClInclude Include="Libraries\imgui-master\imconfig.h">
       <Filter>Engine\ImGui</Filter>
     </ClInclude>
@@ -392,14 +392,17 @@
     <ClInclude Include="Events.h">
       <Filter>Engine\Events</Filter>
     </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Applications\HealthComponent</Filter>
-    </ClInclude>
     <ClInclude Include="KillCommand.h">
       <Filter>Applications\Test_App\Commands\KillCommand</Filter>
     </ClInclude>
     <ClInclude Include="ActorComponent.h">
       <Filter>Engine\Components\ActorComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthDisplayComponent.h">
+      <Filter>Applications\Components\HealthDisplayComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Applications\Components\HealthComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

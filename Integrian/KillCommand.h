@@ -6,17 +6,16 @@
 
 namespace Integrian
 {
-	class ActorComponent;
-	class TextComponent;
+	class HealthComponent;
 	class KillCommand final : public Command
 	{
 	public:
-		KillCommand(ActorComponent* pActor);
+		KillCommand(HealthComponent* pHealth);
 
 		virtual void Execute() override;
 
 	private:
-		ActorComponent* m_pActor;
+		HealthComponent* m_pHealthComponent;
 	};
 }
 

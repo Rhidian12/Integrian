@@ -3,28 +3,29 @@
 #define INTEGRIAN_HEALTHCOMPONENT_H
 
 #include "Component.h"
+#include <memory>
 
 namespace Integrian
 {
 	class Observer;
-	class TextComponent;
-	class HealthComponent : public Component
+	class Subject;
+	class HealthComponent final : public Component
 	{
 	public:
-		HealthComponent(const uint64_t maxHealth);
-		HealthComponent(const uint64_t maxHealth, const uint64_t currentHealth);
-		HealthComponent(const uint64_t maxHealth, const uint64_t currentHealth, TextComponent* pTextComponent);
+		HealthComponent(const uint64_t maxLives);
+		HealthComponent(const uint64_t maxLives, const uint64_t currentLives);
+		virtual ~HealthComponent() = default;
 
-		virtual ~HealthComponent();
+		void AddObserver(Observer* pObserver);
+		void DecreaseLivesByValue(const uint64_t value);
 
-		void OnKill();
-		Observer* GetObserver() const;
+		[[nodiscard]] uint64_t GetCurrentHealth() const;
+		[[nodiscard]] uint64_t GetMaxHealth() const;
 
 	private:
-		uint64_t m_CurrentLives;
 		uint64_t m_MaxLives;
-		TextComponent* m_pTextComponent;
-		Observer* m_pObserver;
+		uint64_t m_CurrentLives;
+		std::unique_ptr<Subject> m_pSubject;
 	};
 }
 
