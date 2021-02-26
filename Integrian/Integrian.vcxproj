@@ -163,6 +163,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DefeatCoilyCommand.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="CameraInitialisationFailed.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="DefeatCoilyCommand.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="ExceptionHandler.h" />
     <ClInclude Include="FPSComponent.h" />

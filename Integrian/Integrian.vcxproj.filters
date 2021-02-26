@@ -136,6 +136,9 @@
     <Filter Include="Applications\Test_App\Components\ScoreComponent">
       <UniqueIdentifier>{6402a466-1582-4249-8973-880cfcdb1c08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Applications\Test_App\Commands\DefeatCoily">
+      <UniqueIdentifier>{5f7c5f95-e642-4e22-a933-8d39cc5dbbfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -254,6 +257,9 @@
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Applications\Test_App\Components\ScoreComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="DefeatCoilyCommand.cpp">
+      <Filter>Applications\Test_App\Commands\DefeatCoily</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +427,9 @@
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
       <Filter>Applications\Test_App\Components\ScoreComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="DefeatCoilyCommand.h">
+      <Filter>Applications\Test_App\Commands\DefeatCoily</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
