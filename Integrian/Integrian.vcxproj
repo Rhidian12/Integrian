@@ -187,6 +187,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Printer.cpp" />
     <ClCompile Include="PrinterManager.cpp" />
+    <ClCompile Include="ScoreDisplayComponent.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="Test_App.cpp" />
     <ClCompile Include="TextComponent.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="PossibleInputs.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="PrinterManager.h" />
+    <ClInclude Include="ScoreDisplayComponent.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="RuntimeInitFailed.h" />
     <ClInclude Include="Singleton.h" />

@@ -130,6 +130,9 @@
     <Filter Include="Applications\Test_App\Components\HealthComponent">
       <UniqueIdentifier>{cbc5b3a0-673e-4b77-acf3-d3ae61fc67f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Applications\Test_App\Components\ScoreDisplayComponent">
+      <UniqueIdentifier>{260060a5-2f22-4609-b009-3f46a620c2eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Applications\Test_App\Components\HealthComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDisplayComponent.cpp">
+      <Filter>Applications\Test_App\Components\ScoreDisplayComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Applications\Test_App\Components\HealthComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreDisplayComponent.h">
+      <Filter>Applications\Test_App\Components\ScoreDisplayComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
