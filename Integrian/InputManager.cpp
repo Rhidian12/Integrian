@@ -76,7 +76,7 @@ void Integrian::InputManager::HandleInput()
 			break;
 		case SDL_JOYBUTTONUP:
 			for (uint32_t i{}; i < m_AmountOfControllers; ++i)
-				m_pControllers[i]->ExecuteCommands(State::OnRelease);
+				m_pControllers[i]->ExecuteCommands(State::OnRelease, e.jbutton.button);
 			break;
 		default:
 			break;
@@ -89,7 +89,7 @@ void Integrian::InputManager::HandleInput()
 		m_pControllers[i]->ExecuteTriggers();
 
 	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
-		m_pControllers[i]->ExecuteCommands(State::OnHeld);
+		m_pControllers[i]->ExecuteCommands(State::OnHeld, 0);
 }
 
 void Integrian::InputManager::SetWindowSize(const uint32_t width, const uint32_t height)

@@ -9,7 +9,7 @@ Integrian::ScoreDisplayComponent::ScoreDisplayComponent(TextComponent* pTextComp
 	, m_pScoreComponent{ pScoreComponent }
 	, m_pObserver{ new Observer{} }
 {
-	m_pTextComponent->SetTextToRender("Score: " + pScoreComponent->GetCurrentScore());
+	m_pTextComponent->SetTextToRender(pTextComponent->GetTextToRender() + std::to_string(pScoreComponent->GetCurrentScore()));
 	m_pObserver->AddCallback("OnScoreChange", this, &ScoreDisplayComponent::OnScoreChange);
 }
 
@@ -21,7 +21,7 @@ Integrian::ScoreDisplayComponent::~ScoreDisplayComponent()
 void Integrian::ScoreDisplayComponent::OnScoreChange()
 {
 	std::string currentText{ m_pTextComponent->GetTextToRender() };
-	currentText.pop_back();
+	currentText.erase(currentText.find_last_of(" ") + 1, currentText.size() - currentText.find_last_of(" "));
 	m_pTextComponent->SetTextToRender(currentText + std::to_string(m_pScoreComponent->GetCurrentScore()));
 }
 

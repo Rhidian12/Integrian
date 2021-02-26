@@ -9,6 +9,13 @@
 #include "HealthDisplayComponent.h"
 #include "HealthComponent.h"
 #include "KillCommand.h"
+#include "ScoreComponent.h"
+#include "ScoreDisplayComponent.h"
+#include "DefeatCoilyCommand.h"
+#include "CatchSlickOrSamCommand.h"
+#include "ChangeColourCommand.h"
+#include "DisksRemainingCommand.h"
+#include "Logger.h"
 
 void Integrian::Test_App::Start()
 {
@@ -36,28 +43,8 @@ void Integrian::Test_App::Start()
 	pFPSCounter->transform = Point2f{ 10.f,float(m_WindowHeight) - 30.f };
 	m_pGameObjects.push_back(std::move(pFPSCounter));
 
-	GameObject* pQbert = new GameObject{};
-	GameObject* pQbertHealthDisplay = new GameObject{};
-
-	TextComponent* pText{ new TextComponent{"Remaining Lives: ", 30, RGBColour{255.f,0.f,0.f}} };
-	HealthComponent* pHealthComponent{ new HealthComponent{3,3} };
-	HealthDisplayComponent* pHealthDisplayComponent{ new HealthDisplayComponent{pText, pHealthComponent} };
-	ActorComponent* pActor{ new ActorComponent{} };
-	KillCommand* pKillCommand{ new KillCommand{pHealthComponent} };
-	pHealthComponent->AddObserver(pHealthDisplayComponent->GetObserver());
-	pActor->AddCommand(GameInput{ KeyboardInput::A }, pKillCommand, State::OnRelease);
-
-	pQbert->AddComponent(pActor);
-	pQbert->AddComponent(pHealthComponent);
-	pQbertHealthDisplay->transform = Point2f{ 150.f,150.f };
-
-	pQbertHealthDisplay->AddComponent(pText);
-	pQbertHealthDisplay->AddComponent(pHealthDisplayComponent);
-
-	m_pGameObjects.push_back(std::move(pQbert));
-	m_pGameObjects.push_back(std::move(pQbertHealthDisplay));
-
-	m_pCommands.push_back(std::move(pKillCommand));
+	InitPlayerOne();
+	InitPlayerTwo();
 }
 
 void Integrian::Test_App::Update(const float dt)
@@ -71,9 +58,127 @@ void Integrian::Test_App::Render() const
 	for (GameObject* pGameObject : m_pGameObjects)
 		pGameObject->Render();
 
-	ImGui::Begin("Test_App");
-	ImGui::Button("Single Player");
-	ImGui::Button("Co-op");
-	ImGui::Button("Versus");
+	ImGui::SetNextWindowPos(ImVec2{ 250,0 });
+	ImGui::Begin("Player 1 uses the keyboard");
+	ImGui::Text("Press A To Damage Q*bert");
+	ImGui::Text("Press W To Defeat Coily");
+	ImGui::Text("Press S To Catch Slick Or Sam");
+	ImGui::Text("Press D To Change The Colour");
+	ImGui::Text("Press E To Add The Remaining Disks To The Score");
+	ImGui::Text("This is all hardcoded and just adds score");
 	ImGui::End();
+
+	ImGui::SetNextWindowPos(ImVec2{ 250,150 });
+	ImGui::Begin("Player 2 uses the controller");
+	ImGui::Text("Press A To Damage Q*bert");
+	ImGui::Text("Press B To Defeat Coily");
+	ImGui::Text("Press X To Catch Slick Or Sam");
+	ImGui::Text("Press Y To Change The Colour");
+	ImGui::Text("Press RightTrigger To Add The Remaining Disks To The Score");
+	ImGui::Text("This is all hardcoded and just adds score");
+	ImGui::End();
+}
+
+void Integrian::Test_App::InitPlayerOne()
+{
+	GameObject* pQbert = new GameObject{};
+	GameObject* pQbertHealthDisplay = new GameObject{};
+	GameObject* pScoreDisplay{ new GameObject{} };
+
+	TextComponent* pTextComponent{ new TextComponent{"Player 1 Remaining Lives: ", 30, RGBColour{255.f,0.f,0.f}} };
+	HealthComponent* pHealthComponent{ new HealthComponent{3,3} };
+	HealthDisplayComponent* pHealthDisplayComponent{ new HealthDisplayComponent{pTextComponent, pHealthComponent} };
+	ActorComponent* pActor{ new ActorComponent{} };
+	ScoreComponent* pScoreComponent{ new ScoreComponent{} };
+
+	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 1 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
+	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, pScoreComponent } };
+	pScoreDisplay->AddComponent(pScoreDisplayTextComponent);
+	pScoreDisplay->AddComponent(pScoreDisplayComponent);
+	pScoreDisplay->transform = Point2f{ 150.f, 50.f };
+
+	pHealthComponent->AddObserver(pHealthDisplayComponent->GetObserver());
+	pScoreComponent->AddObserver(pScoreDisplayComponent->GetObserver());
+
+	KillCommand* pKillCommand{ new KillCommand{pHealthComponent} };
+	DefeatCoilyCommand* pDefeatCoilyCommand{ new DefeatCoilyCommand{pScoreComponent} };
+	CatchSlickOrSamCommand* pCatchSlickOrSamCommand{ new CatchSlickOrSamCommand{pScoreComponent} };
+	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
+	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
+
+	pActor->AddCommand(GameInput{ KeyboardInput::A }, pKillCommand, State::OnRelease);
+	pActor->AddCommand(GameInput{ KeyboardInput::W }, pDefeatCoilyCommand, State::OnRelease);
+	pActor->AddCommand(GameInput{ KeyboardInput::S }, pCatchSlickOrSamCommand, State::OnRelease);
+	pActor->AddCommand(GameInput{ KeyboardInput::D }, pChangeColourCommand, State::OnRelease);
+	pActor->AddCommand(GameInput{ KeyboardInput::E }, pDisksRemainingCommand, State::OnRelease);
+
+	pQbert->AddComponent(pActor);
+	pQbert->AddComponent(pHealthComponent);
+	pQbert->AddComponent(pScoreComponent);
+	pQbertHealthDisplay->transform = Point2f{ 150.f,150.f };
+
+	pQbertHealthDisplay->AddComponent(pTextComponent);
+	pQbertHealthDisplay->AddComponent(pHealthDisplayComponent);
+
+	m_pGameObjects.push_back(std::move(pQbert));
+	m_pGameObjects.push_back(std::move(pQbertHealthDisplay));
+	m_pGameObjects.push_back(std::move(pScoreDisplay));
+
+	m_pCommands.push_back(std::move(pKillCommand));
+	m_pCommands.push_back(std::move(pDefeatCoilyCommand));
+	m_pCommands.push_back(std::move(pCatchSlickOrSamCommand));
+	m_pCommands.push_back(std::move(pChangeColourCommand));
+	m_pCommands.push_back(std::move(pDisksRemainingCommand));
+}
+
+void Integrian::Test_App::InitPlayerTwo()
+{
+	GameObject* pQbert = new GameObject{};
+	GameObject* pQbertHealthDisplay = new GameObject{};
+	GameObject* pScoreDisplay{ new GameObject{} };
+
+	TextComponent* pTextComponent{ new TextComponent{"Player 2 Remaining Lives: ", 30, RGBColour{255.f,0.f,0.f}} };
+	HealthComponent* pHealthComponent{ new HealthComponent{3,3} };
+	HealthDisplayComponent* pHealthDisplayComponent{ new HealthDisplayComponent{pTextComponent, pHealthComponent} };
+	ActorComponent* pActor{ new ActorComponent{} };
+	ScoreComponent* pScoreComponent{ new ScoreComponent{} };
+
+	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 2 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
+	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, pScoreComponent } };
+	pScoreDisplay->AddComponent(pScoreDisplayTextComponent);
+	pScoreDisplay->AddComponent(pScoreDisplayComponent);
+	pScoreDisplay->transform = Point2f{ 150.f, 0.f };
+
+	pHealthComponent->AddObserver(pHealthDisplayComponent->GetObserver());
+	pScoreComponent->AddObserver(pScoreDisplayComponent->GetObserver());
+
+	KillCommand* pKillCommand{ new KillCommand{pHealthComponent} };
+	DefeatCoilyCommand* pDefeatCoilyCommand{ new DefeatCoilyCommand{pScoreComponent} };
+	CatchSlickOrSamCommand* pCatchSlickOrSamCommand{ new CatchSlickOrSamCommand{pScoreComponent} };
+	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
+	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
+
+	pActor->AddCommand(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
+	pActor->AddCommand(GameInput{ ControllerInput::ButtonB }, pDefeatCoilyCommand, State::OnRelease);
+	pActor->AddCommand(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
+	pActor->AddCommand(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
+	pActor->AddCommand(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
+
+	pQbert->AddComponent(pActor);
+	pQbert->AddComponent(pHealthComponent);
+	pQbert->AddComponent(pScoreComponent);
+	pQbertHealthDisplay->transform = Point2f{ 150.f,100.f };
+
+	pQbertHealthDisplay->AddComponent(pTextComponent);
+	pQbertHealthDisplay->AddComponent(pHealthDisplayComponent);
+
+	m_pGameObjects.push_back(std::move(pQbert));
+	m_pGameObjects.push_back(std::move(pQbertHealthDisplay));
+	m_pGameObjects.push_back(std::move(pScoreDisplay));
+
+	m_pCommands.push_back(std::move(pKillCommand));
+	m_pCommands.push_back(std::move(pDefeatCoilyCommand));
+	m_pCommands.push_back(std::move(pCatchSlickOrSamCommand));
+	m_pCommands.push_back(std::move(pChangeColourCommand));
+	m_pCommands.push_back(std::move(pDisksRemainingCommand));
 }

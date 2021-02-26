@@ -22,8 +22,10 @@ namespace Integrian
 
 		virtual Rectf GetLevelBoundaries() const override { return Rectf{ 0.f,0.f,float(m_WindowWidth),float(m_WindowHeight)}; };
 		virtual Rectf GetTarget() const override { return Rectf{}; };
-	private:
 
+	private:
+		void InitPlayerOne();
+		void InitPlayerTwo();
 	};
 }
 

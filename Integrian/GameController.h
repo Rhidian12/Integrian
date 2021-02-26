@@ -21,7 +21,7 @@ namespace Integrian
 		GameController& operator=(GameController&&) = delete;
 
 		void AddCommand(const ControllerInput controllerInput, const State keyState, Command* pCommand);
-		void ExecuteCommands(const State currentHandledKeyState);
+		void ExecuteCommands(const State currentHandledKeyState, const Uint8 button);
 		void ExecuteTriggers();
 		[[nodiscard]] bool IsControllerButtonPressed(const ControllerInput gameInput) const;
 

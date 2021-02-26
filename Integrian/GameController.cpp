@@ -57,13 +57,31 @@ void Integrian::GameController::AddCommand(const ControllerInput controllerInput
 		m_pCommands[controllerInput].push_back(CommandAndButton{ pCommand,keyState });
 }
 
-void Integrian::GameController::ExecuteCommands(const State currentHandledKeyState)
+void Integrian::GameController::ExecuteCommands(const State currentHandledKeyState, const Uint8 button)
 {
 	for (const CommandPair& commandPair : m_pCommands)
+	{
 		for (const CommandAndButton& commandAndButton : commandPair.second)
+		{
 			if (commandAndButton.keyState == currentHandledKeyState)
-				if (SDL_GameControllerGetButton(m_pSDLGameController, static_cast<SDL_GameControllerButton>(commandPair.first)) > 0)
-					commandAndButton.pCommand->Execute();
+			{
+				if (currentHandledKeyState == State::OnRelease)
+				{
+					if (button == static_cast<SDL_GameControllerButton>(commandPair.first))
+					{
+						commandAndButton.pCommand->Execute();
+					}
+				}
+				else
+				{
+					if (SDL_GameControllerGetButton(m_pSDLGameController, static_cast<SDL_GameControllerButton>(commandPair.first)))
+					{
+						commandAndButton.pCommand->Execute();
+					}
+				}
+			}
+		}
+	}
 }
 
 void Integrian::GameController::ExecuteTriggers()
