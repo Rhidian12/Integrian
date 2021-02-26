@@ -12,36 +12,26 @@ Integrian::InputManager::InputManager()
 	, m_WindowWidth{}
 	, m_WindowHeight{}
 	, m_AmountOfControllers{ uint8_t(SDL_NumJoysticks()) }
-	, m_pControllers{}
+	, m_Controllers{}
 {
 	for (uint32_t i{}; i < m_MaxAmountOfControllers; ++i)
-		m_pControllers[i] = new GameController{ uint8_t(i) };
+		m_Controllers[i] = std::move(GameController{ uint8_t(i) });
 
-	m_pKeyboard = new Keyboard{};
+	m_Keyboard = std::move(Keyboard{});
 
-	m_pMouse = new Mouse{};
-}
-
-Integrian::InputManager::~InputManager()
-{
-	for (GameController* pGameController : m_pControllers)
-		SAFE_DELETE(pGameController);
-
-	SAFE_DELETE(m_pKeyboard);
-
-	SAFE_DELETE(m_pMouse);
+	m_Mouse = std::move(Mouse{});
 }
 
 void Integrian::InputManager::AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex)
 {
 	if (gameInput.controllerInput != ControllerInput::INVALID)
-		m_pControllers[controllerIndex]->AddCommand(gameInput.controllerInput, keyState, pCommand);
+		m_Controllers[controllerIndex].AddCommand(gameInput.controllerInput, keyState, pCommand);
 
 	else if (gameInput.mouseButton != MouseButton::INVALID)
-		m_pMouse->AddCommand(gameInput.mouseButton, keyState, pCommand);
+		m_Mouse.AddCommand(gameInput.mouseButton, keyState, pCommand);
 
 	else /*if (gameInput.keyboardInput != KeyboardInput::INVALID)*/
-		m_pKeyboard->AddCommand(gameInput.keyboardInput, keyState, pCommand);
+		m_Keyboard.AddCommand(gameInput.keyboardInput, keyState, pCommand);
 }
 
 void Integrian::InputManager::HandleInput()
@@ -70,11 +60,11 @@ void Integrian::InputManager::HandleInput()
 		}
 	}
 
-	m_pKeyboard->ExecuteCommands();
-	m_pMouse->ExecuteCommands();
+	m_Keyboard.ExecuteCommands();
+	m_Mouse.ExecuteCommands();
 
 	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
-		m_pControllers[i]->ExecuteCommands();
+		m_Controllers[i].ExecuteCommands();
 }
 
 void Integrian::InputManager::SetWindowSize(const uint32_t width, const uint32_t height)
@@ -85,17 +75,17 @@ void Integrian::InputManager::SetWindowSize(const uint32_t width, const uint32_t
 
 bool Integrian::InputManager::IsKeyboardKeyPressed(const KeyboardInput gameInput) const
 {
-	return m_pKeyboard->IsPressed(gameInput);
+	return m_Keyboard.IsPressed(gameInput);
 }
 
 bool Integrian::InputManager::IsMouseButtonPressed(const MouseButton gameInput) const
 {
-	return m_pMouse->IsPressed(gameInput);
+	return m_Mouse.IsPressed(gameInput);
 }
 
 bool Integrian::InputManager::IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex) const
 {
-	return m_pControllers[playerIndex]->IsPressed(gameInput);
+	return m_Controllers[playerIndex].IsPressed(gameInput);
 }
 
 const Integrian::Point2f& Integrian::InputManager::GetMousePosition() const

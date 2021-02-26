@@ -12,9 +12,11 @@
 #include <array>
 
 #include "Command.h"
-#include "Timer.h"
 #include "PossibleInputs.h"
 #include "GameInput.h"
+#include "Keyboard.h"
+#include "GameController.h"
+#include "Mouse.h"
 // Reference: https://stackoverflow.com/questions/25963966/c-function-pointer-callback-without-inheritance
 
 // Henri-Thibault Huyghe came up with the idea of a superclass game input enum class
@@ -33,7 +35,7 @@ namespace Integrian
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
-		virtual ~InputManager();
+		virtual ~InputManager() = default;
 
 		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex = 0);
 
@@ -56,9 +58,9 @@ namespace Integrian
 		uint8_t m_AmountOfControllers;
 		inline static constexpr uint8_t m_MaxAmountOfControllers{ 4 };
 
-		std::array<GameController*, m_MaxAmountOfControllers> m_pControllers;
-		Keyboard* m_pKeyboard;
-		Mouse* m_pMouse;
+		std::array<GameController, m_MaxAmountOfControllers> m_Controllers;
+		Keyboard m_Keyboard;
+		Mouse m_Mouse;
 	};
 }
 
