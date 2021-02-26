@@ -34,11 +34,11 @@ namespace Integrian
 
 		using CommandPair = std::pair<KeyboardInput, std::vector<CommandAndButton>>;
 
-		inline Integrian::Keyboard& operator=(const Integrian::Keyboard& other)
+		inline Keyboard& operator=(const Integrian::Keyboard& other)
 		{
 			m_KeyboardCommands = other.m_KeyboardCommands;
 		}
-		inline Integrian::Keyboard& operator=(Integrian::Keyboard&& other)
+		inline Keyboard& operator=(Integrian::Keyboard&& other)
 		{
 			m_KeyboardCommands = other.m_KeyboardCommands;
 			other.m_KeyboardCommands.clear();
