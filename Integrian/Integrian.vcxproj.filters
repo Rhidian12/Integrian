@@ -145,6 +145,9 @@
     <Filter Include="Applications\Test_App\Commands\ChangeColourCommand">
       <UniqueIdentifier>{d13fa926-50d5-4196-8acc-5083df108169}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Applications\Test_App\Commands\DisksRemainingCommand">
+      <UniqueIdentifier>{365b7c15-f0fc-4327-82b4-2c28194a2f74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -272,6 +275,9 @@
     </ClCompile>
     <ClCompile Include="ChangeColourCommand.cpp">
       <Filter>Applications\Test_App\Commands\ChangeColourCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="DisksRemainingCommand.cpp">
+      <Filter>Applications\Test_App\Commands\DisksRemainingCommand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -448,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="ChangeColourCommand.h">
       <Filter>Applications\Test_App\Commands\ChangeColourCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="DisksRemainingCommand.h">
+      <Filter>Applications\Test_App\Commands\DisksRemainingCommand</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
