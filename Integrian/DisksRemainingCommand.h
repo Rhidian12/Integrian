@@ -6,8 +6,17 @@
 
 namespace Integrian
 {
-	class DisksRemainingCommand
+	class ScoreComponent;
+	class DisksRemainingCommand final : public Command
 	{
+	public:
+		DisksRemainingCommand(ScoreComponent* pScoreComponent);
+		virtual ~DisksRemainingCommand() = default;
+
+		virtual void Execute() override;
+
+	private:
+		ScoreComponent* m_pScoreComponent;
 	};
 }
 
