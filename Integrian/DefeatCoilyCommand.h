@@ -6,8 +6,17 @@
 
 namespace Integrian
 {
+	class ScoreComponent;
 	class DefeatCoilyCommand final : public Command
 	{
+	public:
+		DefeatCoilyCommand(ScoreComponent* pScoreComponent);
+		virtual ~DefeatCoilyCommand() = default;
+
+		virtual void Execute() override;
+
+	private:
+		ScoreComponent* m_pScoreComponent;
 	}
 };
 
