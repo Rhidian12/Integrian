@@ -65,18 +65,13 @@ void Integrian::InputManager::HandleInput()
 		case SDL_QUIT:
 			g_IsLooping = false;
 			break;
-		case SDL_MOUSEBUTTONDOWN:
-			m_pMouse->ExecuteCommands(mouseState, State::OnHeld);
-			break;
-		case SDL_MOUSEBUTTONUP:
-			m_pMouse->ExecuteCommands(mouseState, State::OnRelease);
-			break;
 		default:
 			break;
 		}
 	}
 
 	m_pKeyboard->ExecuteCommands();
+	m_pMouse->ExecuteCommands();
 
 	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
 		m_pControllers[i]->ExecuteCommands();
@@ -94,7 +89,7 @@ bool Integrian::InputManager::IsKeyboardKeyPressed(const KeyboardInput gameInput
 }
 bool Integrian::InputManager::IsMouseButtonPressed(const MouseButton gameInput) const
 {
-	return m_pMouse->IsMouseButtonPressed(gameInput);
+	return m_pMouse->IsPressed(gameInput);
 }
 bool Integrian::InputManager::IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex) const
 {

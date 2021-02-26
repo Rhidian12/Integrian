@@ -19,12 +19,16 @@ namespace Integrian
 		Mouse& operator=(Mouse&&) = delete;
 
 		void AddCommand(const MouseButton mouseButton, const State keyState, Command* pCommand);
-		void ExecuteCommands(const Uint32 mouseState, const State currentHandledKeyState);
-		[[nodiscard]] bool IsMouseButtonPressed(const MouseButton gameInput) const;
+		void ExecuteCommands();
+
+		[[nodiscard]] bool IsPressed(const MouseButton gameInput) const;
 
 	private:
 		Mouse() = default;
 		friend class InputManager;
+
+		bool WasPressed(const State previousState) const;
+		State GetKeystate(const MouseButton mouseButton, const State previousState) const;
 
 		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_pMouseCommands{};
 

@@ -11,16 +11,45 @@ void Integrian::Mouse::AddCommand(const MouseButton mouseButton, const State key
 	m_pMouseCommands[mouseButton].push_back(CommandAndButton{ pCommand,keyState });
 }
 
-void Integrian::Mouse::ExecuteCommands(const Uint32 mouseState, const State currentHandledKeyState)
+void Integrian::Mouse::ExecuteCommands()
 {
-	for (const CommandPair& inputCommandPair : m_pMouseCommands)
-		for (const CommandAndButton& commandAndButton : inputCommandPair.second)
-			if (commandAndButton.keyState == currentHandledKeyState)
-				if (static_cast<std::underlying_type<MouseButton>::type>(inputCommandPair.first) & mouseState)
-					commandAndButton.pCommand->Execute();
+	for (std::pair<const MouseButton, std::vector<CommandAndButton>>& commandPair : m_pMouseCommands)
+	{
+		for (CommandAndButton& commandAndButton : commandPair.second)
+		{
+			const State currentKeystate{ GetKeystate(commandPair.first, commandAndButton.previousKeystate) };
+			if (currentKeystate == commandAndButton.wantedKeystate)
+			{
+				commandAndButton.pCommand->Execute();
+			}
+			commandAndButton.previousKeystate = currentKeystate;
+		}
+	}
 }
 
-bool Integrian::Mouse::IsMouseButtonPressed(const MouseButton gameInput) const
+bool Integrian::Mouse::IsPressed(const MouseButton gameInput) const
 {
-	return static_cast<std::underlying_type<MouseButton>::type>(gameInput) & SDL_GetMouseState(NULL, NULL);
+	return static_cast<std::underlying_type<MouseButton>::type>(gameInput) == SDL_GetMouseState(NULL, NULL);
+}
+
+bool Integrian::Mouse::WasPressed(const State previousState) const
+{
+	return (previousState == State::OnPress || previousState == State::OnHeld);
+}
+
+Integrian::State Integrian::Mouse::GetKeystate(const MouseButton mouseButton, const State previousState) const
+{
+	if (WasPressed(previousState))
+	{
+		if (IsPressed(mouseButton))
+			return State::OnHeld;
+
+		else
+			return State::OnRelease;
+	}
+
+	if (IsPressed(mouseButton))
+		return State::OnPress;
+
+	return State::NotPressed;
 }
