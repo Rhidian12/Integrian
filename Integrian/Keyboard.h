@@ -21,6 +21,7 @@ namespace Integrian
 
 		void AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand);
 		void ExecuteCommands();
+
 		[[nodiscard]] bool IsPressed(const KeyboardInput gameInput) const;
 
 	private:

@@ -87,10 +87,12 @@ bool Integrian::InputManager::IsKeyboardKeyPressed(const KeyboardInput gameInput
 {
 	return m_pKeyboard->IsPressed(gameInput);
 }
+
 bool Integrian::InputManager::IsMouseButtonPressed(const MouseButton gameInput) const
 {
 	return m_pMouse->IsPressed(gameInput);
 }
+
 bool Integrian::InputManager::IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex) const
 {
 	return m_pControllers[playerIndex]->IsPressed(gameInput);
