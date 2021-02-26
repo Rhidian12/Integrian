@@ -20,14 +20,16 @@ namespace Integrian
 
 	struct CommandAndButton final
 	{
-		CommandAndButton(Command* pCommand, const State keyState)
+		CommandAndButton(Command* pCommand, const State wantedKeystate)
 			: pCommand{ pCommand }
-			, keyState{ keyState }
+			, wantedKeystate{ wantedKeystate }
+			, previousKeystate{ State::NotPressed }
 		{
 		}
 
 		Command* pCommand;
-		State keyState;
+		State wantedKeystate;
+		State previousKeystate;
 	};
 
 	struct GameInput final

@@ -21,25 +21,22 @@ namespace Integrian
 		GameController& operator=(GameController&&) = delete;
 
 		void AddCommand(const ControllerInput controllerInput, const State keyState, Command* pCommand);
-		void ExecuteCommands(const State currentHandledKeyState, const Uint8 button);
-		void ExecuteTriggers();
-		[[nodiscard]] bool IsControllerButtonPressed(const ControllerInput gameInput) const;
+		void ExecuteCommands();
+
+		[[nodiscard]] bool IsPressed(const ControllerInput controllerInput) const;
 
 	private:
 		GameController(const uint8_t index);
 		friend class InputManager;
 
-		bool IsPressed(SDL_GameController* pController, const SDL_GameControllerAxis axis) const;
 		bool WasPressed(const State previousState) const;
-		State GetTriggerState(const SDL_GameControllerAxis axis, const State previousState, SDL_GameController* pController) const;
+		State GetKeystate(const ControllerInput controllerInput, const State previousState) const;
 
 		std::unordered_map<ControllerInput, std::vector<CommandAndButton>> m_pCommands;
 		SDL_GameController* m_pSDLGameController;
-		std::vector<CommandAndButton> m_pLeftTriggerCommands{};
-		std::vector<CommandAndButton> m_pRightTriggerCommands{};
-		std::vector<State> m_pLeftTriggerPreviousStates{};
-		std::vector<State> m_pRightTriggerPreviousStates{};
 		uint8_t m_Index;
+
+
 
 		using CommandPair = std::pair<ControllerInput, std::vector<CommandAndButton>>;
 	};

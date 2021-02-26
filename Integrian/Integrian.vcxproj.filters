@@ -103,9 +103,6 @@
     <Filter Include="Engine\GameInput">
       <UniqueIdentifier>{fb7edb13-6810-4170-a0bf-4a3003aaf1a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\KeyboardInput">
-      <UniqueIdentifier>{2e04a266-46a7-4b85-8f5f-45c791b403d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Mouse">
       <UniqueIdentifier>{dc34fe7a-86f8-47e3-a0b0-30c8ef9590f8}</UniqueIdentifier>
     </Filter>
@@ -147,6 +144,9 @@
     </Filter>
     <Filter Include="Applications\Test_App\Commands\DisksRemainingCommand">
       <UniqueIdentifier>{365b7c15-f0fc-4327-82b4-2c28194a2f74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Keyboard">
+      <UniqueIdentifier>{2e04a266-46a7-4b85-8f5f-45c791b403d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +238,7 @@
       <Filter>Engine\GameController</Filter>
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
-      <Filter>Engine\KeyboardInput</Filter>
+      <Filter>Engine\Keyboard</Filter>
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>Engine\Mouse</Filter>
@@ -414,7 +414,7 @@
       <Filter>Engine\GameInput</Filter>
     </ClInclude>
     <ClInclude Include="Keyboard.h">
-      <Filter>Engine\KeyboardInput</Filter>
+      <Filter>Engine\Keyboard</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
       <Filter>Engine\Mouse</Filter>

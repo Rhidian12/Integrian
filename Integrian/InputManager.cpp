@@ -74,10 +74,6 @@ void Integrian::InputManager::HandleInput()
 		case SDL_MOUSEBUTTONUP:
 			m_pMouse->ExecuteCommands(mouseState, State::OnRelease);
 			break;
-		case SDL_JOYBUTTONUP:
-			for (uint32_t i{}; i < m_AmountOfControllers; ++i)
-				m_pControllers[i]->ExecuteCommands(State::OnRelease, e.jbutton.button);
-			break;
 		default:
 			break;
 		}
@@ -86,10 +82,7 @@ void Integrian::InputManager::HandleInput()
 	m_pKeyboard->ExecuteCommands(SDL_GetKeyboardState(nullptr), State::OnHeld); // SDL_KEYDOWN
 
 	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
-		m_pControllers[i]->ExecuteTriggers();
-
-	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
-		m_pControllers[i]->ExecuteCommands(State::OnHeld, 0);
+		m_pControllers[i]->ExecuteCommands();
 }
 
 void Integrian::InputManager::SetWindowSize(const uint32_t width, const uint32_t height)
@@ -100,7 +93,7 @@ void Integrian::InputManager::SetWindowSize(const uint32_t width, const uint32_t
 
 bool Integrian::InputManager::IsKeyboardKeyPressed(const KeyboardInput gameInput) const
 {
-	return m_pKeyboard->IsKeyboardKeyPressed(gameInput);
+	return m_pKeyboard->IsPressed(gameInput);
 }
 bool Integrian::InputManager::IsMouseButtonPressed(const MouseButton gameInput) const
 {
@@ -108,7 +101,7 @@ bool Integrian::InputManager::IsMouseButtonPressed(const MouseButton gameInput) 
 }
 bool Integrian::InputManager::IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex) const
 {
-	return m_pControllers[playerIndex]->IsControllerButtonPressed(gameInput);
+	return m_pControllers[playerIndex]->IsPressed(gameInput);
 }
 
 const Integrian::Point2f& Integrian::InputManager::GetMousePosition() const
