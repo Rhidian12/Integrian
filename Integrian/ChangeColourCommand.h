@@ -1,0 +1,9 @@
+#pragma once
+#ifndef INTEGRIAN_CHANGECOLOURCOMMAND_H
+#define INTEGRIAN_CHANGECOLOURCOMMAND_H
+
+class ChangeColourCommand
+{
+};
+
+#endif // !INTEGRIAN_CHANGECOLOURCOMMAND_H

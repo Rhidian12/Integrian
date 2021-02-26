@@ -142,6 +142,9 @@
     <Filter Include="Applications\Test_App\Commands\CatchSlickOrSamCommand">
       <UniqueIdentifier>{3102c50e-4446-452a-8a07-4d714d82bace}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Applications\Test_App\Commands\ChangeColourCommand">
+      <UniqueIdentifier>{d13fa926-50d5-4196-8acc-5083df108169}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -266,6 +269,9 @@
     </ClCompile>
     <ClCompile Include="CatchSlickOrSamCommand.cpp">
       <Filter>Applications\Test_App\Commands\CatchSlickOrSamCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeColourCommand.cpp">
+      <Filter>Applications\Test_App\Commands\ChangeColourCommand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -439,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="CatchSlickOrSamCommand.h">
       <Filter>Applications\Test_App\Commands\CatchSlickOrSamCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeColourCommand.h">
+      <Filter>Applications\Test_App\Commands\ChangeColourCommand</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
