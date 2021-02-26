@@ -2,19 +2,30 @@
 #include "Keyboard.h"
 #include "Command.h"
 
+Integrian::Keyboard::Keyboard(const Keyboard& other)
+{
+	m_KeyboardCommands = other.m_KeyboardCommands;
+}
+Integrian::Keyboard::Keyboard(Keyboard&& other)
+{
+	m_KeyboardCommands = other.m_KeyboardCommands;
+	other.m_KeyboardCommands.clear();
+}
+
+
 Integrian::Keyboard::~Keyboard()
 {
-	m_pKeyboardCommands.clear();
+	m_KeyboardCommands.clear();
 }
 
 void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand)
 {
-	m_pKeyboardCommands[keyboardInput].push_back(CommandAndButton{ pCommand,keyState });
+	m_KeyboardCommands[keyboardInput].push_back(CommandAndButton{ pCommand,keyState });
 }
 
 void Integrian::Keyboard::ExecuteCommands()
 {
-	for (std::pair<const KeyboardInput, std::vector<CommandAndButton>>& commandPair : m_pKeyboardCommands)
+	for (std::pair<const KeyboardInput, std::vector<CommandAndButton>>& commandPair : m_KeyboardCommands)
 	{
 		for (CommandAndButton& commandAndButton : commandPair.second)
 		{

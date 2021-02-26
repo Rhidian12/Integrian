@@ -14,11 +14,6 @@ namespace Integrian
 	public:
 		~Keyboard();
 
-		Keyboard(const Keyboard&) = delete;
-		Keyboard(Keyboard&&) = delete;
-		Keyboard& operator=(const Keyboard&) = delete;
-		Keyboard& operator=(Keyboard&&) = delete;
-
 		void AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand);
 		void ExecuteCommands();
 
@@ -26,14 +21,28 @@ namespace Integrian
 
 	private:
 		Keyboard() = default;
+		Keyboard(const Keyboard& other);
+		Keyboard(Keyboard&& other);
+		Keyboard& operator=(const Keyboard& other);
+		Keyboard& operator=(Keyboard&& other);
 		friend class InputManager;
 
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const KeyboardInput keyboardInput, const State previousState) const;
 
-		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_pKeyboardCommands{};
+		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_KeyboardCommands{};
 
 		using CommandPair = std::pair<KeyboardInput, std::vector<CommandAndButton>>;
+
+		inline Integrian::Keyboard& operator=(const Integrian::Keyboard& other)
+		{
+			m_KeyboardCommands = other.m_KeyboardCommands;
+		}
+		inline Integrian::Keyboard& operator=(Integrian::Keyboard&& other)
+		{
+			m_KeyboardCommands = other.m_KeyboardCommands;
+			other.m_KeyboardCommands.clear();
+		}
 	};
 }
 
