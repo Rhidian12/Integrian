@@ -19,6 +19,22 @@ Integrian::GameController::GameController(const uint8_t index)
 	}
 }
 
+Integrian::GameController::GameController(const GameController& other)
+{
+	m_pCommands = other.m_pCommands;
+	m_pSDLGameController = other.m_pSDLGameController;
+	m_Index = other.m_Index;
+}
+Integrian::GameController::GameController(GameController&& other)
+{
+	m_pCommands = other.m_pCommands;
+	m_pSDLGameController = other.m_pSDLGameController;
+	m_Index = other.m_Index;
+
+	other.m_pCommands.clear();
+	other.m_pSDLGameController = nullptr;
+}
+
 Integrian::GameController::~GameController()
 {
 	// Below code SHOULD work, but does not work. Throws read access violations, even though this is the exact

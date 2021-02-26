@@ -15,18 +15,19 @@ namespace Integrian
 	public:
 		~GameController();
 
-		GameController(const GameController&) = delete;
-		GameController(GameController&&) = delete;
-		GameController& operator=(const GameController&) = delete;
-		GameController& operator=(GameController&&) = delete;
-
 		void AddCommand(const ControllerInput controllerInput, const State keyState, Command* pCommand);
 		void ExecuteCommands();
 
 		[[nodiscard]] bool IsPressed(const ControllerInput controllerInput) const;
 
 	private:
+		GameController() = default;
 		GameController(const uint8_t index);
+
+		GameController(const GameController& other);
+		GameController(GameController&& other);
+		GameController& operator=(const GameController& other);
+		GameController& operator=(GameController&& other);
 		friend class InputManager;
 
 		bool WasPressed(const State previousState) const;
@@ -36,9 +37,23 @@ namespace Integrian
 		SDL_GameController* m_pSDLGameController;
 		uint8_t m_Index;
 
-
-
 		using CommandPair = std::pair<ControllerInput, std::vector<CommandAndButton>>;
+
+		inline GameController& operator=(const GameController& other)
+		{
+			m_pCommands = other.m_pCommands;
+			m_pSDLGameController = other.m_pSDLGameController;
+			m_Index = other.m_Index;
+		}
+		inline GameController& operator=(GameController&& other)
+		{
+			m_pCommands = other.m_pCommands;
+			m_pSDLGameController = other.m_pSDLGameController;
+			m_Index = other.m_Index;
+
+			other.m_pCommands.clear();
+			other.m_pSDLGameController = nullptr;
+		}
 	};
 }
 
