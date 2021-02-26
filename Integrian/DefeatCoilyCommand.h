@@ -17,7 +17,7 @@ namespace Integrian
 
 	private:
 		ScoreComponent* m_pScoreComponent;
-	}
-};
+	};
+}
 
 #endif // !INTEGRIAN_DEFEATCOILYCOMMAND_H
