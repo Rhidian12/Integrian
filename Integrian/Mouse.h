@@ -13,11 +13,6 @@ namespace Integrian
 	public:
 		~Mouse();
 
-		Mouse(const Mouse&) = delete;
-		Mouse(Mouse&&) = delete;
-		Mouse& operator=(const Mouse&) = delete;
-		Mouse& operator=(Mouse&&) = delete;
-
 		void AddCommand(const MouseButton mouseButton, const State keyState, Command* pCommand);
 		void ExecuteCommands();
 
@@ -25,14 +20,24 @@ namespace Integrian
 
 	private:
 		Mouse() = default;
+		Mouse(const Mouse&) = delete;
+		Mouse(Mouse&& other);
+		Mouse& operator=(const Mouse&) = delete;
+		Mouse& operator=(Mouse&& other);
 		friend class InputManager;
 
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const MouseButton mouseButton, const State previousState) const;
 
-		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_pMouseCommands{};
+		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_MouseCommands{};
 
 		using CommandPair = std::pair<MouseButton, std::vector<CommandAndButton>>;
+	
+		inline Mouse& operator=(Mouse&& other)
+		{
+			m_MouseCommands = other.m_MouseCommands;
+			other.m_MouseCommands.clear();
+		}
 	};
 }
 

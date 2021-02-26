@@ -1,19 +1,25 @@
 #include "Mouse.h"
 #include "Command.h"
 
+Integrian::Mouse::Mouse(Mouse&& other)
+{
+	m_MouseCommands = other.m_MouseCommands;
+	other.m_MouseCommands.clear();
+}
+
 Integrian::Mouse::~Mouse()
 {
-	m_pMouseCommands.clear();
+	m_MouseCommands.clear();
 }
 
 void Integrian::Mouse::AddCommand(const MouseButton mouseButton, const State keyState, Command* pCommand)
 {
-	m_pMouseCommands[mouseButton].push_back(CommandAndButton{ pCommand,keyState });
+	m_MouseCommands[mouseButton].push_back(CommandAndButton{ pCommand,keyState });
 }
 
 void Integrian::Mouse::ExecuteCommands()
 {
-	for (std::pair<const MouseButton, std::vector<CommandAndButton>>& commandPair : m_pMouseCommands)
+	for (std::pair<const MouseButton, std::vector<CommandAndButton>>& commandPair : m_MouseCommands)
 	{
 		for (CommandAndButton& commandAndButton : commandPair.second)
 		{
