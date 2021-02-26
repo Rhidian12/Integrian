@@ -24,9 +24,9 @@ namespace Integrian
 		GameController() = default;
 		GameController(const uint8_t index);
 
-		GameController(const GameController& other);
+		GameController(const GameController&) = delete;
 		GameController(GameController&& other);
-		GameController& operator=(const GameController& other);
+		GameController& operator=(const GameController&) = delete;
 		GameController& operator=(GameController&& other);
 		friend class InputManager;
 
@@ -39,12 +39,6 @@ namespace Integrian
 
 		using CommandPair = std::pair<ControllerInput, std::vector<CommandAndButton>>;
 
-		inline GameController& operator=(const GameController& other)
-		{
-			m_pCommands = other.m_pCommands;
-			m_pSDLGameController = other.m_pSDLGameController;
-			m_Index = other.m_Index;
-		}
 		inline GameController& operator=(GameController&& other)
 		{
 			m_pCommands = other.m_pCommands;
