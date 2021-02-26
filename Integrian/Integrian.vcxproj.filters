@@ -139,6 +139,9 @@
     <Filter Include="Applications\Test_App\Commands\DefeatCoily">
       <UniqueIdentifier>{5f7c5f95-e642-4e22-a933-8d39cc5dbbfa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Applications\Test_App\Commands\CatchSlickOrSamCommand">
+      <UniqueIdentifier>{3102c50e-4446-452a-8a07-4d714d82bace}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -260,6 +263,9 @@
     </ClCompile>
     <ClCompile Include="DefeatCoilyCommand.cpp">
       <Filter>Applications\Test_App\Commands\DefeatCoily</Filter>
+    </ClCompile>
+    <ClCompile Include="CatchSlickOrSamCommand.cpp">
+      <Filter>Applications\Test_App\Commands\CatchSlickOrSamCommand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -430,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="DefeatCoilyCommand.h">
       <Filter>Applications\Test_App\Commands\DefeatCoily</Filter>
+    </ClInclude>
+    <ClInclude Include="CatchSlickOrSamCommand.h">
+      <Filter>Applications\Test_App\Commands\CatchSlickOrSamCommand</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

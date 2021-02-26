@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="CatchSlickOrSamCommand.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DefeatCoilyCommand.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />
+    <ClInclude Include="CatchSlickOrSamCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DefeatCoilyCommand.h" />
