@@ -27,7 +27,6 @@ namespace Integrian
 		GameController(const GameController&) = delete;
 		GameController(GameController&& other);
 		GameController& operator=(const GameController&) = delete;
-		GameController& operator=(GameController&& other);
 		friend class InputManager;
 
 		bool WasPressed(const State previousState) const;
@@ -47,6 +46,8 @@ namespace Integrian
 
 			other.m_pCommands.clear();
 			other.m_pSDLGameController = nullptr;
+
+			return *this;
 		}
 	};
 }

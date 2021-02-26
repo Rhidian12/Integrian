@@ -24,7 +24,6 @@ namespace Integrian
 		Keyboard(const Keyboard&) = delete;
 		Keyboard(Keyboard&& other);
 		Keyboard& operator=(const Keyboard&) = delete;
-		Keyboard& operator=(Keyboard&& other);
 		friend class InputManager;
 
 		bool WasPressed(const State previousState) const;
@@ -38,6 +37,8 @@ namespace Integrian
 		{
 			m_KeyboardCommands = other.m_KeyboardCommands;
 			other.m_KeyboardCommands.clear();
+
+			return *this;
 		}
 	};
 }

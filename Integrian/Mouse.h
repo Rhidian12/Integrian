@@ -23,7 +23,6 @@ namespace Integrian
 		Mouse(const Mouse&) = delete;
 		Mouse(Mouse&& other);
 		Mouse& operator=(const Mouse&) = delete;
-		Mouse& operator=(Mouse&& other);
 		friend class InputManager;
 
 		bool WasPressed(const State previousState) const;
@@ -37,6 +36,8 @@ namespace Integrian
 		{
 			m_MouseCommands = other.m_MouseCommands;
 			other.m_MouseCommands.clear();
+
+			return *this;
 		}
 	};
 }
