@@ -1,4 +1,5 @@
 #include "Observer.h"
+#include "Logger.h"
 
 void Integrian::Observer::OnNotify(const std::string& event)
 {
@@ -6,4 +7,6 @@ void Integrian::Observer::OnNotify(const std::string& event)
 	if (iterator != m_pFunctions.cend())
 		for (std::function<void()> pFunction : iterator->second)
 			pFunction();
+	else
+		Logger::GetInstance().Log("Event not found!", ErrorLevel::error);
 }

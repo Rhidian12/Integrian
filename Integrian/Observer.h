@@ -9,11 +9,11 @@
 
 namespace Integrian
 {
-	class Observer
+	class Observer final
 	{
 	public:
 		Observer() = default;
-		virtual ~Observer() = default;
+		~Observer() = default;
 
 		void OnNotify(const std::string& event);
 
