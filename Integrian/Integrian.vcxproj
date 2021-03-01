@@ -205,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActorComponent.h" />
+    <ClInclude Include="allocators.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />
@@ -212,11 +213,18 @@
     <ClInclude Include="ChangeColourCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="cursorstreamwrapper.h" />
     <ClInclude Include="DefeatCoilyCommand.h" />
     <ClInclude Include="DisksRemainingCommand.h" />
+    <ClInclude Include="document.h" />
+    <ClInclude Include="encodedstream.h" />
+    <ClInclude Include="encodings.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="ExceptionHandler.h" />
+    <ClInclude Include="filereadstream.h" />
+    <ClInclude Include="filewritestream.h" />
     <ClInclude Include="FPSComponent.h" />
+    <ClInclude Include="fwd.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="GameInput.h" />
     <ClInclude Include="GameObject.h" />
@@ -224,6 +232,7 @@
     <ClInclude Include="HealthDisplayComponent.h" />
     <ClInclude Include="InitialisationFailed.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="istreamwrapper.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="KillCommand.h" />
     <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_opengl2.h" />
@@ -236,18 +245,28 @@
     <ClInclude Include="Libraries\imgui-master\imstb_truetype.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MathFunctions.h" />
+    <ClInclude Include="memorybuffer.h" />
+    <ClInclude Include="memorystream.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="OrthographicCamera.h" />
+    <ClInclude Include="ostreamwrapper.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Point2f.h" />
+    <ClInclude Include="pointer.h" />
     <ClInclude Include="PossibleCharacters.h" />
     <ClInclude Include="PossibleInputs.h" />
+    <ClInclude Include="prettywriter.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="PrinterManager.h" />
+    <ClInclude Include="rapidjson.h" />
+    <ClInclude Include="reader.h" />
+    <ClInclude Include="schema.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
+    <ClInclude Include="stream.h" />
+    <ClInclude Include="stringbuffer.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="RuntimeInitFailed.h" />
     <ClInclude Include="Singleton.h" />
@@ -263,6 +282,7 @@
     <ClInclude Include="Utility Functions.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vector2f.h" />
+    <ClInclude Include="writer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
