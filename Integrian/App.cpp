@@ -17,11 +17,11 @@ Integrian::App::App()
 Integrian::App::~App()
 {
 	for (GameObject* pGameObject : m_pGameObjects)
-		SAFE_DELETE(pGameObject);
+		SafeDelete(pGameObject);
 	m_pGameObjects.clear();
 
 	for (Command* pCommand : m_pCommands)
-		SAFE_DELETE(pCommand);
+		SafeDelete(pCommand);
 	m_pCommands.clear();
 	
 	ShutDown();

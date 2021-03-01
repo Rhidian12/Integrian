@@ -15,7 +15,7 @@ void Integrian::TextureManager::Init(const std::string& path)
 Integrian::TextureManager::~TextureManager()
 {
 	for (std::pair<std::string, Texture*> pPair : m_pTextures)
-		SAFE_DELETE(pPair.second);
+		SafeDelete(pPair.second);
 }
 
 void Integrian::TextureManager::AddTexture(const std::string& name, const std::string& path)

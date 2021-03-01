@@ -37,6 +37,14 @@
 #include "ExceptionHandler.h"
 #include "Logger.h"
 
-#define SAFE_DELETE(p) if(p) {delete (p); (p) = nullptr;}
+template<typename Type>
+constexpr void SafeDelete(Type* pData)
+{
+	if (pData)
+	{
+		delete pData;
+		pData = nullptr;
+	}
+}
 
 #endif //PCH_H

@@ -4,10 +4,11 @@
 
 #include "Component.h"
 #include <memory>
+#include "Observer.h"
+#include "Subject.h"
 
 namespace Integrian
 {
-	class Observer;
 	class Subject;
 	class HealthComponent final : public Component
 	{
@@ -16,7 +17,11 @@ namespace Integrian
 		HealthComponent(const uint64_t maxLives, const uint64_t currentLives);
 		virtual ~HealthComponent() = default;
 
-		void AddObserver(Observer* pObserver);
+		template<typename ... Args>
+		void AddObserver(Observer<Args...>* pObserver)
+		{
+			m_pSubject->AddObserver(pObserver);
+		}
 		void DecreaseLivesByValue(const uint64_t value);
 
 		[[nodiscard]] uint64_t GetCurrentHealth() const;

@@ -5,27 +5,44 @@
 #include "pch.h"
 #include <vector>
 #include "Observer.h"
+#include <algorithm>
+#include "Logger.h"
 
 namespace Integrian
 {
-	class Observer;
+	class IObserver;
 	class Subject
 	{
 	public:
 		Subject() = default;
 		~Subject() = default;
 
-		void AddObserver(Observer* pObserver);
-		void RemoveObserver(Observer* pObserver);
-
-		void Notify(const std::string& event)
+		template<typename ... Args>
+		void AddObserver(Observer<Args...>* pObserver)
 		{
-			for (Observer* pObserver : m_pObservers)
-				pObserver->OnNotify(event);
+			ObserverConstIt it{ std::find(m_pObservers.cbegin(),m_pObservers.cend(),pObserver) };
+			if (it == m_pObservers.cend())
+				m_pObservers.push_back(pObserver);
+			else
+				Logger::GetInstance().Log("Observer was already added!", ErrorLevel::error);
+		}
+		template<typename ... Args>
+		void RemoveObserver(Observer<Args...>* pObserver)
+		{
+			m_pObservers.erase(std::remove(m_pObservers.begin(), m_pObservers.end(), pObserver));
+		}
+
+		template<typename ... Args>
+		inline void Notify(const std::string& event, const Args& ... args)
+		{
+			for (size_t i{}; i < m_pObservers.size(); ++i)
+				static_cast<Observer<Args...>*>(m_pObservers[i])->OnNotify(event, args...);
 		}
 
 	private:
-		std::vector<Observer*> m_pObservers;
+		std::vector<IObserver*> m_pObservers;
+
+		using ObserverConstIt = std::vector<IObserver*>::const_iterator;
 	};
 }
 

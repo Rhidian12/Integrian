@@ -1,0 +1,46 @@
+{
+	"GameObjects":
+	[
+		{
+			"name": "Q*bert",
+			"Components":
+			[
+				{
+					"name": "pHealthComponent",
+					"type": "HealthComponent",
+					"constructor": [3, 3]
+				},
+				{
+					"name": "pActor",
+					"type": "ActorComponent",
+					"constructor": []
+				},
+				{
+					"name": "pScoreComponent",
+					"type": "ScoreComponent",
+					"constructor": []
+				},
+			],
+		},
+		{
+			"name": "Q*bertHealthDisplay"
+			"Components":
+			[
+				{
+					"name": "pTextComponent",
+					"type": "TextComponent",
+					"constructor": ["Player 1 Remaining Lives: ", 30, 255, 0, 0]
+				},
+				{
+					"name": "pHealthDisplayComponent",
+					"type": "HealthDisplayComponent",
+					"constructor": ["COMPONENT: pTextComponent", "COMPONENT: pHealthComponent"]
+				},
+			]
+		},
+		{
+			"name": "pScoreDisplay"
+		},
+	],
+	
+}

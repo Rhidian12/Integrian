@@ -87,17 +87,18 @@ void Integrian::Test_App::InitPlayerOne()
 
 	TextComponent* pTextComponent{ new TextComponent{"Player 1 Remaining Lives: ", 30, RGBColour{255.f,0.f,0.f}} };
 	HealthComponent* pHealthComponent{ new HealthComponent{3,3} };
-	HealthDisplayComponent* pHealthDisplayComponent{ new HealthDisplayComponent{pTextComponent, pHealthComponent} };
+	HealthDisplayComponent* pHealthDisplayComponent{ new HealthDisplayComponent{pTextComponent, pHealthComponent->GetCurrentHealth()} };
 	ActorComponent* pActor{ new ActorComponent{} };
 	ScoreComponent* pScoreComponent{ new ScoreComponent{} };
 
 	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 1 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
-	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, pScoreComponent } };
+	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, 0 } };
 	pScoreDisplay->AddComponent(pScoreDisplayTextComponent);
 	pScoreDisplay->AddComponent(pScoreDisplayComponent);
 	pScoreDisplay->transform = Point2f{ 150.f, 50.f };
 
 	pHealthComponent->AddObserver(pHealthDisplayComponent->GetObserver());
+	pHealthComponent->AddObserver(pHealthDisplayComponent->GetObserver<uint64_t>());
 	pScoreComponent->AddObserver(pScoreDisplayComponent->GetObserver());
 
 	KillCommand* pKillCommand{ new KillCommand{pHealthComponent} };
@@ -139,17 +140,19 @@ void Integrian::Test_App::InitPlayerTwo()
 
 	TextComponent* pTextComponent{ new TextComponent{"Player 2 Remaining Lives: ", 30, RGBColour{255.f,0.f,0.f}} };
 	HealthComponent* pHealthComponent{ new HealthComponent{3,3} };
-	HealthDisplayComponent* pHealthDisplayComponent{ new HealthDisplayComponent{pTextComponent, pHealthComponent} };
+	HealthDisplayComponent* pHealthDisplayComponent{ new HealthDisplayComponent{pTextComponent, pHealthComponent->GetCurrentHealth()} };
 	ActorComponent* pActor{ new ActorComponent{} };
 	ScoreComponent* pScoreComponent{ new ScoreComponent{} };
 
 	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 2 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
-	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, pScoreComponent } };
+	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, 0 } };
+	
 	pScoreDisplay->AddComponent(pScoreDisplayTextComponent);
 	pScoreDisplay->AddComponent(pScoreDisplayComponent);
 	pScoreDisplay->transform = Point2f{ 150.f, 0.f };
 
 	pHealthComponent->AddObserver(pHealthDisplayComponent->GetObserver());
+	pHealthComponent->AddObserver(pHealthDisplayComponent->GetObserver<uint64_t>());
 	pScoreComponent->AddObserver(pScoreDisplayComponent->GetObserver());
 
 	KillCommand* pKillCommand{ new KillCommand{pHealthComponent} };
@@ -167,8 +170,8 @@ void Integrian::Test_App::InitPlayerTwo()
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
 	pQbert->AddComponent(pScoreComponent);
-	pQbertHealthDisplay->transform = Point2f{ 150.f,100.f };
 
+	pQbertHealthDisplay->transform = Point2f{ 150.f,100.f };
 	pQbertHealthDisplay->AddComponent(pTextComponent);
 	pQbertHealthDisplay->AddComponent(pHealthDisplayComponent);
 

@@ -15,23 +15,17 @@ Integrian::HealthComponent::HealthComponent(const uint64_t maxLives, const uint6
 {
 }
 
-void Integrian::HealthComponent::AddObserver(Observer* pObserver)
-{
-	m_pSubject->AddObserver(pObserver);
-}
-
 void Integrian::HealthComponent::DecreaseLivesByValue(const uint64_t value)
 {
 	if (m_CurrentLives > 0)
 	{
 		m_CurrentLives -= value;
 
-		if (m_CurrentLives == 0)
+		if (m_CurrentLives <= 0)
 			m_pSubject->Notify("OnDeath");
 		else
-			m_pSubject->Notify("OnLifeLost");
+			m_pSubject->Notify("OnLifeLost", m_CurrentLives);
 	}
-
 }
 
 uint64_t Integrian::HealthComponent::GetCurrentHealth() const

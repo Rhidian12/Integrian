@@ -8,17 +8,12 @@ Integrian::ScoreComponent::ScoreComponent(const uint64_t maxScore, const uint64_
 {
 }
 
-void Integrian::ScoreComponent::AddObserver(Observer* pObserver)
-{
-	m_pSubject->AddObserver(pObserver);
-}
-
 void Integrian::ScoreComponent::ChangeScore(const TypeOfGettingScore score)
 {
 	if (m_CurrentScore < m_MaxScore)
 	{
 		m_CurrentScore += static_cast<std::underlying_type<TypeOfGettingScore>::type>(score);
-		m_pSubject->Notify("OnScoreChange");
+		m_pSubject->Notify("OnScoreChange", m_CurrentScore);
 	}
 }
 

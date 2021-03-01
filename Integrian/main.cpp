@@ -60,7 +60,7 @@ int main(int argc, char* args[])
 	}
 
 	// == Cleanup ==
-	SAFE_DELETE(pApplication);
+	SafeDelete(pApplication);
 
 	return 0;
 }

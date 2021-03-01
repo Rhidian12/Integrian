@@ -3,26 +3,28 @@
 #define INTEGRIAN_SCOREDISPLAYCOMPONENT_H
 
 #include "Component.h"
+#include "Observer.h"
 
 namespace Integrian
 {
-	class Observer;
 	class TextComponent;
 	class ScoreComponent;
 	class ScoreDisplayComponent final : public Component
 	{
 	public:
-		ScoreDisplayComponent(TextComponent* pTextComponent, ScoreComponent* pScoreComponent);
+		ScoreDisplayComponent(TextComponent* pTextComponent, uint64_t currentScore);
 		virtual ~ScoreDisplayComponent();
 
-		void OnScoreChange();
+		void OnScoreChange(uint64_t currentScore);
 
-		[[nodiscard]] Observer* GetObserver() const;
+		[[nodiscard]] Observer<uint64_t>* GetObserver() const
+		{
+			return m_pObserver;
+		}
 
 	private:
 		TextComponent* m_pTextComponent;
-		ScoreComponent* m_pScoreComponent;
-		Observer* m_pObserver;
+		Observer<uint64_t>* m_pObserver;
 	};
 }
 

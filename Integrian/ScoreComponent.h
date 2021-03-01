@@ -5,6 +5,8 @@
 #include "Component.h"
 #include <limits>
 #include <memory>
+#include "Observer.h"
+#include "Subject.h"
 
 enum class TypeOfGettingScore : uint64_t
 {
@@ -16,15 +18,17 @@ enum class TypeOfGettingScore : uint64_t
 
 namespace Integrian
 {
-	class Subject;
-	class Observer;
 	class ScoreComponent final : public Component
 	{
 	public:
 		ScoreComponent(const uint64_t maxScore = std::numeric_limits<uint64_t>::max() , const uint64_t currentScore = 0);
 		virtual ~ScoreComponent() = default;
 
-		void AddObserver(Observer* pObserver);
+		template<typename ... Args>
+		void AddObserver(Observer<Args...>* pObserver)
+		{
+			m_pSubject->AddObserver(pObserver);
+		}
 
 		void ChangeScore(const TypeOfGettingScore score);
 

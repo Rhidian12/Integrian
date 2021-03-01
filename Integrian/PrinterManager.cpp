@@ -8,7 +8,7 @@
 Integrian::PrinterManager::~PrinterManager()
 {
 	for (Printer* pPrinter : m_pPrinters)
-		SAFE_DELETE(pPrinter);
+		SafeDelete(pPrinter);
 }
 
 Integrian::Printer* Integrian::PrinterManager::AddPrinter(const int size, const RGBColour& colour)
