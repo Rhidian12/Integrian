@@ -26,6 +26,7 @@ namespace Integrian
 			else
 				Logger::GetInstance().Log("Observer was already added!", ErrorLevel::error);
 		}
+
 		template<typename ... Args>
 		void RemoveObserver(Observer<Args...>* pObserver)
 		{
