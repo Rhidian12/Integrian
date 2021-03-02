@@ -22,7 +22,6 @@ namespace Integrian
 		~GameObject();
 
 		void AddComponent(Component* pComponent);
-		//void AddCommand(Command* pCommand);
 
 		void Update(const float elapsedSeconds);
 		void FixedUpdate(const float elapsedSeconds);
@@ -42,24 +41,11 @@ namespace Integrian
 			Logger::GetInstance().Log("GetComponentByType returned a nullptr\n", ErrorLevel::warning);
 			return nullptr;
 		}
-		//template<typename Type>
-		//inline [[nodiscard]] Type* GetCommandByType() const
-		//{
-		//	for (Command* pCommand : m_pCommands)
-		//	{
-		//		if (typeid(*pCommand) == typeid(Type))
-		//			return static_cast<Type*>(pCommand);
-		//	}
-
-		//	Logger::GetInstance().Log("GetCommandByType returned a nullptr", ErrorLevel::warning);
-		//	return nullptr;
-		//}
 		
 		TransformComponent transform{};
 	
 	private:
 		std::vector<Component*> m_pComponents;
-		//std::vector<Command*> m_pCommands;
 	};
 }
 #endif // INTEGRIAN_GAMEOBJECT_H
