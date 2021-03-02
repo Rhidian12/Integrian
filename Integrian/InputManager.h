@@ -47,6 +47,8 @@ namespace Integrian
 		[[nodiscard]] bool IsMouseButtonPressed(const MouseButton gameInput) const;
 		[[nodiscard]] bool IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex = 0) const;
 		[[nodiscard]] const Point2f& GetMousePosition() const;
+		[[nodiscard]] double GetJoystickMovement(const SDL_GameControllerAxis axis, const uint8_t playerIndex = 0) const;
+		[[nodiscard]] double GetTriggerMovement(const SDL_GameControllerAxis axis, const uint8_t playerIndex = 0) const;
 
 	private:
 		InputManager();

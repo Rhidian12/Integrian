@@ -92,3 +92,13 @@ const Integrian::Point2f& Integrian::InputManager::GetMousePosition() const
 {
 	return m_MousePosition;
 }
+
+double Integrian::InputManager::GetJoystickMovement(const SDL_GameControllerAxis axis, const uint8_t playerIndex) const
+{
+	return m_Controllers[playerIndex].GetJoystickMovement(axis);
+}
+
+double Integrian::InputManager::GetTriggerMovement(const SDL_GameControllerAxis axis, const uint8_t playerIndex) const
+{
+	return m_Controllers[playerIndex].GetTriggerMovement(axis);
+}

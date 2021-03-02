@@ -29,12 +29,15 @@ namespace Integrian
 		GameController& operator=(const GameController&) = delete;
 		friend class InputManager;
 
-		bool WasPressed(const State previousState) const;
-		State GetKeystate(const ControllerInput controllerInput, const State previousState) const;
+		[[nodiscard]] bool WasPressed(const State previousState) const;
+		[[nodiscard]] State GetKeystate(const ControllerInput controllerInput, const State previousState) const;
+		[[nodiscard]] double GetJoystickMovement(const SDL_GameControllerAxis axis) const;
+		[[nodiscard]] double GetTriggerMovement(const SDL_GameControllerAxis axis) const;
 
 		std::unordered_map<ControllerInput, std::vector<CommandAndButton>> m_pCommands;
 		SDL_GameController* m_pSDLGameController;
 		uint8_t m_Index;
+		static constexpr double m_MaxJoystickValue{ 32767.0 };
 
 		using CommandPair = std::pair<ControllerInput, std::vector<CommandAndButton>>;
 

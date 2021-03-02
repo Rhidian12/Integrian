@@ -1,4 +1,5 @@
 #include "GameController.h"
+#include "Logger.h"
 #include "Command.h"
 
 Integrian::GameController::GameController(const uint8_t index)
@@ -19,7 +20,7 @@ Integrian::GameController::GameController(const uint8_t index)
 	}
 }
 
-Integrian::GameController::GameController(GameController&& other)
+Integrian::GameController::GameController(GameController&& other) noexcept
 {
 	m_pCommands = other.m_pCommands;
 	m_pSDLGameController = other.m_pSDLGameController;
@@ -96,4 +97,29 @@ Integrian::State Integrian::GameController::GetKeystate(const ControllerInput co
 		return State::OnPress;
 
 	return State::NotPressed;
+}
+
+double Integrian::GameController::GetJoystickMovement(const SDL_GameControllerAxis axis) const
+{
+	if (axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_LEFTX && axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_LEFTY)
+	{
+		if (axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_RIGHTX && axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_RIGHTY)
+		{
+			Logger::GetInstance().Log("GetJoystickMovement() was called with a wrong parameter!", ErrorLevel::warning);
+			return 0.0;
+		}
+	}
+
+	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, axis) / m_MaxJoystickValue), -1.0, 1.0); // map to [0,1]
+}
+
+double Integrian::GameController::GetTriggerMovement(const SDL_GameControllerAxis axis) const
+{
+	if (axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_TRIGGERLEFT && axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_TRIGGERRIGHT)
+	{
+		Logger::GetInstance().Log("GetTriggerMovement() was called with the wrong parameter!", ErrorLevel::warning);
+		return 0.0;
+	}
+
+	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, axis) / m_MaxJoystickValue), 0.0, 1.0); // map to [0,1]
 }
