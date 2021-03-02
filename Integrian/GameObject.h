@@ -38,7 +38,7 @@ namespace Integrian
 					return static_cast<Type*>(pComponent);
 			}
 
-			Logger::GetInstance().Log("GetComponentByType returned a nullptr\n", ErrorLevel::warning);
+			Logger::GetInstance().Log("GetComponentByType returned a nullptr\n", ErrorLevel::error);
 			return nullptr;
 		}
 		
