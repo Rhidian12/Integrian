@@ -29,14 +29,18 @@ namespace Integrian
 		template<typename ... Args>
 		void RemoveObserver(Observer<Args...>* pObserver)
 		{
-			m_pObservers.erase(std::remove(m_pObservers.begin(), m_pObservers.end(), pObserver));
+			m_pObservers.erase(std::remove(m_pObservers.begin(), m_pObservers.end(), pObserver), m_pObservers.end());
 		}
 
 		template<typename ... Args>
 		inline void Notify(const std::string& event, const Args& ... args)
 		{
 			for (size_t i{}; i < m_pObservers.size(); ++i)
-				static_cast<Observer<Args...>*>(m_pObservers[i])->OnNotify(event, args...);
+			{
+				Observer<Args...>* pTemplatedObserver{ dynamic_cast<Observer<Args...>*>(m_pObservers[i]) };
+				if(pTemplatedObserver)
+					pTemplatedObserver->OnNotify(event, args...);
+			}
 		}
 
 	private:
