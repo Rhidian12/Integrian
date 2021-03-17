@@ -4,22 +4,16 @@
 #include "GameController.h"
 #include "Keyboard.h"
 #include "Mouse.h"
-#include "StaticInstanceAlreadyCreated.h"
 
 extern bool g_IsLooping;
 
-Integrian::InputManager::InputManager(const char* pFile, const int line)
+Integrian::InputManager::InputManager()
 	: m_MousePosition{}
 	, m_WindowWidth{}
 	, m_WindowHeight{}
 	, m_AmountOfControllers{ uint8_t(SDL_NumJoysticks()) }
 	, m_Controllers{}
 {
-	if (m_IsInstantiated)
-		throw StaticInstanceAlreadyCreated{ pFile, line };
-
-	m_IsInstantiated = true;
-
 	for (uint32_t i{}; i < m_MaxAmountOfControllers; ++i)
 		m_Controllers[i] = std::move(GameController{ uint8_t(i) });
 
@@ -54,9 +48,7 @@ void Integrian::InputManager::RemoveCommandFromInput(const GameInput& input, Com
 
 void Integrian::InputManager::RemoveCommand(Command* pCommand, const uint8_t controllerIndex)
 {
-	(void)pCommand;
-	(void)controllerIndex;
-	//TODO: Implement this after event queue has been made
+
 }
 
 void Integrian::InputManager::AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex)

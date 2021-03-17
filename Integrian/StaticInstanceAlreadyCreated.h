@@ -11,10 +11,13 @@ namespace Integrian
 	public:
 		StaticInstanceAlreadyCreated(const char* pFile, const int line)
 		{
+<<<<<<< HEAD
 			ServiceLocator::GetInstance().GetLogger().Log("EXCEPTION: A static instance was created twice in file: ", ErrorLevel::severeError);
 			ServiceLocator::GetInstance().GetLogger().Log(pFile, ErrorLevel::severeError);
 			ServiceLocator::GetInstance().GetLogger().Log(" at line: ", ErrorLevel::severeError);
 			ServiceLocator::GetInstance().GetLogger().Log(std::to_string(line), ErrorLevel::severeError);
+=======
+>>>>>>> parent of d032d2d (Changed Managers to not be Singletons)
 		}
 	};
 }
