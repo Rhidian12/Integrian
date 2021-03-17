@@ -30,7 +30,11 @@ namespace Integrian
 				for (const std::function<void(Args ...)>& pFunction : iterator->second)
 					pFunction(args...);
 			else
-				Logger::GetInstance().Log("Event not found!", ErrorLevel::error);
+			{
+				Logger::GetInstance().Log("Event: ", ErrorLevel::error);
+				Logger::GetInstance().Log(event, ErrorLevel::error);
+				Logger::GetInstance().Log(" was not found!\n", ErrorLevel::error);
+			}
 		}
 
 		template<typename Type>

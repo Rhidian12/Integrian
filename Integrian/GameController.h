@@ -34,12 +34,17 @@ namespace Integrian
 		[[nodiscard]] double GetJoystickMovement(const SDL_GameControllerAxis axis) const;
 		[[nodiscard]] double GetTriggerMovement(const SDL_GameControllerAxis axis) const;
 
+		void RemoveInput(const ControllerInput controllerInput);
+		void RemoveCommandFromInput(const ControllerInput controllerInput, Command* pCommand);
+		void RemoveCommand(Command* pCommand);
+
 		std::unordered_map<ControllerInput, std::vector<CommandAndButton>> m_pCommands;
 		SDL_GameController* m_pSDLGameController;
 		uint8_t m_Index;
-		static constexpr double m_MaxJoystickValue{ 32767.0 };
+		static constexpr double m_MaxJoystickValue{ 32767.0 }; // double instead of integer to prevent typecasting
 
 		using CommandPair = std::pair<ControllerInput, std::vector<CommandAndButton>>;
+		using UMapIterator = std::unordered_map<ControllerInput, std::vector<CommandAndButton>>::iterator;
 
 		inline GameController& operator=(GameController&& other) noexcept
 		{

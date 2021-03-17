@@ -164,6 +164,7 @@
     <ClCompile Include="CatchSlickOrSamCommand.cpp" />
     <ClCompile Include="ChangeColourCommand.cpp" />
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DefeatCoilyCommand.cpp" />
     <ClCompile Include="DisksRemainingCommand.cpp" />
@@ -212,6 +213,8 @@
     <ClInclude Include="CatchSlickOrSamCommand.h" />
     <ClInclude Include="ChangeColourCommand.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandManager.h" />
+    <ClInclude Include="CommandNotCreatedByManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="cursorstreamwrapper.h" />
     <ClInclude Include="DefeatCoilyCommand.h" />
@@ -265,6 +268,7 @@
     <ClInclude Include="schema.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
+    <ClInclude Include="StaticInstanceAlreadyCreated.h" />
     <ClInclude Include="stream.h" />
     <ClInclude Include="stringbuffer.h" />
     <ClInclude Include="Subject.h" />

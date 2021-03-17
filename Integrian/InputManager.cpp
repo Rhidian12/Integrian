@@ -22,6 +22,35 @@ Integrian::InputManager::InputManager()
 	m_Mouse = std::move(Mouse{});
 }
 
+void Integrian::InputManager::RemoveInput(const GameInput& input, const uint8_t controllerIndex)
+{
+	if (input.mouseButton != MouseButton::INVALID)
+		m_Mouse.RemoveInput(input.mouseButton);
+
+	else if (input.keyboardInput != KeyboardInput::INVALID)
+		m_Keyboard.RemoveInput(input.keyboardInput);
+
+	else
+		m_Controllers[controllerIndex].RemoveInput(input.controllerInput);
+}
+
+void Integrian::InputManager::RemoveCommandFromInput(const GameInput& input, Command* pCommand, const uint8_t controllerIndex)
+{
+	if (input.mouseButton != MouseButton::INVALID)
+		m_Mouse.RemoveCommandFromInput(input.mouseButton, pCommand);
+
+	else if (input.keyboardInput != KeyboardInput::INVALID)
+		m_Keyboard.RemoveCommandFromInput(input.keyboardInput, pCommand);
+
+	else
+		m_Controllers[controllerIndex].RemoveCommandFromInput(input.controllerInput, pCommand);
+}
+
+void Integrian::InputManager::RemoveCommand(Command* pCommand, const uint8_t controllerIndex)
+{
+
+}
+
 void Integrian::InputManager::AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex)
 {
 	if (gameInput.controllerInput != ControllerInput::INVALID)

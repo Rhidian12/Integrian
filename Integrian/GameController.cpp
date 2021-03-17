@@ -123,3 +123,79 @@ double Integrian::GameController::GetTriggerMovement(const SDL_GameControllerAxi
 
 	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, axis) / m_MaxJoystickValue), 0.0, 1.0); // map to [0,1]
 }
+
+void Integrian::GameController::RemoveInput(const ControllerInput controllerInput)
+{
+#ifdef _DEBUG
+	UMapIterator it{ m_pCommands.find(controllerInput) };
+	if (it != m_pCommands.end())
+		m_pCommands.erase(it);
+	else
+	{
+		// TODO: Come up with a better logging system, this is ridicilous
+		Logger& logger{ Logger::GetInstance() };
+		logger.Log("Tried to remove a non-existing input, ", ErrorLevel::severeError);
+		logger.Log("In file and at line: ", ErrorLevel::severeError);
+		logger.Log(__FILE__, ErrorLevel::severeError);
+		logger.Log(std::to_string(__LINE__), ErrorLevel::severeError);
+		logger.Log("\n", ErrorLevel::severeError);
+	}
+#else
+	try
+	{
+		m_KeyboardCommands.erase(controllerInput);
+	}
+	catch (const std::exception&)
+	{
+		// TODO: Make this print to a file
+		std::cerr << "Tried to remove a non-existent input" << std::endl;
+	}
+#endif
+}
+
+void Integrian::GameController::RemoveCommandFromInput(const ControllerInput controllerInput, Command* pCommand)
+{
+	std::vector<CommandAndButton>& commands{ m_pCommands.find(controllerInput)->second };
+
+#ifdef _DEBUG
+	std::vector<CommandAndButton>::iterator it{ std::remove_if(commands.begin(),commands.end(),[pCommand](const CommandAndButton& commandAndButton)->bool
+		{
+			return commandAndButton.pCommand == pCommand;
+		}) };
+
+	if (it != commands.end())
+		commands.erase(it, commands.end());
+	else
+	{
+		Logger& logger{ Logger::GetInstance() };
+		logger.Log("Tried to remove a non-existing command, ", ErrorLevel::severeError);
+		logger.Log("In file and at line: ", ErrorLevel::severeError);
+		logger.Log(__FILE__, ErrorLevel::severeError);
+		logger.Log(std::to_string(__LINE__), ErrorLevel::severeError);
+		logger.Log("\n", ErrorLevel::severeError);
+	}
+#else
+	try
+	{
+		commands.erase(std::remove_if(commands.begin(), commands.end(), [pCommand](const CommandAndButton& commandAndButton)->bool
+			{
+				return commandAndButton.pCommand == pCommand;
+			}));
+	}
+	catch (const std::exception&)
+	{
+		// TODO: Make this print something to a log file
+		std::cerr << "Tried to remove non-existing command" << std::endl;
+	}
+#endif
+}
+
+void Integrian::GameController::RemoveCommand(Command* pCommand)
+{
+	for (const CommandPair& commandPair : m_pCommands)
+	{
+		for (const CommandAndButton& commandAndButton : commandPair.second)
+			if (commandAndButton.pCommand == pCommand)
+				m_pCommands.erase(commandPair.first);
+	}
+}

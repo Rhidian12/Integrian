@@ -53,6 +53,11 @@ namespace Integrian
 	private:
 		InputManager();
 		friend class Singleton<InputManager>;
+		friend class CommandManager;
+
+		void RemoveInput(const GameInput& input, const uint8_t controllerIndex = 0);
+		void RemoveCommandFromInput(const GameInput& input, Command* pCommand, const uint8_t controllerIndex = 0);
+		void RemoveCommand(Command* pCommand, const uint8_t controllerIndex = 0);
 
 		Point2f m_MousePosition;
 		uint32_t m_WindowWidth;

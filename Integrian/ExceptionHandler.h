@@ -10,6 +10,7 @@
 #include "InitialisationFailed.h"
 #include "RuntimeInitFailed.h"
 #include "CameraInitialisationFailed.h"
+#include "StaticInstanceAlreadyCreated.h"
 
 #include <exception>
 #include <system_error>
@@ -55,6 +56,9 @@ public:
 		{
 		}
 		catch (const Integrian::CameraInitialisationFailedException&)
+		{
+		}
+		catch (const Integrian::StaticInstanceAlreadyCreated&)
 		{
 		}
 		catch (...)

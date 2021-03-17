@@ -27,10 +27,13 @@ namespace Integrian
 
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const MouseButton mouseButton, const State previousState) const;
+		void RemoveInput(const MouseButton mouseButton);
+		void RemoveCommandFromInput(const MouseButton mouseButton, Command* pCommand);
 
 		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_MouseCommands{};
 
 		using CommandPair = std::pair<MouseButton, std::vector<CommandAndButton>>;
+		using UMapIterator = std::unordered_map<MouseButton, std::vector<CommandAndButton>>::iterator;
 	
 		inline Mouse& operator=(Mouse&& other) noexcept
 		{

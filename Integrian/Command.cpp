@@ -1,11 +1,12 @@
 #include "Command.h"
+#include "Logger.h"
 
-Integrian::Command::Command()
+Integrian::Command::Command(char* pFile)
 	: Command{ nullptr }
 {
-}
-
-Integrian::Command::Command(GameObject* actor)
-	: m_Actor{ actor }
-{
+	if (pFile != "CommandManager.cpp")
+	{
+		Logger& logger{ Logger::GetInstance() };
+		logger.Log("", ErrorLevel::error);
+	}
 }

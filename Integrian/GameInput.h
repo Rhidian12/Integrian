@@ -12,7 +12,7 @@ namespace Integrian
 	{
 		OnHeld = 1,
 		OnRelease = 2,
-		OnPress = 3, // Only use this for controllers!
+		OnPress = 3,
 
 
 		NotPressed = 0 // internal usage

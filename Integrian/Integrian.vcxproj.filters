@@ -151,6 +151,9 @@
     <Filter Include="Applications\Test_App\Components\HealthDisplayComponent">
       <UniqueIdentifier>{6684b9eb-1a55-439c-9020-7459598c25d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Managers\CommandManager">
+      <UniqueIdentifier>{539df794-c972-4892-88b1-10aa05cf9aac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -281,6 +284,9 @@
     </ClCompile>
     <ClCompile Include="DisksRemainingCommand.cpp">
       <Filter>Applications\Test_App\Commands\DisksRemainingCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandManager.cpp">
+      <Filter>Engine\Managers\CommandManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -520,6 +526,15 @@
     </ClInclude>
     <ClInclude Include="writer.h">
       <Filter>Engine\RapidJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandManager.h">
+      <Filter>Engine\Managers\CommandManager</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticInstanceAlreadyCreated.h">
+      <Filter>Engine\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandNotCreatedByManager.h">
+      <Filter>Engine\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

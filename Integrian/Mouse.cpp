@@ -1,5 +1,8 @@
 #include "Mouse.h"
 #include "Command.h"
+#include <algorithm>
+#include <iostream>
+#include "Logger.h"
 
 Integrian::Mouse::Mouse(Mouse&& other)
 {
@@ -58,4 +61,70 @@ Integrian::State Integrian::Mouse::GetKeystate(const MouseButton mouseButton, co
 		return State::OnPress;
 
 	return State::NotPressed;
+}
+
+void Integrian::Mouse::RemoveInput(const MouseButton mouseButton)
+{
+#ifdef _DEBUG
+	UMapIterator it{ m_MouseCommands.find(mouseButton) };
+	if(it != m_MouseCommands.end())
+		m_MouseCommands.erase(it);
+	else
+	{
+		// TODO: Come up with a better logging system, this is ridicilous
+		Logger& logger{ Logger::GetInstance() };
+		logger.Log("Tried to remove a non-existing input, ", ErrorLevel::severeError);
+		logger.Log("In file and at line: ", ErrorLevel::severeError);
+		logger.Log(__FILE__, ErrorLevel::severeError);
+		logger.Log(std::to_string(__LINE__), ErrorLevel::severeError);
+		logger.Log("\n", ErrorLevel::severeError);
+	}
+#else
+	try
+	{
+		m_MouseCommands.erase(mouseButton);
+	}
+	catch (const std::exception&)
+	{
+		// TODO: Make this print to a file
+		std::cerr << "Tried to remove a non-existent input" << std::endl;
+	}
+#endif
+}
+
+void Integrian::Mouse::RemoveCommandFromInput(const MouseButton mouseButton, Command* pCommand)
+{
+	std::vector<CommandAndButton>& commands{ m_MouseCommands.find(mouseButton)->second };
+
+#ifdef _DEBUG
+	std::vector<CommandAndButton>::iterator it{ std::remove_if(commands.begin(),commands.end(),[pCommand](const CommandAndButton& commandAndButton)->bool
+		{
+			return commandAndButton.pCommand == pCommand;
+		}) };
+
+	if (it != commands.end())
+		commands.erase(it, commands.end());
+	else
+	{
+		Logger& logger{ Logger::GetInstance() };
+		logger.Log("Tried to remove a non-existing command, ", ErrorLevel::severeError);
+		logger.Log("In file and at line: ", ErrorLevel::severeError);
+		logger.Log(__FILE__, ErrorLevel::severeError);
+		logger.Log(std::to_string(__LINE__), ErrorLevel::severeError);
+		logger.Log("\n", ErrorLevel::severeError);
+	}
+#else
+	try
+	{
+		commands.erase(std::remove_if(commands.begin(), commands.end(), [pCommand](const CommandAndButton& commandAndButton)->bool
+			{
+				return commandAndButton.pCommand == pCommand;
+			}));
+	}
+	catch (const std::exception&)
+	{
+		// TODO: Make this print something to a log file
+		std::cerr << "Tried to remove non-existing command" << std::endl;
+	}
+#endif
 }
