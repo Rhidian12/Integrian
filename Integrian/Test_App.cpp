@@ -106,6 +106,7 @@ void Integrian::Test_App::InitPlayerOne()
 	CatchSlickOrSamCommand* pCatchSlickOrSamCommand{ new CatchSlickOrSamCommand{pScoreComponent} };
 	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
 	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
+<<<<<<< HEAD
 	CommandManager commandManager = ServiceLocator::GetInstance().GetCommandManager();
 	commandManager.AddCommand(pKillCommand);
 	commandManager.AddCommand(pDefeatCoilyCommand);
@@ -118,12 +119,14 @@ void Integrian::Test_App::InitPlayerOne()
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
+=======
 
 	pActor->AddCommand(GameInput{ KeyboardInput::A }, pKillCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::W }, pDefeatCoilyCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::S }, pCatchSlickOrSamCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::D }, pChangeColourCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::E }, pDisksRemainingCommand, State::OnRelease);
+>>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
@@ -172,6 +175,7 @@ void Integrian::Test_App::InitPlayerTwo()
 	CatchSlickOrSamCommand* pCatchSlickOrSamCommand{ new CatchSlickOrSamCommand{pScoreComponent} };
 	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
 	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
+<<<<<<< HEAD
 	CommandManager commandManager = ServiceLocator::GetInstance().GetCommandManager();
 	commandManager.AddCommand(pKillCommand);
 	commandManager.AddCommand(pDefeatCoilyCommand);
@@ -184,12 +188,14 @@ void Integrian::Test_App::InitPlayerTwo()
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
+=======
 
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonB }, pDefeatCoilyCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
+>>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
