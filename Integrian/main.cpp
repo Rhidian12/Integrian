@@ -40,6 +40,7 @@ int main(int argc, char* args[])
 #pragma warning( disable : 4297 ) // disable the warning telling us that SDL_Main is marked as noexcept
 		ExceptionHandler e{};
 		e.ProcessException();
+		SafeDelete(pApplication);
 		return -1;
 #pragma warning ( pop )
 	}
@@ -55,6 +56,7 @@ int main(int argc, char* args[])
 #pragma warning( disable : 4297 ) // disable the warning telling us that SDL_Main is marked as noexcept
 		ExceptionHandler e{};
 		e.ProcessException();
+		SafeDelete(pApplication);
 		return -1;
 #pragma warning ( pop )
 	}

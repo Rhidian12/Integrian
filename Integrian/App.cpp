@@ -19,10 +19,6 @@ Integrian::App::~App()
 	for (GameObject* pGameObject : m_pGameObjects)
 		SafeDelete(pGameObject);
 	m_pGameObjects.clear();
-
-	for (Command* pCommand : m_pCommands)
-		SafeDelete(pCommand);
-	m_pCommands.clear();
 	
 	ShutDown();
 }

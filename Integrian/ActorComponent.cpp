@@ -7,11 +7,6 @@ Integrian::ActorComponent::ActorComponent()
 {
 }
 
-void Integrian::ActorComponent::AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex)
-{
-	InputManager::GetInstance().AddCommand(gameInput, pCommand, keyState, controllerIndex);
-}
-
 void Integrian::ActorComponent::Invoke(const std::string& event)
 {
 	m_pSubject->Notify(event);

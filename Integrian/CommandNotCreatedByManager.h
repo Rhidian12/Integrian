@@ -15,7 +15,7 @@ namespace Integrian
 	public:
 		CommandNotCreatedByManager()
 		{
-			Logger::GetInstance().Log("ERROR: Initialisation Failed\n", ErrorLevel::severeError);
+			Logger::GetInstance().Log("ERROR: Command not created through CommandManager::CreateCommand()\n", ErrorLevel::severeError);
 		}
 	};
 }
