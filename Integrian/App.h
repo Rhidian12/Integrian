@@ -5,8 +5,7 @@
 #include "pch.h"
 #include <memory>
 #include "GameObject.h"
-#include "CommandManager.h"
-
+#include "ServiceLocator.h"
 
 namespace Integrian
 {
