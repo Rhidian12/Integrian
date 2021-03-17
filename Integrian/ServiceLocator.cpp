@@ -1,26 +1,26 @@
 #include "ServiceLocator.h"
 
-const Integrian::InputManager& Integrian::ServiceLocator::GetInputManager() const
+Integrian::InputManager& Integrian::ServiceLocator::GetInputManager()
 {
     return m_Inputmanager;
 }
 
-const Integrian::CommandManager& Integrian::ServiceLocator::GetCommandManager() const
+Integrian::CommandManager& Integrian::ServiceLocator::GetCommandManager()
 {
     return m_CommandManager;
 }
 
-const Integrian::PrinterManager& Integrian::ServiceLocator::GetPrinterManager() const
+Integrian::PrinterManager& Integrian::ServiceLocator::GetPrinterManager()
 {
     return m_PrinterManager;
 }
 
-const Integrian::TextureManager& Integrian::ServiceLocator::GetTextureManager() const
+Integrian::TextureManager& Integrian::ServiceLocator::GetTextureManager()
 {
     return m_TextureManager;
 }
 
-const Integrian::Logger& Integrian::ServiceLocator::GetLogger() const
+Integrian::Logger& Integrian::ServiceLocator::GetLogger()
 {
     return m_Logger;
 }

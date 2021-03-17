@@ -13,11 +13,11 @@ namespace Integrian
 	class ServiceLocator final : public Singleton<ServiceLocator>
 	{
 	public:
-		const InputManager& GetInputManager() const;
-		const CommandManager& GetCommandManager() const;
-		const PrinterManager& GetPrinterManager() const;
-		const TextureManager& GetTextureManager() const;
-		const Logger& GetLogger() const;
+		InputManager& GetInputManager();
+		CommandManager& GetCommandManager();
+		PrinterManager& GetPrinterManager();
+		TextureManager& GetTextureManager();
+		Logger& GetLogger();
 
 	private:
 		friend class Singleton<ServiceLocator>;
