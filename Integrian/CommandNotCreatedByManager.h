@@ -17,9 +17,12 @@ namespace Integrian
 		{
 <<<<<<< HEAD
 			ServiceLocator::GetInstance().GetLogger().Log("ERROR: Command not created through CommandManager::CreateCommand()\n", ErrorLevel::severeError);
+<<<<<<< HEAD
 =======
 			Logger::GetInstance().Log("ERROR: Initialisation Failed\n", ErrorLevel::severeError);
 >>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
+=======
+>>>>>>> parent of 04ea094 (fixed merge conflict)
 		}
 	};
 }

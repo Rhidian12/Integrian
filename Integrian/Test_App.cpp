@@ -121,6 +121,7 @@ void Integrian::Test_App::InitPlayerOne()
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
 =======
 
+<<<<<<< HEAD
 	pActor->AddCommand(GameInput{ KeyboardInput::A }, pKillCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::W }, pDefeatCoilyCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::S }, pCatchSlickOrSamCommand, State::OnRelease);
@@ -128,6 +129,8 @@ void Integrian::Test_App::InitPlayerOne()
 	pActor->AddCommand(GameInput{ KeyboardInput::E }, pDisksRemainingCommand, State::OnRelease);
 >>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 
+=======
+>>>>>>> parent of 04ea094 (fixed merge conflict)
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
 	pQbert->AddComponent(pScoreComponent);
@@ -139,12 +142,6 @@ void Integrian::Test_App::InitPlayerOne()
 	m_pGameObjects.push_back(std::move(pQbert));
 	m_pGameObjects.push_back(std::move(pQbertHealthDisplay));
 	m_pGameObjects.push_back(std::move(pScoreDisplay));
-
-	m_pCommands.push_back(std::move(pKillCommand));
-	m_pCommands.push_back(std::move(pDefeatCoilyCommand));
-	m_pCommands.push_back(std::move(pCatchSlickOrSamCommand));
-	m_pCommands.push_back(std::move(pChangeColourCommand));
-	m_pCommands.push_back(std::move(pDisksRemainingCommand));
 }
 
 void Integrian::Test_App::InitPlayerTwo()
@@ -161,7 +158,7 @@ void Integrian::Test_App::InitPlayerTwo()
 
 	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 2 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
 	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, 0 } };
-	
+
 	pScoreDisplay->AddComponent(pScoreDisplayTextComponent);
 	pScoreDisplay->AddComponent(pScoreDisplayComponent);
 	pScoreDisplay->transform = Point2f{ 150.f, 0.f };
@@ -190,6 +187,7 @@ void Integrian::Test_App::InitPlayerTwo()
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
 =======
 
+<<<<<<< HEAD
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonB }, pDefeatCoilyCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
@@ -197,6 +195,8 @@ void Integrian::Test_App::InitPlayerTwo()
 	pActor->AddCommand(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
 >>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 
+=======
+>>>>>>> parent of 04ea094 (fixed merge conflict)
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
 	pQbert->AddComponent(pScoreComponent);
@@ -208,10 +208,4 @@ void Integrian::Test_App::InitPlayerTwo()
 	m_pGameObjects.push_back(std::move(pQbert));
 	m_pGameObjects.push_back(std::move(pQbertHealthDisplay));
 	m_pGameObjects.push_back(std::move(pScoreDisplay));
-
-	m_pCommands.push_back(std::move(pKillCommand));
-	m_pCommands.push_back(std::move(pDefeatCoilyCommand));
-	m_pCommands.push_back(std::move(pCatchSlickOrSamCommand));
-	m_pCommands.push_back(std::move(pChangeColourCommand));
-	m_pCommands.push_back(std::move(pDisksRemainingCommand));
 }

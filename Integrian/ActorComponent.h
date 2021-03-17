@@ -23,7 +23,6 @@ namespace Integrian
 			m_pSubject->AddObserver(pObserver);
 		}
 
-		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex = 0);
 		void Invoke(const std::string& event);
 
 	private:
