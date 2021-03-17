@@ -6,7 +6,7 @@
 #ifndef ENGINE_INITIALISATIONFAILEDEXCEPTION_H
 #define ENGINE_INITIALISATIONFAILEDEXCEPTION_H
 
-#include "Logger.h"
+#include "ServiceLocator.h"
 
 namespace Integrian
 {
@@ -15,7 +15,7 @@ namespace Integrian
 	public:
 		InitialisationFailedException()
 		{
-			Logger::GetInstance().Log("ERROR: Initialisation Failed\n", ErrorLevel::severeError);
+			ServiceLocator::GetInstance().GetLogger().Log("ERROR: Initialisation Failed\n", ErrorLevel::severeError);
 		}
 	};
 }

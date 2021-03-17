@@ -6,7 +6,7 @@
 #ifndef ENGINE_COMMANDNOTCREATEDBYMANAGER_H
 #define ENGINE_COMMANDNOTCREATEDBYMANAGER_H
 
-#include "Logger.h"
+#include "ServiceLocator.h"
 
 namespace Integrian
 {
@@ -15,7 +15,7 @@ namespace Integrian
 	public:
 		CommandNotCreatedByManager()
 		{
-			Logger::GetInstance().Log("ERROR: Command not created through CommandManager::CreateCommand()\n", ErrorLevel::severeError);
+			ServiceLocator::GetInstance().GetLogger().Log("ERROR: Command not created through CommandManager::CreateCommand()\n", ErrorLevel::severeError);
 		}
 	};
 }
