@@ -194,7 +194,6 @@
     <ClCompile Include="PrinterManager.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="ScoreDisplayComponent.cpp" />
-    <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="Test_App.cpp" />
     <ClCompile Include="TextComponent.cpp" />
@@ -269,7 +268,6 @@
     <ClInclude Include="schema.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
-    <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="StaticInstanceAlreadyCreated.h" />
     <ClInclude Include="stream.h" />
     <ClInclude Include="stringbuffer.h" />

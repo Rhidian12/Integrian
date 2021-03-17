@@ -16,6 +16,7 @@ namespace Integrian
 		CommandNotCreatedByManager()
 		{
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ServiceLocator::GetInstance().GetLogger().Log("ERROR: Command not created through CommandManager::CreateCommand()\n", ErrorLevel::severeError);
 <<<<<<< HEAD
 =======
@@ -23,6 +24,8 @@ namespace Integrian
 >>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 =======
 >>>>>>> parent of 04ea094 (fixed merge conflict)
+=======
+>>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 		}
 	};
 }

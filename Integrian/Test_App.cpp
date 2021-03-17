@@ -107,6 +107,7 @@ void Integrian::Test_App::InitPlayerOne()
 	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
 	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
 <<<<<<< HEAD
+<<<<<<< HEAD
 	CommandManager commandManager = ServiceLocator::GetInstance().GetCommandManager();
 	commandManager.AddCommand(pKillCommand);
 	commandManager.AddCommand(pDefeatCoilyCommand);
@@ -122,15 +123,22 @@ void Integrian::Test_App::InitPlayerOne()
 =======
 
 <<<<<<< HEAD
+=======
+
+>>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 	pActor->AddCommand(GameInput{ KeyboardInput::A }, pKillCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::W }, pDefeatCoilyCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::S }, pCatchSlickOrSamCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::D }, pChangeColourCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ KeyboardInput::E }, pDisksRemainingCommand, State::OnRelease);
+<<<<<<< HEAD
 >>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 
 =======
 >>>>>>> parent of 04ea094 (fixed merge conflict)
+=======
+
+>>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
 	pQbert->AddComponent(pScoreComponent);
@@ -158,7 +166,6 @@ void Integrian::Test_App::InitPlayerTwo()
 
 	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 2 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
 	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, 0 } };
-
 	pScoreDisplay->AddComponent(pScoreDisplayTextComponent);
 	pScoreDisplay->AddComponent(pScoreDisplayComponent);
 	pScoreDisplay->transform = Point2f{ 150.f, 0.f };
@@ -172,6 +179,7 @@ void Integrian::Test_App::InitPlayerTwo()
 	CatchSlickOrSamCommand* pCatchSlickOrSamCommand{ new CatchSlickOrSamCommand{pScoreComponent} };
 	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
 	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
+<<<<<<< HEAD
 <<<<<<< HEAD
 	CommandManager commandManager = ServiceLocator::GetInstance().GetCommandManager();
 	commandManager.AddCommand(pKillCommand);
@@ -188,15 +196,22 @@ void Integrian::Test_App::InitPlayerTwo()
 =======
 
 <<<<<<< HEAD
+=======
+
+>>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonB }, pDefeatCoilyCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
 	pActor->AddCommand(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
+<<<<<<< HEAD
 >>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 
 =======
 >>>>>>> parent of 04ea094 (fixed merge conflict)
+=======
+
+>>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
 	pQbert->AddComponent(pScoreComponent);
