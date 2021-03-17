@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include "TransformComponent.h"
-#include "Logger.h"
+#include "ServiceLocator.h"
 #include "PossibleInputs.h"
 
 // http://scottmeyers.blogspot.com/2015/09/should-you-be-using-something-instead.html
@@ -38,7 +38,7 @@ namespace Integrian
 					return static_cast<Type*>(pComponent);
 			}
 
-			Logger::GetInstance().Log("GetComponentByType returned a nullptr\n", ErrorLevel::error);
+			ServiceLocator::GetInstance().GetLogger().Log("GetComponentByType returned a nullptr\n", ErrorLevel::error);
 			return nullptr;
 		}
 		

@@ -6,7 +6,7 @@
 #include <vector>
 #include "Observer.h"
 #include <algorithm>
-#include "Logger.h"
+#include "ServiceLocator.h"
 
 namespace Integrian
 {
@@ -24,7 +24,7 @@ namespace Integrian
 			if (it == m_pObservers.cend())
 				m_pObservers.push_back(pObserver);
 			else
-				Logger::GetInstance().Log("Observer was already added!", ErrorLevel::error);
+				ServiceLocator::GetInstance().GetLogger().Log("Observer was already added!", ErrorLevel::error);
 		}
 
 		template<typename ... Args>

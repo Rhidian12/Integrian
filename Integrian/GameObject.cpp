@@ -18,8 +18,8 @@ void Integrian::GameObject::AddComponent(Component* pComponent)
 			});
 	if (isComponentAlreadyInList != m_pComponents.cend())
 	{
-		Logger::GetInstance().Log(typeid(*pComponent).name(), ErrorLevel::severeError);
-		Logger::GetInstance().Log(" was already added!\n", ErrorLevel::severeError);
+		ServiceLocator::GetInstance().GetLogger().Log(typeid(*pComponent).name(), ErrorLevel::severeError);
+		ServiceLocator::GetInstance().GetLogger().Log(" was already added!\n", ErrorLevel::severeError);
 	}
 	else
 		m_pComponents.push_back(pComponent);

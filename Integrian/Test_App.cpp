@@ -19,16 +19,16 @@
 
 void Integrian::Test_App::Start()
 {
-	TextureManager& textureManager{ TextureManager::GetInstance() };
+	TextureManager textureManager{ ServiceLocator::GetInstance().GetTextureManager() };
 
 	GameObject* pBackground = new GameObject{};
 	textureManager.AddTexture("background", "Images/background.jpg");
-	pBackground->AddComponent(new TextureComponent{ TextureManager::GetInstance().GetTextures().find("background")->second });
+	pBackground->AddComponent(new TextureComponent{ textureManager.GetTextures().find("background")->second });
 	m_pGameObjects.push_back(std::move(pBackground));
 
 	GameObject* pLogo = new GameObject{};
 	textureManager.AddTexture("logo", "Images/logo.png");
-	pLogo->AddComponent(new TextureComponent{ TextureManager::GetInstance().GetTextures().find("logo")->second });
+	pLogo->AddComponent(new TextureComponent{ textureManager.GetTextures().find("logo")->second });
 	pLogo->transform = Point2f{ 216.f, float(m_WindowHeight) - 180.f };
 	m_pGameObjects.push_back(std::move(pLogo));
 
@@ -106,17 +106,18 @@ void Integrian::Test_App::InitPlayerOne()
 	CatchSlickOrSamCommand* pCatchSlickOrSamCommand{ new CatchSlickOrSamCommand{pScoreComponent} };
 	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
 	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
-	m_CommandManager.AddCommand(pKillCommand);
-	m_CommandManager.AddCommand(pDefeatCoilyCommand);
-	m_CommandManager.AddCommand(pCatchSlickOrSamCommand);
-	m_CommandManager.AddCommand(pChangeColourCommand);
-	m_CommandManager.AddCommand(pDisksRemainingCommand);
+	CommandManager commandManager = ServiceLocator::GetInstance().GetCommandManager();
+	commandManager.AddCommand(pKillCommand);
+	commandManager.AddCommand(pDefeatCoilyCommand);
+	commandManager.AddCommand(pCatchSlickOrSamCommand);
+	commandManager.AddCommand(pChangeColourCommand);
+	commandManager.AddCommand(pDisksRemainingCommand);
 
-	m_CommandManager.LinkCommandToInput(GameInput{ KeyboardInput::A }, pKillCommand, State::OnRelease);
-	m_CommandManager.LinkCommandToInput(GameInput{ KeyboardInput::W }, pDefeatCoilyCommand, State::OnRelease);
-	m_CommandManager.LinkCommandToInput(GameInput{ KeyboardInput::S }, pCatchSlickOrSamCommand, State::OnRelease);
-	m_CommandManager.LinkCommandToInput(GameInput{ KeyboardInput::D }, pChangeColourCommand, State::OnRelease);
-	m_CommandManager.LinkCommandToInput(GameInput{ KeyboardInput::E }, pDisksRemainingCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonB }, pDefeatCoilyCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
 
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
@@ -159,17 +160,18 @@ void Integrian::Test_App::InitPlayerTwo()
 	CatchSlickOrSamCommand* pCatchSlickOrSamCommand{ new CatchSlickOrSamCommand{pScoreComponent} };
 	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
 	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
-	m_CommandManager.AddCommand(pKillCommand);
-	m_CommandManager.AddCommand(pDefeatCoilyCommand);
-	m_CommandManager.AddCommand(pCatchSlickOrSamCommand);
-	m_CommandManager.AddCommand(pChangeColourCommand);
-	m_CommandManager.AddCommand(pDisksRemainingCommand);
+	CommandManager commandManager = ServiceLocator::GetInstance().GetCommandManager();
+	commandManager.AddCommand(pKillCommand);
+	commandManager.AddCommand(pDefeatCoilyCommand);
+	commandManager.AddCommand(pCatchSlickOrSamCommand);
+	commandManager.AddCommand(pChangeColourCommand);
+	commandManager.AddCommand(pDisksRemainingCommand);
 
-	m_CommandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
-	m_CommandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonB }, pDefeatCoilyCommand, State::OnRelease);
-	m_CommandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
-	m_CommandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
-	m_CommandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonB }, pDefeatCoilyCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
 
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
