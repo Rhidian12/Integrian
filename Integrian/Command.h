@@ -14,7 +14,7 @@ namespace Integrian
 		virtual void Execute() = 0;
 		
 	protected:
-		Command() = default;
+		Command(char* pFile);
 	};
 }
 

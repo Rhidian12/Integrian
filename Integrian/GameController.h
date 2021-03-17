@@ -25,7 +25,7 @@ namespace Integrian
 		GameController(const uint8_t index);
 
 		GameController(const GameController&) = delete;
-		GameController(GameController&& other) noexcept;
+		GameController(GameController&& other);
 		GameController& operator=(const GameController&) = delete;
 		friend class InputManager;
 

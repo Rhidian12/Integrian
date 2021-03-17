@@ -154,9 +154,6 @@
     <Filter Include="Engine\Managers\CommandManager">
       <UniqueIdentifier>{539df794-c972-4892-88b1-10aa05cf9aac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\ServiceLocator">
-      <UniqueIdentifier>{d1354f29-ad85-43db-8d89-0e9275640a5d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -290,9 +287,6 @@
     </ClCompile>
     <ClCompile Include="CommandManager.cpp">
       <Filter>Engine\Managers\CommandManager</Filter>
-    </ClCompile>
-    <ClCompile Include="ServiceLocator.cpp">
-      <Filter>Engine\ServiceLocator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -541,9 +535,6 @@
     </ClInclude>
     <ClInclude Include="CommandNotCreatedByManager.h">
       <Filter>Engine\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="ServiceLocator.h">
-      <Filter>Engine\ServiceLocator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
