@@ -32,12 +32,11 @@ namespace Integrian
 	class GameController;
 	class Keyboard;
 	class Mouse;
-	class InputManager final : public Singleton<InputManager>
+	class InputManager final
 	{
 	public:
+		InputManager(const char* pFile, const int line);
 		virtual ~InputManager() = default;
-
-		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex = 0);
 
 		void HandleInput();
 
@@ -51,14 +50,14 @@ namespace Integrian
 		[[nodiscard]] double GetTriggerMovement(const SDL_GameControllerAxis axis, const uint8_t playerIndex = 0) const;
 
 	private:
-		InputManager();
-		friend class Singleton<InputManager>;
 		friend class CommandManager;
 
+		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex = 0);
 		void RemoveInput(const GameInput& input, const uint8_t controllerIndex = 0);
 		void RemoveCommandFromInput(const GameInput& input, Command* pCommand, const uint8_t controllerIndex = 0);
 		void RemoveCommand(Command* pCommand, const uint8_t controllerIndex = 0);
 
+		inline static bool m_IsInstantiated{};
 		Point2f m_MousePosition;
 		uint32_t m_WindowWidth;
 		uint32_t m_WindowHeight;

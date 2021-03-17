@@ -2,9 +2,14 @@
 #include "TextureManager.h"
 #include "Texture.h"
 #include <iostream>
-Integrian::TextureManager::TextureManager()
+#include "StaticInstanceAlreadyCreated.h"
+Integrian::TextureManager::TextureManager(const char* pFile, const int line)
 	: m_DataPath{}
 {
+	if (m_IsInstantiated)
+		throw StaticInstanceAlreadyCreated{ pFile, line };
+
+	m_IsInstantiated = true;
 }
 
 void Integrian::TextureManager::Init(const std::string& path)

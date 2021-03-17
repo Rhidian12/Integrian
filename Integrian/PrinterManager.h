@@ -8,16 +8,16 @@
 namespace Integrian
 {
 	class Printer;
-	class PrinterManager final : public Singleton<PrinterManager>
+	class PrinterManager final
 	{
 	public:
+		PrinterManager(const char* pFile, const int line);
 		virtual ~PrinterManager();
 
 		Printer* AddPrinter(const int size, const RGBColour& colour);
 
 	private:
-		PrinterManager() = default;
-		friend class Singleton<PrinterManager>;
+		inline static bool m_IsInstatiated{};
 
 		const std::string m_FilePath{ "Fonts/RobotoMono-Regular.ttf" };
 		std::vector<Printer*> m_pPrinters;

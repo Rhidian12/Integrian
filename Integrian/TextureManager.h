@@ -6,15 +6,15 @@
 #ifndef ENGINE_TEXTUREMANAGER_H
 #define ENGINE_TEXTUREMANAGER_H
 
-#include "Singleton.h"
 #include <unordered_map>
 
 namespace Integrian
 {
 	class Texture;
-	class TextureManager final : public Singleton<TextureManager>
+	class TextureManager final
 	{
 	public:
+		TextureManager(const char* pFile, const int line);
 		void Init(const std::string& path);
 		
 		// == CleanUp ==
@@ -27,9 +27,7 @@ namespace Integrian
 		const std::unordered_map<std::string, Integrian::Texture*>& GetTextures() const;
 
 	private:
-		TextureManager();
-		friend class Singleton<TextureManager>;
-
+		inline static bool m_IsInstantiated{};
 		std::string m_DataPath;
 		std::unordered_map<std::string, Texture*> m_pTextures;
 	};

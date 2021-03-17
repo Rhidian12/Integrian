@@ -5,6 +5,7 @@
 #include "pch.h"
 #include <memory>
 #include "GameObject.h"
+#include "CommandManager.h"
 
 
 namespace Integrian
@@ -48,7 +49,6 @@ namespace Integrian
 
 		std::unique_ptr<OrthographicCamera> m_pCamera;
 		std::vector<GameObject*> m_pGameObjects;
-		std::vector<Command*> m_pCommands;
 
 		// make the constructor protected, so only children can make an app
 		App();

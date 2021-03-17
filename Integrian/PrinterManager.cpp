@@ -4,6 +4,15 @@
 #include "PossibleCharacters.h"
 #include "Printer.h"
 #include "TextureManager.h"
+#include "StaticInstanceAlreadyCreated.h"
+
+Integrian::PrinterManager::PrinterManager(const char* pFile, const int line)
+{
+	if (m_IsInstatiated)
+		throw StaticInstanceAlreadyCreated{ pFile, line };
+
+	m_IsInstatiated = true;
+}
 
 Integrian::PrinterManager::~PrinterManager()
 {

@@ -9,7 +9,7 @@ namespace Integrian
 	public:
 		StaticInstanceAlreadyCreated(const char* pFile, const int line)
 		{
-			std::cerr << "EXCEPTION: A static instance was created twice in file: " << pFile << "at line: " << line << std::endl;
+			std::cerr << "EXCEPTION: A static instance was created twice in file: " << pFile << " at line: " << line << std::endl;
 		}
 	};
 }
