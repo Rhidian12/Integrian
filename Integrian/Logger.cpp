@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Logger.h"
 #include <Windows.h>
+#include "StaticInstanceAlreadyCreated.h"
 
 // Reference: https://stackoverflow.com/questions/8765938/colorful-text-using-printf-in-c
 // Reference: https://docs.microsoft.com/en-us/windows/console/setconsoletextattribute
@@ -29,6 +30,14 @@
 // 13 = lighter purple
 // 14 = very light yellow
 // 15 = intense white
+
+Integrian::Logger::Logger(const char* pFile, const int line)
+{
+	if (m_IsInstantiated)
+		throw StaticInstanceAlreadyCreated{ pFile, line };
+
+	m_IsInstantiated = true;
+}
 
 void Integrian::Logger::Log(const std::string& message, const ErrorLevel level) const
 {
