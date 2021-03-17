@@ -25,6 +25,7 @@ namespace Integrian
 =======
 >>>>>>> parent of 04ea094 (fixed merge conflict)
 =======
+			Logger::GetInstance().Log("ERROR: Initialisation Failed\n", ErrorLevel::severeError);
 >>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 		}
 	};

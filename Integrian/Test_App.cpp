@@ -150,6 +150,12 @@ void Integrian::Test_App::InitPlayerOne()
 	m_pGameObjects.push_back(std::move(pQbert));
 	m_pGameObjects.push_back(std::move(pQbertHealthDisplay));
 	m_pGameObjects.push_back(std::move(pScoreDisplay));
+
+	m_pCommands.push_back(std::move(pKillCommand));
+	m_pCommands.push_back(std::move(pDefeatCoilyCommand));
+	m_pCommands.push_back(std::move(pCatchSlickOrSamCommand));
+	m_pCommands.push_back(std::move(pChangeColourCommand));
+	m_pCommands.push_back(std::move(pDisksRemainingCommand));
 }
 
 void Integrian::Test_App::InitPlayerTwo()
@@ -166,6 +172,7 @@ void Integrian::Test_App::InitPlayerTwo()
 
 	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 2 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
 	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, 0 } };
+	
 	pScoreDisplay->AddComponent(pScoreDisplayTextComponent);
 	pScoreDisplay->AddComponent(pScoreDisplayComponent);
 	pScoreDisplay->transform = Point2f{ 150.f, 0.f };
@@ -223,4 +230,10 @@ void Integrian::Test_App::InitPlayerTwo()
 	m_pGameObjects.push_back(std::move(pQbert));
 	m_pGameObjects.push_back(std::move(pQbertHealthDisplay));
 	m_pGameObjects.push_back(std::move(pScoreDisplay));
+
+	m_pCommands.push_back(std::move(pKillCommand));
+	m_pCommands.push_back(std::move(pDefeatCoilyCommand));
+	m_pCommands.push_back(std::move(pCatchSlickOrSamCommand));
+	m_pCommands.push_back(std::move(pChangeColourCommand));
+	m_pCommands.push_back(std::move(pDisksRemainingCommand));
 }
