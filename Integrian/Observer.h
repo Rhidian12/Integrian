@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <functional>
 #include <vector>
-#include "ServiceLocator.h"
+#include "Logger.h"
 
 namespace Integrian
 {
@@ -32,9 +32,9 @@ namespace Integrian
 					pFunction(args...);
 			else
 			{
-				ServiceLocator::GetInstance().GetLogger().Log("Event: ", ErrorLevel::error);
-				ServiceLocator::GetInstance().GetLogger().Log(event, ErrorLevel::error);
-				ServiceLocator::GetInstance().GetLogger().Log(" was not found!\n", ErrorLevel::error);
+				Logger::GetInstance().Log("Event: ", ErrorLevel::error);
+				Logger::GetInstance().Log(event, ErrorLevel::error);
+				Logger::GetInstance().Log(" was not found!\n", ErrorLevel::error);
 			}
 		}
 

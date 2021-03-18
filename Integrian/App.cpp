@@ -1,6 +1,9 @@
 #include "App.h"
 #include "OrthographicCamera.h"
 #include "Timer.h"
+#include "Logger.h"
+#include "InputManager.h"
+#include "TextureManager.h"
 
 // == Global Variables ==
 extern bool g_IsLooping;
@@ -29,7 +32,7 @@ bool Integrian::App::Initialize()
 	uint32_t width = 640;
 	uint32_t height = 480;
 
-	const Logger& logger{ ServiceLocator::GetInstance().GetLogger() };
+	const Logger& logger{ Logger::GetInstance() };
 
 #pragma region SDL Stuff
 	//Create window + surfaces
@@ -97,7 +100,7 @@ bool Integrian::App::Initialize()
 #pragma endregion
 
 	// == Set Window Size For InputManager ==
-	ServiceLocator::GetInstance().GetInputManager().SetWindowSize(width, height);
+	InputManager::GetInstance().SetWindowSize(width, height);
 
 	// == Seed rand() ==
 	srand(static_cast<unsigned int>(time(nullptr)));
@@ -107,7 +110,7 @@ bool Integrian::App::Initialize()
 	m_WindowHeight = height;
 
 	// Initialise Datapath
-	ServiceLocator::GetInstance().GetTextureManager().Init("Data/");
+	TextureManager::GetInstance().Init("Data/");
 
 	return true;
 }
@@ -124,7 +127,7 @@ void Integrian::App::FinishInitializationOfApp()
 	if (!InitializeCamera())
 		throw InitialisationFailedException{};
 
-	ServiceLocator::GetInstance().GetLogger().Log("Initialisation finished!\n", ErrorLevel::noWarning);
+	Logger::GetInstance().Log("Initialisation finished!\n", ErrorLevel::noWarning);
 
 	m_IsInitializationFinished = true;
 	m_HasStarted = true;
@@ -159,7 +162,7 @@ void Integrian::App::Run()
 		timer.Update();
 
 		// == Handle Input ==
-		ServiceLocator::GetInstance().GetInputManager().HandleInput();
+		InputManager::GetInstance().HandleInput();
 
 		// == Update ==
 		UpdateApplication(timeSinceLastUpdate);

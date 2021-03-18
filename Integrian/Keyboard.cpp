@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Keyboard.h"
 #include "Command.h"
-#include "ServiceLocator.h"
+#include "Logger.h"
 
 Integrian::Keyboard::Keyboard(Keyboard&& other)
 {
@@ -72,7 +72,7 @@ void Integrian::Keyboard::RemoveInput(const KeyboardInput keyboardInput)
 	else
 	{
 		// TODO: Come up with a better logging system, this is ridicilous
-		const Logger& logger{ ServiceLocator::GetInstance().GetLogger() };
+		const Logger& logger{ Logger::GetInstance() };
 		logger.Log("Tried to remove a non-existing input, ", ErrorLevel::severeError);
 		logger.Log("In file and at line: ", ErrorLevel::severeError);
 		logger.Log(__FILE__, ErrorLevel::severeError);
@@ -106,7 +106,7 @@ void Integrian::Keyboard::RemoveCommandFromInput(const KeyboardInput keyboardInp
 		commands.erase(it, commands.end());
 	else
 	{
-		Logger& logger{ ServiceLocator::GetInstance().GetLogger() };
+		Logger& logger{ Logger::GetInstance() };
 		logger.Log("Tried to remove a non-existing command, ", ErrorLevel::severeError);
 		logger.Log("In file and at line: ", ErrorLevel::severeError);
 		logger.Log(__FILE__, ErrorLevel::severeError);

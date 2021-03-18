@@ -5,11 +5,7 @@
 #include "pch.h"
 #include <memory>
 #include "GameObject.h"
-<<<<<<< HEAD
-#include "ServiceLocator.h"
-=======
-
->>>>>>> parent of d032d2d (Changed Managers to not be Singletons)
+#include "Logger.h"
 
 namespace Integrian
 {

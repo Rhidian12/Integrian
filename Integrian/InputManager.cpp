@@ -48,7 +48,8 @@ void Integrian::InputManager::RemoveCommandFromInput(const GameInput& input, Com
 
 void Integrian::InputManager::RemoveCommand(Command* pCommand, const uint8_t controllerIndex)
 {
-
+	(void)pCommand;
+	(void)controllerIndex;
 }
 
 void Integrian::InputManager::AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex)

@@ -2,7 +2,7 @@
 #include "Command.h"
 #include <algorithm>
 #include <iostream>
-#include "ServiceLocator.h"
+#include "Logger.h"
 
 Integrian::Mouse::Mouse(Mouse&& other)
 {
@@ -72,7 +72,7 @@ void Integrian::Mouse::RemoveInput(const MouseButton mouseButton)
 	else
 	{
 		// TODO: Come up with a better logging system, this is ridicilous
-		const Logger& logger{ ServiceLocator::GetInstance().GetLogger() };
+		const Logger& logger{ Logger::GetInstance() };
 		logger.Log("Tried to remove a non-existing input, ", ErrorLevel::severeError);
 		logger.Log("In file and at line: ", ErrorLevel::severeError);
 		logger.Log(__FILE__, ErrorLevel::severeError);
@@ -106,7 +106,7 @@ void Integrian::Mouse::RemoveCommandFromInput(const MouseButton mouseButton, Com
 		commands.erase(it, commands.end());
 	else
 	{
-		const Logger& logger{ ServiceLocator::GetInstance().GetLogger() };
+		const Logger& logger{ Logger::GetInstance() };
 		logger.Log("Tried to remove a non-existing command, ", ErrorLevel::severeError);
 		logger.Log("In file and at line: ", ErrorLevel::severeError);
 		logger.Log(__FILE__, ErrorLevel::severeError);

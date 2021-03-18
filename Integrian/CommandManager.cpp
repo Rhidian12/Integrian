@@ -4,18 +4,26 @@
 #include "ExceptionHandler.h"
 #include "InputManager.h"
 
-Integrian::CommandManager::CommandManager(const char* pFile, const int line)
-{
-	if (m_IsInstantiated)
-		throw StaticInstanceAlreadyCreated{ pFile, line};
-
-	m_IsInstantiated = true;
-}
-
 Integrian::CommandManager::~CommandManager()
 {
 	for (Command* pCommand : m_pCommands)
 		SafeDelete(pCommand);
+}
+
+Integrian::Command* Integrian::CommandManager::AddCommand(Command* pCommand)
+{
+#ifdef _DEBUG
+	if (std::find(m_pCommands.cbegin(), m_pCommands.cend(), pCommand) != m_pCommands.cend())
+	{
+		// the command has already been added. Add it nonetheless, but log a warning
+		m_pCommands.push_back(pCommand);
+		Logger::GetInstance().Log("Command was already added!", ErrorLevel::warning);
+	}
+#else
+	m_pCommands.push_back(pCommand);
+#endif // _DEBUG
+
+	return pCommand;
 }
 
 void Integrian::CommandManager::LinkCommandToInput(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex)
@@ -25,5 +33,5 @@ void Integrian::CommandManager::LinkCommandToInput(const GameInput& gameInput, C
 
 void Integrian::CommandManager::RemoveCommand(Command* pCommand)
 {
-	
+	(void)pCommand;
 }

@@ -2,7 +2,7 @@
 #include "TextComponent.h"
 #include "Printer.h"
 #include "Texture.h"
-#include "ServiceLocator.h"
+#include "PrinterManager.h"
 
 Integrian::TextComponent::TextComponent()
 	: TextComponent{ "" }
@@ -21,7 +21,7 @@ Integrian::TextComponent::TextComponent(const std::string& textToBeRendered)
 
 Integrian::TextComponent::TextComponent(const std::string& textToRender, const int size, const RGBColour& colour)
 	: m_TextToBeRendered{ textToRender }
-	, m_pPrinter{ ServiceLocator::GetInstance().GetPrinterManager().AddPrinter(size,colour) }
+	, m_pPrinter{ PrinterManager::GetInstance().AddPrinter(size,colour) }
 {
 }
 

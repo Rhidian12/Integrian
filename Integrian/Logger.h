@@ -3,6 +3,7 @@
 #define INTEGRIAN_LOGGER_H
 
 #include <string>
+#include "Singleton.h"
 
 enum class ErrorLevel
 {
@@ -14,14 +15,13 @@ enum class ErrorLevel
 
 namespace Integrian
 {
-	class Logger final
+	class Logger final : public Singleton<Logger>
 	{
 	public:
-		Logger(const char* pFile, const int line);
+		Logger() = default;
 		void Log(const std::string& message, const ErrorLevel level) const;
 
 	private:
-		inline static bool m_IsInstantiated{};
 	};
 }
 

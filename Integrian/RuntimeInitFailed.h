@@ -6,7 +6,7 @@
 #ifndef ENGINE_RUNTIMEINITIALISATIONFAILEDEXCEPTION_H
 #define ENGINE_RUNTIMEINITIALISATIONFAILEDEXCEPTION_H
 
-#include "ServiceLocator.h"
+#include "Logger.h"
 
 namespace Integrian
 {
@@ -15,7 +15,7 @@ namespace Integrian
 	public:
 		RuntimeInitialisationFailed()
 		{
-			ServiceLocator::GetInstance().GetLogger().Log("EXCEPTION: Something went wrong in App::FinishInitialisationOfApp()", ErrorLevel::severeError);
+			Logger::GetInstance().Log("EXCEPTION: Something went wrong in App::FinishInitialisationOfApp()", ErrorLevel::severeError);
 		}
 	};
 }

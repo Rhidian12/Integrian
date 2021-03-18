@@ -16,10 +16,11 @@
 #include "ChangeColourCommand.h"
 #include "DisksRemainingCommand.h"
 #include "Logger.h"
+#include "CommandManager.h"
 
 void Integrian::Test_App::Start()
 {
-	TextureManager textureManager{ ServiceLocator::GetInstance().GetTextureManager() };
+	TextureManager& textureManager{ TextureManager::GetInstance() };
 
 	GameObject* pBackground = new GameObject{};
 	textureManager.AddTexture("background", "Images/background.jpg");
@@ -106,39 +107,20 @@ void Integrian::Test_App::InitPlayerOne()
 	CatchSlickOrSamCommand* pCatchSlickOrSamCommand{ new CatchSlickOrSamCommand{pScoreComponent} };
 	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
 	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
-<<<<<<< HEAD
-<<<<<<< HEAD
-	CommandManager commandManager = ServiceLocator::GetInstance().GetCommandManager();
+
+	CommandManager& commandManager = CommandManager::GetInstance();
 	commandManager.AddCommand(pKillCommand);
 	commandManager.AddCommand(pDefeatCoilyCommand);
 	commandManager.AddCommand(pCatchSlickOrSamCommand);
 	commandManager.AddCommand(pChangeColourCommand);
 	commandManager.AddCommand(pDisksRemainingCommand);
 
-	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
-	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonB }, pDefeatCoilyCommand, State::OnRelease);
-	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
-	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
-	commandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
-=======
+	commandManager.LinkCommandToInput(GameInput{ KeyboardInput::A }, pKillCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ KeyboardInput::W }, pDefeatCoilyCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ KeyboardInput::S }, pCatchSlickOrSamCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ KeyboardInput::D }, pChangeColourCommand, State::OnRelease);
+	commandManager.LinkCommandToInput(GameInput{ KeyboardInput::E }, pDisksRemainingCommand, State::OnRelease);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
-	pActor->AddCommand(GameInput{ KeyboardInput::A }, pKillCommand, State::OnRelease);
-	pActor->AddCommand(GameInput{ KeyboardInput::W }, pDefeatCoilyCommand, State::OnRelease);
-	pActor->AddCommand(GameInput{ KeyboardInput::S }, pCatchSlickOrSamCommand, State::OnRelease);
-	pActor->AddCommand(GameInput{ KeyboardInput::D }, pChangeColourCommand, State::OnRelease);
-	pActor->AddCommand(GameInput{ KeyboardInput::E }, pDisksRemainingCommand, State::OnRelease);
-<<<<<<< HEAD
->>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
-
-=======
->>>>>>> parent of 04ea094 (fixed merge conflict)
-=======
-
->>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
 	pQbert->AddComponent(pScoreComponent);
@@ -186,9 +168,8 @@ void Integrian::Test_App::InitPlayerTwo()
 	CatchSlickOrSamCommand* pCatchSlickOrSamCommand{ new CatchSlickOrSamCommand{pScoreComponent} };
 	ChangeColourCommand* pChangeColourCommand{ new ChangeColourCommand{pScoreComponent} };
 	DisksRemainingCommand* pDisksRemainingCommand{ new DisksRemainingCommand{pScoreComponent} };
-<<<<<<< HEAD
-<<<<<<< HEAD
-	CommandManager commandManager = ServiceLocator::GetInstance().GetCommandManager();
+
+	CommandManager& commandManager = CommandManager::GetInstance();
 	commandManager.AddCommand(pKillCommand);
 	commandManager.AddCommand(pDefeatCoilyCommand);
 	commandManager.AddCommand(pCatchSlickOrSamCommand);
@@ -200,25 +181,7 @@ void Integrian::Test_App::InitPlayerTwo()
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
-=======
 
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
-	pActor->AddCommand(GameInput{ ControllerInput::ButtonA }, pKillCommand, State::OnRelease);
-	pActor->AddCommand(GameInput{ ControllerInput::ButtonB }, pDefeatCoilyCommand, State::OnRelease);
-	pActor->AddCommand(GameInput{ ControllerInput::ButtonX }, pCatchSlickOrSamCommand, State::OnRelease);
-	pActor->AddCommand(GameInput{ ControllerInput::ButtonY }, pChangeColourCommand, State::OnRelease);
-	pActor->AddCommand(GameInput{ ControllerInput::RightTrigger }, pDisksRemainingCommand, State::OnRelease);
-<<<<<<< HEAD
->>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
-
-=======
->>>>>>> parent of 04ea094 (fixed merge conflict)
-=======
-
->>>>>>> parent of 9f32a8a (Made CommandManager BUT NEEDS EVENT QUEUE TO BE FINISHED)
 	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
 	pQbert->AddComponent(pScoreComponent);

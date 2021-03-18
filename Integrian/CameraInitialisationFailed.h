@@ -6,7 +6,7 @@
 #ifndef ENGINE_CAMERAINITIALISATIONFAILEDEXCEPTION_H
 #define ENGINE_CAMERAINITIALISATIONFAILEDEXCEPTION_H
 
-#include "ServiceLocator.h"
+#include "Logger.h"
 
 namespace Integrian
 {
@@ -15,7 +15,7 @@ namespace Integrian
 	public:
 		CameraInitialisationFailedException()
 		{
-			ServiceLocator::GetInstance().GetLogger().Log("EXCEPTION: App::InitializeCamera() called in App::FinishInitialisationOfApp() failed", ErrorLevel::severeError);
+			Logger::GetInstance().Log("EXCEPTION: App::InitializeCamera() called in App::FinishInitialisationOfApp() failed", ErrorLevel::severeError);
 		}
 	};
 }
