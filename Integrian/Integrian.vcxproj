@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="AudioSystem.cpp" />
     <ClCompile Include="CatchSlickOrSamCommand.cpp" />
     <ClCompile Include="ChangeColourCommand.cpp" />
     <ClCompile Include="Command.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="allocators.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
+    <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />
     <ClInclude Include="CatchSlickOrSamCommand.h" />
     <ClInclude Include="ChangeColourCommand.h" />
