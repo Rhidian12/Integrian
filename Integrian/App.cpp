@@ -6,7 +6,7 @@
 #include "TextureManager.h"
 
 // == Global Variables ==
-extern bool g_IsLooping;
+extern bool g_IsLooping; // Used by the inputmanager and App::Run() to see when SDL_Quit event gets fired
 
 Integrian::App::App()
 {
@@ -23,7 +23,7 @@ Integrian::App::~App()
 	for (Command* pCommand : m_pCommands)
 		SafeDelete(pCommand);
 	m_pCommands.clear();
-	
+
 	ShutDown();
 }
 
@@ -99,14 +99,7 @@ bool Integrian::App::Initialize()
 	ImGui_ImplOpenGL2_Init();
 #pragma endregion
 
-	// == Initialize SDL_Mixer == 
-	const int mixerFlags{ MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG };
-	if ((Mix_Init(mixerFlags) & mixerFlags) != mixerFlags)
-	{
-		logger.Log("SDL_Mixer failed to initialize!", ErrorLevel::severeError);
-		logger.Log(Mix_GetError(), ErrorLevel::severeError);
-	}
-
+#pragma region SDL_Mixer
 	// this final parameter is the chunk size of the audio, this might have to be made larger if too much memory is getting used
 	// TODO: Load in all filesizes of music in our folder, and take the average of that
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048) == -1)
@@ -114,6 +107,15 @@ bool Integrian::App::Initialize()
 		logger.Log("SDL_Mixer failed to open!", ErrorLevel::severeError);
 		logger.Log(Mix_GetError(), ErrorLevel::severeError);
 	}
+
+	// == Initialize SDL_Mixer == 
+	const int mixerFlags{ MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG };
+	if ((Mix_Init(mixerFlags) & mixerFlags) != mixerFlags)
+	{
+		logger.Log("SDL_Mixer failed to initialize!", ErrorLevel::severeError);
+		logger.Log(Mix_GetError(), ErrorLevel::severeError);
+	}
+#pragma endregion
 
 	// == Set Window Size For InputManager ==
 	InputManager::GetInstance().SetWindowSize(width, height);
@@ -226,7 +228,7 @@ void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
 		FixedUpdate(timer.GetTimePerFrame());
 		timeSinceLastUpdate -= timer.GetTimePerFrame();
 	}
-	
+
 	const float dt{ timer.GetElapsedSeconds() };
 
 	Update(dt);
