@@ -5,7 +5,7 @@
 
 namespace Integrian
 {
-	class ServiceLocator
+	class ServiceLocator final
 	{
 	};
 }
