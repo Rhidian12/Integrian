@@ -160,6 +160,9 @@
     <Filter Include="Engine\Audio">
       <UniqueIdentifier>{384d9f7e-ca8e-480d-9cb1-ca68f9a164b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Audio\AudioSystem">
+      <UniqueIdentifier>{e11d2b97-d73f-4b7a-b4fd-e4a0f2fefb21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -298,7 +301,7 @@
       <Filter>Engine\ServiceLocator</Filter>
     </ClCompile>
     <ClCompile Include="AudioSystem.cpp">
-      <Filter>Engine\Audio</Filter>
+      <Filter>Engine\Audio\AudioSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -552,7 +555,7 @@
       <Filter>Engine\ServiceLocator</Filter>
     </ClInclude>
     <ClInclude Include="AudioSystem.h">
-      <Filter>Engine\Audio</Filter>
+      <Filter>Engine\Audio\AudioSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
