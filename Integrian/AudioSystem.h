@@ -13,18 +13,25 @@ namespace Integrian
 	class AudioSystem abstract
 	{
 	public:
-		using SoundID = uint64_t;
+		using SoundID = uint64_t; // TODO: make a seperate MusicID
 
-		virtual ~AudioSystem() = default;
+		AudioSystem() = default;
+		virtual ~AudioSystem();
 
 		void AddSound(const SoundID uniqueSoundID, const std::string& filePath);
 		void AddMusic(const SoundID uniqueMusicID, const std::string& filePath);
 
-		virtual void PlaySound(const SoundID, const float = 100.f) = 0;
+		virtual void PlaySound(const SoundID, const bool = false, const int = 0, const int = 100) = 0;
+		virtual void PlayMusic(const SoundID, const bool = false, const int = 0, const int = 100) = 0;
 
-	private:
+	protected:
 		std::unordered_map<SoundID, Mix_Chunk*> m_Sounds;
 		std::unordered_map<SoundID, Mix_Music*> m_Music;
+
+		Mix_Music* m_pCurrentPlayingMusic;
+
+		using SoundPair = std::pair<SoundID, Mix_Chunk*>;
+		using MusicPair = std::pair<SoundID, Mix_Music*>;
 	};
 }
 

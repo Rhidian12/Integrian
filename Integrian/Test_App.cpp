@@ -17,6 +17,7 @@
 #include "DisksRemainingCommand.h"
 #include "Logger.h"
 #include "CommandManager.h"
+#include "AudioPlayerLogged.h"
 
 void Integrian::Test_App::Start()
 {
@@ -46,6 +47,12 @@ void Integrian::Test_App::Start()
 
 	InitPlayerOne();
 	InitPlayerTwo();
+
+	AudioPlayerLogged test{};
+	//test.AddSound(0, "Data/menu3.wav");
+	test.AddMusic(0, "Data/AHHHHH.mp3");
+	//test.PlaySound(0, true);
+	test.PlayMusic(0);
 }
 
 void Integrian::Test_App::Update(const float dt)

@@ -163,6 +163,9 @@
     <Filter Include="Engine\Audio\AudioSystem">
       <UniqueIdentifier>{e11d2b97-d73f-4b7a-b4fd-e4a0f2fefb21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Audio\AudioPlayerLogged">
+      <UniqueIdentifier>{98e2db59-5227-4adf-a2d7-02d3d6d32d20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -302,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="AudioSystem.cpp">
       <Filter>Engine\Audio\AudioSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioPlayerLogged.cpp">
+      <Filter>Engine\Audio\AudioPlayerLogged</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -556,6 +562,9 @@
     </ClInclude>
     <ClInclude Include="AudioSystem.h">
       <Filter>Engine\Audio\AudioSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioPlayerLogged.h">
+      <Filter>Engine\Audio\AudioPlayerLogged</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

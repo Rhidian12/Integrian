@@ -36,7 +36,11 @@ bool Integrian::App::Initialize()
 
 #pragma region SDL Stuff
 	//Create window + surfaces
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO);
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) == -1)
+	{
+		logger.Log(SDL_GetError(), ErrorLevel::severeError);
+		logger.Log("\n", ErrorLevel::severeError);
+	}
 
 	m_pWindow = SDL_CreateWindow(
 		"Programming 4 Assignment - Rhidian De Wit",
@@ -102,9 +106,9 @@ bool Integrian::App::Initialize()
 #pragma region SDL_Mixer
 	// this final parameter is the chunk size of the audio, this might have to be made larger if too much memory is getting used
 	// TODO: Load in all filesizes of music in our folder, and take the average of that
-	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048) == -1)
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 4, 2048) == -1)
 	{
-		logger.Log("SDL_Mixer failed to open!", ErrorLevel::severeError);
+		logger.Log("SDL_Mixer failed to open! ", ErrorLevel::severeError);
 		logger.Log(Mix_GetError(), ErrorLevel::severeError);
 	}
 
