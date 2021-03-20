@@ -14,7 +14,7 @@ Integrian::InputManager::InputManager()
 	, m_AmountOfControllers{ uint8_t(SDL_NumJoysticks()) }
 	, m_Controllers{}
 {
-	for (uint32_t i{}; i < m_MaxAmountOfControllers; ++i)
+	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
 		m_Controllers[i] = std::move(GameController{ uint8_t(i) });
 
 	m_Keyboard = std::move(Keyboard{});

@@ -15,6 +15,7 @@ Integrian::GameController::GameController(const uint8_t index)
 		{
 			Logger::GetInstance().Log("Error in controller: ", ErrorLevel::error);
 			Logger::GetInstance().Log(std::to_string(index), ErrorLevel::error);
+			Logger::GetInstance().Log(" ", ErrorLevel::error);
 			Logger::GetInstance().Log(SDL_GetError(), ErrorLevel::error);
 		}
 	}
@@ -143,7 +144,7 @@ void Integrian::GameController::RemoveInput(const ControllerInput controllerInpu
 #else
 	try
 	{
-		m_KeyboardCommands.erase(controllerInput);
+		m_pCommands.erase(controllerInput);
 	}
 	catch (const std::exception&)
 	{
