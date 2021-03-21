@@ -32,7 +32,7 @@ namespace Integrian
 		template<typename Type> // this is templated so it can be checked at compile time
 		inline static void Provide(Type* pService)
 		{
-			static_assert(std::is_base_of_v<IService, Type>, "The pointer supplied to ServiceLocator::Provide was not a Service");
+			static_assert(std::is_base_of_v<IService, Type>, "The pointer supplied to ServiceLocator::Provide was not a Service"); // compile time assertion
 			Logger& logger{ Logger::GetInstance() };
 			if (pService == nullptr || std::is_same_v<Type, NullService>) // literally this if is the reason I made this templated
 			{
