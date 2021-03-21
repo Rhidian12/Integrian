@@ -15,7 +15,7 @@ enum class ErrorLevel
 
 namespace Integrian
 {
-	class Logger final : public Singleton<Logger>
+	class Logger final : public Singleton<Logger> // TODO: Make this just a static class, it doesn't need to store data
 	{
 	public:
 		Logger() = default;

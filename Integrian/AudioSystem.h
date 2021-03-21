@@ -7,10 +7,11 @@
 #include <SDL_mixer.h> // Mix_Chunk, Mix_Music, more SDL_Mixer related functionality
 #include <string> // std::string
 #include <unordered_map> // std::unordered_map
+#include "ServiceInterface.h"
 
 namespace Integrian
 {
-	class AudioSystem abstract
+	class AudioSystem abstract : public IService
 	{
 	public:
 		using SoundID = uint64_t; // TODO: make a seperate MusicID

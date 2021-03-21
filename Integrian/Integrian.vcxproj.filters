@@ -166,6 +166,12 @@
     <Filter Include="Engine\Audio\AudioPlayerLogged">
       <UniqueIdentifier>{98e2db59-5227-4adf-a2d7-02d3d6d32d20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ServiceLocator\ServiceInterface">
+      <UniqueIdentifier>{0eea5940-68d1-48c0-bd13-5bd92cb177d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ServiceLocator\NullService">
+      <UniqueIdentifier>{42cbc4a6-4629-4e7b-bb9d-de860a48aff2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -565,6 +571,12 @@
     </ClInclude>
     <ClInclude Include="AudioPlayerLogged.h">
       <Filter>Engine\Audio\AudioPlayerLogged</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceInterface.h">
+      <Filter>Engine\ServiceLocator\ServiceInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="NullService.h">
+      <Filter>Engine\ServiceLocator\NullService</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

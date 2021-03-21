@@ -256,6 +256,7 @@
     <ClInclude Include="memorybuffer.h" />
     <ClInclude Include="memorystream.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="NullService.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="ostreamwrapper.h" />
@@ -273,6 +274,7 @@
     <ClInclude Include="schema.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
+    <ClInclude Include="ServiceInterface.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="StaticInstanceAlreadyCreated.h" />
     <ClInclude Include="stream.h" />

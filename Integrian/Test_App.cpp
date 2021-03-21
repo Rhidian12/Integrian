@@ -18,6 +18,7 @@
 #include "Logger.h"
 #include "CommandManager.h"
 #include "AudioPlayerLogged.h"
+#include "ServiceLocator.h"
 
 void Integrian::Test_App::Start()
 {
@@ -48,11 +49,10 @@ void Integrian::Test_App::Start()
 	InitPlayerOne();
 	InitPlayerTwo();
 
-	AudioPlayerLogged test{};
-	//test.AddSound(0, "Data/menu3.wav");
-	test.AddMusic(0, "Data/AHHHHH.mp3");
-	//test.PlaySound(0, true);
-	test.PlayMusic(0);
+	ServiceLocator serviceLocator{};
+	serviceLocator.Provide(new AudioPlayerLogged{});
+	AudioPlayerLogged* pAudio = serviceLocator.GetService<AudioPlayerLogged>();
+	pAudio->AddSound(0, "ree");
 }
 
 void Integrian::Test_App::Update(const float dt)
@@ -161,7 +161,7 @@ void Integrian::Test_App::InitPlayerTwo()
 
 	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 2 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
 	ScoreDisplayComponent* pScoreDisplayComponent{ new ScoreDisplayComponent{pScoreDisplayTextComponent, 0 } };
-	
+
 	pScoreDisplay->AddComponent(pScoreDisplayTextComponent);
 	pScoreDisplay->AddComponent(pScoreDisplayComponent);
 	pScoreDisplay->transform = Point2f{ 150.f, 0.f };
