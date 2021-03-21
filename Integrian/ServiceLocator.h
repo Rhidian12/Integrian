@@ -54,9 +54,7 @@ namespace Integrian
 					m_pServices.insert(pService);
 			}
 			else
-			{
 				static_assert(std::is_base_of_v<IService, Type>, "The pointer supplied to ServiceLocator::Provide was not a Service"); // compile time assertion
-			}
 		}
 
 	private:

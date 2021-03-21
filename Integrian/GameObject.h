@@ -7,6 +7,7 @@
 #include "TransformComponent.h"
 #include "Logger.h"
 #include "PossibleInputs.h"
+#include <type_traits> // std::is_base_of_v, std::enable_if_t
 
 // http://scottmeyers.blogspot.com/2015/09/should-you-be-using-something-instead.html
 // I dont think this will ever be necessary
@@ -29,14 +30,12 @@ namespace Integrian
 		
 		void Render() const;
 
-		template<typename Type>
+		template<typename Type, typename = std::enable_if_t<std::is_base_of_v<Component, Type>>> // sfinae
 		inline [[nodiscard]] Type* GetComponentByType() const
 		{
 			for (Component* pComponent : m_pComponents)
-			{
-				if (typeid(*pComponent) == typeid(Type))
+				if (typeid(*pComponent) == typeid(Type)) // no way to do this at compile time :(
 					return static_cast<Type*>(pComponent);
-			}
 
 			Logger::GetInstance().Log("GetComponentByType returned a nullptr\n", ErrorLevel::error);
 			return nullptr;
