@@ -47,4 +47,9 @@ constexpr void SafeDelete(Type* pData)
 	}
 }
 
+constexpr bool AlwaysFalse()
+{
+	return false;
+}
+
 #endif //PCH_H
