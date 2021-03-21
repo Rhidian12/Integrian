@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ServiceLocator.h"
 
-Integrian::ServiceLocator::~ServiceLocator()
+void Integrian::ServiceLocator::Cleanup()
 {
 	for (IService* pService : m_pServices)
 		SafeDelete(pService);

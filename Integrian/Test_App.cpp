@@ -51,7 +51,8 @@ void Integrian::Test_App::Start()
 
 	ServiceLocator::Provide(new AudioPlayerLogged{});
 	AudioPlayerLogged* pAudio = ServiceLocator::GetService<AudioPlayerLogged>();
-	pAudio->AddSound(0, "ree");
+	pAudio->AddMusic(0, "Data/AHHHHH.mp3");
+	pAudio->PlayMusic(0);
 }
 
 void Integrian::Test_App::Update(const float dt)

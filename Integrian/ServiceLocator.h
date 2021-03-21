@@ -16,7 +16,9 @@ namespace Integrian
 	{
 	public:
 		ServiceLocator() = default;
-		~ServiceLocator();
+		~ServiceLocator() = default;
+
+		static void Cleanup();
 
 		template<typename Type>
 		[[nodiscard]] inline static Type* GetService()

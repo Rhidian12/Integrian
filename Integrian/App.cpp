@@ -24,6 +24,8 @@ Integrian::App::~App()
 		SafeDelete(pCommand);
 	m_pCommands.clear();
 
+	ServiceLocator::Cleanup();
+
 	ShutDown();
 }
 
