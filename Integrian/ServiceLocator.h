@@ -15,7 +15,7 @@ namespace Integrian
 	class ServiceLocator final
 	{
 	public:
-		ServiceLocator();
+		ServiceLocator() = default;
 		~ServiceLocator();
 
 		template<typename Type>
@@ -53,7 +53,7 @@ namespace Integrian
 
 	private:
 		inline static std::unordered_set<IService*> m_pServices{};
-		inline static IService* m_pNullService{};
+		inline static IService* m_pNullService{ new NullService{} };
 	};
 }
 

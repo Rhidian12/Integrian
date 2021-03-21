@@ -49,9 +49,8 @@ void Integrian::Test_App::Start()
 	InitPlayerOne();
 	InitPlayerTwo();
 
-	ServiceLocator serviceLocator{};
-	serviceLocator.Provide(new AudioPlayerLogged{});
-	AudioPlayerLogged* pAudio = serviceLocator.GetService<AudioPlayerLogged>();
+	ServiceLocator::Provide(new AudioPlayerLogged{});
+	AudioPlayerLogged* pAudio = ServiceLocator::GetService<AudioPlayerLogged>();
 	pAudio->AddSound(0, "ree");
 }
 
