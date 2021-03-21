@@ -170,6 +170,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DefeatCoilyCommand.cpp" />
     <ClCompile Include="DisksRemainingCommand.cpp" />
+    <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -227,7 +228,7 @@
     <ClInclude Include="document.h" />
     <ClInclude Include="encodedstream.h" />
     <ClInclude Include="encodings.h" />
-    <ClInclude Include="Events.h" />
+    <ClInclude Include="EventQueue.h" />
     <ClInclude Include="ExceptionHandler.h" />
     <ClInclude Include="filereadstream.h" />
     <ClInclude Include="filewritestream.h" />

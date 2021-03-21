@@ -112,9 +112,6 @@
     <Filter Include="Engine\Subject">
       <UniqueIdentifier>{ee02623b-b158-4c83-9720-661085125f95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Events">
-      <UniqueIdentifier>{0d42fa4b-f710-4d2e-b0fa-5b9fc6e5e0f0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Applications\Test_App\Commands\KillCommand">
       <UniqueIdentifier>{7c981eff-3e84-481d-ad93-94fbed8964a1}</UniqueIdentifier>
     </Filter>
@@ -171,6 +168,9 @@
     </Filter>
     <Filter Include="Engine\ServiceLocator\NullService">
       <UniqueIdentifier>{42cbc4a6-4629-4e7b-bb9d-de860a48aff2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\EventQueue">
+      <UniqueIdentifier>{54bb65d2-2210-4cfa-a334-04ad626ccfa2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +314,9 @@
     </ClCompile>
     <ClCompile Include="AudioPlayerLogged.cpp">
       <Filter>Engine\Audio\AudioPlayerLogged</Filter>
+    </ClCompile>
+    <ClCompile Include="EventQueue.cpp">
+      <Filter>Engine\EventQueue</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -461,9 +464,6 @@
     <ClInclude Include="Subject.h">
       <Filter>Engine\Subject</Filter>
     </ClInclude>
-    <ClInclude Include="Events.h">
-      <Filter>Engine\Events</Filter>
-    </ClInclude>
     <ClInclude Include="KillCommand.h">
       <Filter>Applications\Test_App\Commands\KillCommand</Filter>
     </ClInclude>
@@ -577,6 +577,9 @@
     </ClInclude>
     <ClInclude Include="NullService.h">
       <Filter>Engine\ServiceLocator\NullService</Filter>
+    </ClInclude>
+    <ClInclude Include="EventQueue.h">
+      <Filter>Engine\EventQueue</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
