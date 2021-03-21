@@ -3,6 +3,7 @@
 #ifndef INTEGRIAN_SERVICELOCATOR_H
 #define INTEGRIAN_SERVICELOCATOR_H
 
+#include "pch.h" // AlwaysFalse()
 #include <unordered_set> // std::unordered_set
 #include <typeinfo> // typeid()
 #include "ServiceInterface.h" // Base class for all services
@@ -54,7 +55,7 @@ namespace Integrian
 					m_pServices.insert(pService);
 			}
 			else
-				static_assert(std::is_base_of_v<IService, Type>, "The pointer supplied to ServiceLocator::Provide was not a Service"); // compile time assertion
+				static_assert(AlwaysFalse(), "The pointer supplied to ServiceLocator::Provide was not a Service"); // compile time assertion
 		}
 
 	private:
