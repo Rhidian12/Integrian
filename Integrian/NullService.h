@@ -3,11 +3,11 @@
 #ifndef INTEGRIAN_NULLSERVICE_H
 #define INTEGRIAN_NULLSERVICE_H
 
-#include "AudioSystem.h"
+#include "AudioPlayerLogged.h"
 
 namespace Integrian
 {
-	class NullService final : public AudioSystem
+	class NullService final : public AudioPlayerLogged
 	{
 	public:
 		virtual void PlaySound(const SoundID, const bool = false, const int = 0, const int = 100) override {}

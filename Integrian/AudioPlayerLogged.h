@@ -7,7 +7,7 @@
 
 namespace Integrian
 {
-	class AudioPlayerLogged final : public AudioSystem
+	class AudioPlayerLogged : public AudioSystem // Not final since NullService inherits
 	{
 	public:
 		AudioPlayerLogged() = default;

@@ -8,7 +8,7 @@
 #include "ServiceInterface.h" // Base class for all services
 #include "Logger.h" // Logger
 #include "NullService.h" // NullService
-#include <type_traits> // std::is_base_of
+#include <type_traits> // std::is_base_of, std::is_same_v
 
 namespace Integrian
 {
