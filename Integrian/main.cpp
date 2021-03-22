@@ -3,6 +3,7 @@
 #include <vld.h>
 #include "App_Selector.h"
 #include "App.h"
+#include "VisualBenchmark.h"
 
 // == Include correct application == 
 #ifdef TEST_APP
@@ -17,6 +18,8 @@ int main(int argc, char* args[])
 	// make the parameters unreferenced
 	(void)argc;
 	(void)args;
+
+	Session::Get().BeginSession();
 
 	// == Make the application ==
 	Integrian::App* pApplication{};
@@ -61,6 +64,8 @@ int main(int argc, char* args[])
 
 	// == Cleanup ==
 	SafeDelete(pApplication);
+
+	Session::Get().EndSession();
 
 	return 0;
 }

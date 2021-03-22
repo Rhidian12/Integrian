@@ -185,12 +185,14 @@ void Integrian::App::Run()
 
 	float timeSinceLastUpdate{};
 
-	auto test = std::async(std::launch::async, [&eventQueue]()
+#pragma warning( push )
+#pragma warning( disable : 4834 )
+	std::async(std::launch::async, [&eventQueue]()
 		{
 			while (g_IsLooping)
 				eventQueue.Update();
 		});
-	test;
+#pragma warning( pop )
 
 	// == Event Loop ==
 	while (g_IsLooping)
@@ -208,7 +210,7 @@ void Integrian::App::Run()
 		TransformCameraAndRender();
 
 		// == Process Events ==
-		//EventQueue::GetInstance().Update();
+		//eventQueue.Update();
 
 		// == Update The Timer For The Fixed Update ==
 		timeSinceLastUpdate += timer.GetElapsedSeconds();

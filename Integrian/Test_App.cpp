@@ -54,6 +54,7 @@ void Integrian::Test_App::Start()
 	AudioPlayerLogged* pAudio = ServiceLocator::GetService<AudioPlayerLogged>();
 	pAudio->AddMusic(0, "Data/AHHHHH.mp3");
 	pAudio->PlayMusic(0);
+	pAudio->AddSound(0, "Data/menu3.wav");
 	EventQueue::GetInstance().AddListener(pAudio);
 }
 

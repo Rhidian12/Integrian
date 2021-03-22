@@ -596,5 +596,8 @@
     <ClInclude Include="ListenerInterface.h">
       <Filter>Engine\Listener</Filter>
     </ClInclude>
+    <ClInclude Include="VisualBenchmark.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

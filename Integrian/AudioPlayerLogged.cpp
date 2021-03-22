@@ -4,29 +4,37 @@
 #include <string> // std::to_string
 #include <future> // std::async
 
+#include "VisualBenchmark.h" // TODO: REMOVE THIS
+
 bool Integrian::AudioPlayerLogged::OnEvent(const Event& event)
 {
+	TIME();
+
 	switch (event.GetEvent())
 	{
 	case Events::PlaySound:
 	{
 		auto data{ event.GetData<int, bool, int, int>() };
-		auto future = std::async(std::launch::async, [&data, this]()
+#pragma warning( push )
+#pragma warning( disable : 4834 )
+		std::async(std::launch::async, [&data, this]()
 			{
 				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});
-		future;
+#pragma warning( pop )
 		return true;
 	}
 		break;
 	case Events::PlayMusic:
 	{
 		auto data{ event.GetData<MusicID, bool, int, int>() };
-		auto future = std::async(std::launch::async, [&data, this]()
+#pragma warning( push )
+#pragma warning( disable : 4834 )
+		std::async(std::launch::async, [&data, this]()
 			{
 				PlayMusic(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});
-		future;
+#pragma warning( pop )
 		return true;
 	}
 		break;

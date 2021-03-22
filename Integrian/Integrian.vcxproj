@@ -298,6 +298,7 @@
     <ClInclude Include="Utility Functions.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vector2f.h" />
+    <ClInclude Include="VisualBenchmark.h" />
     <ClInclude Include="writer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

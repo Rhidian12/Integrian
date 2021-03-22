@@ -15,9 +15,6 @@ Integrian::HealthComponent::HealthComponent(const uint64_t maxLives, const uint6
 	, m_CurrentLives{ currentLives }
 	, m_pSubject{ std::make_unique<Subject>() }
 {
-	ServiceLocator::Provide(new AudioPlayerLogged{}); // TODO: MOVE THIS TO TEST_APP
-	AudioPlayerLogged* pAudio{ ServiceLocator::GetService<AudioPlayerLogged>() };
-	pAudio->AddSound(0, "Data/menu3.wav");
 }
 
 void Integrian::HealthComponent::DecreaseLivesByValue(const uint64_t value)

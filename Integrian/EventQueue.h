@@ -11,6 +11,8 @@
 #include "ListenerInterface.h" // Integrian::IListener
 #include <future> // std::async
 
+#include "VisualBenchmark.h" // TODO: REMOVE THIS, ONLY FOR TESTING 
+
 namespace Integrian
 {
 	class EventQueue final : public Singleton<EventQueue>
@@ -33,6 +35,8 @@ namespace Integrian
 		{
 			if (!m_Events.empty())
 			{
+				TIME();
+
 				bool wasEventProcessed{};
 				for (IListener* pListener : m_pListeners)
 					if (pListener->OnEvent(m_Events.front()))
