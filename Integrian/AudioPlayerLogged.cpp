@@ -93,3 +93,33 @@ void Integrian::AudioPlayerLogged::PlayMusic(const MusicID musicID, const bool i
 		Logger::LogError("Music with Music ID: " + std::to_string(musicID) + " was not found\n");
 #endif
 }
+
+void Integrian::AudioPlayerLogged::RewindMusic()
+{
+	Mix_RewindMusic();
+}
+
+void Integrian::AudioPlayerLogged::SetMusicPosition(double time)
+{
+	switch (Mix_GetMusicType(m_pCurrentPlayingMusic))
+	{
+	case MUS_OGG:
+	case MUS_MOD:
+		if (Mix_SetMusicPosition(time) == -1)
+			Logger::LogError(std::string{ "SetMusicPosition() failed: " } + Mix_GetError() + "\n");
+		else
+			Logger::LogNoWarning("Music position set to: " + std::to_string(time) + "\n");
+		break;
+	case MUS_MP3:
+		RewindMusic();
+		if (Mix_SetMusicPosition(time) == -1)
+			Logger::LogError(std::string{ "SetMusicPosition() failed: " } + Mix_GetError() + "\n");
+		else
+			Logger::LogNoWarning("Music position set to: " + std::to_string(time) + "\n");
+		break;
+	default:
+		Logger::LogWarning("SetMusicPosition() only supports .mp3, .ogg and .mod music formats\n");
+		return;
+	}
+
+}

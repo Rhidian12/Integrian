@@ -26,6 +26,9 @@ namespace Integrian
 		virtual void PlaySound(const SoundID, const bool = false, const int = 0, const int = 100) = 0;
 		virtual void PlayMusic(const MusicID, const bool = false, const int = 0, const int = 100) = 0;
 
+		virtual void RewindMusic() = 0;
+		virtual void SetMusicPosition(double time) = 0;
+
 	protected:
 		std::unordered_map<SoundID, Mix_Chunk*> m_Sounds;
 		std::unordered_map<MusicID, Mix_Music*> m_Music;
