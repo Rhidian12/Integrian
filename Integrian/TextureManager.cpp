@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "TextureManager.h"
 #include "Texture.h"
-#include <iostream>
+#include "Logger.h"
 Integrian::TextureManager::TextureManager()
 	: m_DataPath{}
 {
@@ -21,19 +21,13 @@ Integrian::TextureManager::~TextureManager()
 void Integrian::TextureManager::AddTexture(const std::string& name, const std::string& path)
 {
 	if (!m_pTextures.insert(std::make_pair(name, new Texture{ m_DataPath + path })).second)
-	{
-		// TODO: Turn this into a Logger thing
-		// == If The Insertion Failed, .second Will Be False ==
-		std::cout << name << " was not inserted! Check " << m_DataPath + path << std::endl;
-	}
+		Logger::LogWarning(name + " was not inserted!\n");
 }
 
 void Integrian::TextureManager::AddTexture(const std::string& name, const std::string& path, const std::string& textToRender, const int size, const RGBColour& colour)
 {
 	if(!m_pTextures.insert(std::make_pair(name, new Texture{ textToRender,m_DataPath + path,size,colour})).second)
-	{
-		// TODO: Logger thingie
-	}
+		Logger::LogWarning(name + " was not inserted!\n");
 }
 
 const std::unordered_map<std::string, Integrian::Texture*>& Integrian::TextureManager::GetTextures() const

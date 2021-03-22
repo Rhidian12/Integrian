@@ -78,8 +78,7 @@ void Integrian::Mouse::RemoveInput(const MouseButton mouseButton, const char* pF
 	}
 	catch (const std::exception&)
 	{
-		// TODO: Make this print to a file
-		std::cerr << "Tried to remove a non-existent input" << std::endl;
+		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
 	}
 #endif
 }
@@ -108,8 +107,7 @@ void Integrian::Mouse::RemoveCommandFromInput(const MouseButton mouseButton, Com
 	}
 	catch (const std::exception&)
 	{
-		// TODO: Make this print something to a log file
-		std::cerr << "Tried to remove non-existing command" << std::endl;
+		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
 	}
 #endif
 }

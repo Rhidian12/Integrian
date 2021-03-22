@@ -137,8 +137,7 @@ void Integrian::GameController::RemoveInput(const ControllerInput controllerInpu
 	}
 	catch (const std::exception&)
 	{
-		// TODO: Make this print to a file
-		std::cerr << "Tried to remove a non-existent input" << std::endl;
+		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
 	}
 #endif
 }
@@ -167,8 +166,7 @@ void Integrian::GameController::RemoveCommandFromInput(const ControllerInput con
 	}
 	catch (const std::exception&)
 	{
-		// TODO: Make this print something to a log file
-		std::cerr << "Tried to remove non-existing command" << std::endl;
+		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
 	}
 #endif
 }
