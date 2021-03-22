@@ -101,15 +101,15 @@ bool Integrian::App::Initialize()
 #pragma endregion
 
 #pragma region SDL_Mixer
-	// this final parameter is the chunk size of the audio, this might have to be made larger if too much memory is getting used
+	// this final parameter is the chunk size of the audio, this might have to be made larger if too much hooks are getting used
 	// TODO: Load in all filesizes of music in our folder, and take the average of that
-	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 4, 2048) == -1)
-		Logger::LogSevereError(std::string{ "SDL_Mixer failed to open! " } + Mix_GetError());
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 8, 2048) == -1)
+		Logger::LogSevereError(std::string{ "SDL_Mixer failed to open! " } + Mix_GetError() + "\n");
 
 	// == Initialize SDL_Mixer == 
 	const int mixerFlags{ MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG };
 	if ((Mix_Init(mixerFlags) & mixerFlags) != mixerFlags)
-		Logger::LogSevereError(std::string{ "SDL_Mixer failed to initialize!" } + Mix_GetError());
+		Logger::LogSevereError(std::string{ "SDL_Mixer failed to initialize!" } + Mix_GetError() + "\n");
 #pragma endregion
 
 	// == Set Window Size For InputManager ==
@@ -174,7 +174,7 @@ void Integrian::App::Run()
 
 #pragma warning( push )
 #pragma warning( disable : 4834 )
-	std::async(std::launch::async, [&eventQueue]()
+	auto future = std::async(std::launch::async, [&eventQueue]()
 		{
 			while (g_IsLooping)
 				eventQueue.Update();

@@ -19,8 +19,14 @@ namespace Integrian
 		virtual void PlaySound(const SoundID soundID, const bool infiniteLoop = false, const int amountOfLoops= 0, const int volume = 100) override;
 		virtual void PlayMusic(const MusicID soundID, const bool infiniteLoop = false, const int amountOfLoops= 0, const int volume = 100) override;
 
+		virtual void PauseMusic() override;
+		virtual void PauseSound() override;
+
 		virtual void RewindMusic() override;
 		virtual void SetMusicPosition(double time) override;
+
+		virtual [[nodiscard]] bool IsMusicPlaying() const override;
+		virtual [[nodiscard]] bool IsSoundPlaying() const override;
 
 		// TODO: Expand this class to be able to do more than just play a sound and music
 	private:

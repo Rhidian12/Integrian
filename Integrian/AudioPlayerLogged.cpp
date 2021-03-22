@@ -3,6 +3,7 @@
 #include "Logger.h" // Logger
 #include <string> // std::to_string
 #include <future> // std::async
+#include <algorithm> // std::find
 
 #include "VisualBenchmark.h" // TODO: REMOVE THIS
 
@@ -17,7 +18,7 @@ bool Integrian::AudioPlayerLogged::OnEvent(const Event& event)
 	case Events::PlaySound:
 	{
 		auto data{ event.GetData<int, bool, int, int>() };
-		std::async(std::launch::async, [&data, this]()
+		auto future = std::async(std::launch::async, [&data, this]()
 			{
 				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});
@@ -27,8 +28,7 @@ bool Integrian::AudioPlayerLogged::OnEvent(const Event& event)
 	case Events::PlayMusic:
 	{
 		auto data{ event.GetData<MusicID, bool, int, int>() };
-
-		std::async(std::launch::async, [&data, this]()
+		auto future = std::async(std::launch::async, [&data, this]()
 			{
 				PlayMusic(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});
@@ -51,11 +51,17 @@ void Integrian::AudioPlayerLogged::PlaySound(const SoundID soundID, const bool i
 			loops = -1;
 
 		Mix_VolumeChunk(m_Sounds[soundID], volume);
-		if (Mix_PlayChannel(-1, m_Sounds[soundID], loops) == -1) // just take the first available channel
+		Channel& channel{ GetFirstAvailableChannel() };
+		if (Mix_PlayChannel(channel.channelIndex, m_Sounds[soundID], loops) == -1)
+		{
 			// something went wrong
 			Logger::LogError((("Sound with sound ID: " + std::to_string(soundID)) + " could not be played: ") + Mix_GetError() + "\n");
+		}
 		else
+		{
 			Logger::LogNoWarning("Sound with sound ID: " + std::to_string(soundID) + " was played\n");
+			channel.isInUse = true;
+		}
 	}
 #ifdef _DEBUG
 	else
@@ -94,6 +100,14 @@ void Integrian::AudioPlayerLogged::PlayMusic(const MusicID musicID, const bool i
 #endif
 }
 
+void Integrian::AudioPlayerLogged::PauseMusic()
+{
+}
+
+void Integrian::AudioPlayerLogged::PauseSound()
+{
+}
+
 void Integrian::AudioPlayerLogged::RewindMusic()
 {
 	Mix_RewindMusic();
@@ -119,7 +133,15 @@ void Integrian::AudioPlayerLogged::SetMusicPosition(double time)
 		break;
 	default:
 		Logger::LogWarning("SetMusicPosition() only supports .mp3, .ogg and .mod music formats\n");
-		return;
 	}
+}
 
+bool Integrian::AudioPlayerLogged::IsMusicPlaying() const
+{
+	return Mix_PlayingMusic() == 1;
+}
+
+bool Integrian::AudioPlayerLogged::IsSoundPlaying() const
+{
+	return false;
 }
