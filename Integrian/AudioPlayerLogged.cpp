@@ -10,38 +10,36 @@ bool Integrian::AudioPlayerLogged::OnEvent(const Event& event)
 {
 	TIME();
 
+#pragma warning( push )
+#pragma warning( disable : 4834 ) // disables the [[nodiscard]] warning thrown by std::async
 	switch (event.GetEvent())
 	{
 	case Events::PlaySound:
 	{
 		auto data{ event.GetData<int, bool, int, int>() };
-#pragma warning( push )
-#pragma warning( disable : 4834 )
 		std::async(std::launch::async, [&data, this]()
 			{
 				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});
-#pragma warning( pop )
 		return true;
 	}
-		break;
+	break;
 	case Events::PlayMusic:
 	{
 		auto data{ event.GetData<MusicID, bool, int, int>() };
-#pragma warning( push )
-#pragma warning( disable : 4834 )
+
 		std::async(std::launch::async, [&data, this]()
 			{
 				PlayMusic(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});
-#pragma warning( pop )
 		return true;
 	}
-		break;
+	break;
 	default:
 		return false;
 		break;
 	}
+#pragma warning( pop )
 }
 
 void Integrian::AudioPlayerLogged::PlaySound(const SoundID soundID, const bool infiniteLoop, const int amountOfLoops, const int volume)
