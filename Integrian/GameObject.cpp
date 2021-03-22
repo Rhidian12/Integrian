@@ -17,10 +17,7 @@ void Integrian::GameObject::AddComponent(Component* pComponent)
 				return pComponent == pC;
 			});
 	if (isComponentAlreadyInList != m_pComponents.cend())
-	{
-		Logger::GetInstance().Log(typeid(*pComponent).name(), ErrorLevel::severeError);
-		Logger::GetInstance().Log(" was already added!\n", ErrorLevel::severeError);
-	}
+		Logger::LogWarning(std::string{ typeid(*pComponent).name() } + " was already added\n");
 	else
 		m_pComponents.push_back(pComponent);
 }

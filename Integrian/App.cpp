@@ -36,15 +36,10 @@ bool Integrian::App::Initialize()
 	uint32_t width = 640;
 	uint32_t height = 480;
 
-	const Logger& logger{ Logger::GetInstance() };
-
 #pragma region SDL Stuff
 	//Create window + surfaces
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) == -1)
-	{
-		logger.Log(SDL_GetError(), ErrorLevel::severeError);
-		logger.Log("\n", ErrorLevel::severeError);
-	}
+		Logger::LogSevereError(std::string{ "SDL_Init failed:" } + SDL_GetError() + "\n");
 
 	m_pWindow = SDL_CreateWindow(
 		"Programming 4 Assignment - Rhidian De Wit",
@@ -55,19 +50,17 @@ bool Integrian::App::Initialize()
 
 	if (!m_pWindow)
 	{
-		logger.Log("Error: m_pWindow failed in App::Initialize()\n", ErrorLevel::severeError);
+		Logger::LogSevereError("Error: m_pWindow failed in App::Initialize()\n");
 		return false;
 	}
 
 	SDL_GLContext context = SDL_GL_CreateContext(m_pWindow);
 	if (context == nullptr)
-		logger.Log("App::Initialize() CreateContext() failed\n", ErrorLevel::severeError);
+		Logger::LogSevereError("App::Initialize() CreateContext() failed\n");
 
 	if (SDL_GL_SetSwapInterval(1) < 0)
 	{
-		logger.Log("App::Initialize() error when calling SDL_GL_SetSwapInterval ", ErrorLevel::error);
-		logger.Log(SDL_GetError(), ErrorLevel::error);
-		logger.Log("\n", ErrorLevel::error);
+		Logger::LogError(std::string{ "App::Initialize() error when calling SDL_GL_SetSwapInterval " } + SDL_GetError() + "\n");
 		return false;
 	}
 
@@ -94,10 +87,10 @@ bool Integrian::App::Initialize()
 	const int pngFlags{ IMG_INIT_PNG };
 	const int jpgFlags{ IMG_INIT_JPG };
 	if (!(IMG_Init(pngFlags) & pngFlags) || !(IMG_Init(jpgFlags) & jpgFlags))
-		logger.Log("SDL_image could not initialize! SDL_image Error: %s\n", ErrorLevel::severeError);
+		Logger::LogSevereError(std::string{ "SDL_image could not initialize! SDL_image Error: " } + SDL_GetError() + "\n");
 
 	if (TTF_Init() != 0)
-		logger.Log(SDL_GetError(), ErrorLevel::severeError);
+		Logger::LogSevereError(SDL_GetError());
 #pragma endregion
 
 #pragma region ImGui
@@ -111,18 +104,12 @@ bool Integrian::App::Initialize()
 	// this final parameter is the chunk size of the audio, this might have to be made larger if too much memory is getting used
 	// TODO: Load in all filesizes of music in our folder, and take the average of that
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 4, 2048) == -1)
-	{
-		logger.Log("SDL_Mixer failed to open! ", ErrorLevel::severeError);
-		logger.Log(Mix_GetError(), ErrorLevel::severeError);
-	}
+		Logger::LogSevereError(std::string{ "SDL_Mixer failed to open! " } + Mix_GetError());
 
 	// == Initialize SDL_Mixer == 
 	const int mixerFlags{ MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG };
 	if ((Mix_Init(mixerFlags) & mixerFlags) != mixerFlags)
-	{
-		logger.Log("SDL_Mixer failed to initialize!", ErrorLevel::severeError);
-		logger.Log(Mix_GetError(), ErrorLevel::severeError);
-	}
+		Logger::LogSevereError(std::string{ "SDL_Mixer failed to initialize!" } + Mix_GetError());
 #pragma endregion
 
 	// == Set Window Size For InputManager ==
@@ -153,7 +140,7 @@ void Integrian::App::FinishInitializationOfApp()
 	if (!InitializeCamera())
 		throw InitialisationFailedException{};
 
-	Logger::GetInstance().Log("Initialisation finished!\n", ErrorLevel::noWarning);
+	Logger::LogNoWarning("Initialisation finished!\n");
 
 	m_IsInitializationFinished = true;
 	m_HasStarted = true;

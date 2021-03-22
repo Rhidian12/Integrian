@@ -11,11 +11,7 @@ namespace Integrian
 	public:
 		StaticInstanceAlreadyCreated(const char* pFile, const int line)
 		{
-			Logger& logger{ Logger::GetInstance() };
-			logger.Log("EXCEPTION: A static instance was created twice in file: ", ErrorLevel::severeError);
-			logger.Log(pFile, ErrorLevel::severeError);
-			logger.Log(" at line: ", ErrorLevel::severeError);
-			logger.Log(std::to_string(line), ErrorLevel::severeError);
+			Logger::LogSevereError(std::string{ "EXCEPTION: A static instance was created twice in file: " } + pFile + " at line: " + std::to_string(line));
 		}
 	};
 }

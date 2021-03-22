@@ -17,6 +17,7 @@
 #include "Keyboard.h"
 #include "GameController.h"
 #include "Mouse.h"
+#include "Singleton.h"
 // Reference: https://stackoverflow.com/questions/25963966/c-function-pointer-callback-without-inheritance
 
 // Henri-Thibault Huyghe came up with the idea of a superclass game input enum class

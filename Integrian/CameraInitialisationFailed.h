@@ -15,7 +15,7 @@ namespace Integrian
 	public:
 		CameraInitialisationFailedException()
 		{
-			Logger::GetInstance().Log("EXCEPTION: App::InitializeCamera() called in App::FinishInitialisationOfApp() failed", ErrorLevel::severeError);
+			Logger::LogSevereError("EXCEPTION: App::InitializeCamera() called in App::FinishInitialisationOfApp() failed");
 		}
 	};
 }

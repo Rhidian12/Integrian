@@ -3,6 +3,7 @@
 #include "Command.h"
 #include "ExceptionHandler.h"
 #include "InputManager.h"
+#include "Logger.h"
 
 Integrian::CommandManager::~CommandManager()
 {
@@ -17,7 +18,7 @@ Integrian::Command* Integrian::CommandManager::AddCommand(Command* pCommand)
 	{
 		// the command has already been added. Add it nonetheless, but log a warning
 		m_pCommands.push_back(pCommand);
-		Logger::GetInstance().Log("Command was already added!", ErrorLevel::warning);
+		Logger::LogWarning("Command was already added!\n");
 	}
 #else
 	m_pCommands.push_back(pCommand);

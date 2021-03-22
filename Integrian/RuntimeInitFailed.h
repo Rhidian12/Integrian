@@ -15,7 +15,7 @@ namespace Integrian
 	public:
 		RuntimeInitialisationFailed()
 		{
-			Logger::GetInstance().Log("EXCEPTION: Something went wrong in App::FinishInitialisationOfApp()", ErrorLevel::severeError);
+			Logger::LogSevereError("EXCEPTION: Something went wrong in App::FinishInitialisationOfApp()");
 		}
 	};
 }

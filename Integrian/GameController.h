@@ -34,8 +34,8 @@ namespace Integrian
 		[[nodiscard]] double GetJoystickMovement(const SDL_GameControllerAxis axis) const;
 		[[nodiscard]] double GetTriggerMovement(const SDL_GameControllerAxis axis) const;
 
-		void RemoveInput(const ControllerInput controllerInput);
-		void RemoveCommandFromInput(const ControllerInput controllerInput, Command* pCommand);
+		void RemoveInput(const ControllerInput controllerInput, const char* pFile = __FILE__, const int line = __LINE__);
+		void RemoveCommandFromInput(const ControllerInput controllerInput, Command* pCommand, const char* pFile = __FILE__, const int line = __LINE__);
 		void RemoveCommand(Command* pCommand);
 
 		std::unordered_map<ControllerInput, std::vector<CommandAndButton>> m_pCommands;

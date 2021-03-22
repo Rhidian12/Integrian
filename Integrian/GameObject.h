@@ -37,7 +37,7 @@ namespace Integrian
 				if (typeid(*pComponent) == typeid(Type)) // no way to do this at compile time :(
 					return static_cast<Type*>(pComponent);
 
-			Logger::GetInstance().Log("GetComponentByType returned a nullptr\n", ErrorLevel::error);
+			Logger::LogWarning("GetComponentByType returned a nullptr\n");
 			return nullptr;
 		}
 		

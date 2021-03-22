@@ -13,10 +13,7 @@ Integrian::GameController::GameController(const uint8_t index)
 
 		if (!m_pSDLGameController)
 		{
-			Logger::GetInstance().Log("Error in controller: ", ErrorLevel::error);
-			Logger::GetInstance().Log(std::to_string(index), ErrorLevel::error);
-			Logger::GetInstance().Log(" ", ErrorLevel::error);
-			Logger::GetInstance().Log(SDL_GetError(), ErrorLevel::error);
+			Logger::LogError("Error in controller: " + std::to_string(index) + "\n" + SDL_GetError());
 		}
 	}
 }
@@ -106,7 +103,7 @@ double Integrian::GameController::GetJoystickMovement(const SDL_GameControllerAx
 	{
 		if (axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_RIGHTX && axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_RIGHTY)
 		{
-			Logger::GetInstance().Log("GetJoystickMovement() was called with a wrong parameter!", ErrorLevel::warning);
+			Logger::LogWarning("GetJoystickMovement() was called with a wrong parameter!\n");
 			return 0.0;
 		}
 	}
@@ -118,29 +115,21 @@ double Integrian::GameController::GetTriggerMovement(const SDL_GameControllerAxi
 {
 	if (axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_TRIGGERLEFT && axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_TRIGGERRIGHT)
 	{
-		Logger::GetInstance().Log("GetTriggerMovement() was called with the wrong parameter!", ErrorLevel::warning);
+		Logger::LogWarning("GetTriggerMovement() was called with the wrong parameter!\n");
 		return 0.0;
 	}
 
 	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, axis) / m_MaxJoystickValue), 0.0, 1.0); // map to [0,1]
 }
 
-void Integrian::GameController::RemoveInput(const ControllerInput controllerInput)
+void Integrian::GameController::RemoveInput(const ControllerInput controllerInput, const char* pFile, const int line)
 {
 #ifdef _DEBUG
 	UMapIterator it{ m_pCommands.find(controllerInput) };
 	if (it != m_pCommands.end())
 		m_pCommands.erase(it);
 	else
-	{
-		// TODO: Come up with a better logging system, this is ridicilous
-		Logger& logger{ Logger::GetInstance() };
-		logger.Log("Tried to remove a non-existing input, ", ErrorLevel::severeError);
-		logger.Log("In file and at line: ", ErrorLevel::severeError);
-		logger.Log(__FILE__, ErrorLevel::severeError);
-		logger.Log(std::to_string(__LINE__), ErrorLevel::severeError);
-		logger.Log("\n", ErrorLevel::severeError);
-	}
+		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
 #else
 	try
 	{
@@ -154,7 +143,7 @@ void Integrian::GameController::RemoveInput(const ControllerInput controllerInpu
 #endif
 }
 
-void Integrian::GameController::RemoveCommandFromInput(const ControllerInput controllerInput, Command* pCommand)
+void Integrian::GameController::RemoveCommandFromInput(const ControllerInput controllerInput, Command* pCommand, const char* pFile, const int line)
 {
 	std::vector<CommandAndButton>& commands{ m_pCommands.find(controllerInput)->second };
 
@@ -167,14 +156,7 @@ void Integrian::GameController::RemoveCommandFromInput(const ControllerInput con
 	if (it != commands.end())
 		commands.erase(it, commands.end());
 	else
-	{
-		Logger& logger{ Logger::GetInstance() };
-		logger.Log("Tried to remove a non-existing command, ", ErrorLevel::severeError);
-		logger.Log("In file and at line: ", ErrorLevel::severeError);
-		logger.Log(__FILE__, ErrorLevel::severeError);
-		logger.Log(std::to_string(__LINE__), ErrorLevel::severeError);
-		logger.Log("\n", ErrorLevel::severeError);
-	}
+		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
 #else
 	try
 	{

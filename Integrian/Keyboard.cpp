@@ -63,22 +63,14 @@ Integrian::State Integrian::Keyboard::GetKeystate(const KeyboardInput keyboardIn
 	return State::NotPressed;
 }
 
-void Integrian::Keyboard::RemoveInput(const KeyboardInput keyboardInput)
+void Integrian::Keyboard::RemoveInput(const KeyboardInput keyboardInput, const char* pFile, const int line)
 {
 #ifdef _DEBUG
 	UMapIterator it{ m_KeyboardCommands.find(keyboardInput) };
 	if (it != m_KeyboardCommands.end())
 		m_KeyboardCommands.erase(it);
 	else
-	{
-		// TODO: Come up with a better logging system, this is ridicilous
-		const Logger& logger{ Logger::GetInstance() };
-		logger.Log("Tried to remove a non-existing input, ", ErrorLevel::severeError);
-		logger.Log("In file and at line: ", ErrorLevel::severeError);
-		logger.Log(__FILE__, ErrorLevel::severeError);
-		logger.Log(std::to_string(__LINE__), ErrorLevel::severeError);
-		logger.Log("\n", ErrorLevel::severeError);
-	}
+		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
 #else
 	try
 	{
@@ -92,7 +84,7 @@ void Integrian::Keyboard::RemoveInput(const KeyboardInput keyboardInput)
 #endif
 }
 
-void Integrian::Keyboard::RemoveCommandFromInput(const KeyboardInput keyboardInput, Command* pCommand)
+void Integrian::Keyboard::RemoveCommandFromInput(const KeyboardInput keyboardInput, Command* pCommand, const char* pFile, const int line)
 {
 	std::vector<CommandAndButton>& commands{ m_KeyboardCommands.find(keyboardInput)->second };
 
@@ -106,12 +98,7 @@ void Integrian::Keyboard::RemoveCommandFromInput(const KeyboardInput keyboardInp
 		commands.erase(it, commands.end());
 	else
 	{
-		Logger& logger{ Logger::GetInstance() };
-		logger.Log("Tried to remove a non-existing command, ", ErrorLevel::severeError);
-		logger.Log("In file and at line: ", ErrorLevel::severeError);
-		logger.Log(__FILE__, ErrorLevel::severeError);
-		logger.Log(std::to_string(__LINE__), ErrorLevel::severeError);
-		logger.Log("\n", ErrorLevel::severeError);
+		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
 	}
 #else
 	try

@@ -27,8 +27,8 @@ namespace Integrian
 
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const MouseButton mouseButton, const State previousState) const;
-		void RemoveInput(const MouseButton mouseButton);
-		void RemoveCommandFromInput(const MouseButton mouseButton, Command* pCommand);
+		void RemoveInput(const MouseButton mouseButton, const char* pFile = __FILE__, const int line = __LINE__);
+		void RemoveCommandFromInput(const MouseButton mouseButton, Command* pCommand, const char* pFile = __FILE__, const int line = __LINE__);
 
 		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_MouseCommands{};
 

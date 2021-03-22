@@ -31,25 +31,34 @@
 // 14 = very light yellow
 // 15 = intense white
 
-void Integrian::Logger::Log(const std::string& message, const ErrorLevel level) const
+void Integrian::Logger::LogNoWarning(const std::string& message)
 {
 	const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 2);
+	std::cout << message;
+	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+}
 
-	switch (level)
-	{
-	case ErrorLevel::noWarning:
-		SetConsoleTextAttribute(hConsole, 2);
-		break;
-	case ErrorLevel::warning:
-		SetConsoleTextAttribute(hConsole, 6);
-		break;
-	case ErrorLevel::error:
-		SetConsoleTextAttribute(hConsole, 12);
-		break;
-	case ErrorLevel::severeError:
-		SetConsoleTextAttribute(hConsole, 4);
-		break;
-	}
+void Integrian::Logger::LogWarning(const std::string& message)
+{
+	const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 6);
+	std::cout << message;
+	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+}
+
+void Integrian::Logger::LogError(const std::string& message)
+{
+	const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 12);
+	std::cout << message;
+	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+}
+
+void Integrian::Logger::LogSevereError(const std::string& message)
+{
+	const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 4);
 	std::cout << message;
 	SetConsoleTextAttribute(hConsole, 7); // set text back to white
 }

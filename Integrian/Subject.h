@@ -24,7 +24,7 @@ namespace Integrian
 			if (it == m_pObservers.cend())
 				m_pObservers.push_back(pObserver);
 			else
-				Logger::GetInstance().Log("Observer was already added!", ErrorLevel::error);
+				Logger::LogError("Observer was already added!\n");
 		}
 
 		template<typename ... Args>

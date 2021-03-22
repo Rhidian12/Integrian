@@ -13,23 +13,13 @@ Integrian::AudioSystem::~AudioSystem()
 void Integrian::AudioSystem::AddSound(const SoundID uniqueSoundID, const std::string& filePath)
 {
 #ifdef _DEBUG
-	Logger& logger{ Logger::GetInstance() };
 	if (m_Sounds.find(uniqueSoundID) != m_Sounds.cend())
-	{
-		// this soundID has already been used
-		logger.Log("SoundID: ", ErrorLevel::warning); // TODO: IMPROVE THIS RHIDIAN
-		logger.Log(std::to_string(uniqueSoundID), ErrorLevel::warning);
-		logger.Log(" was already used and has not been added\n", ErrorLevel::warning);
-	}
+		Logger::LogWarning("SoundID: " + std::to_string(uniqueSoundID) + " was already used and has not been added\n"); // this soundID has already been used
 	else
 	{
 		Mix_Chunk* pTemp{ Mix_LoadWAV(filePath.c_str()) };
 		if (pTemp == nullptr)
-		{
-			logger.Log(filePath, ErrorLevel::error);
-			logger.Log(" did not contain a sound file\n", ErrorLevel::error);
-			logger.Log(Mix_GetError(), ErrorLevel::error);
-		}
+			Logger::LogError(filePath + " did not contain a sound file\n" + Mix_GetError());
 		else
 		{
 			m_Sounds.insert(std::make_pair(uniqueSoundID, pTemp));
@@ -43,26 +33,15 @@ void Integrian::AudioSystem::AddSound(const SoundID uniqueSoundID, const std::st
 void Integrian::AudioSystem::AddMusic(const MusicID uniqueMusicID, const std::string& filePath)
 {
 #ifdef _DEBUG
-	Logger& logger{ Logger::GetInstance() };
 	if (m_Music.find(uniqueMusicID) != m_Music.cend())
-	{
-		// this MusicID has already been used
-		logger.Log("MusicID: ", ErrorLevel::warning); // TODO: IMPROVE THIS RHIDIAN
-		logger.Log(std::to_string(uniqueMusicID), ErrorLevel::warning);
-		logger.Log(" was already used and has not been added\n", ErrorLevel::warning);
-	}
+		Logger::LogWarning("MusicID: " + std::to_string(uniqueMusicID) + " was already used and has not been added\n"); // this MusicID has already been used
 	else
 	{
 		Mix_Music* pTemp{ Mix_LoadMUS(filePath.c_str()) };
 		if (pTemp == nullptr)
-		{
-			logger.Log(filePath, ErrorLevel::error);
-			logger.Log(" did not contain a sound file\n", ErrorLevel::error);
-		}
+			Logger::LogError(filePath + " did not contain a Music file\n" + Mix_GetError());
 		else
-		{
 			m_Music.insert(std::make_pair(uniqueMusicID, pTemp));
-		}
 	}
 #else
 	m_Music.insert(std::make_pair(uniqueMusicID, Mix_LoadMUS(filePath.c_str())));
