@@ -19,6 +19,7 @@
 #include "CommandManager.h"
 #include "AudioPlayerLogged.h"
 #include "ServiceLocator.h"
+#include "EventQueue.h"
 
 void Integrian::Test_App::Start()
 {
@@ -53,6 +54,7 @@ void Integrian::Test_App::Start()
 	AudioPlayerLogged* pAudio = ServiceLocator::GetService<AudioPlayerLogged>();
 	pAudio->AddMusic(0, "Data/AHHHHH.mp3");
 	pAudio->PlayMusic(0);
+	EventQueue::GetInstance().AddListener(pAudio);
 }
 
 void Integrian::Test_App::Update(const float dt)

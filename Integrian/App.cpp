@@ -4,6 +4,8 @@
 #include "Logger.h"
 #include "InputManager.h"
 #include "TextureManager.h"
+#include "EventQueue.h"
+#include <future>
 
 // == Global Variables ==
 extern bool g_IsLooping; // Used by the inputmanager and App::Run() to see when SDL_Quit event gets fired
@@ -179,8 +181,16 @@ void Integrian::App::Run()
 		throw RuntimeInitialisationFailed{};
 
 	Timer& timer = Timer::GetInstance();
+	EventQueue& eventQueue = EventQueue::GetInstance();
 
 	float timeSinceLastUpdate{};
+
+	auto test = std::async(std::launch::async, [&eventQueue]()
+		{
+			while (g_IsLooping)
+				eventQueue.Update();
+		});
+	test;
 
 	// == Event Loop ==
 	while (g_IsLooping)
@@ -196,6 +206,9 @@ void Integrian::App::Run()
 
 		// == Render ==
 		TransformCameraAndRender();
+
+		// == Process Events ==
+		//EventQueue::GetInstance().Update();
 
 		// == Update The Timer For The Fixed Update ==
 		timeSinceLastUpdate += timer.GetElapsedSeconds();

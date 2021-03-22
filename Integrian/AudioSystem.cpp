@@ -40,7 +40,7 @@ void Integrian::AudioSystem::AddSound(const SoundID uniqueSoundID, const std::st
 #endif // _DEBUG
 }
 
-void Integrian::AudioSystem::AddMusic(const SoundID uniqueMusicID, const std::string& filePath)
+void Integrian::AudioSystem::AddMusic(const MusicID uniqueMusicID, const std::string& filePath)
 {
 #ifdef _DEBUG
 	Logger& logger{ Logger::GetInstance() };

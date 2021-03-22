@@ -11,7 +11,7 @@ namespace Integrian
 	{
 	public:
 		virtual void PlaySound(const SoundID, const bool = false, const int = 0, const int = 100) override {}
-		virtual void PlayMusic(const SoundID, const bool = false, const int = 0, const int = 100) override {}
+		virtual void PlayMusic(const MusicID, const bool = false, const int = 0, const int = 100) override {}
 	};
 }
 

@@ -2,6 +2,39 @@
 #include "AudioPlayerLogged.h" // header
 #include "Logger.h" // Logger
 #include <string> // std::to_string
+#include <future> // std::async
+
+bool Integrian::AudioPlayerLogged::OnEvent(const Event& event)
+{
+	switch (event.GetEvent())
+	{
+	case Events::PlaySound:
+	{
+		auto data{ event.GetData<int, bool, int, int>() };
+		auto future = std::async(std::launch::async, [&data, this]()
+			{
+				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
+			});
+		future;
+		return true;
+	}
+		break;
+	case Events::PlayMusic:
+	{
+		auto data{ event.GetData<MusicID, bool, int, int>() };
+		auto future = std::async(std::launch::async, [&data, this]()
+			{
+				PlayMusic(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
+			});
+		future;
+		return true;
+	}
+		break;
+	default:
+		return false;
+		break;
+	}
+}
 
 void Integrian::AudioPlayerLogged::PlaySound(const SoundID soundID, const bool infiniteLoop, const int amountOfLoops, const int volume)
 {
@@ -39,7 +72,7 @@ void Integrian::AudioPlayerLogged::PlaySound(const SoundID soundID, const bool i
 #endif
 }
 
-void Integrian::AudioPlayerLogged::PlayMusic(const SoundID musicID, const bool infiniteLoop, const int amountOfLoops, const int volume)
+void Integrian::AudioPlayerLogged::PlayMusic(const MusicID musicID, const bool infiniteLoop, const int amountOfLoops, const int volume)
 {
 	Logger& logger{ Logger::GetInstance() };
 	if (m_Music.find(musicID) != m_Music.cend())
@@ -49,7 +82,7 @@ void Integrian::AudioPlayerLogged::PlayMusic(const SoundID musicID, const bool i
 			loops = -1;
 
 		// Mix_PlayingMusic() returns 1 if music is playing, but does not check if something has been paused
-		if (m_pCurrentPlayingMusic && Mix_PlayingMusic() == 1) 
+		if (m_pCurrentPlayingMusic && Mix_PlayingMusic() == 1)
 		{
 			// if music is playing, stop the music
 			Mix_HaltMusic();

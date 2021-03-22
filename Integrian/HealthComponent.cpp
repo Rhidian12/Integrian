@@ -2,6 +2,8 @@
 #include "HealthComponent.h"
 #include "Observer.h"
 #include "Subject.h"
+#include "ServiceLocator.h"
+#include "EventQueue.h"
 
 Integrian::HealthComponent::HealthComponent(const uint64_t maxLives)
 	: HealthComponent{ maxLives,maxLives }
@@ -13,6 +15,9 @@ Integrian::HealthComponent::HealthComponent(const uint64_t maxLives, const uint6
 	, m_CurrentLives{ currentLives }
 	, m_pSubject{ std::make_unique<Subject>() }
 {
+	ServiceLocator::Provide(new AudioPlayerLogged{}); // TODO: MOVE THIS TO TEST_APP
+	AudioPlayerLogged* pAudio{ ServiceLocator::GetService<AudioPlayerLogged>() };
+	pAudio->AddSound(0, "Data/menu3.wav");
 }
 
 void Integrian::HealthComponent::DecreaseLivesByValue(const uint64_t value)
@@ -25,6 +30,8 @@ void Integrian::HealthComponent::DecreaseLivesByValue(const uint64_t value)
 			m_pSubject->Notify("OnDeath");
 		else
 			m_pSubject->Notify("OnLifeLost", m_CurrentLives);
+
+		EventQueue::GetInstance().QueueEvent(Event{ Events::PlaySound, 0, false, 0, 100 });
 	}
 }
 

@@ -170,6 +170,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DefeatCoilyCommand.cpp" />
     <ClCompile Include="DisksRemainingCommand.cpp" />
+    <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameController.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="document.h" />
     <ClInclude Include="encodedstream.h" />
     <ClInclude Include="encodings.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="ExceptionHandler.h" />
     <ClInclude Include="filereadstream.h" />
@@ -252,6 +254,7 @@
     <ClInclude Include="Libraries\imgui-master\imstb_rectpack.h" />
     <ClInclude Include="Libraries\imgui-master\imstb_textedit.h" />
     <ClInclude Include="Libraries\imgui-master\imstb_truetype.h" />
+    <ClInclude Include="ListenerInterface.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MathFunctions.h" />
     <ClInclude Include="memorybuffer.h" />

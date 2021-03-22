@@ -1,7 +1,7 @@
 #include "HealthDisplayComponent.h"
 #include "Observer.h"
 #include "TextComponent.h"
-#include "HealthComponent.h"
+#include "EventQueue.h"
 
 Integrian::HealthDisplayComponent::HealthDisplayComponent(TextComponent* pTextComponent, const uint64_t startHealth)
 	: m_pNoParamObserver{ new Observer<>{} }
