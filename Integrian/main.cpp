@@ -19,7 +19,7 @@ int main(int argc, char* args[])
 	(void)argc;
 	(void)args;
 
-	Session::Get().BeginSession();
+	//Session::Get().BeginSession();
 
 	// == Make the application ==
 	Integrian::App* pApplication{};
@@ -65,7 +65,7 @@ int main(int argc, char* args[])
 	// == Cleanup ==
 	SafeDelete(pApplication);
 
-	Session::Get().EndSession();
+	//Session::Get().EndSession();
 
 	return 0;
 }

@@ -55,12 +55,12 @@ namespace Integrian
 			bool isInUse{ false };
 			uint16_t channelIndex; // uint16_t because the range is [0 - 7]
 			float timeInUse{};
-			uint64_t expectedTimeInUse{};
+			float expectedTimeInUse{};
 			SoundID soundIDOfChunk{ std::numeric_limits<int>::max() };
 		};
 
 		Channel& GetFirstAvailableChannel();
-		uint64_t GetChunkTimeInMilliseconds(Mix_Chunk* pChunk) const; // reference: https://discourse.libsdl.org/t/time-length-of-sdl-mixer-chunks/12852
+		float GetChunkTimeInSeconds(Mix_Chunk* pChunk) const; // reference: https://discourse.libsdl.org/t/time-length-of-sdl-mixer-chunks/12852
 
 		inline static std::unordered_map<SoundID, Mix_Chunk*> m_Sounds{};	
 		inline static std::unordered_map<MusicID, Mix_Music*> m_Music{};

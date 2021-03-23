@@ -65,7 +65,7 @@ Integrian::AudioSystem::Channel& Integrian::AudioSystem::GetFirstAvailableChanne
 		}));
 }
 
-uint64_t Integrian::AudioSystem::GetChunkTimeInMilliseconds(Mix_Chunk* pChunk) const
+float Integrian::AudioSystem::GetChunkTimeInSeconds(Mix_Chunk* pChunk) const
 {
 	Uint32 points = 0;
 	Uint32 frames = 0;
@@ -86,5 +86,5 @@ uint64_t Integrian::AudioSystem::GetChunkTimeInMilliseconds(Mix_Chunk* pChunk) c
 	frames = (points / chans);
 
 	/* (sample frames * 1000) / frequency == play length in ms */
-	return (frames * 1000) / freq;
+	return float(frames) / float(freq);
 }

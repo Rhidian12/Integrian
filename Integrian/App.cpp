@@ -239,6 +239,8 @@ void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
 
 	Update(dt);
 
+	ServiceLocator::GetAudio()->Update(dt); // update the audio
+
 	LateUpdate(dt);
 
 	// == THE UPDATE NEEDS m_Target TO BE SET AT THE END FOR THE CAMERA POSITIONING ==

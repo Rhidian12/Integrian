@@ -23,7 +23,7 @@ namespace Integrian
 
 		inline void QueueEvent(Event&& event)
 		{
-			m_Events.push(std::forward<Event>(event)); // we need to std::forward this so that it actuallly moves this instead of copying like a little fucking bitch
+			m_Events.push(std::forward<Event>(event)); // we need to std::forward this so that it actually moves this instead of copying like a little fucking bitch
 		}
 
 		inline void AddListener(IListener* pListener)

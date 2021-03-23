@@ -53,6 +53,8 @@ void Integrian::AudioPlayerLogged::Update(const float dt)
 				channel.expectedTimeInUse = 0;
 				channel.timeInUse = 0;
 				channel.soundIDOfChunk = std::numeric_limits<int>::max();
+
+				Logger::LogNoWarning("Channel " + std::to_string(channel.channelIndex) + " is ready for use again\n");
 			}
 		}
 	}
@@ -75,9 +77,10 @@ void Integrian::AudioPlayerLogged::PlaySound(const SoundID soundID, const bool i
 		}
 		else
 		{
-			Logger::LogNoWarning("Sound with sound ID: " + std::to_string(soundID) + " was played\n");
+			Logger::LogNoWarning("Sound with sound ID: " + std::to_string(soundID) + " was played on channel " 
+				+ std::to_string(channel.channelIndex) + "\n");
 			channel.isInUse = true;
-			channel.expectedTimeInUse = GetChunkTimeInMilliseconds(m_Sounds[soundID]);
+			channel.expectedTimeInUse = GetChunkTimeInSeconds(m_Sounds[soundID]);
 			channel.soundIDOfChunk = soundID;
 		}
 	}
