@@ -25,7 +25,7 @@ namespace Integrian
 		friend class Singleton<CommandManager>;
 
 		std::vector<Command*> m_pCommands;
-		};
-	}
+	};
+}
 
 #endif // !INTEGRIAN_COMMANDMANAGER_H

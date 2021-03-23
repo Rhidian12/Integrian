@@ -10,6 +10,7 @@
 #include "Logger.h" // Logger
 #include "NullService.h" // NullService
 #include <type_traits> // std::is_base_of, std::is_same_v
+#include "AudioPlayerLogged.h" // AudioPlayerLogged
 
 namespace Integrian
 {
@@ -21,14 +22,13 @@ namespace Integrian
 
 		static void Cleanup();
 
-		template<typename Type>
-		[[nodiscard]] inline static Type* GetService()
+		[[nodiscard]] inline static AudioSystem* GetAudio()
 		{
 			for (IService* pService : m_pServices)
-				if (typeid(*pService) == typeid(Type))
-					return static_cast<Type*>(pService);
+				if (typeid(*pService) == typeid(AudioPlayerLogged))
+					return static_cast<AudioSystem*>(pService);
 
-			Logger::LogWarning("GetService returned a nullservice\n");
+			Logger::LogWarning("GetAudio returned a nullservice\n");
 			return static_cast<NullService*>(m_pNullService);
 		}
 
@@ -56,6 +56,8 @@ namespace Integrian
 	private:
 		inline static std::unordered_set<IService*> m_pServices{};
 		inline static IService* m_pNullService{ new NullService{} };
+	
+		using USetConstIterator = std::unordered_set<IService*>::const_iterator;
 	};
 }
 

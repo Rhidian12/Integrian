@@ -11,8 +11,6 @@ bool Integrian::AudioPlayerLogged::OnEvent(const Event& event)
 {
 	TIME();
 
-#pragma warning( push )
-#pragma warning( disable : 4834 ) // disables the [[nodiscard]] warning thrown by std::async
 	switch (event.GetEvent())
 	{
 	case Events::PlaySound:
@@ -39,7 +37,25 @@ bool Integrian::AudioPlayerLogged::OnEvent(const Event& event)
 		return false;
 		break;
 	}
-#pragma warning( pop )
+}
+
+void Integrian::AudioPlayerLogged::Update(const float dt)
+{
+	for (Channel& channel : m_Channels)
+	{
+		if (channel.isInUse)
+		{
+			channel.timeInUse += dt;
+			if (channel.timeInUse >= channel.expectedTimeInUse && Mix_Playing(channel.channelIndex) == 0) 
+			{
+				// if both SDL_Mixer and the calculations agree that the sound is no longer playing, set the channel to be used again
+				channel.isInUse = false;
+				channel.expectedTimeInUse = 0;
+				channel.timeInUse = 0;
+				channel.soundIDOfChunk = std::numeric_limits<int>::max();
+			}
+		}
+	}
 }
 
 void Integrian::AudioPlayerLogged::PlaySound(const SoundID soundID, const bool infiniteLoop, const int amountOfLoops, const int volume)
@@ -61,6 +77,8 @@ void Integrian::AudioPlayerLogged::PlaySound(const SoundID soundID, const bool i
 		{
 			Logger::LogNoWarning("Sound with sound ID: " + std::to_string(soundID) + " was played\n");
 			channel.isInUse = true;
+			channel.expectedTimeInUse = GetChunkTimeInMilliseconds(m_Sounds[soundID]);
+			channel.soundIDOfChunk = soundID;
 		}
 	}
 #ifdef _DEBUG
@@ -102,10 +120,16 @@ void Integrian::AudioPlayerLogged::PlayMusic(const MusicID musicID, const bool i
 
 void Integrian::AudioPlayerLogged::PauseMusic()
 {
+	Mix_PauseMusic();
 }
 
-void Integrian::AudioPlayerLogged::PauseSound()
+void Integrian::AudioPlayerLogged::PauseSound(const SoundID soundID)
 {
+	for (const Channel& channel : m_Channels)
+		if (channel.soundIDOfChunk == soundID)
+			return Mix_Pause(channel.channelIndex);
+
+	Logger::LogWarning("The SoundID provided to IsSoundPlaying() was not found\n");
 }
 
 void Integrian::AudioPlayerLogged::RewindMusic()
@@ -141,7 +165,12 @@ bool Integrian::AudioPlayerLogged::IsMusicPlaying() const
 	return Mix_PlayingMusic() == 1;
 }
 
-bool Integrian::AudioPlayerLogged::IsSoundPlaying() const
+bool Integrian::AudioPlayerLogged::IsSoundPlaying(const SoundID soundID) const
 {
+	for (const Channel& channel : m_Channels)
+		if (channel.soundIDOfChunk == soundID)
+			return Mix_Playing(channel.channelIndex) == 1;
+
+	Logger::LogWarning("The SoundID provided to IsSoundPlaying() was not found\n");
 	return false;
 }

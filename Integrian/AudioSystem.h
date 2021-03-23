@@ -9,10 +9,12 @@
 #include <unordered_map> // std::unordered_map
 #include "ServiceInterface.h" // IService
 #include <vector> // std::vector
+#include <limits> // std::numeric_limits<int>::max()
+#include "ListenerInterface.h" // IListener
 
 namespace Integrian
 {
-	class AudioSystem abstract : public IService
+	class AudioSystem abstract : public IService, public IListener
 	{
 	public:
 		using SoundID = int;
@@ -21,20 +23,26 @@ namespace Integrian
 		AudioSystem();
 		virtual ~AudioSystem();
 
+		static void Cleanup();
+
+		virtual bool OnEvent(const Event&) = 0;
+
 		void AddSound(const SoundID uniqueSoundID, const std::string& filePath);
 		void AddMusic(const MusicID uniqueMusicID, const std::string& filePath);
+
+		virtual void Update(const float) = 0; // It would be nice to implement this here, but the NullService needs to use it
 
 		virtual void PlaySound(const SoundID, const bool = false, const int = 0, const int = 100) = 0;
 		virtual void PlayMusic(const MusicID, const bool = false, const int = 0, const int = 100) = 0;
 
 		virtual void PauseMusic() = 0;
-		virtual void PauseSound() = 0;
+		virtual void PauseSound(const SoundID) = 0;
 
 		virtual void RewindMusic() = 0;
 		virtual void SetMusicPosition(double) = 0;
 
 		virtual [[nodiscard]] bool IsMusicPlaying() const = 0;
-		virtual [[nodiscard]] bool IsSoundPlaying() const = 0;
+		virtual [[nodiscard]] bool IsSoundPlaying(const SoundID) const = 0;
 
 	protected:
 		struct Channel final
@@ -46,12 +54,16 @@ namespace Integrian
 
 			bool isInUse{ false };
 			uint16_t channelIndex; // uint16_t because the range is [0 - 7]
+			float timeInUse{};
+			uint64_t expectedTimeInUse{};
+			SoundID soundIDOfChunk{ std::numeric_limits<int>::max() };
 		};
 
 		Channel& GetFirstAvailableChannel();
+		uint64_t GetChunkTimeInMilliseconds(Mix_Chunk* pChunk) const; // reference: https://discourse.libsdl.org/t/time-length-of-sdl-mixer-chunks/12852
 
-		std::unordered_map<SoundID, Mix_Chunk*> m_Sounds;
-		std::unordered_map<MusicID, Mix_Music*> m_Music;
+		inline static std::unordered_map<SoundID, Mix_Chunk*> m_Sounds{};	
+		inline static std::unordered_map<MusicID, Mix_Music*> m_Music{};
 
 		inline static std::vector<Channel> m_Channels{};
 

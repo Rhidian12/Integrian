@@ -51,7 +51,7 @@ void Integrian::Test_App::Start()
 	InitPlayerTwo();
 
 	ServiceLocator::Provide(new AudioPlayerLogged{});
-	AudioPlayerLogged* pAudio = ServiceLocator::GetService<AudioPlayerLogged>();
+	AudioSystem* pAudio = ServiceLocator::GetAudio();
 	pAudio->AddMusic(0, "Data/AHHHHH.mp3");
 	pAudio->PlayMusic(0);
 	pAudio->AddSound(0, "Data/menu3.wav");

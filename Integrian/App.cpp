@@ -27,6 +27,7 @@ Integrian::App::~App()
 	m_pCommands.clear();
 
 	ServiceLocator::Cleanup();
+	AudioSystem::Cleanup();
 
 	ShutDown();
 }
@@ -172,14 +173,11 @@ void Integrian::App::Run()
 
 	float timeSinceLastUpdate{};
 
-#pragma warning( push )
-#pragma warning( disable : 4834 )
 	auto future = std::async(std::launch::async, [&eventQueue]()
 		{
 			while (g_IsLooping)
 				eventQueue.Update();
 		});
-#pragma warning( pop )
 
 	// == Event Loop ==
 	while (g_IsLooping)

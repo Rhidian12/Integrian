@@ -9,6 +9,11 @@ Integrian::AudioSystem::AudioSystem()
 
 Integrian::AudioSystem::~AudioSystem()
 {
+	m_pCurrentPlayingMusic = nullptr;
+}
+
+void Integrian::AudioSystem::Cleanup()
+{
 	for (const SoundPair& soundPair : m_Sounds)
 		Mix_FreeChunk(soundPair.second);
 
@@ -27,9 +32,7 @@ void Integrian::AudioSystem::AddSound(const SoundID uniqueSoundID, const std::st
 		if (pTemp == nullptr)
 			Logger::LogError(filePath + " did not contain a sound file\n" + Mix_GetError());
 		else
-		{
 			m_Sounds.insert(std::make_pair(uniqueSoundID, pTemp));
-		}
 	}
 #else
 	m_Sounds.insert(std::make_pair(uniqueSoundID, Mix_LoadWAV(filePath.c_str())));
@@ -60,4 +63,28 @@ Integrian::AudioSystem::Channel& Integrian::AudioSystem::GetFirstAvailableChanne
 		{
 			return !c.isInUse;
 		}));
+}
+
+uint64_t Integrian::AudioSystem::GetChunkTimeInMilliseconds(Mix_Chunk* pChunk) const
+{
+	Uint32 points = 0;
+	Uint32 frames = 0;
+	int freq = 0;
+	Uint16 fmt = 0;
+	int chans = 0;
+	/* Chunks are converted to audio device format… */
+	if (Mix_QuerySpec(&freq, &fmt, &chans) == 0)
+	{
+		Logger::LogError(std::string{ "GetChunkTimeInMilliSeconds() failed: " } + SDL_GetError());
+		return 0;
+	}
+
+	/* bytes / samplesize == sample points */
+	points = (pChunk->alen / ((fmt & 0xFF) / 8));
+
+	/* sample points / channels == sample frames */
+	frames = (points / chans);
+
+	/* (sample frames * 1000) / frequency == play length in ms */
+	return (frames * 1000) / freq;
 }
