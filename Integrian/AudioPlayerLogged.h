@@ -27,10 +27,15 @@ namespace Integrian
 		virtual void RewindMusic() override;
 		virtual void SetMusicPosition(double time) override;
 
+		virtual void SetSoundVolume(const SoundID soundID, const int volume) override;
+		virtual void SetMusicVolume(const int volume) override;
+
 		virtual [[nodiscard]] bool IsMusicPlaying() const override;
 		virtual [[nodiscard]] bool IsSoundPlaying(const SoundID soundID) const override;
 
-		// TODO: Expand this class to be able to do more than just play a sound and music
+		virtual [[nodiscard]] int GetSoundVolume(const SoundID soundID) const override;
+		virtual [[nodiscard]] int GetMusicVolume() const override;
+
 	private:
 	};
 }

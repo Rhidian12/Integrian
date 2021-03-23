@@ -88,3 +88,19 @@ float Integrian::AudioSystem::GetChunkTimeInSeconds(Mix_Chunk* pChunk) const
 	/* (sample frames * 1000) / frequency == play length in ms */
 	return float(frames) / float(freq);
 }
+
+int Integrian::AudioSystem::RemapVolumeToSDL(const int volumeInPercentage) const
+{
+	return ((volumeInPercentage * m_SDLMixerMaxVolume) / 100);
+
+	//NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
+	// Reference: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+}
+
+int Integrian::AudioSystem::RemapVolumeToIntegrian(const int volumeInSDL) const
+{
+	return ((volumeInSDL * 100) / m_SDLMixerMaxVolume);
+
+	//NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
+	// Reference: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio
+}

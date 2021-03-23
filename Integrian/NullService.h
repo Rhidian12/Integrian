@@ -23,8 +23,14 @@ namespace Integrian
 		virtual void RewindMusic() override {}
 		virtual void SetMusicPosition(double) override {}
 
+		virtual void SetSoundVolume(const SoundID, const int) override {}
+		virtual void SetMusicVolume(const int) override {}
+
 		virtual [[nodiscard]] bool IsMusicPlaying() const override { return false; }
 		virtual [[nodiscard]] bool IsSoundPlaying(const SoundID) const override { return false; }
+
+		virtual [[nodiscard]] int GetSoundVolume(const SoundID) const override { return 0; }
+		virtual [[nodiscard]] int GetMusicVolume() const override { return 0; }
 	};
 }
 

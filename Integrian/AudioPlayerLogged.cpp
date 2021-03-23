@@ -68,7 +68,7 @@ void Integrian::AudioPlayerLogged::PlaySound(const SoundID soundID, const bool i
 		if (infiniteLoop)
 			loops = -1;
 
-		Mix_VolumeChunk(m_Sounds[soundID], volume);
+		Mix_VolumeChunk(m_Sounds[soundID], RemapVolumeToSDL(volume));
 		Channel& channel{ GetFirstAvailableChannel() };
 		if (Mix_PlayChannel(channel.channelIndex, m_Sounds[soundID], loops) == -1)
 		{
@@ -163,6 +163,19 @@ void Integrian::AudioPlayerLogged::SetMusicPosition(double time)
 	}
 }
 
+void Integrian::AudioPlayerLogged::SetSoundVolume(const SoundID soundID, const int volume)
+{
+	if (m_Sounds.find(soundID) != m_Sounds.cend())
+		Mix_VolumeChunk(m_Sounds[soundID], RemapVolumeToSDL(volume));
+	else
+		Logger::LogWarning("GetSoundVolume was called with a not-used SoundID\n");
+}
+
+void Integrian::AudioPlayerLogged::SetMusicVolume(const int volume)
+{
+	Mix_VolumeMusic(RemapVolumeToSDL(volume));
+}
+
 bool Integrian::AudioPlayerLogged::IsMusicPlaying() const
 {
 	return Mix_PlayingMusic() == 1;
@@ -176,4 +189,18 @@ bool Integrian::AudioPlayerLogged::IsSoundPlaying(const SoundID soundID) const
 
 	Logger::LogWarning("The SoundID provided to IsSoundPlaying() was not found\n");
 	return false;
+}
+
+int Integrian::AudioPlayerLogged::GetSoundVolume(const SoundID soundID) const
+{
+	if (m_Sounds.find(soundID) != m_Sounds.cend())
+		return RemapVolumeToIntegrian(Mix_VolumeChunk(m_Sounds[soundID], -1));
+	else
+		Logger::LogWarning("GetSoundVolume was called with a not-used SoundID\n");
+	return 0;
+}
+
+int Integrian::AudioPlayerLogged::GetMusicVolume() const
+{
+	return RemapVolumeToIntegrian(Mix_VolumeMusic(-1));
 }

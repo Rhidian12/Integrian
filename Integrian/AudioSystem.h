@@ -41,8 +41,14 @@ namespace Integrian
 		virtual void RewindMusic() = 0;
 		virtual void SetMusicPosition(double) = 0;
 
+		virtual void SetSoundVolume(const SoundID, const int) = 0;
+		virtual void SetMusicVolume(const int) = 0;
+
 		virtual [[nodiscard]] bool IsMusicPlaying() const = 0;
 		virtual [[nodiscard]] bool IsSoundPlaying(const SoundID) const = 0;
+
+		virtual [[nodiscard]] int GetSoundVolume(const SoundID) const = 0;
+		virtual [[nodiscard]] int GetMusicVolume() const = 0;
 
 	protected:
 		struct Channel final
@@ -61,6 +67,8 @@ namespace Integrian
 
 		Channel& GetFirstAvailableChannel();
 		float GetChunkTimeInSeconds(Mix_Chunk* pChunk) const; // reference: https://discourse.libsdl.org/t/time-length-of-sdl-mixer-chunks/12852
+		int RemapVolumeToSDL(const int volumeInPercentage) const;
+		int RemapVolumeToIntegrian(const int volumeInSDL) const;
 
 		inline static std::unordered_map<SoundID, Mix_Chunk*> m_Sounds{};	
 		inline static std::unordered_map<MusicID, Mix_Music*> m_Music{};
@@ -68,6 +76,8 @@ namespace Integrian
 		inline static std::vector<Channel> m_Channels{};
 
 		Mix_Music* m_pCurrentPlayingMusic{};
+
+		const int m_SDLMixerMaxVolume{ MIX_MAX_VOLUME };
 
 		using SoundPair = std::pair<SoundID, Mix_Chunk*>;
 		using MusicPair = std::pair<MusicID, Mix_Music*>;
