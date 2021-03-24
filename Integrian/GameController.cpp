@@ -1,6 +1,7 @@
-#include "GameController.h"
-#include "Logger.h"
-#include "Command.h"
+#include "GameController.h" // header
+#include "Logger.h" // Logger
+#include "Command.h" // Command::Execute()
+#include <future> // std::async
 
 Integrian::GameController::GameController(const uint8_t index)
 	: m_pCommands{}
@@ -75,6 +76,28 @@ bool Integrian::GameController::IsPressed(const ControllerInput controllerInput)
 		return (SDL_GameControllerGetButton(m_pSDLGameController, static_cast<SDL_GameControllerButton>(controllerInput)) > 0);
 }
 
+bool Integrian::GameController::OnEvent(const Event& event)
+{
+	switch (event.GetEvent())
+	{
+	case Events::EndOfFrame:
+	{
+		auto future = std::async(std::launch::async, [this]()
+			{
+				for (const ControllerInput& input : m_KeysToBeRemoved)
+					m_pCommands.erase(input);
+
+				m_KeysToBeRemoved.clear();
+			});
+		return true;
+	}
+	break;
+	default:
+		return false;
+		break;
+	}
+}
+
 bool Integrian::GameController::WasPressed(const State previousState) const
 {
 	return (previousState == State::OnPress || previousState == State::OnHeld);
@@ -97,86 +120,35 @@ Integrian::State Integrian::GameController::GetKeystate(const ControllerInput co
 	return State::NotPressed;
 }
 
-double Integrian::GameController::GetJoystickMovement(const SDL_GameControllerAxis axis) const
+double Integrian::GameController::GetJoystickMovement(const ControllerInput axis) const
 {
-	if (axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_LEFTX && axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_LEFTY)
+	if (axis != ControllerInput::JoystickLeftHorizontalAxis && axis != ControllerInput::JoystickLeftVerticalAxis)
 	{
-		if (axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_RIGHTX && axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_RIGHTY)
+		if (axis != ControllerInput::JoystickRightHorizontalAxis && axis != ControllerInput::JoystickRightVerticalAxis)
 		{
 			Logger::LogWarning("GetJoystickMovement() was called with a wrong parameter!\n");
 			return 0.0;
 		}
 	}
 
-	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, axis) / m_MaxJoystickValue), -1.0, 1.0); // map to [0,1]
+	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, static_cast<SDL_GameControllerAxis>(axis)) / m_MaxJoystickValue), -1.0, 1.0); // map to [-1, 1]
 }
 
-double Integrian::GameController::GetTriggerMovement(const SDL_GameControllerAxis axis) const
+double Integrian::GameController::GetTriggerMovement(const ControllerInput axis) const
 {
-	if (axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_TRIGGERLEFT && axis != SDL_GameControllerAxis::SDL_CONTROLLER_AXIS_TRIGGERRIGHT)
+	if (axis != ControllerInput::LeftTrigger && axis != ControllerInput::RightTrigger)
 	{
 		Logger::LogWarning("GetTriggerMovement() was called with the wrong parameter!\n");
 		return 0.0;
 	}
 
-	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, axis) / m_MaxJoystickValue), 0.0, 1.0); // map to [0,1]
-}
-
-void Integrian::GameController::RemoveInput(const ControllerInput controllerInput, const char* pFile, const int line)
-{
-#ifdef _DEBUG
-	UMapIterator it{ m_pCommands.find(controllerInput) };
-	if (it != m_pCommands.end())
-		m_pCommands.erase(it);
-	else
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-#else
-	try
-	{
-		m_pCommands.erase(controllerInput);
-	}
-	catch (const std::exception&)
-	{
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-	}
-#endif
-}
-
-void Integrian::GameController::RemoveCommandFromInput(const ControllerInput controllerInput, Command* pCommand, const char* pFile, const int line)
-{
-	std::vector<CommandAndButton>& commands{ m_pCommands.find(controllerInput)->second };
-
-#ifdef _DEBUG
-	std::vector<CommandAndButton>::iterator it{ std::remove_if(commands.begin(),commands.end(),[pCommand](const CommandAndButton& commandAndButton)->bool
-		{
-			return commandAndButton.pCommand == pCommand;
-		}) };
-
-	if (it != commands.end())
-		commands.erase(it, commands.end());
-	else
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-#else
-	try
-	{
-		commands.erase(std::remove_if(commands.begin(), commands.end(), [pCommand](const CommandAndButton& commandAndButton)->bool
-			{
-				return commandAndButton.pCommand == pCommand;
-			}));
-	}
-	catch (const std::exception&)
-	{
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-	}
-#endif
+	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, static_cast<SDL_GameControllerAxis>(axis)) / m_MaxJoystickValue), 0.0, 1.0); // map to [0,1]
 }
 
 void Integrian::GameController::RemoveCommand(Command* pCommand)
 {
 	for (const CommandPair& commandPair : m_pCommands)
-	{
 		for (const CommandAndButton& commandAndButton : commandPair.second)
 			if (commandAndButton.pCommand == pCommand)
-				m_pCommands.erase(commandPair.first);
-	}
+				m_KeysToBeRemoved.push_back(commandPair.first);
 }

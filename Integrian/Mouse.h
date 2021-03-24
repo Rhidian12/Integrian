@@ -2,21 +2,19 @@
 #ifndef INTEGRIAN_MOUSE_H
 #define INTEGRIAN_MOUSE_H
 
-#include "GameInput.h"
-#include "PossibleInputs.h"
-#include <unordered_map>
+#include "GameInput.h" // GameInput
+#include <unordered_map> // std::unordered_map
+#include "ListenerInterface.h" // IListener
+#include <vector> // std::vector
 
 namespace Integrian
 {
-	class Mouse
+	class Mouse final : public IListener
 	{
 	public:
 		~Mouse();
 
-		void AddCommand(const MouseButton mouseButton, const State keyState, Command* pCommand);
-		void ExecuteCommands();
-
-		[[nodiscard]] bool IsPressed(const MouseButton gameInput) const;
+		virtual bool OnEvent(const Event& event) override;
 
 	private:
 		Mouse() = default;
@@ -25,12 +23,17 @@ namespace Integrian
 		Mouse& operator=(const Mouse&) = delete;
 		friend class InputManager;
 
+		void AddCommand(const MouseButton mouseButton, const State keyState, Command* pCommand);
+		void ExecuteCommands();
+
+		[[nodiscard]] bool IsPressed(const MouseButton gameInput) const;
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const MouseButton mouseButton, const State previousState) const;
-		void RemoveInput(const MouseButton mouseButton, const char* pFile = __FILE__, const int line = __LINE__);
-		void RemoveCommandFromInput(const MouseButton mouseButton, Command* pCommand, const char* pFile = __FILE__, const int line = __LINE__);
+		
+		void RemoveCommand(Command* pCommand);
 
 		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_MouseCommands{};
+		std::vector<MouseButton> m_KeysToBeRemoved{};
 
 		using CommandPair = std::pair<MouseButton, std::vector<CommandAndButton>>;
 		using UMapIterator = std::unordered_map<MouseButton, std::vector<CommandAndButton>>::iterator;

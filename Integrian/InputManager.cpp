@@ -1,9 +1,6 @@
 #include "pch.h"
-#include "InputManager.h"
-#include <algorithm>
-#include "GameController.h"
-#include "Keyboard.h"
-#include "Mouse.h"
+#include "InputManager.h" // header
+#include "EventQueue.h" // EventQueue
 
 extern bool g_IsLooping;
 
@@ -14,42 +11,38 @@ Integrian::InputManager::InputManager()
 	, m_AmountOfControllers{ uint8_t(SDL_NumJoysticks()) }
 	, m_Controllers{}
 {
+	EventQueue& eventQueue{ EventQueue::GetInstance() };
+
 	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
+	{
 		m_Controllers[i] = std::move(GameController{ uint8_t(i) });
+		eventQueue.AddListener(&m_Controllers[i]);
+	}
 
 	m_Keyboard = std::move(Keyboard{});
+	eventQueue.AddListener(&m_Keyboard);
 
 	m_Mouse = std::move(Mouse{});
-}
-
-void Integrian::InputManager::RemoveInput(const GameInput& input, const uint8_t controllerIndex)
-{
-	if (input.mouseButton != MouseButton::INVALID)
-		m_Mouse.RemoveInput(input.mouseButton);
-
-	else if (input.keyboardInput != KeyboardInput::INVALID)
-		m_Keyboard.RemoveInput(input.keyboardInput);
-
-	else
-		m_Controllers[controllerIndex].RemoveInput(input.controllerInput);
+	eventQueue.AddListener(&m_Mouse);
 }
 
 void Integrian::InputManager::RemoveCommandFromInput(const GameInput& input, Command* pCommand, const uint8_t controllerIndex)
 {
 	if (input.mouseButton != MouseButton::INVALID)
-		m_Mouse.RemoveCommandFromInput(input.mouseButton, pCommand);
+		m_Mouse.RemoveCommand(pCommand);
 
 	else if (input.keyboardInput != KeyboardInput::INVALID)
-		m_Keyboard.RemoveCommandFromInput(input.keyboardInput, pCommand);
+		m_Keyboard.RemoveCommand(pCommand);
 
 	else
-		m_Controllers[controllerIndex].RemoveCommandFromInput(input.controllerInput, pCommand);
+		m_Controllers[controllerIndex].RemoveCommand(pCommand);
 }
 
 void Integrian::InputManager::RemoveCommand(Command* pCommand, const uint8_t controllerIndex)
 {
-	(void)pCommand;
-	(void)controllerIndex;
+	m_Mouse.RemoveCommand(pCommand);
+	m_Keyboard.RemoveCommand(pCommand);
+	m_Controllers[controllerIndex].RemoveCommand(pCommand);
 }
 
 void Integrian::InputManager::AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex)
@@ -123,12 +116,12 @@ const Integrian::Point2f& Integrian::InputManager::GetMousePosition() const
 	return m_MousePosition;
 }
 
-double Integrian::InputManager::GetJoystickMovement(const SDL_GameControllerAxis axis, const uint8_t playerIndex) const
+double Integrian::InputManager::GetJoystickMovement(const ControllerInput axis, const uint8_t playerIndex) const
 {
 	return m_Controllers[playerIndex].GetJoystickMovement(axis);
 }
 
-double Integrian::InputManager::GetTriggerMovement(const SDL_GameControllerAxis axis, const uint8_t playerIndex) const
+double Integrian::InputManager::GetTriggerMovement(const ControllerInput axis, const uint8_t playerIndex) const
 {
 	return m_Controllers[playerIndex].GetTriggerMovement(axis);
 }

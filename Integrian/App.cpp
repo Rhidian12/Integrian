@@ -22,10 +22,6 @@ Integrian::App::~App()
 		SafeDelete(pGameObject);
 	m_pGameObjects.clear();
 
-	for (Command* pCommand : m_pCommands)
-		SafeDelete(pCommand);
-	m_pCommands.clear();
-
 	ServiceLocator::Cleanup();
 	AudioSystem::Cleanup();
 
@@ -194,11 +190,11 @@ void Integrian::App::Run()
 		// == Render ==
 		TransformCameraAndRender();
 
-		// == Process Events ==
-		//eventQueue.Update();
-
 		// == Update The Timer For The Fixed Update ==
 		timeSinceLastUpdate += timer.GetElapsedSeconds();
+
+		// == Send New Frame ==
+		eventQueue.QueueEvent(Event{ Events::EndOfFrame });
 	}
 }
 

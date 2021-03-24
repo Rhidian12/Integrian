@@ -210,23 +210,27 @@ namespace Integrian
 
 	enum class ControllerInput : Uint8
 	{
-		INVALID				= std::numeric_limits<Uint8>::max(), // internal usage
-		ButtonA				= SDL_CONTROLLER_BUTTON_A,
-		ButtonB				= SDL_CONTROLLER_BUTTON_B,
-		ButtonX				= SDL_CONTROLLER_BUTTON_X,
-		ButtonY				= SDL_CONTROLLER_BUTTON_Y,
-		Back				= SDL_CONTROLLER_BUTTON_BACK,
-		Start				= SDL_CONTROLLER_BUTTON_START,
-		LeftStickPressed	= SDL_CONTROLLER_BUTTON_LEFTSTICK,
-		RightStickPressed	= SDL_CONTROLLER_BUTTON_RIGHTSTICK,
-		LeftShoulder		= SDL_CONTROLLER_BUTTON_LEFTSHOULDER,
-		RightShoulder		= SDL_CONTROLLER_BUTTON_RIGHTSHOULDER,
-		DPAD_Up				= SDL_CONTROLLER_BUTTON_DPAD_UP,
-		DPAD_Down			= SDL_CONTROLLER_BUTTON_DPAD_DOWN,
-		DPAD_Left			= SDL_CONTROLLER_BUTTON_DPAD_LEFT,
-		DPAD_Right			= SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
-		LeftTrigger, // There are no SDL_Scancodes for this
-		RightTrigger // There are no SDL_Scancodes for this
+		INVALID						= std::numeric_limits<Uint8>::max(), // internal usage
+		ButtonA						= SDL_CONTROLLER_BUTTON_A,
+		ButtonB						= SDL_CONTROLLER_BUTTON_B,
+		ButtonX						= SDL_CONTROLLER_BUTTON_X,
+		ButtonY						= SDL_CONTROLLER_BUTTON_Y,
+		Back						= SDL_CONTROLLER_BUTTON_BACK,
+		Start						= SDL_CONTROLLER_BUTTON_START,
+		LeftStickPressed			= SDL_CONTROLLER_BUTTON_LEFTSTICK,
+		RightStickPressed			= SDL_CONTROLLER_BUTTON_RIGHTSTICK,
+		LeftShoulder				= SDL_CONTROLLER_BUTTON_LEFTSHOULDER,
+		RightShoulder				= SDL_CONTROLLER_BUTTON_RIGHTSHOULDER,
+		DPAD_Up						= SDL_CONTROLLER_BUTTON_DPAD_UP,
+		DPAD_Down					= SDL_CONTROLLER_BUTTON_DPAD_DOWN,
+		DPAD_Left					= SDL_CONTROLLER_BUTTON_DPAD_LEFT,
+		DPAD_Right					= SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
+		JoystickLeftHorizontalAxis	= SDL_CONTROLLER_AXIS_LEFTX,
+		JoystickLeftVerticalAxis	= SDL_CONTROLLER_AXIS_LEFTY,
+		JoystickRightHorizontalAxis = SDL_CONTROLLER_AXIS_RIGHTX,
+		JoystickRightVerticalAxis	= SDL_CONTROLLER_AXIS_RIGHTY,
+		LeftTrigger					= SDL_CONTROLLER_AXIS_TRIGGERLEFT,
+		RightTrigger				= SDL_CONTROLLER_AXIS_TRIGGERRIGHT
 	};
 }
 

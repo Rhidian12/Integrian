@@ -10,7 +10,8 @@ namespace Integrian
 	enum class Events
 	{
 		PlaySound,
-		PlayMusic
+		PlayMusic,
+		EndOfFrame,
 	};
 
 	class IEventData abstract

@@ -2,23 +2,23 @@
 #ifndef INTEGRIAN_GAMECONTROLLER_H
 #define INTEGRIAN_GAMECONTROLLER_H
 
-#include <unordered_map>
-#include <vector>
-#include "PossibleInputs.h"
-#include "GameInput.h"
+#include <unordered_map> // std::unordered_map
+#include <vector> // std::vector
+#include "GameInput.h" // GameInput
+#include "ListenerInterface.h" // IListener
 
 namespace Integrian
 {
 	class Command;
-	class GameController final
+	class GameController final : public IListener
 	{
 	public:
 		~GameController();
 
-		void AddCommand(const ControllerInput controllerInput, const State keyState, Command* pCommand);
-		void ExecuteCommands();
-
-		[[nodiscard]] bool IsPressed(const ControllerInput controllerInput) const;
+		/*
+		Public function to handle events. This is not supposed to be called manually
+		*/
+		virtual bool OnEvent(const Event& event) override;
 
 	private:
 		GameController() = default;
@@ -29,18 +29,22 @@ namespace Integrian
 		GameController& operator=(const GameController&) = delete;
 		friend class InputManager;
 
+		void AddCommand(const ControllerInput controllerInput, const State keyState, Command* pCommand);
+		void ExecuteCommands();
+
+		[[nodiscard]] bool IsPressed(const ControllerInput controllerInput) const;
 		[[nodiscard]] bool WasPressed(const State previousState) const;
 		[[nodiscard]] State GetKeystate(const ControllerInput controllerInput, const State previousState) const;
-		[[nodiscard]] double GetJoystickMovement(const SDL_GameControllerAxis axis) const;
-		[[nodiscard]] double GetTriggerMovement(const SDL_GameControllerAxis axis) const;
+		[[nodiscard]] double GetJoystickMovement(const ControllerInput axis) const;
+		[[nodiscard]] double GetTriggerMovement(const ControllerInput axis) const;
 
-		void RemoveInput(const ControllerInput controllerInput, const char* pFile = __FILE__, const int line = __LINE__);
-		void RemoveCommandFromInput(const ControllerInput controllerInput, Command* pCommand, const char* pFile = __FILE__, const int line = __LINE__);
 		void RemoveCommand(Command* pCommand);
 
-		std::unordered_map<ControllerInput, std::vector<CommandAndButton>> m_pCommands;
-		SDL_GameController* m_pSDLGameController;
-		uint8_t m_Index;
+		std::unordered_map<ControllerInput, std::vector<CommandAndButton>> m_pCommands{};
+		std::vector<ControllerInput> m_KeysToBeRemoved{};
+
+		SDL_GameController* m_pSDLGameController{};
+		uint8_t m_Index{};
 		static constexpr double m_MaxJoystickValue{ 32767.0 }; // double instead of integer to prevent typecasting
 
 		using CommandPair = std::pair<ControllerInput, std::vector<CommandAndButton>>;

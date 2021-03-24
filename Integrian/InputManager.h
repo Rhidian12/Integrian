@@ -6,18 +6,12 @@
 #ifndef INTEGRIAN_INPUTMANAGER_H
 #define INTEGRIAN_INPUTMANAGER_H
 
-#include <unordered_map>
-#include <vector>
-#include <iostream>
-#include <array>
-
-#include "Command.h"
-#include "PossibleInputs.h"
-#include "GameInput.h"
-#include "Keyboard.h"
-#include "GameController.h"
-#include "Mouse.h"
-#include "Singleton.h"
+#include <array> // std::array
+#include "GameInput.h" // GameInput
+#include "Keyboard.h" // Keyboard
+#include "GameController.h" // GameController
+#include "Mouse.h" // Mouse
+#include "Singleton.h" // Singleton
 // Reference: https://stackoverflow.com/questions/25963966/c-function-pointer-callback-without-inheritance
 
 // Henri-Thibault Huyghe came up with the idea of a superclass game input enum class
@@ -30,33 +24,46 @@
 namespace Integrian
 {
 	class Command;
-	class GameController;
-	class Keyboard;
-	class Mouse;
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
 		virtual ~InputManager() = default;
 
-		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex = 0);
-
+		/*
+		This function gets called in the App::Run() every frame.
+		All input gets processed, and commands linked to those inputs get executed
+		*/
 		void HandleInput();
 
+		/* At the moment, this does nothing, so don't use it*/
 		void SetWindowSize(const uint32_t width, const uint32_t height);
 
+		/* Returns whether a keyboard key is pressed now */
 		[[nodiscard]] bool IsKeyboardKeyPressed(const KeyboardInput gameInput) const;
+
+		/* Returns whether a mouse button is pressed now */
 		[[nodiscard]] bool IsMouseButtonPressed(const MouseButton gameInput) const;
+		/*
+		Returns whether a controller button is pressed now.
+		This does not return how much of a Trigger is pressed, use GetTriggerMovement() for that
+		*/
 		[[nodiscard]] bool IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex = 0) const;
+		
+		/* Get current mouse position */
 		[[nodiscard]] const Point2f& GetMousePosition() const;
-		[[nodiscard]] double GetJoystickMovement(const SDL_GameControllerAxis axis, const uint8_t playerIndex = 0) const;
-		[[nodiscard]] double GetTriggerMovement(const SDL_GameControllerAxis axis, const uint8_t playerIndex = 0) const;
+
+		/* Get how much the joystick is moved mapped to a range of [-1, 1] */
+		[[nodiscard]] double GetJoystickMovement(const ControllerInput axis, const uint8_t playerIndex = 0) const;
+
+		/* Get how much a Trigger is pressed mapped to a range of [0, 1] */
+		[[nodiscard]] double GetTriggerMovement(const ControllerInput axis, const uint8_t playerIndex = 0) const;
 
 	private:
 		InputManager();
 		friend class Singleton<InputManager>;
 		friend class CommandManager;
 
-		void RemoveInput(const GameInput& input, const uint8_t controllerIndex = 0);
+		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex = 0);
 		void RemoveCommandFromInput(const GameInput& input, Command* pCommand, const uint8_t controllerIndex = 0);
 		void RemoveCommand(Command* pCommand, const uint8_t controllerIndex = 0);
 

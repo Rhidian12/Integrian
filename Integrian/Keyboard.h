@@ -2,22 +2,23 @@
 #ifndef INTEGRIAN_KEYBOARDINPUT_H
 #define INTEGRIAN_KEYBOARDINPUT_H
 
-#include "GameInput.h"
-#include "PossibleInputs.h"
-#include <unordered_map>
+#include "GameInput.h" // GameInput
+#include <unordered_map> // std::unordered_map
+#include <vector> // std::vector
+#include "ListenerInterface.h" // IListener
 
 namespace Integrian
 {
 	class Command;
-	class Keyboard final
+	class Keyboard final : public IListener
 	{
 	public:
 		~Keyboard();
 
-		void AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand);
-		void ExecuteCommands();
-
-		[[nodiscard]] bool IsPressed(const KeyboardInput gameInput) const;
+		/*
+		Public function to handle events. This is not supposed to be called manually
+		*/
+		virtual bool OnEvent(const Event& event) override;
 
 	private:
 		Keyboard() = default;
@@ -26,12 +27,17 @@ namespace Integrian
 		Keyboard& operator=(const Keyboard&) = delete;
 		friend class InputManager;
 
+		void AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand);
+		void ExecuteCommands();
+
+		[[nodiscard]] bool IsPressed(const KeyboardInput gameInput) const;
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const KeyboardInput keyboardInput, const State previousState) const;
-		void RemoveInput(const KeyboardInput mouseButton, const char* pFile = __FILE__, const int line = __LINE__);
-		void RemoveCommandFromInput(const KeyboardInput mouseButton, Command* pCommand, const char* pFile = __FILE__, const int line = __LINE__);
+		
+		void RemoveCommand(Command* pCommand);
 
 		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_KeyboardCommands{};
+		std::vector<KeyboardInput> m_KeysToBeRemoved{};
 
 		using CommandPair = std::pair<KeyboardInput, std::vector<CommandAndButton>>;
 		using UMapIterator = std::unordered_map<KeyboardInput, std::vector<CommandAndButton>>::iterator;

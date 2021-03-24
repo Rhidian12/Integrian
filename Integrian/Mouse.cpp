@@ -15,6 +15,28 @@ Integrian::Mouse::~Mouse()
 	m_MouseCommands.clear();
 }
 
+bool Integrian::Mouse::OnEvent(const Event& event)
+{
+	switch (event.GetEvent())
+	{
+	case Events::EndOfFrame:
+	{
+		auto future = std::async(std::launch::async, [this]()
+			{
+				for (const MouseButton& input : m_KeysToBeRemoved)
+					m_MouseCommands.erase(input);
+
+				m_KeysToBeRemoved.clear();
+			});
+		return true;
+	}
+	break;
+	default:
+		return false;
+		break;
+	}
+}
+
 void Integrian::Mouse::AddCommand(const MouseButton mouseButton, const State keyState, Command* pCommand)
 {
 	m_MouseCommands[mouseButton].push_back(CommandAndButton{ pCommand,keyState });
@@ -63,51 +85,10 @@ Integrian::State Integrian::Mouse::GetKeystate(const MouseButton mouseButton, co
 	return State::NotPressed;
 }
 
-void Integrian::Mouse::RemoveInput(const MouseButton mouseButton, const char* pFile, const int line)
+void Integrian::Mouse::RemoveCommand(Command* pCommand)
 {
-#ifdef _DEBUG
-	UMapIterator it{ m_MouseCommands.find(mouseButton) };
-	if(it != m_MouseCommands.end())
-		m_MouseCommands.erase(it);
-	else
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-#else
-	try
-	{
-		m_MouseCommands.erase(mouseButton);
-	}
-	catch (const std::exception&)
-	{
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-	}
-#endif
-}
-
-void Integrian::Mouse::RemoveCommandFromInput(const MouseButton mouseButton, Command* pCommand, const char* pFile, const int line)
-{
-	std::vector<CommandAndButton>& commands{ m_MouseCommands.find(mouseButton)->second };
-
-#ifdef _DEBUG
-	std::vector<CommandAndButton>::iterator it{ std::remove_if(commands.begin(),commands.end(),[pCommand](const CommandAndButton& commandAndButton)->bool
-		{
-			return commandAndButton.pCommand == pCommand;
-		}) };
-
-	if (it != commands.end())
-		commands.erase(it, commands.end());
-	else
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-#else
-	try
-	{
-		commands.erase(std::remove_if(commands.begin(), commands.end(), [pCommand](const CommandAndButton& commandAndButton)->bool
-			{
-				return commandAndButton.pCommand == pCommand;
-			}));
-	}
-	catch (const std::exception&)
-	{
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-	}
-#endif
+	for (const CommandPair& commandPair : m_MouseCommands)
+		for (const CommandAndButton& commandAndButton : commandPair.second)
+			if (commandAndButton.pCommand == pCommand)
+				m_KeysToBeRemoved.push_back(commandPair.first);
 }

@@ -1,7 +1,7 @@
-#include "pch.h"
-#include "Keyboard.h"
-#include "Command.h"
-#include "Logger.h"
+#include "Keyboard.h" // Header
+#include "Command.h" // Command::Execute()
+#include "Logger.h" // Logger
+#include <future> // std::async
 
 Integrian::Keyboard::Keyboard(Keyboard&& other)
 {
@@ -13,6 +13,28 @@ Integrian::Keyboard::Keyboard(Keyboard&& other)
 Integrian::Keyboard::~Keyboard()
 {
 	m_KeyboardCommands.clear();
+}
+
+bool Integrian::Keyboard::OnEvent(const Event& event)
+{
+	switch (event.GetEvent())
+	{
+	case Events::EndOfFrame:
+	{
+		auto future = std::async(std::launch::async, [this]()
+			{
+				for (const KeyboardInput& input : m_KeysToBeRemoved)
+					m_KeyboardCommands.erase(input);
+
+				m_KeysToBeRemoved.clear();
+			});
+		return true;
+	}
+	break;
+	default:
+		return false;
+		break;
+	}
 }
 
 void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand)
@@ -63,53 +85,10 @@ Integrian::State Integrian::Keyboard::GetKeystate(const KeyboardInput keyboardIn
 	return State::NotPressed;
 }
 
-void Integrian::Keyboard::RemoveInput(const KeyboardInput keyboardInput, const char* pFile, const int line)
+void Integrian::Keyboard::RemoveCommand(Command* pCommand)
 {
-#ifdef _DEBUG
-	UMapIterator it{ m_KeyboardCommands.find(keyboardInput) };
-	if (it != m_KeyboardCommands.end())
-		m_KeyboardCommands.erase(it);
-	else
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-#else
-	try
-	{
-		m_KeyboardCommands.erase(keyboardInput);
-	}
-	catch (const std::exception&)
-	{
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing input in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-	}
-#endif
-}
-
-void Integrian::Keyboard::RemoveCommandFromInput(const KeyboardInput keyboardInput, Command* pCommand, const char* pFile, const int line)
-{
-	std::vector<CommandAndButton>& commands{ m_KeyboardCommands.find(keyboardInput)->second };
-
-#ifdef _DEBUG
-	std::vector<CommandAndButton>::iterator it{ std::remove_if(commands.begin(),commands.end(),[pCommand](const CommandAndButton& commandAndButton)->bool
-		{
-			return commandAndButton.pCommand == pCommand;
-		}) };
-
-	if (it != commands.end())
-		commands.erase(it, commands.end());
-	else
-	{
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-	}
-#else
-	try
-	{
-		commands.erase(std::remove_if(commands.begin(), commands.end(), [pCommand](const CommandAndButton& commandAndButton)->bool
-			{
-				return commandAndButton.pCommand == pCommand;
-			}));
-	}
-	catch (const std::exception&)
-	{
-		Logger::LogSevereError(std::string{ "Tried to remove a non-existing command in file: " } + pFile + " and at line: " + std::to_string(line) + "\n");
-	}
-#endif
+	for (const CommandPair& commandPair : m_KeyboardCommands)
+		for (const CommandAndButton& commandAndButton : commandPair.second)
+			if (commandAndButton.pCommand == pCommand)
+				m_KeysToBeRemoved.push_back(commandPair.first);
 }
