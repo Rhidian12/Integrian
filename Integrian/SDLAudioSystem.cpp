@@ -3,8 +3,11 @@
 #include "Logger.h" // Logger
 #include <string> // std::to_string
 #include <future> // std::async
+#include "ThreadManager.h"
 
 #include "VisualBenchmark.h" // TODO: REMOVE THIS
+
+extern bool g_IsLooping;
 
 Integrian::SDLAudioSystem::SDLAudioSystem()
 {
@@ -30,7 +33,7 @@ bool Integrian::SDLAudioSystem::OnEvent(const Event& event)
 	case Events::PlaySound:
 	{
 		auto data{ event.GetData<int, bool, int, int>() };
-		auto future = std::async(std::launch::async, [&data, this]() // TODO: change this to use a thread pool
+		ThreadManager::GetInstance().GetThread([this, &data]()
 			{
 				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});
@@ -40,9 +43,9 @@ bool Integrian::SDLAudioSystem::OnEvent(const Event& event)
 	case Events::PlayMusic:
 	{
 		auto data{ event.GetData<MusicID, bool, int, int>() };
-		auto future = std::async(std::launch::async, [&data, this]()
+		ThreadManager::GetInstance().GetThread([this, &data]()
 			{
-				PlayMusic(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
+				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});
 		return true;
 	}
@@ -82,11 +85,11 @@ Integrian::AudioSystem::SoundID Integrian::SDLAudioSystem::AddSound(const std::s
 	else
 		newSoundID = ((m_Sounds.end()--)->first) + 1;
 
-	if(m_Sounds.empty())
+	if (m_Sounds.empty())
 		m_Sounds.insert(std::make_pair(newSoundID, Mix_LoadWAV(filePath.c_str())));
 	else
 		m_Sounds.insert(std::make_pair(newSoundID, Mix_LoadWAV(filePath.c_str())));
-	
+
 	return newSoundID;
 #endif // _DEBUG
 }

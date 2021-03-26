@@ -178,6 +178,9 @@
     <Filter Include="Engine\Audio\LoggedAudioSystem">
       <UniqueIdentifier>{c4d3f235-4da1-4cea-b204-984c573b4443}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Managers\ThreadManager">
+      <UniqueIdentifier>{9ea87432-0494-4938-b0fb-a9887ff7d56d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -329,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="LoggedAudioSystem.cpp">
       <Filter>Engine\Audio\LoggedAudioSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadManager.cpp">
+      <Filter>Engine\Managers\ThreadManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -601,6 +607,9 @@
     </ClInclude>
     <ClInclude Include="LoggedAudioSystem.h">
       <Filter>Engine\Audio\LoggedAudioSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadManager.h">
+      <Filter>Engine\Managers\ThreadManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
