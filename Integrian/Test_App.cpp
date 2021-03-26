@@ -71,7 +71,7 @@ void Integrian::Test_App::Render() const
 
 	ImGui::SetNextWindowPos(ImVec2{ 250,0 });
 	ImGui::Begin("Player 1 uses the keyboard");
-	ImGui::Text("Press A To Damage Q*bert");
+	ImGui::Text("Press A To Damage Q*bert, This will also play a sound");
 	ImGui::Text("Press W To Defeat Coily");
 	ImGui::Text("Press S To Catch Slick Or Sam");
 	ImGui::Text("Press D To Change The Colour");

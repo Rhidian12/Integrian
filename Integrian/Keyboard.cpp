@@ -1,7 +1,7 @@
 #include "Keyboard.h" // Header
 #include "Command.h" // Command::Execute()
 #include "Logger.h" // Logger
-#include <future> // std::async
+#include "ThreadManager.h" // ThreadManager
 
 Integrian::Keyboard::Keyboard(Keyboard&& other)
 {
@@ -21,7 +21,7 @@ bool Integrian::Keyboard::OnEvent(const Event& event)
 	{
 	case Events::EndOfFrame:
 	{
-		auto future = std::async(std::launch::async, [this]()
+		ThreadManager::GetInstance().AssignThread([this]()
 			{
 				for (const KeyboardInput& input : m_KeysToBeRemoved)
 					m_KeyboardCommands.erase(input);

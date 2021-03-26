@@ -8,7 +8,6 @@
 #include <queue> // std::queue
 #include <vector> // std::vector
 #include "ListenerInterface.h" // Integrian::IListener
-#include <future> // std::async
 
 #include "VisualBenchmark.h" // TODO: REMOVE THIS, ONLY FOR TESTING 
 

@@ -18,20 +18,24 @@ Integrian::ThreadManager::ThreadManager()
 	{
 		while (g_IsLooping)
 		{
-			std::unique_lock<std::mutex> lock{ m_Mutex };
-
-			m_CV.wait(lock, [this]()
-				{
-					return (!m_Jobs.empty() || !g_IsLooping);
-				});
-
-			if (!m_Jobs.empty())
+			std::function<void()> pF{};
 			{
-				auto pF = m_Jobs.front();
-				m_Jobs.pop();
+				std::unique_lock<std::mutex> lock{ m_Mutex };
 
+				m_CV.wait(lock, [this]()
+					{
+						return (!m_Jobs.empty() || !g_IsLooping);
+					});
+
+				if (!m_Jobs.empty())
+				{
+					pF = m_Jobs.front();
+					m_Jobs.pop();
+
+				}
+			} // make sure the lock goes out of scope
+			if(pF)
 				pF();
-			}
 		}
 	};
 

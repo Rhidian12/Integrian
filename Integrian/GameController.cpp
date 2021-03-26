@@ -1,7 +1,7 @@
 #include "GameController.h" // header
 #include "Logger.h" // Logger
 #include "Command.h" // Command::Execute()
-#include <future> // std::async
+#include "ThreadManager.h" // ThreadManager
 
 Integrian::GameController::GameController(const uint8_t index)
 	: m_pCommands{}
@@ -82,7 +82,7 @@ bool Integrian::GameController::OnEvent(const Event& event)
 	{
 	case Events::EndOfFrame:
 	{
-		auto future = std::async(std::launch::async, [this]()
+		ThreadManager::GetInstance().AssignThread([this]()
 			{
 				for (const ControllerInput& input : m_KeysToBeRemoved)
 					m_pCommands.erase(input);

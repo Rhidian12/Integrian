@@ -2,8 +2,7 @@
 #include "SDLAudioSystem.h" // header
 #include "Logger.h" // Logger
 #include <string> // std::to_string
-#include <future> // std::async
-#include "ThreadManager.h"
+#include "ThreadManager.h" // ThreadManager
 
 #include "VisualBenchmark.h" // TODO: REMOVE THIS
 

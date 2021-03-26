@@ -1,8 +1,7 @@
-#include "Mouse.h"
-#include "Command.h"
-#include <algorithm>
-#include <iostream>
-#include "Logger.h"
+#include "Mouse.h" // Header
+#include "Command.h" // Command::Execute()
+#include "Logger.h" // Logger
+#include "ThreadManager.h" // ThreadManager
 
 Integrian::Mouse::Mouse(Mouse&& other)
 {
@@ -21,7 +20,7 @@ bool Integrian::Mouse::OnEvent(const Event& event)
 	{
 	case Events::EndOfFrame:
 	{
-		auto future = std::async(std::launch::async, [this]()
+		ThreadManager::GetInstance().AssignThread([this]()
 			{
 				for (const MouseButton& input : m_KeysToBeRemoved)
 					m_MouseCommands.erase(input);

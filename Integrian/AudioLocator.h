@@ -30,7 +30,7 @@ namespace Integrian
 		{
 			if constexpr (std::is_base_of_v<AudioSystem, Type>)
 			{
-				if (pAudio != nullptr && !std::is_same_v<Type, NullAudioSystem>)
+				if (pAudio != nullptr && !std::is_same_v<Type, NullAudioSystem>) // maybe change this later to make NullAudioSystem private?
 					m_pAudioSystem = pAudio;
 			}
 			else

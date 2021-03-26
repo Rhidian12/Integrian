@@ -1,11 +1,11 @@
-#include "App.h"
-#include "OrthographicCamera.h"
-#include "Timer.h"
-#include "Logger.h"
-#include "InputManager.h"
-#include "TextureManager.h"
-#include "EventQueue.h"
-#include <future>
+#include "App.h" // Header
+#include "OrthographicCamera.h" // Camera
+#include "Timer.h" // Timer
+#include "Logger.h" // Logger
+#include "InputManager.h" // InputManager
+#include "TextureManager.h" // TextureManager
+#include "EventQueue.h" // EventQueue
+#include "ThreadManager.h" // ThreadManager
 
 // == Global Variables ==
 extern bool g_IsLooping; // Used by the inputmanager and App::Run() to see when SDL_Quit event gets fired
@@ -168,7 +168,7 @@ void Integrian::App::Run()
 
 	float timeSinceLastUpdate{};
 
-	auto future = std::async(std::launch::async, [&eventQueue]()
+	ThreadManager::GetInstance().AssignThread([&eventQueue]()
 		{
 			while (g_IsLooping)
 				eventQueue.Update();

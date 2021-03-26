@@ -36,8 +36,10 @@ namespace Integrian
 		{
 			if constexpr (std::is_assignable_v<std::function<void()>, Lambda>) // Can Lambda be assigned to std::function<void()>
 			{
-				std::unique_lock<std::mutex> lock{ m_Mutex };
-				m_Jobs.push(lambda);
+				{
+					std::unique_lock<std::mutex> lock{ m_Mutex };
+					m_Jobs.push(lambda);
+				} // make sure the lock goes out of scope
 				m_CV.notify_one();
 			}
 			else
