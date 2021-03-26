@@ -32,8 +32,8 @@ bool Integrian::SDLAudioSystem::OnEvent(const Event& event)
 	{
 	case Events::PlaySound:
 	{
-		auto data{ event.GetData<int, bool, int, int>() };
-		ThreadManager::GetInstance().GetThread([this, &data]()
+		auto data{ event.GetData<SoundID, bool, int, int>() };
+		ThreadManager::GetInstance().AssignThread([this, data]()
 			{
 				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});
@@ -43,7 +43,7 @@ bool Integrian::SDLAudioSystem::OnEvent(const Event& event)
 	case Events::PlayMusic:
 	{
 		auto data{ event.GetData<MusicID, bool, int, int>() };
-		ThreadManager::GetInstance().GetThread([this, &data]()
+		ThreadManager::GetInstance().AssignThread([this, data]()
 			{
 				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 			});

@@ -5,6 +5,8 @@
 
 #include "AudioSystem.h" // AudioSystem
 #include <map> // std::map
+#include <limits> // std::numeric_limits
+#include <vector> // std::vector
 
 namespace Integrian
 {
@@ -59,7 +61,7 @@ namespace Integrian
 		int RemapVolumeToSDL(const int volumeInPercentage) const;
 		int RemapVolumeToIntegrian(const int volumeInSDL) const;
 
-		std::map<SoundID, Mix_Chunk*> m_Sounds{}; // TODO: Make a wrapper for Mix_Chunk* and Mix_Music*
+		std::map<SoundID, Mix_Chunk*> m_Sounds{};
 		std::map<MusicID, Mix_Music*> m_Music{};
 
 		std::vector<Channel> m_Channels{};

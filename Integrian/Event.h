@@ -56,7 +56,7 @@ namespace Integrian
 		const Events GetEvent() const;
 
 		template<typename ... Args>
-		const std::tuple<Args...>& GetData() const
+		const std::tuple<Args...> GetData() const
 		{
 			return static_cast<EventData<Args...>*>(m_pData)->GetData();
 		}

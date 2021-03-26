@@ -7,7 +7,6 @@
 #include "Event.h" // IEvent and Event
 #include <queue> // std::queue
 #include <vector> // std::vector
-#include "Timer.h" // Integrian::Timer
 #include "ListenerInterface.h" // Integrian::IListener
 #include <future> // std::async
 

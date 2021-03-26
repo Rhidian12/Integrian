@@ -35,6 +35,6 @@ Integrian::ThreadManager::ThreadManager()
 		}
 	};
 
-	for (int i{}; i < 5; ++i)
+	for (size_t i{}; i < std::thread::hardware_concurrency(); ++i)
 		m_Threads.push_back(std::thread{ infiniteLoop });
 }

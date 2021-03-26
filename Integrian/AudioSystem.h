@@ -3,12 +3,9 @@
 #ifndef INTEGRIAN_AUDIOSYSTEM_H
 #define INTEGRIAN_AUDIOSYSTEM_H
 
-#include <cstdint> // uint64_t
 #include <SDL_mixer.h> // Mix_Chunk, Mix_Music, more SDL_Mixer related functionality
 #include <string> // std::string
-#include <limits> // std::numeric_limits<int>::max()
 #include "ListenerInterface.h" // IListener
-#include <vector> // std::vector
 
 namespace Integrian
 {
