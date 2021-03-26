@@ -160,12 +160,6 @@
     <Filter Include="Engine\Audio\AudioSystem">
       <UniqueIdentifier>{e11d2b97-d73f-4b7a-b4fd-e4a0f2fefb21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Audio\AudioPlayerLogged">
-      <UniqueIdentifier>{98e2db59-5227-4adf-a2d7-02d3d6d32d20}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\ServiceLocator\ServiceInterface">
-      <UniqueIdentifier>{0eea5940-68d1-48c0-bd13-5bd92cb177d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\ServiceLocator\NullService">
       <UniqueIdentifier>{42cbc4a6-4629-4e7b-bb9d-de860a48aff2}</UniqueIdentifier>
     </Filter>
@@ -177,6 +171,12 @@
     </Filter>
     <Filter Include="Engine\Listener">
       <UniqueIdentifier>{d4e36f02-90f4-417b-9b32-4000fc86079d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\SDLAudioSystem">
+      <UniqueIdentifier>{98e2db59-5227-4adf-a2d7-02d3d6d32d20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\LoggedAudioSystem">
+      <UniqueIdentifier>{c4d3f235-4da1-4cea-b204-984c573b4443}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -312,20 +312,23 @@
     <ClCompile Include="CommandManager.cpp">
       <Filter>Engine\Managers\CommandManager</Filter>
     </ClCompile>
-    <ClCompile Include="ServiceLocator.cpp">
+    <ClCompile Include="AudioLocator.cpp">
       <Filter>Engine\ServiceLocator</Filter>
     </ClCompile>
     <ClCompile Include="AudioSystem.cpp">
       <Filter>Engine\Audio\AudioSystem</Filter>
     </ClCompile>
-    <ClCompile Include="AudioPlayerLogged.cpp">
-      <Filter>Engine\Audio\AudioPlayerLogged</Filter>
+    <ClCompile Include="SDLAudioSystem.cpp">
+      <Filter>Engine\Audio\SDLAudioSystem</Filter>
     </ClCompile>
     <ClCompile Include="EventQueue.cpp">
       <Filter>Engine\EventQueue</Filter>
     </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Engine\EventQueue\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="LoggedAudioSystem.cpp">
+      <Filter>Engine\Audio\LoggedAudioSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -572,19 +575,16 @@
     <ClInclude Include="CommandNotCreatedByManager.h">
       <Filter>Engine\Exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="ServiceLocator.h">
+    <ClInclude Include="AudioLocator.h">
       <Filter>Engine\ServiceLocator</Filter>
     </ClInclude>
     <ClInclude Include="AudioSystem.h">
       <Filter>Engine\Audio\AudioSystem</Filter>
     </ClInclude>
-    <ClInclude Include="AudioPlayerLogged.h">
-      <Filter>Engine\Audio\AudioPlayerLogged</Filter>
+    <ClInclude Include="SDLAudioSystem.h">
+      <Filter>Engine\Audio\SDLAudioSystem</Filter>
     </ClInclude>
-    <ClInclude Include="ServiceInterface.h">
-      <Filter>Engine\ServiceLocator\ServiceInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="NullService.h">
+    <ClInclude Include="NullAudioSystem.h">
       <Filter>Engine\ServiceLocator\NullService</Filter>
     </ClInclude>
     <ClInclude Include="EventQueue.h">
@@ -598,6 +598,9 @@
     </ClInclude>
     <ClInclude Include="VisualBenchmark.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggedAudioSystem.h">
+      <Filter>Engine\Audio\LoggedAudioSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

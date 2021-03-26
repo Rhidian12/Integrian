@@ -22,8 +22,7 @@ Integrian::App::~App()
 		SafeDelete(pGameObject);
 	m_pGameObjects.clear();
 
-	ServiceLocator::Cleanup();
-	AudioSystem::Cleanup();
+	AudioLocator::Cleanup();
 
 	ShutDown();
 }
@@ -235,7 +234,7 @@ void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
 
 	Update(dt);
 
-	ServiceLocator::GetAudio()->Update(dt); // update the audio
+	AudioLocator::GetAudio()->Update(dt); // update the audio
 
 	LateUpdate(dt);
 

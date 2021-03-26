@@ -2,7 +2,6 @@
 #include "HealthComponent.h"
 #include "Observer.h"
 #include "Subject.h"
-#include "ServiceLocator.h"
 #include "EventQueue.h"
 
 Integrian::HealthComponent::HealthComponent(const uint64_t maxLives)

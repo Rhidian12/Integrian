@@ -17,8 +17,8 @@
 #include "DisksRemainingCommand.h"
 #include "Logger.h"
 #include "CommandManager.h"
-#include "AudioPlayerLogged.h"
-#include "ServiceLocator.h"
+#include "SDLAudioSystem.h"
+#include "AudioLocator.h"
 #include "EventQueue.h"
 
 void Integrian::Test_App::Start()
@@ -50,11 +50,11 @@ void Integrian::Test_App::Start()
 	InitPlayerOne();
 	InitPlayerTwo();
 
-	ServiceLocator::Provide(new AudioPlayerLogged{});
-	AudioSystem* pAudio = ServiceLocator::GetAudio();
-	pAudio->AddMusic(0, "Data/AHHHHH.mp3");
+	AudioLocator::Provide(new SDLAudioSystem{});
+	AudioSystem* pAudio = AudioLocator::GetAudio();
+	pAudio->AddMusic("Data/AHHHHH.mp3");
 	pAudio->PlayMusic(0);
-	pAudio->AddSound(0, "Data/menu3.wav");
+	pAudio->AddSound("Data/menu3.wav");
 	EventQueue::GetInstance().AddListener(pAudio);
 }
 

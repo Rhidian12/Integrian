@@ -1,25 +1,27 @@
 #pragma once
 
-#ifndef INTEGRIAN_AUDIOPLAYERLOGGED_H
-#define INTEGRIAN_AUDIOPLAYERLOGGED_H
+#ifndef INTEGRIAN_LOGGEDAUDIOSYSTEM_H
+#define INTEGRIAN_LOGGEDAUDIOSYSTEM_H
 
 #include "AudioSystem.h"
-#include "ListenerInterface.h"
 
 namespace Integrian
 {
-	class AudioPlayerLogged : public AudioSystem // Not final since NullService inherits
+	class LoggedAudioSystem final : public AudioSystem
 	{
 	public:
-		AudioPlayerLogged() = default;
-		virtual ~AudioPlayerLogged() = default;
+		LoggedAudioSystem(AudioSystem* pAudio);
+		~LoggedAudioSystem() = default;
 
 		virtual bool OnEvent(const Event& event) override;
 
+		virtual SoundID AddSound(const std::string& filePath) override;
+		virtual MusicID AddMusic(const std::string& filePath) override;
+
 		virtual void Update(const float dt) override;
 
-		virtual void PlaySound(const SoundID soundID, const bool infiniteLoop = false, const int amountOfLoops= 0, const int volume = 100) override;
-		virtual void PlayMusic(const MusicID soundID, const bool infiniteLoop = false, const int amountOfLoops= 0, const int volume = 100) override;
+		virtual void PlaySound(const SoundID soundID, const bool infiniteLoop = false, const int amountOfLoops = 0, const int volume = 100) override;
+		virtual void PlayMusic(const MusicID musicID, const bool infiniteLoop = false, const int amountOfLoops = 0, const int volume = 100) override;
 
 		virtual void PauseMusic() override;
 		virtual void PauseSound(const SoundID soundID) override;
@@ -37,7 +39,8 @@ namespace Integrian
 		virtual [[nodiscard]] int GetMusicVolume() const override;
 
 	private:
+		AudioSystem* m_pAudioSystem;
 	};
 }
 
-#endif // !INTEGRIAN_AUDIOPLAYERLOGGED_H
+#endif // !INTEGRIAN_LOGGEDAUDIOSYSTEM_H

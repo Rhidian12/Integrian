@@ -161,7 +161,8 @@
   <ItemGroup>
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="AudioPlayerLogged.cpp" />
+    <ClCompile Include="LoggedAudioSystem.cpp" />
+    <ClCompile Include="SDLAudioSystem.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
     <ClCompile Include="CatchSlickOrSamCommand.cpp" />
     <ClCompile Include="ChangeColourCommand.cpp" />
@@ -198,7 +199,7 @@
     <ClCompile Include="PrinterManager.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="ScoreDisplayComponent.cpp" />
-    <ClCompile Include="ServiceLocator.cpp" />
+    <ClCompile Include="AudioLocator.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="Test_App.cpp" />
     <ClCompile Include="TextComponent.cpp" />
@@ -214,7 +215,8 @@
     <ClInclude Include="allocators.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
-    <ClInclude Include="AudioPlayerLogged.h" />
+    <ClInclude Include="LoggedAudioSystem.h" />
+    <ClInclude Include="SDLAudioSystem.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />
     <ClInclude Include="CatchSlickOrSamCommand.h" />
@@ -260,7 +262,7 @@
     <ClInclude Include="memorybuffer.h" />
     <ClInclude Include="memorystream.h" />
     <ClInclude Include="Mouse.h" />
-    <ClInclude Include="NullService.h" />
+    <ClInclude Include="NullAudioSystem.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="ostreamwrapper.h" />
@@ -278,8 +280,7 @@
     <ClInclude Include="schema.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
-    <ClInclude Include="ServiceInterface.h" />
-    <ClInclude Include="ServiceLocator.h" />
+    <ClInclude Include="AudioLocator.h" />
     <ClInclude Include="StaticInstanceAlreadyCreated.h" />
     <ClInclude Include="stream.h" />
     <ClInclude Include="stringbuffer.h" />

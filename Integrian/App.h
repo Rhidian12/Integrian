@@ -6,7 +6,7 @@
 #include <memory>
 #include "GameObject.h"
 #include "Logger.h"
-#include "ServiceLocator.h"
+#include "AudioLocator.h"
 
 namespace Integrian
 {

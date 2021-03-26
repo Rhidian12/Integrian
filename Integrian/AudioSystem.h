@@ -6,31 +6,27 @@
 #include <cstdint> // uint64_t
 #include <SDL_mixer.h> // Mix_Chunk, Mix_Music, more SDL_Mixer related functionality
 #include <string> // std::string
-#include <unordered_map> // std::unordered_map
-#include "ServiceInterface.h" // IService
-#include <vector> // std::vector
 #include <limits> // std::numeric_limits<int>::max()
 #include "ListenerInterface.h" // IListener
+#include <vector> // std::vector
 
 namespace Integrian
 {
-	class AudioSystem abstract : public IService, public IListener
+	class AudioSystem abstract : public IListener
 	{
 	public:
 		using SoundID = int;
 		using MusicID = int;
 
-		AudioSystem();
-		virtual ~AudioSystem();
-
-		static void Cleanup();
+		AudioSystem() = default;
+		virtual ~AudioSystem() = default;
 
 		virtual bool OnEvent(const Event&) = 0;
 
-		void AddSound(const SoundID uniqueSoundID, const std::string& filePath);
-		void AddMusic(const MusicID uniqueMusicID, const std::string& filePath);
+		virtual SoundID AddSound(const std::string&) = 0;
+		virtual MusicID AddMusic(const std::string&) = 0;
 
-		virtual void Update(const float) = 0; // It would be nice to implement this here, but the NullService needs to use it
+		virtual void Update(const float) = 0;
 
 		virtual void PlaySound(const SoundID, const bool = false, const int = 0, const int = 100) = 0;
 		virtual void PlayMusic(const MusicID, const bool = false, const int = 0, const int = 100) = 0;
@@ -51,36 +47,6 @@ namespace Integrian
 		virtual [[nodiscard]] int GetMusicVolume() const = 0;
 
 	protected:
-		struct Channel final
-		{
-			Channel(const uint16_t index)
-				: channelIndex{ index }
-			{
-			}
-
-			bool isInUse{ false };
-			uint16_t channelIndex; // uint16_t because the range is [0 - 7]
-			float timeInUse{};
-			float expectedTimeInUse{};
-			SoundID soundIDOfChunk{ std::numeric_limits<int>::max() };
-		};
-
-		Channel& GetFirstAvailableChannel();
-		float GetChunkTimeInSeconds(Mix_Chunk* pChunk) const; // reference: https://discourse.libsdl.org/t/time-length-of-sdl-mixer-chunks/12852
-		int RemapVolumeToSDL(const int volumeInPercentage) const;
-		int RemapVolumeToIntegrian(const int volumeInSDL) const;
-
-		inline static std::unordered_map<SoundID, Mix_Chunk*> m_Sounds{};	
-		inline static std::unordered_map<MusicID, Mix_Music*> m_Music{};
-
-		inline static std::vector<Channel> m_Channels{};
-
-		Mix_Music* m_pCurrentPlayingMusic{};
-
-		const int m_SDLMixerMaxVolume{ MIX_MAX_VOLUME };
-
-		using SoundPair = std::pair<SoundID, Mix_Chunk*>;
-		using MusicPair = std::pair<MusicID, Mix_Music*>;
 	};
 }
 

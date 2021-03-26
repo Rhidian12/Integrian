@@ -1,18 +1,21 @@
 #pragma once
 
-#ifndef INTEGRIAN_NULLSERVICE_H
-#define INTEGRIAN_NULLSERVICE_H
+#ifndef INTEGRIAN_NULLAUDIOSYSTEM_H
+#define INTEGRIAN_NULLAUDIOSYSTEM_H
 
 #include "AudioSystem.h"
 
 namespace Integrian
 {
-	class NullService final : public AudioSystem
+	class NullAudioSystem final : public AudioSystem
 	{
 	public:
 		virtual bool OnEvent(const Event&) override { return false; }
 
 		virtual void Update(const float) override {}
+
+		SoundID AddSound(const std::string&) override { return -1; }
+		MusicID AddMusic(const std::string&) override { return -1; }
 
 		virtual void PlaySound(const SoundID, const bool = false, const int = 0, const int = 100) override {}
 		virtual void PlayMusic(const MusicID, const bool = false, const int = 0, const int = 100) override {}
@@ -34,4 +37,4 @@ namespace Integrian
 	};
 }
 
-#endif // !INTEGRIAN_NULLSERVICE_H
+#endif // !INTEGRIAN_NULLAUDIOSYSTEM_H
