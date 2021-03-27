@@ -125,7 +125,7 @@ Integrian::AudioSystem::MusicID Integrian::SDLAudioSystem::AddMusic(const std::s
 	if (m_Music.empty())
 		m_Music.insert(std::make_pair(newMusicID, Mix_LoadMUS(filePath.c_str())));
 	else
-		m_Music.insert(std::make_pair(newMusicID, Mix_LoadWAV(filePath.c_str())));
+		m_Music.insert(std::make_pair(newMusicID, Mix_LoadMUS(filePath.c_str())));
 
 	return newMusicID;
 #endif // _DEBUG

@@ -75,6 +75,7 @@ Integrian::Command* Integrian::CommandManager::GetCommand(const std::string& ide
 		return nullptr;
 	}
 #else
+	UMapIterator it{ m_pCommands.find(identifier) };
 	if (it != m_pCommands.end())
 		return it->second;
 	else
