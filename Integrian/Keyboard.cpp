@@ -21,7 +21,7 @@ bool Integrian::Keyboard::OnEvent(const Event& event)
 	{
 	case Events::EndOfFrame:
 	{
-		ThreadManager::GetInstance().AssignThread([this]()
+		ThreadManager::GetInstance().AssignThread([this]() //TODO: dont multithread this
 			{
 				for (const KeyboardInput& input : m_KeysToBeRemoved)
 					m_KeyboardCommands.erase(input);
@@ -85,7 +85,7 @@ Integrian::State Integrian::Keyboard::GetKeystate(const KeyboardInput keyboardIn
 	return State::NotPressed;
 }
 
-void Integrian::Keyboard::RemoveCommand(Command* pCommand)
+void Integrian::Keyboard::RemoveCommand(Command* pCommand) // TODO: rework this with std::move
 {
 	for (const CommandPair& commandPair : m_KeyboardCommands)
 		for (const CommandAndButton& commandAndButton : commandPair.second)
