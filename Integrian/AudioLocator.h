@@ -3,7 +3,7 @@
 #ifndef INTEGRIAN_SERVICELOCATOR_H
 #define INTEGRIAN_SERVICELOCATOR_H
 
-#include "pch.h" // AlwaysFalse()
+#include "pch.h" // AlwaysFalse(), SafeDelete()
 #include <type_traits> // std::is_same_v, std::is_base_of_v
 #include "Logger.h" // Logger
 #include "NullAudioSystem.h" // NullAudioSystem
@@ -31,7 +31,12 @@ namespace Integrian
 			if constexpr (std::is_base_of_v<AudioSystem, Type>)
 			{
 				if (pAudio != nullptr && !std::is_same_v<Type, NullAudioSystem>) // maybe change this later to make NullAudioSystem private?
+				{
+					//if (m_pAudioSystem) dont delete it
+						//SafeDelete(m_pAudioSystem); // Should this be at a GC moment? and make this an event?
+					
 					m_pAudioSystem = pAudio;
+				}
 			}
 			else
 				static_assert(AlwaysFalse(), "The pointer supplied to AudioLocator::Provide() was not an AudioSystem");

@@ -25,11 +25,11 @@ Integrian::SDLAudioSystem::~SDLAudioSystem()
 
 bool Integrian::SDLAudioSystem::OnEvent(const Event& event)
 {
-	TIME();
+	//TIME();
 
-	switch (event.GetEvent())
-	{
-	case Events::PlaySound:
+	const std::string eventName{ event.GetEvent() };
+
+	if (eventName == "PlaySound")
 	{
 		auto data{ event.GetData<SoundID, bool, int, int>() };
 		ThreadManager::GetInstance().AssignThread([this, data]()
@@ -38,8 +38,7 @@ bool Integrian::SDLAudioSystem::OnEvent(const Event& event)
 			});
 		return true;
 	}
-	break;
-	case Events::PlayMusic:
+	else if (eventName == "PlayMusic")
 	{
 		auto data{ event.GetData<MusicID, bool, int, int>() };
 		ThreadManager::GetInstance().AssignThread([this, data]()
@@ -48,11 +47,8 @@ bool Integrian::SDLAudioSystem::OnEvent(const Event& event)
 			});
 		return true;
 	}
-	break;
-	default:
+	else
 		return false;
-		break;
-	}
 }
 
 Integrian::AudioSystem::SoundID Integrian::SDLAudioSystem::AddSound(const std::string& filePath)

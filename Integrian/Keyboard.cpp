@@ -17,24 +17,17 @@ Integrian::Keyboard::~Keyboard()
 
 bool Integrian::Keyboard::OnEvent(const Event& event)
 {
-	switch (event.GetEvent())
+	const std::string eventName{ event.GetEvent() };
+	if (eventName == "EndOfFrame")
 	{
-	case Events::EndOfFrame:
-	{
-		ThreadManager::GetInstance().AssignThread([this]() //TODO: dont multithread this
-			{
-				for (const KeyboardInput& input : m_KeysToBeRemoved)
-					m_KeyboardCommands.erase(input);
+		for (const KeyboardInput& input : m_KeysToBeRemoved)
+			m_KeyboardCommands.erase(input);
 
-				m_KeysToBeRemoved.clear();
-			});
+		m_KeysToBeRemoved.clear();
 		return true;
 	}
-	break;
-	default:
+	else
 		return false;
-		break;
-	}
 }
 
 void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand)

@@ -1,6 +1,6 @@
 #include "ThreadManager.h" // header
 
-extern bool g_IsLooping;
+extern std::atomic<bool> g_IsLooping;
 
 Integrian::ThreadManager::~ThreadManager()
 {
@@ -16,7 +16,7 @@ Integrian::ThreadManager::ThreadManager()
 {
 	auto infiniteLoop = [this]()
 	{
-		while (g_IsLooping)
+		while (g_IsLooping.load())
 		{
 			std::function<void()> pF{};
 			{
@@ -31,9 +31,9 @@ Integrian::ThreadManager::ThreadManager()
 				{
 					pF = m_Jobs.front();
 					m_Jobs.pop();
-
 				}
 			} // make sure the lock goes out of scope
+
 			if(pF)
 				pF();
 		}

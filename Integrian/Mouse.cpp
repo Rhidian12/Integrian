@@ -16,24 +16,17 @@ Integrian::Mouse::~Mouse()
 
 bool Integrian::Mouse::OnEvent(const Event& event)
 {
-	switch (event.GetEvent())
+	const std::string eventName{ event.GetEvent() };
+	if (eventName == "EndOfFrame")
 	{
-	case Events::EndOfFrame:
-	{
-		ThreadManager::GetInstance().AssignThread([this]()
-			{
-				for (const MouseButton& input : m_KeysToBeRemoved)
-					m_MouseCommands.erase(input);
+		for (const MouseButton& input : m_KeysToBeRemoved)
+			m_MouseCommands.erase(input);
 
-				m_KeysToBeRemoved.clear();
-			});
+		m_KeysToBeRemoved.clear();
 		return true;
 	}
-	break;
-	default:
+	else
 		return false;
-		break;
-	}
 }
 
 void Integrian::Mouse::AddCommand(const MouseButton mouseButton, const State keyState, Command* pCommand)

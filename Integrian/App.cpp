@@ -8,7 +8,7 @@
 #include "ThreadManager.h" // ThreadManager
 
 // == Global Variables ==
-extern bool g_IsLooping; // Used by the inputmanager and App::Run() to see when SDL_Quit event gets fired
+extern std::atomic<bool> g_IsLooping; // Used by the inputmanager and App::Run() to see when SDL_Quit event gets fired
 
 Integrian::App::App()
 {
@@ -170,12 +170,12 @@ void Integrian::App::Run()
 
 	ThreadManager::GetInstance().AssignThread([&eventQueue]()
 		{
-			while (g_IsLooping)
+			while (g_IsLooping.load())
 				eventQueue.Update();
 		});
 
 	// == Event Loop ==
-	while (g_IsLooping)
+	while (g_IsLooping.load())
 	{
 		// == Update Timer ==
 		timer.Update();
@@ -193,7 +193,7 @@ void Integrian::App::Run()
 		timeSinceLastUpdate += timer.GetElapsedSeconds();
 
 		// == Send New Frame ==
-		eventQueue.QueueEvent(Event{ Events::EndOfFrame });
+		eventQueue.QueueEvent(Event{ "EndOfFrame" });
 	}
 }
 

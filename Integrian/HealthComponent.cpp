@@ -2,7 +2,6 @@
 #include "HealthComponent.h"
 #include "Observer.h"
 #include "Subject.h"
-#include "EventQueue.h"
 
 Integrian::HealthComponent::HealthComponent(const uint64_t maxLives)
 	: HealthComponent{ maxLives,maxLives }
@@ -26,8 +25,6 @@ void Integrian::HealthComponent::DecreaseLivesByValue(const uint64_t value)
 			m_pSubject->Notify("OnDeath");
 		else
 			m_pSubject->Notify("OnLifeLost", m_CurrentLives);
-
-		EventQueue::GetInstance().QueueEvent(Event{ Events::PlaySound, 0, false, 0, 100 });
 	}
 }
 

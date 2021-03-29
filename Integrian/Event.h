@@ -4,16 +4,10 @@
 #define INTEGRIAN_EVENT_H
 
 #include <tuple> // std::tuple
+#include <string> // std::string
 
 namespace Integrian
 {
-	enum class Events
-	{
-		PlaySound,
-		PlayMusic,
-		EndOfFrame,
-	};
-
 	class IEventData abstract
 	{
 	public:
@@ -43,7 +37,7 @@ namespace Integrian
 	{
 	public:
 		template<typename ... Args>
-		Event(const Events event, Args... args)
+		Event(const std::string& event, Args... args)
 			: m_Event{ event }
 			, m_pData{ new EventData<Args...>{args...} }
 		{
@@ -53,7 +47,7 @@ namespace Integrian
 
 		~Event();
 
-		const Events GetEvent() const;
+		const std::string GetEvent() const;
 
 		template<typename ... Args>
 		const std::tuple<Args...> GetData() const
@@ -62,7 +56,7 @@ namespace Integrian
 		}
 
 	private:
-		Events m_Event;
+		std::string m_Event;
 		IEventData* m_pData{};
 	};
 }

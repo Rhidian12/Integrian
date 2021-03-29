@@ -4,65 +4,35 @@
 #define INTEGRIAN_EVENTQUEUE_H
 
 #include "Singleton.h" // Singleton
-#include "Event.h" // IEvent and Event
-#include <queue> // std::queue
+#include "Event.h" // Event, also includes std::tuple
+#include <deque> // std::deque
 #include <vector> // std::vector
-#include "ListenerInterface.h" // Integrian::IListener
+#include "ListenerInterface.h" // IListener
 #include <mutex> // std::mutex, std::unique_lock, std::condition_variable
 
 #include "VisualBenchmark.h" // TODO: REMOVE THIS, ONLY FOR TESTING 
 
 namespace Integrian
 {
-	class EventQueue final : public Singleton<EventQueue>
+	class EventQueue final : public Singleton<EventQueue>, public IListener
 	{
 	public:
-		EventQueue() = default;
+		EventQueue();
 		virtual ~EventQueue();
 
-		inline void QueueEvent(Event&& event)
-		{
-			{
-				std::unique_lock<std::mutex> lock{ m_Mutex };
-				m_Events.push(std::forward<Event>(event)); // we need to std::forward this so that it actually moves this instead of copying like a little fucking bitch
-			} // make sure the lock goes out of scope before notifying a thread
+		virtual bool OnEvent(const Event& event) override;
 
-			m_CV.notify_one();
-		}
+		void QueueEvent(Event&& event);
+		void Update();
 
-		inline void AddListener(IListener* pListener)
-		{
-			m_pListeners.push_back(pListener);
-		}
-
-		inline void Update()
-		{
-			std::unique_lock<std::mutex> lock{ m_Mutex };
-			//TIME();
-
-			m_CV.wait(lock, [this]()
-				{
-					return !m_Events.empty();
-				});
-
-			bool wasEventProcessed{};
-			for (IListener* pListener : m_pListeners)
-				if (pListener->OnEvent(m_Events.front()))
-					wasEventProcessed = true;
-
-			if (wasEventProcessed)
-			{
-				m_EventsToBeDeleted.push_back(std::move(m_Events.front()));
-				m_Events.pop();
-			}
-		}
+		void AddListener(IListener* pListener);
+		void RemoveListener(IListener* pListener);
 
 	private:
 		friend class Singleton<EventQueue>;
 
 		std::vector<IListener*> m_pListeners{};
-		std::queue<Event> m_Events{};
-		std::vector<Event> m_EventsToBeDeleted{};
+		std::deque<Event> m_Events{};
 
 		std::mutex m_Mutex{};
 		std::condition_variable m_CV{};

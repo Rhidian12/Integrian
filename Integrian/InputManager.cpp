@@ -2,7 +2,7 @@
 #include "InputManager.h" // header
 #include "EventQueue.h" // EventQueue
 
-extern bool g_IsLooping;
+extern std::atomic<bool> g_IsLooping;
 
 Integrian::InputManager::InputManager()
 	: m_MousePosition{}
@@ -76,7 +76,7 @@ void Integrian::InputManager::HandleInput()
 		switch (e.type)
 		{
 		case SDL_QUIT:
-			g_IsLooping = false;
+			g_IsLooping.store(false);
 			break;
 		default:
 			break;

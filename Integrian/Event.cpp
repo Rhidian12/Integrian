@@ -19,7 +19,7 @@ Integrian::Event::~Event()
 	SafeDelete(m_pData);
 }
 
-const Integrian::Events Integrian::Event::GetEvent() const
+const std::string Integrian::Event::GetEvent() const
 {
 	return m_Event;
 }

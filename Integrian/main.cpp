@@ -4,6 +4,7 @@
 #include "App_Selector.h"
 #include "App.h"
 #include "VisualBenchmark.h"
+#include <atomic> // std::atomic
 
 // == Include correct application == 
 #ifdef TEST_APP
@@ -11,7 +12,7 @@
 #endif
 
 // == Global Variables ==
-bool g_IsLooping{ true };
+std::atomic<bool> g_IsLooping{ true };
 
 int main(int argc, char* args[])
 {
