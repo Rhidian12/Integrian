@@ -34,9 +34,11 @@ namespace Integrian
 				{
 					//if (m_pAudioSystem) dont delete it
 						//SafeDelete(m_pAudioSystem); // Should this be at a GC moment? and make this an event?
-					
+
 					m_pAudioSystem = pAudio;
 				}
+				else
+					m_pAudioSystem = nullptr;
 			}
 			else
 				static_assert(AlwaysFalse(), "The pointer supplied to AudioLocator::Provide() was not an AudioSystem");

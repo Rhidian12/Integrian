@@ -16,7 +16,7 @@ namespace Integrian
 {
 	class Texture final
 	{
-	public:
+	public: // TODO: Make Texturemanager creator
 		explicit Texture(const std::string& imagePath);
 		explicit Texture(const std::string& text, const std::string& fontPath, int ptSize, const RGBColour& textColor);
 		Texture(const Texture& other) = delete;

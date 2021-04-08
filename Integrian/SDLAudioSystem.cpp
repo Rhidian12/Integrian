@@ -307,7 +307,7 @@ float Integrian::SDLAudioSystem::GetChunkTimeInSeconds(Mix_Chunk* pChunk) const
 	/* Chunks are converted to audio device format… */
 	if (Mix_QuerySpec(&freq, &fmt, &chans) == 0)
 	{
-		Logger::LogError(std::string{ "GetChunkTimeInMilliSeconds() failed: " } + SDL_GetError());
+		Logger::LogError(std::string{ "GetChunkTimeInSeconds() failed: " } + SDL_GetError());
 		return 0;
 	}
 
