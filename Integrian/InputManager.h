@@ -11,7 +11,9 @@
 #include "Keyboard.h" // Keyboard
 #include "GameController.h" // GameController
 #include "Mouse.h" // Mouse
-#include "Singleton.h" // Singleton
+#include "EventQueue.h" // EventQueue
+#include <functional> // std::function
+
 // Reference: https://stackoverflow.com/questions/25963966/c-function-pointer-callback-without-inheritance
 
 // Henri-Thibault Huyghe came up with the idea of a superclass game input enum class
@@ -23,8 +25,7 @@
 
 namespace Integrian
 {
-	class Command;
-	class InputManager final : public Singleton<InputManager>
+	class InputManager final
 	{
 	public:
 		virtual ~InputManager() = default;
@@ -59,13 +60,13 @@ namespace Integrian
 		[[nodiscard]] double GetTriggerMovement(const ControllerInput axis, const uint8_t playerIndex = 0) const;
 
 	private:
-		InputManager();
-		friend class Singleton<InputManager>;
+		friend struct App_Info;
 		friend class CommandManager;
+		InputManager(EventQueue& eventQueue);
 
-		void AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex = 0);
-		void RemoveCommandFromInput(const GameInput& input, Command* pCommand, const uint8_t controllerIndex = 0);
-		void RemoveCommand(Command* pCommand, const uint8_t controllerIndex = 0);
+		void AddCommand(const GameInput& gameInput, std::function<void()>& pCommand, const State keyState, const uint8_t controllerIndex = 0);
+		void RemoveCommandFromInput(const GameInput& input, std::function<void()>& pCommand, const uint8_t controllerIndex = 0);
+		void RemoveCommand(std::function<void()>& pCommand, const uint8_t controllerIndex = 0);
 
 		Point2f m_MousePosition;
 		uint32_t m_WindowWidth;
@@ -76,6 +77,8 @@ namespace Integrian
 		std::array<GameController, m_MaxAmountOfControllers> m_Controllers;
 		Keyboard m_Keyboard;
 		Mouse m_Mouse;
+
+		EventQueue& m_EventQueue;
 	};
 }
 

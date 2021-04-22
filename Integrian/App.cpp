@@ -6,32 +6,71 @@
 #include "TextureManager.h" // TextureManager
 #include "EventQueue.h" // EventQueue
 #include "ThreadManager.h" // ThreadManager
+#include "AudioLocator.h" // AudioLocator
+#include "AppInfoLocator.h" // AppInfoLocator
+#include "App_Selector.h" // App_Selector
 
 // == Global Variables ==
-extern std::atomic<bool> g_IsLooping; // Used by the inputmanager and App::Run() to see when SDL_Quit event gets fired
+extern std::atomic<bool> g_IsLooping; // Used by the inputmanager, threadmanager and App::Run() to see when SDL_Quit event gets fired
 
-Integrian::App::App()
+Integrian::App::App(const std::string& name)
+	: m_AppName{ name }
 {
 	if (!Initialize())
 		throw InitialisationFailedException{};
+
+	if (!m_IsLibraryInitialised)
+	{
+		InitializeLibraries();
+		m_IsLibraryInitialised = true;
+	}
+
+	App_Selector::GetInstance().AddApplication(this);
+
+	AppInfoLocator::Provide(&m_AppInfo);
 }
 
 Integrian::App::~App()
 {
 	for (GameObject* pGameObject : m_pGameObjects)
 		SafeDelete(pGameObject);
+
 	m_pGameObjects.clear();
 
 	AudioLocator::Cleanup();
 
-	ShutDown();
+	if (!m_IsLibraryDestroyed)
+	{
+		ShutDown();
+		m_IsLibraryDestroyed = true;
+	}
 }
 
 bool Integrian::App::Initialize()
 {
-	uint32_t width = 640;
-	uint32_t height = 480;
+	m_WindowWidth = 640;
+	m_WindowHeight = 480;
 
+	// == Set Window Size For InputManager ==
+	m_AppInfo.inputManager.SetWindowSize(m_WindowWidth, m_WindowHeight);
+
+	// == Seed rand() ==
+	srand(static_cast<unsigned int>(time(nullptr)));
+
+	// Initialise Datapath
+	TextureManager::GetInstance().Init("Data/");
+
+	return true;
+}
+
+bool Integrian::App::InitializeCamera()
+{
+	m_pCamera = std::make_unique<OrthographicCamera>(m_WindowWidth, m_WindowHeight, GetLevelBoundaries());
+	return m_pCamera != nullptr;
+}
+
+bool Integrian::App::InitializeLibraries()
+{
 #pragma region SDL Stuff
 	//Create window + surfaces
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) == -1)
@@ -41,7 +80,7 @@ bool Integrian::App::Initialize()
 		"Programming 4 Assignment - Rhidian De Wit",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		width, height,
+		m_WindowWidth, m_WindowHeight,
 		SDL_WINDOW_OPENGL);
 
 	if (!m_pWindow)
@@ -65,11 +104,11 @@ bool Integrian::App::Initialize()
 	glLoadIdentity();
 
 	// Set up a two-dimensional orthographic viewing region.
-	gluOrtho2D(0, width, 0, height); // y from bottom to top
+	gluOrtho2D(0, m_WindowWidth, 0, m_WindowHeight); // y from bottom to top
 
 	// Set the viewport to the client window area
 	// The viewport is the rectangu	lar region of the window where the image is drawn.
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, m_WindowWidth, m_WindowHeight);
 
 	// Set the Modelview matrix to the identity matrix
 	glMatrixMode(GL_MODELVIEW);
@@ -108,26 +147,7 @@ bool Integrian::App::Initialize()
 		Logger::LogSevereError(std::string{ "SDL_Mixer failed to initialize!" } + Mix_GetError() + "\n");
 #pragma endregion
 
-	// == Set Window Size For InputManager ==
-	InputManager::GetInstance().SetWindowSize(width, height);
-
-	// == Seed rand() ==
-	srand(static_cast<unsigned int>(time(nullptr)));
-
-	// == Set Window Size == 
-	m_WindowWidth = width;
-	m_WindowHeight = height;
-
-	// Initialise Datapath
-	TextureManager::GetInstance().Init("Data/");
-
 	return true;
-}
-
-bool Integrian::App::InitializeCamera()
-{
-	m_pCamera = std::make_unique<OrthographicCamera>(m_WindowWidth, m_WindowHeight, GetLevelBoundaries());
-	return m_pCamera != nullptr;
 }
 
 void Integrian::App::FinishInitializationOfApp()
@@ -135,6 +155,18 @@ void Integrian::App::FinishInitializationOfApp()
 	Start();
 	if (!InitializeCamera())
 		throw InitialisationFailedException{};
+
+	ThreadManager::GetInstance().AssignThread([this]()
+		{
+			while (g_IsLooping.load())
+				m_AppInfo.eventQueue.Update();
+
+			if (!g_IsLooping)
+			{
+				bool b = true;
+				b;
+			}
+		});
 
 	Logger::LogNoWarning("Initialisation finished!\n");
 
@@ -164,24 +196,17 @@ void Integrian::App::Run()
 		throw RuntimeInitialisationFailed{};
 
 	Timer& timer = Timer::GetInstance();
-	EventQueue& eventQueue = EventQueue::GetInstance();
 
 	float timeSinceLastUpdate{};
 
-	ThreadManager::GetInstance().AssignThread([&eventQueue]()
-		{
-			while (g_IsLooping.load())
-				eventQueue.Update();
-		});
-
 	// == Event Loop ==
-	while (g_IsLooping.load())
+	//while (g_IsLooping.load())
 	{
 		// == Update Timer ==
 		timer.Update();
 
 		// == Handle Input ==
-		InputManager::GetInstance().HandleInput();
+		m_AppInfo.inputManager.HandleInput();
 
 		// == Update ==
 		UpdateApplication(timeSinceLastUpdate);
@@ -193,7 +218,7 @@ void Integrian::App::Run()
 		timeSinceLastUpdate += timer.GetElapsedSeconds();
 
 		// == Send New Frame ==
-		eventQueue.QueueEvent(Event{ "EndOfFrame" });
+		m_AppInfo.eventQueue.QueueEvent(Event{ "EndOfFrame" });
 	}
 }
 
@@ -248,6 +273,12 @@ void Integrian::App::SetWindowSize(const uint32_t windowWidth, const uint32_t wi
 	m_WindowHeight = windowHeight;
 }
 
+bool Integrian::App::OnEvent(const Event&)
+{
+
+	return false;
+}
+
 uint32_t Integrian::App::GetWindowWidth() const
 {
 	return m_WindowWidth;
@@ -256,6 +287,16 @@ uint32_t Integrian::App::GetWindowWidth() const
 uint32_t Integrian::App::GetWindowHeight() const
 {
 	return m_WindowHeight;
+}
+
+std::string Integrian::App::GetAppName() const
+{
+	return m_AppName;
+}
+
+Integrian::App_Info& Integrian::App::GetAppInfo()
+{
+	return m_AppInfo;
 }
 
 void Integrian::App::ClearBackground() const

@@ -1,14 +1,15 @@
 // == Includes ==
-#include "pch.h"
-#include <vld.h>
-#include "App_Selector.h"
-#include "App.h"
-#include "VisualBenchmark.h"
+#include "pch.h" // precompiled header
+#include <vld.h> // visual leak detector
+#include "App_Selector.h" // App_Selector
+#include "App.h" // App
+#include "VisualBenchmark.h" // Testing purposes
 #include <atomic> // std::atomic
 
 // == Include correct application == 
 #ifdef TEST_APP
 #include "Test_App.h"
+#include "Test_App_2_Boogaloo.h"
 #endif
 
 // == Global Variables ==
@@ -22,51 +23,42 @@ int main(int argc, char* args[])
 
 	//Session::Get().BeginSession();
 
-	// == Make the application ==
-	Integrian::App* pApplication{};
+	{
+		Integrian::App_Selector& appSelector{ Integrian::App_Selector::GetInstance() };
 
-	try
-	{
-		// == Initialise the correct application
-#ifdef GRAPPLE_HOOK_APP
-		pApplication = new Grapple_Hook_App{};
-#endif
-#ifdef BENCHMARK_APP
-		pApplication = new Benchmark_App{};
-#endif
-#ifdef TEST_APP
-		pApplication = new Integrian::Test_App{};
-#endif
-	}
-	catch (...)
-	{
+		try
+		{
+			appSelector.AddApplication(new Integrian::Test_App{});
+			appSelector.AddApplication(new Integrian::Test_App_2_Boogaloo{});
+		}
+		catch (...)
+		{
 #pragma warning( push )
 #pragma warning( disable : 4297 ) // disable the warning telling us that SDL_Main is marked as noexcept
-		ExceptionHandler e{};
-		e.ProcessException();
-		return -1;
+			ExceptionHandler e{};
+			e.ProcessException();
+			return -1;
 #pragma warning ( pop )
-	}
+		}
 
-	try
-	{
-		// == Run The Application ==
-		pApplication->Run();
-	}
-	catch (...)
-	{
+		try
+		{
+			// == Run The Application ==
+			while (g_IsLooping.load())
+				appSelector.GetActiveApplication()->Run();
+		}
+		catch (...)
+		{
 #pragma warning( push )
 #pragma warning( disable : 4297 ) // disable the warning telling us that SDL_Main is marked as noexcept
-		ExceptionHandler e{};
-		e.ProcessException();
-		return -1;
+			ExceptionHandler e{};
+			e.ProcessException();
+			return -1;
 #pragma warning ( pop )
+		}
+
+		//Session::Get().EndSession();
 	}
-
-	// == Cleanup ==
-	SafeDelete(pApplication);
-
-	//Session::Get().EndSession();
 
 	return 0;
 }

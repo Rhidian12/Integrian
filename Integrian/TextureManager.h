@@ -23,8 +23,10 @@ namespace Integrian
 		void AddTexture(const std::string& name, const std::string& path);
 		void AddTexture(const std::string& name, const std::string& path, const std::string& textToRender, const int size, const RGBColour& colour);
 		
+		Texture* GetTexture(const std::string& name) const;
+
 		// == Get Textures ==
-		const std::unordered_map<std::string, Integrian::Texture*>& GetTextures() const;
+		const std::unordered_map<std::string, Texture*>& GetTextures() const;
 
 	private:
 		TextureManager();

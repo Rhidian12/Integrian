@@ -9,7 +9,7 @@ namespace Integrian
 	class Test_App final : public App  // NOLINT(cppcoreguidelines-special-member-functions)
 	{
 	public:
-		Test_App() = default;
+		Test_App();
 		virtual ~Test_App() = default;
 
 		virtual void Start() override;

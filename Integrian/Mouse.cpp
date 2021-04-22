@@ -29,7 +29,7 @@ bool Integrian::Mouse::OnEvent(const Event& event)
 		return false;
 }
 
-void Integrian::Mouse::AddCommand(const MouseButton mouseButton, const State keyState, Command* pCommand)
+void Integrian::Mouse::AddCommand(const MouseButton mouseButton, const State keyState, std::function<void()>& pCommand)
 {
 	m_MouseCommands[mouseButton].push_back(CommandAndButton{ pCommand,keyState });
 }
@@ -43,7 +43,7 @@ void Integrian::Mouse::ExecuteCommands()
 			const State currentKeystate{ GetKeystate(commandPair.first, commandAndButton.previousKeystate) };
 			if (currentKeystate == commandAndButton.wantedKeystate)
 			{
-				commandAndButton.pCommand->Execute();
+				commandAndButton.pCommand();
 			}
 			commandAndButton.previousKeystate = currentKeystate;
 		}
@@ -77,10 +77,10 @@ Integrian::State Integrian::Mouse::GetKeystate(const MouseButton mouseButton, co
 	return State::NotPressed;
 }
 
-void Integrian::Mouse::RemoveCommand(Command* pCommand)
+void Integrian::Mouse::RemoveCommand(std::function<void()>& pCommand)
 {
 	for (const CommandPair& commandPair : m_MouseCommands)
 		for (const CommandAndButton& commandAndButton : commandPair.second)
-			if (commandAndButton.pCommand == pCommand)
+			if (commandAndButton.pCommand.target_type().hash_code() == pCommand.target_type().hash_code())
 				m_KeysToBeRemoved.push_back(commandPair.first);
 }

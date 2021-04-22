@@ -20,6 +20,12 @@
 #include "SDLAudioSystem.h"
 #include "AudioLocator.h"
 #include "EventQueue.h"
+#include "App_Selector.h"
+
+Integrian::Test_App::Test_App()
+	: App{ "Test_App" }
+{
+}
 
 void Integrian::Test_App::Start()
 {
@@ -53,9 +59,16 @@ void Integrian::Test_App::Start()
 	AudioLocator::Provide(new SDLAudioSystem{});
 	AudioSystem* pAudio = AudioLocator::GetAudio();
 	pAudio->AddMusic("Data/AHHHHH.mp3");
-	pAudio->PlayMusic(0);
+	//pAudio->PlayMusic(0);
 	pAudio->AddSound("Data/menu3.wav");
-	EventQueue::GetInstance().AddListener(pAudio);
+	m_AppInfo.eventQueue.AddListener(pAudio);
+
+	m_AppInfo.commandManager.AddCommand("SwitchScenes", [this]()
+		{
+			m_AppInfo.eventQueue.QueueEvent(Event{ "Change_Application", "Test_App_2_Boogaloo" });
+		});
+
+	m_AppInfo.commandManager.LinkCommandToInput(GameInput{ KeyboardInput::G }, "SwitchScenes", State::OnRelease);
 }
 
 void Integrian::Test_App::Update(const float dt)
@@ -112,12 +125,28 @@ void Integrian::Test_App::InitPlayerOne()
 	pHealthComponent->AddObserver(pHealthDisplayComponent->GetObserver<uint64_t>());
 	pScoreComponent->AddObserver(pScoreDisplayComponent->GetObserver());
 
-	CommandManager& commandManager = CommandManager::GetInstance();
-	commandManager.AddCommand("KillCommandPlayerOne", new KillCommand{ pHealthComponent });
-	commandManager.AddCommand("DefeatCoilyCommandPlayerOne", new DefeatCoilyCommand{ pScoreComponent });
-	commandManager.AddCommand("CatchSlickOrSamCommandPlayerOne", new CatchSlickOrSamCommand{ pScoreComponent });
-	commandManager.AddCommand("ChangeColourCommandPlayerOne", new ChangeColourCommand{ pScoreComponent });
-	commandManager.AddCommand("DisksRemainingCommandPlayerOne", new DisksRemainingCommand{ pScoreComponent });
+	CommandManager& commandManager = m_AppInfo.commandManager;
+	commandManager.AddCommand("KillCommandPlayerOne", [this, pHealthComponent]()
+		{
+			pHealthComponent->DecreaseLivesByValue(1);
+			m_AppInfo.eventQueue.QueueEvent(Event{ "PlaySound", 0, false, 0, 100 });
+		});
+	commandManager.AddCommand("DefeatCoilyCommandPlayerOne", [pScoreComponent]()
+		{
+			pScoreComponent->ChangeScore(TypeOfGettingScore::CoilyDefeated);
+		});
+	commandManager.AddCommand("CatchSlickOrSamCommandPlayerOne", [pScoreComponent]()
+		{
+			pScoreComponent->ChangeScore(TypeOfGettingScore::CatchingSlickAndSam);
+		});
+	commandManager.AddCommand("ChangeColourCommandPlayerOne", [pScoreComponent]()
+		{
+			pScoreComponent->ChangeScore(TypeOfGettingScore::ColourChange);
+		});
+	commandManager.AddCommand("DisksRemainingCommandPlayerOne", [pScoreComponent]()
+		{
+			pScoreComponent->ChangeScore(TypeOfGettingScore::RemainingDiscs);
+		});
 
 	commandManager.LinkCommandToInput(GameInput{ KeyboardInput::A }, "KillCommandPlayerOne", State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ KeyboardInput::W }, "DefeatCoilyCommandPlayerOne", State::OnRelease);
@@ -161,12 +190,28 @@ void Integrian::Test_App::InitPlayerTwo()
 	pHealthComponent->AddObserver(pHealthDisplayComponent->GetObserver<uint64_t>());
 	pScoreComponent->AddObserver(pScoreDisplayComponent->GetObserver());
 
-	CommandManager& commandManager = CommandManager::GetInstance();
-	commandManager.AddCommand("KillCommandPlayerTwo", new KillCommand{ pHealthComponent });
-	commandManager.AddCommand("DefeatCoilyCommandPlayerTwo", new DefeatCoilyCommand{ pScoreComponent });
-	commandManager.AddCommand("CatchSlickOrSamCommandPlayerTwo", new CatchSlickOrSamCommand{ pScoreComponent });
-	commandManager.AddCommand("ChangeColourCommandPlayerTwo", new ChangeColourCommand{ pScoreComponent });
-	commandManager.AddCommand("DisksRemainingCommandPlayerTwo", new DisksRemainingCommand{ pScoreComponent });
+	CommandManager& commandManager = m_AppInfo.commandManager;
+	commandManager.AddCommand("KillCommandPlayerTwo", [this, pHealthComponent]()
+		{
+			pHealthComponent->DecreaseLivesByValue(1);
+			m_AppInfo.eventQueue.QueueEvent(Event{ "PlaySound", 0, false, 0, 100 });
+		});
+	commandManager.AddCommand("DefeatCoilyCommandPlayerTwo", [pScoreComponent]()
+		{
+			pScoreComponent->ChangeScore(TypeOfGettingScore::CoilyDefeated);
+		});
+	commandManager.AddCommand("CatchSlickOrSamCommandPlayerTwo", [pScoreComponent]()
+		{
+			pScoreComponent->ChangeScore(TypeOfGettingScore::CatchingSlickAndSam);
+		});
+	commandManager.AddCommand("ChangeColourCommandPlayerTwo", [pScoreComponent]()
+		{
+			pScoreComponent->ChangeScore(TypeOfGettingScore::ColourChange);
+		});
+	commandManager.AddCommand("DisksRemainingCommandPlayerTwo", [pScoreComponent]()
+		{
+			pScoreComponent->ChangeScore(TypeOfGettingScore::RemainingDiscs);
+		});
 
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonA }, "KillCommandPlayerTwo", State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonB }, "DefeatCoilyCommandPlayerTwo", State::OnRelease);

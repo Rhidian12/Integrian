@@ -3,7 +3,6 @@
 #ifndef INTEGRIAN_EVENTQUEUE_H
 #define INTEGRIAN_EVENTQUEUE_H
 
-#include "Singleton.h" // Singleton
 #include "Event.h" // Event, also includes std::tuple
 #include <deque> // std::deque
 #include <vector> // std::vector
@@ -14,10 +13,9 @@
 
 namespace Integrian
 {
-	class EventQueue final : public Singleton<EventQueue>, public IListener
+	class EventQueue final : public IListener
 	{
 	public:
-		EventQueue();
 		virtual ~EventQueue();
 
 		virtual bool OnEvent(const Event& event) override;
@@ -28,8 +26,12 @@ namespace Integrian
 		void AddListener(IListener* pListener);
 		void RemoveListener(IListener* pListener);
 
+		/* Returns true if all events have been processed, returns false in other cases */
+		[[nodiscard]] bool AreAllEventsProcessed() const;
+
 	private:
-		friend class Singleton<EventQueue>;
+		friend struct App_Info;
+		EventQueue();
 
 		std::vector<IListener*> m_pListeners{};
 		std::deque<Event> m_Events{};

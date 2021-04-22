@@ -38,7 +38,7 @@
 #include "Logger.h"
 
 template<typename Type>
-constexpr void SafeDelete(Type* pData)
+constexpr void SafeDelete(Type*& pData)
 {
 	if (pData)
 	{

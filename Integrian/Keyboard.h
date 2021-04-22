@@ -27,14 +27,14 @@ namespace Integrian
 		Keyboard& operator=(const Keyboard&) = delete;
 		friend class InputManager;
 
-		void AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand);
+		void AddCommand(const KeyboardInput keyboardInput, const State keyState, std::function<void()>& pCommand);
 		void ExecuteCommands();
 
 		[[nodiscard]] bool IsPressed(const KeyboardInput gameInput) const;
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const KeyboardInput keyboardInput, const State previousState) const;
 		
-		void RemoveCommand(Command* pCommand);
+		void RemoveCommand(std::function<void()>& pCommand);
 
 		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_KeyboardCommands{};
 		std::vector<KeyboardInput> m_KeysToBeRemoved{};

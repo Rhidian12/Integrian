@@ -30,7 +30,7 @@ bool Integrian::Keyboard::OnEvent(const Event& event)
 		return false;
 }
 
-void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const State keyState, Command* pCommand)
+void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const State keyState, std::function<void()>& pCommand)
 {
 	m_KeyboardCommands[keyboardInput].push_back(CommandAndButton{ pCommand,keyState });
 }
@@ -44,7 +44,7 @@ void Integrian::Keyboard::ExecuteCommands()
 			const State currentKeystate{ GetKeystate(commandPair.first, commandAndButton.previousKeystate) };
 			if (currentKeystate == commandAndButton.wantedKeystate)
 			{
-				commandAndButton.pCommand->Execute();
+				commandAndButton.pCommand();
 			}
 			commandAndButton.previousKeystate = currentKeystate;
 		}
@@ -78,10 +78,10 @@ Integrian::State Integrian::Keyboard::GetKeystate(const KeyboardInput keyboardIn
 	return State::NotPressed;
 }
 
-void Integrian::Keyboard::RemoveCommand(Command* pCommand) // TODO: rework this with std::move
+void Integrian::Keyboard::RemoveCommand(std::function<void()>& pCommand) // TODO: rework this with std::move
 {
 	for (const CommandPair& commandPair : m_KeyboardCommands)
 		for (const CommandAndButton& commandAndButton : commandPair.second)
-			if (commandAndButton.pCommand == pCommand)
+			if (commandAndButton.pCommand.target_type().hash_code() == pCommand.target_type().hash_code())
 				m_KeysToBeRemoved.push_back(commandPair.first);
 }

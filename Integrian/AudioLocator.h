@@ -11,32 +11,20 @@
 
 namespace Integrian
 {
-	class AudioLocator final // There is no such thing as a static class in C++
+	class AudioLocator final
 	{
 	public:
 		static void Cleanup();
 
-		[[nodiscard]] inline static AudioSystem* GetAudio()
-		{
-			if (m_pAudioSystem)
-				return m_pAudioSystem;
-
-			Logger::LogWarning("GetAudio returned NullAudioService\n");
-			return m_pNullService;
-		}
+		[[nodiscard]] static AudioSystem* GetAudio();
 
 		template<typename Type>
-		inline static void Provide(Type* pAudio)
+		static void Provide(Type* pAudio)
 		{
 			if constexpr (std::is_base_of_v<AudioSystem, Type>)
 			{
 				if (pAudio != nullptr && !std::is_same_v<Type, NullAudioSystem>) // maybe change this later to make NullAudioSystem private?
-				{
-					//if (m_pAudioSystem) dont delete it
-						//SafeDelete(m_pAudioSystem); // Should this be at a GC moment? and make this an event?
-
 					m_pAudioSystem = pAudio;
-				}
 				else
 					m_pAudioSystem = nullptr;
 			}

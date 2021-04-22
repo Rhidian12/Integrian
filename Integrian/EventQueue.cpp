@@ -45,6 +45,8 @@ void Integrian::EventQueue::Update()
 			return !m_Events.empty();
 		});
 
+	std::cout << std::this_thread::get_id() << std::endl;
+
 	bool wasEventProcessed{};
 	for (IListener* pListener : m_pListeners)
 		if (pListener->OnEvent(m_Events.front()))
@@ -62,7 +64,15 @@ void Integrian::EventQueue::Update()
 
 void Integrian::EventQueue::AddListener(IListener* pListener)
 {
-	m_pListeners.push_back(pListener);
+	std::vector<IListener*>::const_iterator cIt{ std::find_if(m_pListeners.begin(), m_pListeners.end(), [pListener](IListener* pL)->bool
+		{
+			return pListener == pL;
+		}) };
+
+	if (cIt == m_pListeners.cend())
+		m_pListeners.push_back(pListener);
+	else
+		Logger::LogError("Cannot add the same listener twice to the EventQueue!\n");
 }
 
 void Integrian::EventQueue::RemoveListener(IListener* pListener)
@@ -74,4 +84,9 @@ void Integrian::EventQueue::RemoveListener(IListener* pListener)
 	};
 
 	m_pListeners.erase(it, m_pListeners.end());
+}
+
+bool Integrian::EventQueue::AreAllEventsProcessed() const
+{
+	return m_Events.empty();
 }

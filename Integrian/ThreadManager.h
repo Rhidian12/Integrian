@@ -4,7 +4,6 @@
 #define INTEGRIAN_THREADMANAGER_H
 
 #include "pch.h" // AlwaysFalse()
-#include "Singleton.h" // Singleton
 #include <thread> // std::thread
 #include <vector> // std::vector
 #include "Logger.h" // Logger
@@ -12,12 +11,14 @@
 #include <queue> // std::queue
 #include <functional> // std::function
 #include <type_traits> // std::is_assignable_v
+#include "ListenerInterface.h" // IListener
+#include "Singleton.h" // Singleton
 
 // Reference: https://stackoverflow.com/questions/15752659/thread-pooling-in-c11
 
 namespace Integrian
 {
-	class ThreadManager final : public Singleton<ThreadManager>
+	class ThreadManager final : public Singleton<ThreadManager>, public IListener
 	{
 	public:
 		virtual ~ThreadManager();
@@ -46,15 +47,19 @@ namespace Integrian
 				static_assert(AlwaysFalse(), "The function assigned to AssignThread() was not a lambda");
 		}
 
+		virtual bool OnEvent(const Event& event) override;
+
 	private:
 		friend class Singleton<ThreadManager>;
-
 		ThreadManager();
 
 		std::vector<std::thread> m_Threads{};
 		std::queue<std::function<void()>> m_Jobs{};
 		std::mutex m_Mutex{};
 		std::condition_variable m_CV{};
+
+
+		inline static std::atomic<int> m_A{ 0 };
 	};
 }
 

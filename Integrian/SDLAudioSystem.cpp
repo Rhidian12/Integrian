@@ -6,10 +6,12 @@
 
 #include "VisualBenchmark.h" // TODO: REMOVE THIS
 
-extern bool g_IsLooping;
+//extern std::atomic<bool> g_IsLooping;
 
 Integrian::SDLAudioSystem::SDLAudioSystem()
 {
+	Mix_AllocateChannels(24);
+
 	for (uint16_t i{}; i < Mix_AllocateChannels(-1); ++i)
 		m_Channels.push_back(Channel{ i });
 }
@@ -32,21 +34,22 @@ bool Integrian::SDLAudioSystem::OnEvent(const Event& event)
 	if (eventName == "PlaySound")
 	{
 		auto data{ event.GetData<SoundID, bool, int, int>() };
-		ThreadManager::GetInstance().AssignThread([this, data]()
-			{
-				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
-			});
+		PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 		return true;
 	}
 	else if (eventName == "PlayMusic")
 	{
 		auto data{ event.GetData<MusicID, bool, int, int>() };
-		ThreadManager::GetInstance().AssignThread([this, data]()
-			{
-				PlaySound(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
-			});
+		PlayMusic(std::get<0>(data), std::get<1>(data), std::get<2>(data), std::get<3>(data));
 		return true;
 	}
+	//else if (eventName == "Change_Application")
+	//{
+	//	//if (IsMusicPlaying())
+	//	//	PauseMusic();
+	//	//
+	//	//if(IsSoundPlaying())
+	//}
 	else
 		return false;
 }

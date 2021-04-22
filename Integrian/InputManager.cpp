@@ -4,15 +4,14 @@
 
 extern std::atomic<bool> g_IsLooping;
 
-Integrian::InputManager::InputManager()
+Integrian::InputManager::InputManager(EventQueue& eventQueue)
 	: m_MousePosition{}
 	, m_WindowWidth{}
 	, m_WindowHeight{}
 	, m_AmountOfControllers{ uint8_t(SDL_NumJoysticks()) }
 	, m_Controllers{}
+	, m_EventQueue{ eventQueue }
 {
-	EventQueue& eventQueue{ EventQueue::GetInstance() };
-
 	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
 	{
 		m_Controllers[i] = std::move(GameController{ uint8_t(i) });
@@ -26,7 +25,7 @@ Integrian::InputManager::InputManager()
 	eventQueue.AddListener(&m_Mouse);
 }
 
-void Integrian::InputManager::RemoveCommandFromInput(const GameInput& input, Command* pCommand, const uint8_t controllerIndex)
+void Integrian::InputManager::RemoveCommandFromInput(const GameInput& input, std::function<void()>& pCommand, const uint8_t controllerIndex)
 {
 	if (input.mouseButton != MouseButton::INVALID)
 		m_Mouse.RemoveCommand(pCommand);
@@ -38,14 +37,14 @@ void Integrian::InputManager::RemoveCommandFromInput(const GameInput& input, Com
 		m_Controllers[controllerIndex].RemoveCommand(pCommand);
 }
 
-void Integrian::InputManager::RemoveCommand(Command* pCommand, const uint8_t controllerIndex)
+void Integrian::InputManager::RemoveCommand(std::function<void()>& pCommand, const uint8_t controllerIndex)
 {
 	m_Mouse.RemoveCommand(pCommand);
 	m_Keyboard.RemoveCommand(pCommand);
 	m_Controllers[controllerIndex].RemoveCommand(pCommand);
 }
 
-void Integrian::InputManager::AddCommand(const GameInput& gameInput, Command* pCommand, const State keyState, const uint8_t controllerIndex)
+void Integrian::InputManager::AddCommand(const GameInput& gameInput, std::function<void()>& pCommand, const State keyState, const uint8_t controllerIndex)
 {
 	if (gameInput.controllerInput != ControllerInput::INVALID)
 		m_Controllers[controllerIndex].AddCommand(gameInput.controllerInput, keyState, pCommand);

@@ -43,7 +43,7 @@ Integrian::GameController::~GameController()
 	m_pCommands.clear();
 }
 
-void Integrian::GameController::AddCommand(const ControllerInput controllerInput, const State keyState, Command* pCommand)
+void Integrian::GameController::AddCommand(const ControllerInput controllerInput, const State keyState, std::function<void()>& pCommand)
 {
 	m_pCommands[controllerInput].push_back(CommandAndButton{ pCommand,keyState });
 }
@@ -57,7 +57,7 @@ void Integrian::GameController::ExecuteCommands()
 			const State currentKeystate{ GetKeystate(commandPair.first, commandAndButton.previousKeystate) };
 			if (currentKeystate == commandAndButton.wantedKeystate)
 			{
-				commandAndButton.pCommand->Execute();
+				commandAndButton.pCommand();
 			}
 			commandAndButton.previousKeystate = currentKeystate;
 		}
@@ -138,10 +138,10 @@ double Integrian::GameController::GetTriggerMovement(const ControllerInput axis)
 	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, static_cast<SDL_GameControllerAxis>(axis)) / m_MaxJoystickValue), 0.0, 1.0); // map to [0,1]
 }
 
-void Integrian::GameController::RemoveCommand(Command* pCommand)
+void Integrian::GameController::RemoveCommand(std::function<void()>& pCommand)
 {
 	for (const CommandPair& commandPair : m_pCommands)
 		for (const CommandAndButton& commandAndButton : commandPair.second)
-			if (commandAndButton.pCommand == pCommand)
+			if (commandAndButton.pCommand.target_type().hash_code() == pCommand.target_type().hash_code())
 				m_KeysToBeRemoved.push_back(commandPair.first);
 }

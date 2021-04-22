@@ -23,14 +23,14 @@ namespace Integrian
 		Mouse& operator=(const Mouse&) = delete;
 		friend class InputManager;
 
-		void AddCommand(const MouseButton mouseButton, const State keyState, Command* pCommand);
+		void AddCommand(const MouseButton mouseButton, const State keyState, std::function<void()>& pCommand);
 		void ExecuteCommands();
 
 		[[nodiscard]] bool IsPressed(const MouseButton gameInput) const;
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const MouseButton mouseButton, const State previousState) const;
 		
-		void RemoveCommand(Command* pCommand);
+		void RemoveCommand(std::function<void()>& pCommand);
 
 		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_MouseCommands{};
 		std::vector<MouseButton> m_KeysToBeRemoved{};

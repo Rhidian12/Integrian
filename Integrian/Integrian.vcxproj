@@ -161,6 +161,8 @@
   <ItemGroup>
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="AppInfoLocator.cpp" />
+    <ClCompile Include="App_Selector.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
     <ClCompile Include="SDLAudioSystem.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
@@ -202,6 +204,7 @@
     <ClCompile Include="AudioLocator.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="Test_App.cpp" />
+    <ClCompile Include="Test_App_2_Boogaloo.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
@@ -215,6 +218,8 @@
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="allocators.h" />
     <ClInclude Include="App.h" />
+    <ClInclude Include="App_Info.h" />
+    <ClInclude Include="AppInfoLocator.h" />
     <ClInclude Include="App_Selector.h" />
     <ClInclude Include="LoggedAudioSystem.h" />
     <ClInclude Include="SDLAudioSystem.h" />
@@ -290,6 +295,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="Test_App.h" />
+    <ClInclude Include="Test_App_2_Boogaloo.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureComponent.h" />

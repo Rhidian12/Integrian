@@ -151,17 +151,11 @@
     <Filter Include="Engine\Managers\CommandManager">
       <UniqueIdentifier>{539df794-c972-4892-88b1-10aa05cf9aac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\ServiceLocator">
-      <UniqueIdentifier>{4cd1959a-5443-466a-9a5d-097f3f5f356d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Audio">
       <UniqueIdentifier>{384d9f7e-ca8e-480d-9cb1-ca68f9a164b6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Audio\AudioSystem">
       <UniqueIdentifier>{e11d2b97-d73f-4b7a-b4fd-e4a0f2fefb21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\ServiceLocator\NullService">
-      <UniqueIdentifier>{42cbc4a6-4629-4e7b-bb9d-de860a48aff2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\EventQueue">
       <UniqueIdentifier>{54bb65d2-2210-4cfa-a334-04ad626ccfa2}</UniqueIdentifier>
@@ -180,6 +174,21 @@
     </Filter>
     <Filter Include="Engine\Managers\ThreadManager">
       <UniqueIdentifier>{9ea87432-0494-4938-b0fb-a9887ff7d56d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\App\App_Info">
+      <UniqueIdentifier>{1cfb5f6b-f674-4b7b-a5b7-f69580e7b10a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\AudioLocator">
+      <UniqueIdentifier>{4cd1959a-5443-466a-9a5d-097f3f5f356d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\App_Info Locator">
+      <UniqueIdentifier>{425c29d1-e2c8-43e0-8b65-ef4dca929304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\AudioLocator\NullAudioSystem">
+      <UniqueIdentifier>{42cbc4a6-4629-4e7b-bb9d-de860a48aff2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Applications\Test_App_2_Boogaloo">
+      <UniqueIdentifier>{3f3fd812-6dbe-44a9-8265-f57ee5889c1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -316,7 +325,7 @@
       <Filter>Engine\Managers\CommandManager</Filter>
     </ClCompile>
     <ClCompile Include="AudioLocator.cpp">
-      <Filter>Engine\ServiceLocator</Filter>
+      <Filter>Engine\AudioLocator</Filter>
     </ClCompile>
     <ClCompile Include="AudioSystem.cpp">
       <Filter>Engine\Audio\AudioSystem</Filter>
@@ -335,6 +344,15 @@
     </ClCompile>
     <ClCompile Include="ThreadManager.cpp">
       <Filter>Engine\Managers\ThreadManager</Filter>
+    </ClCompile>
+    <ClCompile Include="App_Selector.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="AppInfoLocator.cpp">
+      <Filter>Engine\App_Info Locator</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_App_2_Boogaloo.cpp">
+      <Filter>Applications\Test_App_2_Boogaloo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -582,7 +600,7 @@
       <Filter>Engine\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="AudioLocator.h">
-      <Filter>Engine\ServiceLocator</Filter>
+      <Filter>Engine\AudioLocator</Filter>
     </ClInclude>
     <ClInclude Include="AudioSystem.h">
       <Filter>Engine\Audio\AudioSystem</Filter>
@@ -591,7 +609,7 @@
       <Filter>Engine\Audio\SDLAudioSystem</Filter>
     </ClInclude>
     <ClInclude Include="NullAudioSystem.h">
-      <Filter>Engine\ServiceLocator\NullService</Filter>
+      <Filter>Engine\AudioLocator\NullAudioSystem</Filter>
     </ClInclude>
     <ClInclude Include="EventQueue.h">
       <Filter>Engine\EventQueue</Filter>
@@ -610,6 +628,15 @@
     </ClInclude>
     <ClInclude Include="ThreadManager.h">
       <Filter>Engine\Managers\ThreadManager</Filter>
+    </ClInclude>
+    <ClInclude Include="App_Info.h">
+      <Filter>Engine\App\App_Info</Filter>
+    </ClInclude>
+    <ClInclude Include="AppInfoLocator.h">
+      <Filter>Engine\App_Info Locator</Filter>
+    </ClInclude>
+    <ClInclude Include="Test_App_2_Boogaloo.h">
+      <Filter>Applications\Test_App_2_Boogaloo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
