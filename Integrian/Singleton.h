@@ -2,6 +2,8 @@
 #ifndef INTEGRIAN_SINGLETON_H
 #define INTEGRIAN_SINGLETON_H
 
+#include "IntegrianPCH.h" // precompiled header
+
 namespace Integrian
 {
 	template<typename Type>

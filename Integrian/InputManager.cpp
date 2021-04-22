@@ -1,8 +1,7 @@
-#include "pch.h"
+#include "IntegrianPCH.h" // precompiled header
 #include "InputManager.h" // header
-#include "EventQueue.h" // EventQueue
 
-extern std::atomic<bool> g_IsLooping;
+extern std::atomic<bool> volatile g_IsLooping;
 
 Integrian::InputManager::InputManager(EventQueue& eventQueue)
 	: m_MousePosition{}

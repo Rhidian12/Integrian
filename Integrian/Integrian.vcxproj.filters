@@ -66,9 +66,6 @@
     <Filter Include="Engine\Components\FPSComponent">
       <UniqueIdentifier>{ca95a5fd-9d8f-4535-8169-de93e82d7036}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Components\ActorComponent">
-      <UniqueIdentifier>{a14b7102-0a1f-4457-b612-f3c24ec66b9b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Logger">
       <UniqueIdentifier>{ce24a8db-96b5-4be2-b4f0-ce2ccce49d0f}</UniqueIdentifier>
     </Filter>
@@ -219,7 +216,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="IntegrianPCH.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
@@ -294,9 +291,6 @@
     <ClCompile Include="KillCommand.cpp">
       <Filter>Applications\Test_App\Commands\KillCommand</Filter>
     </ClCompile>
-    <ClCompile Include="ActorComponent.cpp">
-      <Filter>Engine\Components\ActorComponent</Filter>
-    </ClCompile>
     <ClCompile Include="HealthDisplayComponent.cpp">
       <Filter>Applications\Test_App\Components\HealthDisplayComponent</Filter>
     </ClCompile>
@@ -356,7 +350,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="IntegrianPCH.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="App.h">
@@ -503,9 +497,6 @@
     <ClInclude Include="KillCommand.h">
       <Filter>Applications\Test_App\Commands\KillCommand</Filter>
     </ClInclude>
-    <ClInclude Include="ActorComponent.h">
-      <Filter>Engine\Components\ActorComponent</Filter>
-    </ClInclude>
     <ClInclude Include="HealthDisplayComponent.h">
       <Filter>Applications\Test_App\Components\HealthDisplayComponent</Filter>
     </ClInclude>
@@ -594,9 +585,6 @@
       <Filter>Engine\Managers\CommandManager</Filter>
     </ClInclude>
     <ClInclude Include="StaticInstanceAlreadyCreated.h">
-      <Filter>Engine\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandNotCreatedByManager.h">
       <Filter>Engine\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="AudioLocator.h">

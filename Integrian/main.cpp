@@ -1,5 +1,5 @@
 // == Includes ==
-#include "pch.h" // precompiled header
+#include "IntegrianPCH.h" // precompiled header
 #include <vld.h> // visual leak detector
 #include "App_Selector.h" // App_Selector
 #include "App.h" // App
@@ -13,7 +13,7 @@
 #endif
 
 // == Global Variables ==
-std::atomic<bool> g_IsLooping{ true };
+std::atomic<bool> volatile g_IsLooping{ true };
 
 int main(int argc, char* args[])
 {
@@ -35,7 +35,7 @@ int main(int argc, char* args[])
 		{
 #pragma warning( push )
 #pragma warning( disable : 4297 ) // disable the warning telling us that SDL_Main is marked as noexcept
-			ExceptionHandler e{};
+			Integrian::ExceptionHandler e{};
 			e.ProcessException();
 			return -1;
 #pragma warning ( pop )
@@ -51,7 +51,7 @@ int main(int argc, char* args[])
 		{
 #pragma warning( push )
 #pragma warning( disable : 4297 ) // disable the warning telling us that SDL_Main is marked as noexcept
-			ExceptionHandler e{};
+			Integrian::ExceptionHandler e{};
 			e.ProcessException();
 			return -1;
 #pragma warning ( pop )

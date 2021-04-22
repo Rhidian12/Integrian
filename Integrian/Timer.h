@@ -6,8 +6,7 @@
 #ifndef INTEGRIAN_TIMER_H
 #define INTEGRIAN_TIMER_H
 
-#include "Singleton.h"
-#include <chrono>
+#include "Singleton.h" // Singleton
 
 namespace Integrian
 {

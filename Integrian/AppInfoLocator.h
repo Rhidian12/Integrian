@@ -3,7 +3,6 @@
 #ifndef INTEGRIAN_APPINFO_LOCATOR_H
 #define INTEGRIAN_APPINFO_LOCATOR_H
 
-#include "pch.h" // AlwaysFalse()
 #include "App_Info.h" // App_Info. This is included and not forward declared, so people don't have to include both AppInfoLocator and App_Info
 
 namespace Integrian

@@ -37,19 +37,6 @@
 #include "ExceptionHandler.h"
 #include "Logger.h"
 
-template<typename Type>
-constexpr void SafeDelete(Type*& pData)
-{
-	if (pData)
-	{
-		delete pData;
-		pData = nullptr;
-	}
-}
-
-constexpr bool AlwaysFalse()
-{
-	return false;
-}
+#include <Windows.h>
 
 #endif //PCH_H

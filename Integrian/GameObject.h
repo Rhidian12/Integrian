@@ -2,11 +2,9 @@
 #ifndef INTEGRIAN_GAMEOBJECT_H
 #define INTEGRIAN_GAMEOBJECT_H
 
-#include <unordered_map>
-#include <vector>
-#include "TransformComponent.h"
-#include "Logger.h"
-#include "PossibleInputs.h"
+#include <vector> // std::vector
+#include "TransformComponent.h" // transformcomponent
+#include "Logger.h" // Logger
 #include <type_traits> // std::is_base_of_v, std::enable_if_t
 
 // http://scottmeyers.blogspot.com/2015/09/should-you-be-using-something-instead.html
@@ -34,7 +32,7 @@ namespace Integrian
 		inline [[nodiscard]] Type* GetComponentByType() const
 		{
 			for (Component* pComponent : m_pComponents)
-				if (typeid(*pComponent) == typeid(Type)) // no way to do this at compile time :(
+				if (typeid(*pComponent) == typeid(Type))
 					return static_cast<Type*>(pComponent);
 
 			Logger::LogWarning("GetComponentByType returned a nullptr\n");

@@ -3,11 +3,11 @@
 // Author: Rhidian De Wit
 // December 2020 ---- Last Edited: December 2020
 // ====================================
-#ifndef ENGINE_POINT2_H
-#define ENGINE_POINT2_H
+#ifndef INTEGRIAN_POINT2_H
+#define INTEGRIAN_POINT2_H
 
-#include "Point.h"
-#include "Vector.h"
+#include "Point.h" // Point 
+#include "Vector.h" // Vector
 namespace Integrian
 {
 	// == Point2f (Point Specialisation) ==

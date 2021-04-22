@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "IntegrianPCH.h"
 #include "ScoreDisplayComponent.h"
 #include "TextComponent.h"
 #include "Observer.h"

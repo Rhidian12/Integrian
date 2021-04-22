@@ -1,9 +1,9 @@
-#include "pch.h"
-#include "PrinterManager.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "PrinterManager.h" // header
 
-#include "PossibleCharacters.h"
-#include "Printer.h"
-#include "TextureManager.h"
+#include "PossibleCharacters.h" // possible characters
+#include "Printer.h" // printer
+#include "TextureManager.h" // texture manager
 
 Integrian::PrinterManager::~PrinterManager()
 {

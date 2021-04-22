@@ -1,14 +1,10 @@
-#include "pch.h"
-#include "AudioLocator.h"
+#include "IntegrianPCH.h" // Precompiled header
+#include "AudioLocator.h" // Header
 
 void Integrian::AudioLocator::Cleanup()
 {
 	SafeDelete(m_pAudioSystem);
 	SafeDelete(m_pNullService);
-
-	// Something strange going on with SafeDelete() not setting this to a nullptr
-	m_pAudioSystem = nullptr;
-	m_pNullService = nullptr;
 }
 
 Integrian::AudioSystem* Integrian::AudioLocator::GetAudio()

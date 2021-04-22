@@ -2,7 +2,7 @@
 #ifndef INTEGRIAN_GAMEINPUT_H
 #define INTEGRIAN_GAMEINPUT_H
 
-#include "PossibleInputs.h"
+#include "PossibleInputs.h" // all the possible inputs
 
 namespace Integrian
 {

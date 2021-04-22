@@ -1,5 +1,6 @@
-#include "TextureComponent.h"
-#include "Texture.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "TextureComponent.h" // header
+#include "Texture.h" // texture
 
 Integrian::TextureComponent::TextureComponent()
 	: TextureComponent{ nullptr }

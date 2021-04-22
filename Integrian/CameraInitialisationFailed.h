@@ -3,10 +3,10 @@
 // Author: Rhidian De Wit
 // February 2021 ---- Last Edited: February 2021
 // ====================================
-#ifndef ENGINE_CAMERAINITIALISATIONFAILEDEXCEPTION_H
-#define ENGINE_CAMERAINITIALISATIONFAILEDEXCEPTION_H
+#ifndef INTEGRIAN_CAMERAINITIALISATIONFAILEDEXCEPTION_H
+#define INTEGRIAN_CAMERAINITIALISATIONFAILEDEXCEPTION_H
 
-#include "Logger.h"
+#include "Logger.h" // Logger
 
 namespace Integrian
 {

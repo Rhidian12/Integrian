@@ -3,10 +3,10 @@
 // Author: Rhidian De Wit
 // February 2021 ---- Last Edited: February 2021
 // ====================================
-#ifndef ENGINE_INITIALISATIONFAILEDEXCEPTION_H
-#define ENGINE_INITIALISATIONFAILEDEXCEPTION_H
+#ifndef INTEGRIAN_INITIALISATIONFAILEDEXCEPTION_H
+#define INTEGRIAN_INITIALISATIONFAILEDEXCEPTION_H
 
-#include "Logger.h"
+#include "Logger.h" // Logger
 
 namespace Integrian
 {

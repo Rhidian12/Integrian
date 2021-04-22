@@ -1,7 +1,5 @@
-#include "pch.h"
-#include "Logger.h"
-#include <Windows.h>
-#include "StaticInstanceAlreadyCreated.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "Logger.h" // Header
 
 // Reference: https://stackoverflow.com/questions/8765938/colorful-text-using-printf-in-c
 // Reference: https://docs.microsoft.com/en-us/windows/console/setconsoletextattribute

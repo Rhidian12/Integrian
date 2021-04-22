@@ -5,7 +5,6 @@
 #include "TextureManager.h"
 #include "Timer.h"
 #include "InputManager.h"
-#include "ActorComponent.h"
 #include "HealthDisplayComponent.h"
 #include "HealthComponent.h"
 #include "KillCommand.h"
@@ -59,7 +58,7 @@ void Integrian::Test_App::Start()
 	AudioLocator::Provide(new SDLAudioSystem{});
 	AudioSystem* pAudio = AudioLocator::GetAudio();
 	pAudio->AddMusic("Data/AHHHHH.mp3");
-	//pAudio->PlayMusic(0);
+	pAudio->PlayMusic(0);
 	pAudio->AddSound("Data/menu3.wav");
 	m_AppInfo.eventQueue.AddListener(pAudio);
 
@@ -112,7 +111,6 @@ void Integrian::Test_App::InitPlayerOne()
 	TextComponent* pTextComponent{ new TextComponent{"Player 1 Remaining Lives: ", 30, RGBColour{255.f,0.f,0.f}} };
 	HealthComponent* pHealthComponent{ new HealthComponent{3,3} };
 	HealthDisplayComponent* pHealthDisplayComponent{ new HealthDisplayComponent{pTextComponent, pHealthComponent->GetCurrentHealth()} };
-	ActorComponent* pActor{ new ActorComponent{} };
 	ScoreComponent* pScoreComponent{ new ScoreComponent{} };
 
 	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 1 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
@@ -154,7 +152,6 @@ void Integrian::Test_App::InitPlayerOne()
 	commandManager.LinkCommandToInput(GameInput{ KeyboardInput::D }, "ChangeColourCommandPlayerOne", State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ KeyboardInput::E }, "DisksRemainingCommandPlayerOne", State::OnRelease);
 
-	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
 	pQbert->AddComponent(pScoreComponent);
 	pQbertHealthDisplay->transform = Point2f{ 150.f,150.f };
@@ -176,7 +173,6 @@ void Integrian::Test_App::InitPlayerTwo()
 	TextComponent* pTextComponent{ new TextComponent{"Player 2 Remaining Lives: ", 30, RGBColour{255.f,0.f,0.f}} };
 	HealthComponent* pHealthComponent{ new HealthComponent{3,3} };
 	HealthDisplayComponent* pHealthDisplayComponent{ new HealthDisplayComponent{pTextComponent, pHealthComponent->GetCurrentHealth()} };
-	ActorComponent* pActor{ new ActorComponent{} };
 	ScoreComponent* pScoreComponent{ new ScoreComponent{} };
 
 	TextComponent* pScoreDisplayTextComponent{ new TextComponent{"Player 2 Score: ", 30, RGBColour{255.f,0.f,0.f}} };
@@ -219,7 +215,6 @@ void Integrian::Test_App::InitPlayerTwo()
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::ButtonY }, "ChangeColourCommandPlayerTwo", State::OnRelease);
 	commandManager.LinkCommandToInput(GameInput{ ControllerInput::RightTrigger }, "DisksRemainingCommandPlayerTwo", State::OnRelease);
 
-	pQbert->AddComponent(pActor);
 	pQbert->AddComponent(pHealthComponent);
 	pQbert->AddComponent(pScoreComponent);
 

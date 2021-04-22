@@ -1,7 +1,5 @@
+#include "IntegrianPCH.h" // precompiled header
 #include "Mouse.h" // Header
-#include "Command.h" // Command::Execute()
-#include "Logger.h" // Logger
-#include "ThreadManager.h" // ThreadManager
 
 Integrian::Mouse::Mouse(Mouse&& other)
 {

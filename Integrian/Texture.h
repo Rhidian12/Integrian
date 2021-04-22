@@ -5,11 +5,7 @@
 #ifndef INTEGRIAN_TEXTURE_H
 #define INTEGRIAN_TEXTURE_H
 
-#include <string>
-#include "TypeDefines.h"
-#include "Structs.h"
-#include <SDL_opengl.h>
-#include <SDL_ttf.h>
+#include <string> // std::string
 
 struct SDL_Surface;
 namespace Integrian

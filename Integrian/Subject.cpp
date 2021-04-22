@@ -1,5 +1,5 @@
-#include "Subject.h"
-#include <algorithm>
+#include "IntegrianPCH.h" // precompiled header
+#include "Subject.h" // header
 
 //void Integrian::Subject::AddObserver(Observer* pObserver)
 //{

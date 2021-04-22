@@ -2,8 +2,7 @@
 #ifndef INTEGRIAN_POSSIBLEINPUTS_H
 #define INTEGRIAN_POSSIBLEINPUTS_H
 
-#include "pch.h"
-#include "Logger.h"
+#include "IntegrianPCH.h" // precompiled header
 
 // !!!!!!!!!!!!!!!!!!!
 // !!!!!!!!!!!!!!!!!!!

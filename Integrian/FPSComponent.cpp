@@ -1,7 +1,7 @@
-#include "pch.h"
-#include "FPSComponent.h"
-#include "TextComponent.h"
-#include "Timer.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "FPSComponent.h" // Header 
+#include "TextComponent.h" // text component
+#include "Timer.h" // Timer
 
 Integrian::FPSComponent::FPSComponent(TextComponent* pTextComponent)
 	: m_pTextComponent{ pTextComponent }

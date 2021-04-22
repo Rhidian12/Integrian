@@ -1,15 +1,10 @@
+#include "IntegrianPCH.h" // precompiled header
 #include "ThreadManager.h" // header
 
-extern std::atomic<bool> g_IsLooping;
+extern std::atomic<bool> volatile g_IsLooping;
 
 Integrian::ThreadManager::~ThreadManager()
 {
-	std::cout << "FILLER" << std::endl;
-	std::cout << "FILLER" << std::endl;
-	std::cout << "FILLER" << std::endl;
-	std::cout << "FILLER" << std::endl;
-	std::cout << "FILLER" << std::endl;
-	
 	m_CV.notify_all();
 
 	for (std::thread& thread : m_Threads)
@@ -32,6 +27,11 @@ bool Integrian::ThreadManager::OnEvent(const Event& event)
 	}
 	else
 		return false;
+}
+
+bool Integrian::ThreadManager::AreAllThreadsDone() const
+{
+	return m_Jobs.empty();
 }
 
 Integrian::ThreadManager::ThreadManager()
@@ -63,10 +63,6 @@ Integrian::ThreadManager::ThreadManager()
 			if (pF)
 				pF();
 		}
-		m_A.store(m_A.load() + 1);
-		std::cout << m_A.load() << " threads went out of scope" << std::endl;
-
-		std::cout << "Thread with thread ID: " << std::this_thread::get_id() << std::endl;
 	};
 
 	for (size_t i{}; i < std::thread::hardware_concurrency(); ++i)

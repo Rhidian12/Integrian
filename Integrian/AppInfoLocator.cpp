@@ -1,4 +1,5 @@
-#include "AppInfoLocator.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "AppInfoLocator.h" // header
 
 Integrian::App_Info* Integrian::AppInfoLocator::GetAppInfo()
 {

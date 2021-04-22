@@ -6,8 +6,8 @@
 #ifndef ENGINE_TEXTUREMANAGER_H
 #define ENGINE_TEXTUREMANAGER_H
 
-#include "Singleton.h"
-#include <unordered_map>
+#include "Singleton.h" // Singleton
+#include <unordered_map> // std::unordered_map
 
 namespace Integrian
 {

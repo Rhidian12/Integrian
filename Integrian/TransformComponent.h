@@ -2,8 +2,7 @@
 #ifndef INTEGRIAN_TRANSFORMCOMPONENT_H
 #define INTEGRIAN_TRANSFORMCOMPONENT_H
 
-#include "Component.h"
-#include "Structs.h"
+#include "Component.h" // Component
 
 namespace Integrian
 {

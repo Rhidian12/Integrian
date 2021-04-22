@@ -3,10 +3,8 @@
 #ifndef INTEGRIAN_THREADMANAGER_H
 #define INTEGRIAN_THREADMANAGER_H
 
-#include "pch.h" // AlwaysFalse()
 #include <thread> // std::thread
 #include <vector> // std::vector
-#include "Logger.h" // Logger
 #include <mutex> // std::mutex, std::unique_lock
 #include <queue> // std::queue
 #include <functional> // std::function
@@ -49,6 +47,8 @@ namespace Integrian
 
 		virtual bool OnEvent(const Event& event) override;
 
+		[[nodiscard]] bool AreAllThreadsDone() const;
+
 	private:
 		friend class Singleton<ThreadManager>;
 		ThreadManager();
@@ -57,9 +57,6 @@ namespace Integrian
 		std::queue<std::function<void()>> m_Jobs{};
 		std::mutex m_Mutex{};
 		std::condition_variable m_CV{};
-
-
-		inline static std::atomic<int> m_A{ 0 };
 	};
 }
 

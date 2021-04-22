@@ -2,11 +2,9 @@
 #ifndef INTEGRIAN_SUBJECT_H
 #define INTEGRIAN_SUBJECT_H
 
-#include "pch.h"
-#include <vector>
-#include "Observer.h"
-#include <algorithm>
-#include "Logger.h"
+#include <vector> // std::vector
+#include "Observer.h" // Observer 
+#include <algorithm> // std::remove
 
 namespace Integrian
 {

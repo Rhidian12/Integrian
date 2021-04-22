@@ -2,8 +2,7 @@
 #ifndef INTEGRIAN_PRINTER_H
 #define INTEGRIAN_PRINTER_H
 
-#include <string>
-#include "Structs.h"
+#include <string> // std::string
 
 namespace Integrian
 {

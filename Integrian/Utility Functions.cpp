@@ -1,5 +1,5 @@
-#include "pch.h"
-#include "Utility Functions.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "Utility Functions.h" // header
 
 #pragma region DrawFunctions
 void Integrian::DrawRectangle(const Rectf& rect)
@@ -108,5 +108,9 @@ void Integrian::DrawLine(const Point2f& start, const Point2f& end, const RGBColo
 		glVertex2f(end.x, end.y);
 	}
 	glEnd();
+}
+constexpr bool Integrian::AlwaysFalse()
+{
+	return false;
 }
 #pragma endregion

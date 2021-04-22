@@ -3,11 +3,11 @@
 // Author: Rhidian De Wit
 // December 2020 ---- Last Edited: December 2020
 // ====================================
-#ifndef ENGINE_POINT_H
-#define ENGINE_POINT_H
+#ifndef INTEGRIAN_POINT_H
+#define INTEGRIAN_POINT_H
 
-#include <cmath>
-#include "Vector.h"
+#include <cmath> //
+#include "Vector.h" // Vector
 namespace Integrian
 {
 	template<int P, typename Type>

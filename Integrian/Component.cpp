@@ -1,2 +1,2 @@
-#include "pch.h"
-#include "Component.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "Component.h" // header

@@ -3,7 +3,7 @@
 #ifndef INTEGRIAN_FPSCOMPONENT_H
 #define INTEGRIAN_FPSCOMPONENT_H
 
-#include "Component.h"
+#include "Component.h" // Component
 
 namespace Integrian
 {

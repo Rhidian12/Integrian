@@ -2,7 +2,7 @@
 #ifndef INTEGRIAN_TEXTCOMPONENT_H
 #define INTEGRIAN_TEXTCOMPONENT_H
 
-#include "Component.h"
+#include "Component.h" // Component
 
 namespace Integrian
 {

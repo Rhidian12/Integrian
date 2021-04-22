@@ -6,9 +6,8 @@
 #ifndef ENGINE_UTILITYFUNCTIONS_H
 #define ENGINE_UTILITYFUNCTIONS_H
 
-#include "pch.h"
 #include <cstdlib> // rand()
-#include <random>
+#include <random> // std::Random_device
 
 namespace Integrian
 {
@@ -59,6 +58,18 @@ namespace Integrian
 			clampedValue -= (clampedValue - max);
 		return clampedValue;
 	}
+
+	template<typename Type>
+	constexpr void SafeDelete(Type*& pData)
+	{
+		if (pData)
+		{
+			delete pData;
+			pData = nullptr;
+		}
+	}
+
+	constexpr bool AlwaysFalse();
 }
 
 #endif // !ENGINE_UTILITYFUNCTIONS_H

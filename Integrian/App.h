@@ -7,7 +7,7 @@
 #include "Structs.h" // Rectf
 #include <string> // std::string
 #include "ListenerInterface.h" // IListener
-#include "App_Info.h"
+#include "App_Info.h" // App_Info
 
 namespace Integrian
 {

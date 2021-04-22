@@ -3,13 +3,11 @@
 // Author: Rhidian De Wit
 // December 2020 ---- Last Edited: January 2021
 // ====================================
-#ifndef ENGINE_MATH_FUNCTIONS_H
-#define ENGINE_MATH_FUNCTIONS_H
+#ifndef INTEGRIAN_MATH_FUNCTIONS_H
+#define INTEGRIAN_MATH_FUNCTIONS_H
 
-#include "Structs.h"
-#include "TypeDefines.h"
-#include <limits>
-#include <vector>
+#include <vector> // std::vector
+
 namespace Integrian
 {
 #pragma region General Math Functions
@@ -25,6 +23,7 @@ namespace Integrian
 
 #pragma region Collisions
 	// == Collisions ==
+	// These functions were made by Bart Uyttenhove
 	struct HitInfo
 	{
 		float lambda;

@@ -2,8 +2,8 @@
 #ifndef INTEGRIAN_PRINTERMANAGER_H
 #define INTEGRIAN_PRINTERMANAGER_H
 
-#include "Singleton.h"
-#include <vector>
+#include "Singleton.h" // Singleton
+#include <vector> // std::vector
 
 namespace Integrian
 {

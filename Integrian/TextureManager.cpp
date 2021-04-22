@@ -1,7 +1,7 @@
-#include "pch.h"
-#include "TextureManager.h"
-#include "Texture.h"
-#include "Logger.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "TextureManager.h" // header
+#include "Texture.h" // texture
+#include "Logger.h" // logger
 Integrian::TextureManager::TextureManager()
 	: m_DataPath{}
 {

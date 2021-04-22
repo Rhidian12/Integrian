@@ -2,11 +2,10 @@
 #ifndef INTEGRIAN_OBSERVER_H
 #define INTEGRIAN_OBSERVER_H
 
-#include "GameObject.h"
-#include <unordered_map>
-#include <functional>
-#include <vector>
-#include "Logger.h"
+#include "GameObject.h" // GameObject
+#include <unordered_map> // std::unordered_map
+#include <functional> // std::function 
+#include <vector> // std::vector
 
 namespace Integrian
 {
@@ -18,7 +17,7 @@ namespace Integrian
 	};
 
 	template<typename ... Args>
-	class Observer final : public IObserver
+	class Observer final : public IObserver // TODO: Make this an interface
 	{
 	public:
 		Observer() = default;

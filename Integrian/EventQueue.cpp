@@ -1,3 +1,4 @@
+#include "IntegrianPCH.h" // precompiled header
 #include "EventQueue.h" // header
 #include <algorithm> // std::remove_if
 #include "Logger.h" // Logger
@@ -27,25 +28,15 @@ bool Integrian::EventQueue::OnEvent(const Event& event)
 
 void Integrian::EventQueue::QueueEvent(Event&& event)
 {
-	{
-		std::unique_lock<std::mutex> lock{ m_Mutex };
-		m_Events.push_back(std::forward<Event>(event)); // we need to std::forward this so that it actually moves this instead of copying like a little fucking bitch
-	} // make sure the lock goes out of scope before notifying a thread
-
-	m_CV.notify_one();
+	m_Events.push_back(std::forward<Event>(event)); // we need to std::forward this so that it actually moves this instead of copying like a little fucking bitch
 }
 
 void Integrian::EventQueue::Update()
 {
-	std::unique_lock<std::mutex> lock{ m_Mutex };
 	//TIME();
 
-	m_CV.wait(lock, [this]()
-		{
-			return !m_Events.empty();
-		});
-
-	std::cout << std::this_thread::get_id() << std::endl;
+	if (m_Events.empty())
+		return;
 
 	bool wasEventProcessed{};
 	for (IListener* pListener : m_pListeners)

@@ -2,8 +2,8 @@
 #ifndef INTEGRIAN_COMPONENT_H
 #define INTEGRIAN_COMPONENT_H
 
-#include "TypeDefines.h"
-#include "Structs.h"
+#include "TypeDefines.h" // Point2f && Vector2f
+#include "Structs.h" // Rectf, ...
 
 namespace Integrian
 {

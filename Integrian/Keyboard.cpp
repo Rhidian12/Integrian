@@ -1,7 +1,6 @@
+#include "IntegrianPCH.h" // precompiled header
 #include "Keyboard.h" // Header
-#include "Command.h" // Command::Execute()
 #include "Logger.h" // Logger
-#include "ThreadManager.h" // ThreadManager
 
 Integrian::Keyboard::Keyboard(Keyboard&& other)
 {

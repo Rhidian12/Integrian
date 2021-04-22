@@ -7,7 +7,6 @@
 #include <deque> // std::deque
 #include <vector> // std::vector
 #include "ListenerInterface.h" // IListener
-#include <mutex> // std::mutex, std::unique_lock, std::condition_variable
 
 #include "VisualBenchmark.h" // TODO: REMOVE THIS, ONLY FOR TESTING 
 
@@ -35,9 +34,6 @@ namespace Integrian
 
 		std::vector<IListener*> m_pListeners{};
 		std::deque<Event> m_Events{};
-
-		std::mutex m_Mutex{};
-		std::condition_variable m_CV{};
 	};
 }
 

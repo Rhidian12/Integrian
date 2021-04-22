@@ -1,5 +1,7 @@
-#include "pch.h"
-#include "Timer.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "Timer.h" // Header
+#include <chrono> // std::Chrono
+
 
 Integrian::Timer::Timer()
 	: m_MaxElapsedSeconds{ 0.1f }

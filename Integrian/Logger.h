@@ -2,7 +2,7 @@
 #ifndef INTEGRIAN_LOGGER_H
 #define INTEGRIAN_LOGGER_H
 
-#include <string>
+#include <string> // std::String
 
 enum class ErrorLevel
 {

@@ -1,8 +1,8 @@
-#include "pch.h"
-#include "Printer.h"
-#include "Texture.h"
-#include "TextureManager.h"
-#include "PossibleCharacters.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "Printer.h" // header
+#include "Texture.h" // Texture
+#include "TextureManager.h" // TextureManager 
+#include "PossibleCharacters.h" // PossibleCharacters
 
 Integrian::Printer::Printer(Texture* pFont)
 	: m_pFont(pFont)

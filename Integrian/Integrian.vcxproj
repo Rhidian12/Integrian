@@ -159,7 +159,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AppInfoLocator.cpp" />
     <ClCompile Include="App_Selector.cpp" />
@@ -196,7 +195,7 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
-    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="IntegrianPCH.cpp" />
     <ClCompile Include="Printer.cpp" />
     <ClCompile Include="PrinterManager.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
@@ -215,7 +214,6 @@
     <ClCompile Include="Utility Functions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="allocators.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Info.h" />
@@ -229,7 +227,6 @@
     <ClInclude Include="ChangeColourCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandManager.h" />
-    <ClInclude Include="CommandNotCreatedByManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="cursorstreamwrapper.h" />
     <ClInclude Include="DefeatCoilyCommand.h" />
@@ -272,7 +269,7 @@
     <ClInclude Include="Observer.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="ostreamwrapper.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="IntegrianPCH.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Point2f.h" />
     <ClInclude Include="pointer.h" />

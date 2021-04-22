@@ -3,13 +3,13 @@
 // Author: Rhidian De Wit
 // December 2020 ---- Last Edited: December 2020
 // ====================================
-#ifndef ENGINE_TYPEDEFINES_H
-#define ENGINE_TYPEDEFINES_H
+#ifndef INTEGRIAN_TYPEDEFINES_H
+#define INTEGRIAN_TYPEDEFINES_H
 
-#include "Point.h"
-#include "Point2f.h"
-#include "Vector.h"
-#include "Vector2f.h"
+#include "Point.h" // Point
+#include "Point2f.h" // Point<2, float>
+#include "Vector.h" // Vector
+#include "Vector2f.h" // Vector<2, float>
 namespace Integrian
 {
 	typedef Vector<2, float> Vector2f;

@@ -3,12 +3,12 @@
 // Author: Rhidian De Wit
 // December 2020 ---- Last Edited: December 2020
 // ====================================
-#ifndef ENGINE_STRUCTS_H
-#define ENGINE_STRUCTS_H
+#ifndef INTEGRIAN_STRUCTS_H
+#define INTEGRIAN_STRUCTS_H
 
-#include "TypeDefines.h"
-#include <cmath>
-#include <string>
+#include "TypeDefines.h" // Point2f && Vector2f
+#include <cmath> //
+#include <string> // std::string
 
 namespace Integrian
 {

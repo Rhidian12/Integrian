@@ -1,5 +1,6 @@
-#include "OrthographicCamera.h"
-#include <assert.h>
+#include "IntegrianPCH.h" // precompiled header
+#include "OrthographicCamera.h" // header
+#include <assert.h> // assert()
 Integrian::OrthographicCamera::OrthographicCamera(const uint32_t windowWidth, const uint32_t windowHeight, const Rectf& levelBoundaries)
 	: m_WindowWidth{ windowWidth }
 	, m_WindowHeight{ windowHeight }

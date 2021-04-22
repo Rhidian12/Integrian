@@ -1,8 +1,8 @@
-#include "pch.h"
-#include "TextComponent.h"
-#include "Printer.h"
-#include "Texture.h"
-#include "PrinterManager.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "TextComponent.h" // header
+#include "Printer.h" // printer
+#include "Texture.h" // texture
+#include "PrinterManager.h" // printermanager
 
 Integrian::TextComponent::TextComponent()
 	: TextComponent{ "" }

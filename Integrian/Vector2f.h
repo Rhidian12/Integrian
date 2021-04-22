@@ -3,8 +3,8 @@
 // Author: Rhidian De Wit
 // December 2020 ---- Last Edited: December 2020
 // ====================================
-#ifndef ENGINE_VECTOR2_H
-#define ENGINE_VECTOR2_H
+#ifndef INTEGRIAN_VECTOR2_H
+#define INTEGRIAN_VECTOR2_H
 
 #include "Vector.h"
 #include "Point.h"

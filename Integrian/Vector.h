@@ -3,8 +3,8 @@
 // Author: Rhidian De Wit
 // December 2020 ---- Last Edited: December 2020
 // ====================================
-#ifndef ENGINE_VECTOR_H
-#define ENGINE_VECTOR_H
+#ifndef INTEGRIAN_VECTOR_H
+#define INTEGRIAN_VECTOR_H
 
 #include <math.h>
 namespace Integrian

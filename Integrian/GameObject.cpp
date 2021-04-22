@@ -1,7 +1,6 @@
-#include "pch.h"
-#include "GameObject.h"
-#include "Component.h"
-#include "Command.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "GameObject.h" // header
+#include "Component.h" // component
 
 Integrian::GameObject::~GameObject()
 {

@@ -1,7 +1,6 @@
-#include "pch.h" // SafeDelete()
+#include "IntegrianPCH.h" // precompiled header
 #include "App_Selector.h" // Header
 #include "App.h" // App
-#include "Logger.h" // Logger
 #include "EventQueue.h" // EventQueue
 #include "Timer.h" // Timer
 

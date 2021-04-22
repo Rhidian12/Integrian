@@ -2,9 +2,7 @@
 #ifndef INTEGRIAN_TEXTURE_COMPONENT_H
 #define INTEGRIAN_TEXTURE_COMPONENT_H
 
-#include "Component.h"
-#include "TypeDefines.h"
-#include <memory>
+#include "Component.h" // Component
 
 namespace Integrian
 {

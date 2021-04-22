@@ -1,4 +1,5 @@
-#include "TransformComponent.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "TransformComponent.h" // header
 
 Integrian::TransformComponent::TransformComponent()
 	: TransformComponent{ {} }

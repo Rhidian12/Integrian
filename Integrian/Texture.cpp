@@ -1,5 +1,5 @@
-#include "pch.h"
-#include "Texture.h"
+#include "IntegrianPCH.h" // precompiled header
+#include "Texture.h" // header
 
 Integrian::Texture::Texture(const std::string& imagePath)
 	: m_Id{ }

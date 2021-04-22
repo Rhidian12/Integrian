@@ -1,8 +1,8 @@
-#include "pch.h"
-#include "MathFunctions.h"
-#include <cmath>
-#include <vector>
-#include <algorithm>
+#include "IntegrianPCH.h" // precompiled header
+#include "MathFunctions.h" // header 
+#include <cmath> // atan
+#include <algorithm> // std::min_element
+#include <limits> // std::numeric_limits
 const float Integrian::CalculateAngle(const Point2f& line1Start, const Point2f& line1End, const Point2f& line2Start, const Point2f& line2End)
 {
 	const float slopeLine1{ line1End.y - line1Start.y / line1End.x - line1Start.x };

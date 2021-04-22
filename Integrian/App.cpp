@@ -1,3 +1,4 @@
+#include "IntegrianPCH.h" // Precompiler Header
 #include "App.h" // Header
 #include "OrthographicCamera.h" // Camera
 #include "Timer.h" // Timer
@@ -11,7 +12,7 @@
 #include "App_Selector.h" // App_Selector
 
 // == Global Variables ==
-extern std::atomic<bool> g_IsLooping; // Used by the inputmanager, threadmanager and App::Run() to see when SDL_Quit event gets fired
+extern std::atomic<bool> volatile g_IsLooping; // Used by the inputmanager, threadmanager and App::Run() to see when SDL_Quit event gets fired
 
 Integrian::App::App(const std::string& name)
 	: m_AppName{ name }
@@ -156,18 +157,6 @@ void Integrian::App::FinishInitializationOfApp()
 	if (!InitializeCamera())
 		throw InitialisationFailedException{};
 
-	ThreadManager::GetInstance().AssignThread([this]()
-		{
-			while (g_IsLooping.load())
-				m_AppInfo.eventQueue.Update();
-
-			if (!g_IsLooping)
-			{
-				bool b = true;
-				b;
-			}
-		});
-
 	Logger::LogNoWarning("Initialisation finished!\n");
 
 	m_IsInitializationFinished = true;
@@ -260,6 +249,8 @@ void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
 	Update(dt);
 
 	AudioLocator::GetAudio()->Update(dt); // update the audio
+	m_AppInfo.eventQueue.Update(); // Update the event queue
+
 
 	LateUpdate(dt);
 
