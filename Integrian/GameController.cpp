@@ -1,7 +1,6 @@
 #include "IntegrianPCH.h" // precompiled header
 #include "GameController.h" // header
 #include "Logger.h" // Logger
-#include "Command.h" // Command::Execute()
 #include "ThreadManager.h" // ThreadManager
 
 Integrian::GameController::GameController(const uint8_t index)
@@ -44,7 +43,7 @@ Integrian::GameController::~GameController()
 	m_pCommands.clear();
 }
 
-void Integrian::GameController::AddCommand(const ControllerInput controllerInput, const State keyState, std::function<void()>& pCommand)
+void Integrian::GameController::AddCommand(const ControllerInput controllerInput, const State keyState, const std::function<void()>& pCommand)
 {
 	m_pCommands[controllerInput].push_back(CommandAndButton{ pCommand,keyState });
 }
@@ -81,6 +80,14 @@ bool Integrian::GameController::OnEvent(const Event& event)
 {
 	const std::string eventName{ event.GetEvent() };
 	if (eventName == "EndOfFrame")
+	{
+		for (const ControllerInput& input : m_KeysToBeRemoved)
+			m_pCommands.erase(input);
+
+		m_KeysToBeRemoved.clear();
+		return true;
+	}
+	else if (eventName == "Change_Application")
 	{
 		for (const ControllerInput& input : m_KeysToBeRemoved)
 			m_pCommands.erase(input);
@@ -139,7 +146,12 @@ double Integrian::GameController::GetTriggerMovement(const ControllerInput axis)
 	return Integrian::Clamp(double(SDL_GameControllerGetAxis(m_pSDLGameController, static_cast<SDL_GameControllerAxis>(axis)) / m_MaxJoystickValue), 0.0, 1.0); // map to [0,1]
 }
 
-void Integrian::GameController::RemoveCommand(std::function<void()>& pCommand)
+const std::unordered_map<Integrian::ControllerInput, std::vector<Integrian::CommandAndButton>>& Integrian::GameController::GetCommands() const
+{
+	return m_pCommands;
+}
+
+void Integrian::GameController::RemoveCommand(const std::function<void()>& pCommand)
 {
 	for (const CommandPair& commandPair : m_pCommands)
 		for (const CommandAndButton& commandAndButton : commandPair.second)

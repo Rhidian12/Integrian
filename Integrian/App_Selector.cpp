@@ -4,6 +4,13 @@
 #include "EventQueue.h" // EventQueue
 #include "Timer.h" // Timer
 
+extern std::atomic<bool> volatile g_IsLooping;
+
+Integrian::App_Selector::App_Selector()
+{
+	EventQueue::GetInstance().AddListener(this);
+}
+
 Integrian::App_Selector::~App_Selector()
 {
 	for (std::pair<std::string, App*> pApp : m_pApplications)
@@ -14,25 +21,37 @@ void Integrian::App_Selector::AddApplication(App* pApplication)
 {
 	if (m_pApplications.insert(std::make_pair(pApplication->GetAppName(), pApplication)).second)
 	{
-		pApplication->GetAppInfo().eventQueue.AddListener(this);
-
 		if (!m_pActiveApplication)
-			m_pActiveApplication = pApplication;
+			SetActiveApplication(pApplication->GetAppName());
 	}
 }
 
 void Integrian::App_Selector::SetActiveApplication(const std::string& name)
 {
+	if (m_pActiveApplication && name == m_pActiveApplication->GetAppName())
+		return;
 #ifdef _DEBUG
 	std::unordered_map<std::string, App*>::const_iterator cIt{ m_pApplications.find(name) };
 	if (cIt != m_pApplications.cend())
-		m_pActiveApplication = cIt->second;
+	{
+		if(m_pActiveApplication)
+			m_pActiveApplication->OnAppExit(); // first call the old app (if there is an old app) its OnAppExit()
+
+		m_pActiveApplication = cIt->second; // Set new application
+		m_pActiveApplication->OnAppEnter(); // Call new application its OnAppEnter()
+	}
 	else
 		Logger::LogSevereError("Application with name: " + name + " was not found!\n");
 
 #else
-	m_pActiveApplication = m_pActiveApplication.find(name)->second;
+	m_pActiveApplication = m_pApplications.find(name)->second;
 #endif // _DEBUG
+}
+
+void Integrian::App_Selector::RunActiveApplication()
+{
+	while(g_IsLooping.load())
+		m_pActiveApplication->Run();
 }
 
 bool Integrian::App_Selector::OnEvent(const Event& event)

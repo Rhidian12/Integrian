@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "IntegrianPCH.h"
 #include "HealthComponent.h"
 #include "Observer.h"
 #include "Subject.h"

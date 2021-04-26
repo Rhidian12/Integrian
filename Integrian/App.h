@@ -7,8 +7,12 @@
 #include "Structs.h" // Rectf
 #include <string> // std::string
 #include "ListenerInterface.h" // IListener
-#include "App_Info.h" // App_Info
+#include <unordered_map> // std::unordered_map
+#include "GameInput.h" // CommandAndButton
+#include <functional> // std::function
+#include <array> // std::array
 
+struct SDL_Window;
 namespace Integrian
 {
 	class OrthographicCamera;
@@ -25,11 +29,12 @@ namespace Integrian
 
 		virtual void Start() = 0;
 
-		void Run();
-
 		virtual void Update(const float elapsedSeconds) = 0;
 		virtual void FixedUpdate(const float elapsedSeconds) = 0;
 		virtual void LateUpdate(const float elapsedSeconds) = 0;
+
+		virtual void OnAppEnter();
+		virtual void OnAppExit();
 
 		virtual void Render() const = 0;
 
@@ -38,7 +43,6 @@ namespace Integrian
 		[[nodiscard]] uint32_t GetWindowWidth() const;
 		[[nodiscard]] uint32_t GetWindowHeight() const;
 		[[nodiscard]] std::string GetAppName() const;
-		[[nodiscard]] App_Info& GetAppInfo();
 
 		void SetWindowSize(const uint32_t windowWidth, const uint32_t windowHeight);
 
@@ -52,8 +56,7 @@ namespace Integrian
 
 		std::unique_ptr<OrthographicCamera> m_pCamera{};
 		std::vector<GameObject*> m_pGameObjects{};
-
-		App_Info m_AppInfo{};
+		std::unordered_map<std::string, std::function<void()>> m_Commands{};
 
 		inline static uint32_t m_WindowWidth{};
 		inline static uint32_t m_WindowHeight{};
@@ -62,7 +65,11 @@ namespace Integrian
 		// make the constructor protected, so only children can make an app
 		App(const std::string& appName);
 
+		/* This removes a command from both the CommandManager and all inputs linked to it */
+		void RemoveCommand(const std::string& commandName);
+
 	private:
+		friend class App_Selector; // TODO: Make this a friend function for Run()
 		void TransformCameraAndRender() const;
 		void UpdateApplication(float& timeSinceLastUpdate);
 
@@ -74,8 +81,14 @@ namespace Integrian
 
 		void ShutDown();
 
+		void Run();
+
 		inline static bool m_IsLibraryInitialised{ false };
 		inline static bool m_IsLibraryDestroyed{ false };
+
+		std::array<std::unordered_map<ControllerInput, std::vector<CommandAndButton>>, 4> m_CC;
+		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_KC;
+		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_MC;
 	};
 }
 

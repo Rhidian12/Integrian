@@ -2,7 +2,7 @@
 #include "Keyboard.h" // Header
 #include "Logger.h" // Logger
 
-Integrian::Keyboard::Keyboard(Keyboard&& other)
+Integrian::Keyboard::Keyboard(Keyboard&& other) noexcept
 {
 	m_KeyboardCommands = other.m_KeyboardCommands;
 	other.m_KeyboardCommands.clear();
@@ -25,11 +25,19 @@ bool Integrian::Keyboard::OnEvent(const Event& event)
 		m_KeysToBeRemoved.clear();
 		return true;
 	}
+	else if (eventName == "Change_Application")
+	{
+		for (const KeyboardInput& input : m_KeysToBeRemoved)
+			m_KeyboardCommands.erase(input);
+
+		m_KeysToBeRemoved.clear();
+		return true;
+	}
 	else
 		return false;
 }
 
-void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const State keyState, std::function<void()>& pCommand)
+void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const State keyState, const std::function<void()>& pCommand)
 {
 	m_KeyboardCommands[keyboardInput].push_back(CommandAndButton{ pCommand,keyState });
 }
@@ -77,7 +85,12 @@ Integrian::State Integrian::Keyboard::GetKeystate(const KeyboardInput keyboardIn
 	return State::NotPressed;
 }
 
-void Integrian::Keyboard::RemoveCommand(std::function<void()>& pCommand) // TODO: rework this with std::move
+const std::unordered_map<Integrian::KeyboardInput, std::vector<Integrian::CommandAndButton>>& Integrian::Keyboard::GetCommands() const
+{
+	return m_KeyboardCommands;
+}
+
+void Integrian::Keyboard::RemoveCommand(const std::function<void()>& pCommand)
 {
 	for (const CommandPair& commandPair : m_KeyboardCommands)
 		for (const CommandAndButton& commandAndButton : commandPair.second)

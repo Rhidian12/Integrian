@@ -160,18 +160,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="AppInfoLocator.cpp" />
     <ClCompile Include="App_Selector.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
     <ClCompile Include="SDLAudioSystem.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
-    <ClCompile Include="CatchSlickOrSamCommand.cpp" />
-    <ClCompile Include="ChangeColourCommand.cpp" />
-    <ClCompile Include="Command.cpp" />
-    <ClCompile Include="CommandManager.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="DefeatCoilyCommand.cpp" />
-    <ClCompile Include="DisksRemainingCommand.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
@@ -181,7 +174,6 @@
     <ClCompile Include="HealthDisplayComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
-    <ClCompile Include="KillCommand.cpp" />
     <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_opengl2.cpp" />
     <ClCompile Include="Libraries\imgui-master\backends\imgui_impl_sdl.cpp" />
     <ClCompile Include="Libraries\imgui-master\imgui.cpp" />
@@ -216,21 +208,13 @@
   <ItemGroup>
     <ClInclude Include="allocators.h" />
     <ClInclude Include="App.h" />
-    <ClInclude Include="App_Info.h" />
-    <ClInclude Include="AppInfoLocator.h" />
     <ClInclude Include="App_Selector.h" />
     <ClInclude Include="LoggedAudioSystem.h" />
     <ClInclude Include="SDLAudioSystem.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />
-    <ClInclude Include="CatchSlickOrSamCommand.h" />
-    <ClInclude Include="ChangeColourCommand.h" />
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="CommandManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="cursorstreamwrapper.h" />
-    <ClInclude Include="DefeatCoilyCommand.h" />
-    <ClInclude Include="DisksRemainingCommand.h" />
     <ClInclude Include="document.h" />
     <ClInclude Include="encodedstream.h" />
     <ClInclude Include="encodings.h" />
@@ -250,7 +234,6 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="istreamwrapper.h" />
     <ClInclude Include="Keyboard.h" />
-    <ClInclude Include="KillCommand.h" />
     <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_opengl2.h" />
     <ClInclude Include="Libraries\imgui-master\backends\imgui_impl_sdl.h" />
     <ClInclude Include="Libraries\imgui-master\imconfig.h" />

@@ -8,7 +8,6 @@
 #include "EventQueue.h" // EventQueue
 #include "ThreadManager.h" // ThreadManager
 #include "AudioLocator.h" // AudioLocator
-#include "AppInfoLocator.h" // AppInfoLocator
 #include "App_Selector.h" // App_Selector
 
 // == Global Variables ==
@@ -27,8 +26,28 @@ Integrian::App::App(const std::string& name)
 	}
 
 	App_Selector::GetInstance().AddApplication(this);
+}
 
-	AppInfoLocator::Provide(&m_AppInfo);
+void Integrian::App::RemoveCommand(const std::string& commandName)
+{
+	using UMapIterator = std::unordered_map<std::string, std::function<void()>>::iterator;
+#ifdef _DEBUG
+	const UMapIterator it{ m_Commands.find(commandName) };
+	if (it != m_Commands.end())
+	{
+		InputManager::GetInstance().RemoveCommand(it->second);
+		m_Commands.erase(commandName);
+	}
+	else
+		Logger::LogWarning("RemoveCommand() did not find a command with name: " + commandName + "\n");
+#else
+	const UMapIterator it{ m_Commands.find(commandName) };
+	if (it != m_Commands.end())
+	{
+		InputManager::GetInstance().RemoveCommand(it->second);
+		m_Commands.erase(commandName);
+	}
+#endif // _DEBUG
 }
 
 Integrian::App::~App()
@@ -53,7 +72,7 @@ bool Integrian::App::Initialize()
 	m_WindowHeight = 480;
 
 	// == Set Window Size For InputManager ==
-	m_AppInfo.inputManager.SetWindowSize(m_WindowWidth, m_WindowHeight);
+	InputManager::GetInstance().SetWindowSize(m_WindowWidth, m_WindowHeight);
 
 	// == Seed rand() ==
 	srand(static_cast<unsigned int>(time(nullptr)));
@@ -189,13 +208,13 @@ void Integrian::App::Run()
 	float timeSinceLastUpdate{};
 
 	// == Event Loop ==
-	//while (g_IsLooping.load())
+	//while (continueRunning)
 	{
 		// == Update Timer ==
 		timer.Update();
 
 		// == Handle Input ==
-		m_AppInfo.inputManager.HandleInput();
+		InputManager::GetInstance().HandleInput();
 
 		// == Update ==
 		UpdateApplication(timeSinceLastUpdate);
@@ -207,7 +226,7 @@ void Integrian::App::Run()
 		timeSinceLastUpdate += timer.GetElapsedSeconds();
 
 		// == Send New Frame ==
-		m_AppInfo.eventQueue.QueueEvent(Event{ "EndOfFrame" });
+		EventQueue::GetInstance().QueueEvent(Event{ "EndOfFrame" });
 	}
 }
 
@@ -249,8 +268,7 @@ void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
 	Update(dt);
 
 	AudioLocator::GetAudio()->Update(dt); // update the audio
-	m_AppInfo.eventQueue.Update(); // Update the event queue
-
+	EventQueue::GetInstance().Update(); // Update the event queue
 
 	LateUpdate(dt);
 
@@ -285,13 +303,38 @@ std::string Integrian::App::GetAppName() const
 	return m_AppName;
 }
 
-Integrian::App_Info& Integrian::App::GetAppInfo()
-{
-	return m_AppInfo;
-}
-
 void Integrian::App::ClearBackground() const
 {
 	glClearColor(192.f / 255.f, 192.f / 255.f, 192.f / 255.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Integrian::App::OnAppEnter()
+{
+	if (!m_CC.empty())
+	{
+		for (uint8_t i{}; i < 4; ++i)
+			InputManager::GetInstance().SetControllerCommands(m_CC[i], i);
+
+		InputManager::GetInstance().SetKeyboardCommands(m_KC);
+		
+		InputManager::GetInstance().SetMouseCommands(m_MC);
+	}
+
+}
+
+void Integrian::App::OnAppExit()
+{
+	using CC = std::unordered_map<ControllerInput, std::vector<CommandAndButton>>;
+	using KC = std::unordered_map<KeyboardInput, std::vector<CommandAndButton>>;
+	using MC = std::unordered_map<MouseButton, std::vector<CommandAndButton>>;
+
+	for (uint8_t i{}; i < 4; ++i)
+		m_CC[i] = std::remove_reference_t<CC>(InputManager::GetInstance().GetControllerCommands(i));
+
+	m_KC = std::remove_reference_t<KC>(InputManager::GetInstance().GetKeyboardCommands());
+
+	m_MC = std::remove_reference_t<MC>(InputManager::GetInstance().GetMouseCommands());
+
+	InputManager::GetInstance().RemoveAllCommands();
 }

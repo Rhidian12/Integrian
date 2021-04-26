@@ -23,18 +23,19 @@ namespace Integrian
 	private:
 		Keyboard() = default;
 		Keyboard(const Keyboard&) = delete;
-		Keyboard(Keyboard&& other);
+		Keyboard(Keyboard&& other) noexcept;
 		Keyboard& operator=(const Keyboard&) = delete;
 		friend class InputManager;
 
-		void AddCommand(const KeyboardInput keyboardInput, const State keyState, std::function<void()>& pCommand);
+		void AddCommand(const KeyboardInput keyboardInput, const State keyState, const std::function<void()>& pCommand);
 		void ExecuteCommands();
 
 		[[nodiscard]] bool IsPressed(const KeyboardInput gameInput) const;
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const KeyboardInput keyboardInput, const State previousState) const;
+		[[nodiscard]] const std::unordered_map<KeyboardInput, std::vector<CommandAndButton>>& GetCommands() const;
 		
-		void RemoveCommand(std::function<void()>& pCommand);
+		void RemoveCommand(const std::function<void()>& pCommand);
 
 		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_KeyboardCommands{};
 		std::vector<KeyboardInput> m_KeysToBeRemoved{};

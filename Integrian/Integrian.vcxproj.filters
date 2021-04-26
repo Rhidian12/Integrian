@@ -78,18 +78,12 @@
     <Filter Include="Engine\PossibleInputs">
       <UniqueIdentifier>{ce408f37-0268-477d-a252-ea36c43bc673}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Command">
-      <UniqueIdentifier>{53027966-f14b-4234-82a2-dd483ffa2191}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Applications">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Applications\Test_App">
       <UniqueIdentifier>{750c1981-6cc9-4638-a1e6-303b343ad768}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App\Commands">
-      <UniqueIdentifier>{12bc12a6-23ce-4fd9-85e0-7aed466818ef}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\ImGui">
       <UniqueIdentifier>{f1afba84-eddb-4304-9f68-b8ae79755c45}</UniqueIdentifier>
@@ -109,9 +103,6 @@
     <Filter Include="Engine\Subject">
       <UniqueIdentifier>{ee02623b-b158-4c83-9720-661085125f95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Applications\Test_App\Commands\KillCommand">
-      <UniqueIdentifier>{7c981eff-3e84-481d-ad93-94fbed8964a1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Applications\Test_App\Components">
       <UniqueIdentifier>{e4649bea-8811-401a-af57-b6b626a336e0}</UniqueIdentifier>
     </Filter>
@@ -123,18 +114,6 @@
     </Filter>
     <Filter Include="Applications\Test_App\Components\ScoreComponent">
       <UniqueIdentifier>{6402a466-1582-4249-8973-880cfcdb1c08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App\Commands\DefeatCoily">
-      <UniqueIdentifier>{5f7c5f95-e642-4e22-a933-8d39cc5dbbfa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App\Commands\CatchSlickOrSamCommand">
-      <UniqueIdentifier>{3102c50e-4446-452a-8a07-4d714d82bace}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App\Commands\ChangeColourCommand">
-      <UniqueIdentifier>{d13fa926-50d5-4196-8acc-5083df108169}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App\Commands\DisksRemainingCommand">
-      <UniqueIdentifier>{365b7c15-f0fc-4327-82b4-2c28194a2f74}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Keyboard">
       <UniqueIdentifier>{2e04a266-46a7-4b85-8f5f-45c791b403d7}</UniqueIdentifier>
@@ -172,14 +151,8 @@
     <Filter Include="Engine\Managers\ThreadManager">
       <UniqueIdentifier>{9ea87432-0494-4938-b0fb-a9887ff7d56d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\App\App_Info">
-      <UniqueIdentifier>{1cfb5f6b-f674-4b7b-a5b7-f69580e7b10a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\AudioLocator">
       <UniqueIdentifier>{4cd1959a-5443-466a-9a5d-097f3f5f356d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\App_Info Locator">
-      <UniqueIdentifier>{425c29d1-e2c8-43e0-8b65-ef4dca929304}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\AudioLocator\NullAudioSystem">
       <UniqueIdentifier>{42cbc4a6-4629-4e7b-bb9d-de860a48aff2}</UniqueIdentifier>
@@ -249,9 +222,6 @@
     <ClCompile Include="FPSComponent.cpp">
       <Filter>Engine\Components\FPSComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>Engine\Command</Filter>
-    </ClCompile>
     <ClCompile Include="Libraries\imgui-master\imgui.cpp">
       <Filter>Engine\ImGui</Filter>
     </ClCompile>
@@ -288,9 +258,6 @@
     <ClCompile Include="Subject.cpp">
       <Filter>Engine\Subject</Filter>
     </ClCompile>
-    <ClCompile Include="KillCommand.cpp">
-      <Filter>Applications\Test_App\Commands\KillCommand</Filter>
-    </ClCompile>
     <ClCompile Include="HealthDisplayComponent.cpp">
       <Filter>Applications\Test_App\Components\HealthDisplayComponent</Filter>
     </ClCompile>
@@ -302,21 +269,6 @@
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Applications\Test_App\Components\ScoreComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="DefeatCoilyCommand.cpp">
-      <Filter>Applications\Test_App\Commands\DefeatCoily</Filter>
-    </ClCompile>
-    <ClCompile Include="CatchSlickOrSamCommand.cpp">
-      <Filter>Applications\Test_App\Commands\CatchSlickOrSamCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="ChangeColourCommand.cpp">
-      <Filter>Applications\Test_App\Commands\ChangeColourCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="DisksRemainingCommand.cpp">
-      <Filter>Applications\Test_App\Commands\DisksRemainingCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandManager.cpp">
-      <Filter>Engine\Managers\CommandManager</Filter>
     </ClCompile>
     <ClCompile Include="AudioLocator.cpp">
       <Filter>Engine\AudioLocator</Filter>
@@ -341,9 +293,6 @@
     </ClCompile>
     <ClCompile Include="App_Selector.cpp">
       <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="AppInfoLocator.cpp">
-      <Filter>Engine\App_Info Locator</Filter>
     </ClCompile>
     <ClCompile Include="Test_App_2_Boogaloo.cpp">
       <Filter>Applications\Test_App_2_Boogaloo</Filter>
@@ -449,9 +398,6 @@
     <ClInclude Include="PossibleInputs.h">
       <Filter>Engine\PossibleInputs</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Engine\Command</Filter>
-    </ClInclude>
     <ClInclude Include="Libraries\imgui-master\imconfig.h">
       <Filter>Engine\ImGui</Filter>
     </ClInclude>
@@ -494,9 +440,6 @@
     <ClInclude Include="Subject.h">
       <Filter>Engine\Subject</Filter>
     </ClInclude>
-    <ClInclude Include="KillCommand.h">
-      <Filter>Applications\Test_App\Commands\KillCommand</Filter>
-    </ClInclude>
     <ClInclude Include="HealthDisplayComponent.h">
       <Filter>Applications\Test_App\Components\HealthDisplayComponent</Filter>
     </ClInclude>
@@ -508,18 +451,6 @@
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
       <Filter>Applications\Test_App\Components\ScoreComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="DefeatCoilyCommand.h">
-      <Filter>Applications\Test_App\Commands\DefeatCoily</Filter>
-    </ClInclude>
-    <ClInclude Include="CatchSlickOrSamCommand.h">
-      <Filter>Applications\Test_App\Commands\CatchSlickOrSamCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="ChangeColourCommand.h">
-      <Filter>Applications\Test_App\Commands\ChangeColourCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="DisksRemainingCommand.h">
-      <Filter>Applications\Test_App\Commands\DisksRemainingCommand</Filter>
     </ClInclude>
     <ClInclude Include="allocators.h">
       <Filter>Engine\RapidJSON</Filter>
@@ -581,9 +512,6 @@
     <ClInclude Include="writer.h">
       <Filter>Engine\RapidJSON</Filter>
     </ClInclude>
-    <ClInclude Include="CommandManager.h">
-      <Filter>Engine\Managers\CommandManager</Filter>
-    </ClInclude>
     <ClInclude Include="StaticInstanceAlreadyCreated.h">
       <Filter>Engine\Exceptions</Filter>
     </ClInclude>
@@ -616,12 +544,6 @@
     </ClInclude>
     <ClInclude Include="ThreadManager.h">
       <Filter>Engine\Managers\ThreadManager</Filter>
-    </ClInclude>
-    <ClInclude Include="App_Info.h">
-      <Filter>Engine\App\App_Info</Filter>
-    </ClInclude>
-    <ClInclude Include="AppInfoLocator.h">
-      <Filter>Engine\App_Info Locator</Filter>
     </ClInclude>
     <ClInclude Include="Test_App_2_Boogaloo.h">
       <Filter>Applications\Test_App_2_Boogaloo</Filter>

@@ -20,7 +20,7 @@ namespace Integrian
 
 	struct CommandAndButton final
 	{
-		CommandAndButton(std::function<void()>& pCommand, const State wantedKeystate)
+		CommandAndButton(const std::function<void()>& pCommand, const State wantedKeystate)
 			: pCommand{ pCommand }
 			, wantedKeystate{ wantedKeystate }
 			, previousKeystate{ State::NotPressed }

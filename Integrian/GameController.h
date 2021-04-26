@@ -29,7 +29,7 @@ namespace Integrian
 		GameController& operator=(const GameController&) = delete;
 		friend class InputManager;
 
-		void AddCommand(const ControllerInput controllerInput, const State keyState, std::function<void()>& pCommand);
+		void AddCommand(const ControllerInput controllerInput, const State keyState, const std::function<void()>& pCommand);
 		void ExecuteCommands();
 
 		[[nodiscard]] bool IsPressed(const ControllerInput controllerInput) const;
@@ -37,8 +37,9 @@ namespace Integrian
 		[[nodiscard]] State GetKeystate(const ControllerInput controllerInput, const State previousState) const;
 		[[nodiscard]] double GetJoystickMovement(const ControllerInput axis) const;
 		[[nodiscard]] double GetTriggerMovement(const ControllerInput axis) const;
+		[[nodiscard]] const std::unordered_map<ControllerInput, std::vector<CommandAndButton>>& GetCommands() const;
 
-		void RemoveCommand(std::function<void()>& pCommand);
+		void RemoveCommand(const std::function<void()>& pCommand);
 
 		std::unordered_map<ControllerInput, std::vector<CommandAndButton>> m_pCommands{};
 		std::vector<ControllerInput> m_KeysToBeRemoved{};

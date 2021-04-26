@@ -1,22 +1,28 @@
+#include "IntegrianPCH.h"
 #include "Test_App_2_Boogaloo.h"
 #include "App_Selector.h"
 #include "TextureComponent.h"
 #include "TextureManager.h"
+#include "EventQueue.h"
+#include "InputManager.h"
 
 Integrian::Test_App_2_Boogaloo::Test_App_2_Boogaloo()
 	: App{ "Test_App_2_Boogaloo" }
 {
-	m_AppInfo.commandManager.AddCommand("SwitchScenes", [this]()
-		{
-			m_AppInfo.eventQueue.QueueEvent(Event{ "Change_Application", "Test_App" });
-		});
 
-	m_AppInfo.commandManager.LinkCommandToInput(GameInput{ KeyboardInput::G }, "SwitchScenes", State::OnRelease);
-	TextureManager::GetInstance().AddTexture("Sabaton", "Images/Sabaton.jpg");
 }
 
 void Integrian::Test_App_2_Boogaloo::Start()
 {
+	m_Commands["SwitchToTest_Scene"] = [this]()
+	{
+		EventQueue::GetInstance().QueueEvent(Event{ "Change_Application", "Test_App" });
+	};
+
+	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::G }, m_Commands["SwitchToTest_Scene"], State::OnRelease);
+
+	TextureManager::GetInstance().AddTexture("Sabaton", "Images/Sabaton.jpg");
+
 	GameObject* pGameObject{ new GameObject{} };
 	pGameObject->AddComponent(new TextureComponent{ TextureManager::GetInstance().GetTexture("Sabaton") });
 	m_pGameObjects.push_back(pGameObject);

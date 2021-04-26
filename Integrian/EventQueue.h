@@ -7,12 +7,13 @@
 #include <deque> // std::deque
 #include <vector> // std::vector
 #include "ListenerInterface.h" // IListener
+#include "Singleton.h" // Singleton
 
 #include "VisualBenchmark.h" // TODO: REMOVE THIS, ONLY FOR TESTING 
 
 namespace Integrian
 {
-	class EventQueue final : public IListener
+	class EventQueue final : public IListener, public Singleton<EventQueue>
 	{
 	public:
 		virtual ~EventQueue();
@@ -29,7 +30,7 @@ namespace Integrian
 		[[nodiscard]] bool AreAllEventsProcessed() const;
 
 	private:
-		friend struct App_Info;
+		friend class Singleton<EventQueue>;
 		EventQueue();
 
 		std::vector<IListener*> m_pListeners{};

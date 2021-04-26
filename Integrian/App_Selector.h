@@ -17,20 +17,19 @@ namespace Integrian
 		
 		void AddApplication(App* pApplication);
 		void SetActiveApplication(const std::string& name);
+		void RunActiveApplication();
 
 		bool OnEvent(const Event& event) override;
 
 		[[nodiscard]] App* GetActiveApplication() const;
 
 	private:
-		App_Selector() = default;
+		App_Selector();
 		friend class Singleton<App_Selector>;
 
 		std::unordered_map<std::string, App*> m_pApplications{};
 		App* m_pActiveApplication{};
 	};
 }
-
-#define TEST_APP
 
 #endif // !APP_SELECTOR_H

@@ -7,10 +7,8 @@
 #include <atomic> // std::atomic
 
 // == Include correct application == 
-#ifdef TEST_APP
 #include "Test_App.h"
 #include "Test_App_2_Boogaloo.h"
-#endif
 
 // == Global Variables ==
 std::atomic<bool> volatile g_IsLooping{ true };
@@ -30,6 +28,8 @@ int main(int argc, char* args[])
 		{
 			appSelector.AddApplication(new Integrian::Test_App{});
 			appSelector.AddApplication(new Integrian::Test_App_2_Boogaloo{});
+
+			appSelector.SetActiveApplication("Test_App");
 		}
 		catch (...)
 		{
@@ -44,8 +44,8 @@ int main(int argc, char* args[])
 		try
 		{
 			// == Run The Application ==
-			while (g_IsLooping.load())
-				appSelector.GetActiveApplication()->Run();
+			//while (g_IsLooping.load())
+				appSelector.RunActiveApplication();
 		}
 		catch (...)
 		{

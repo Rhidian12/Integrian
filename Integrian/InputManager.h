@@ -13,6 +13,7 @@
 #include "Mouse.h" // Mouse
 #include "EventQueue.h" // EventQueue
 #include <functional> // std::function
+#include "Singleton.h" // Singleton
 
 // Reference: https://stackoverflow.com/questions/25963966/c-function-pointer-callback-without-inheritance
 
@@ -25,7 +26,7 @@
 
 namespace Integrian
 {
-	class InputManager final
+	class InputManager final : public Singleton<InputManager>
 	{
 	public:
 		virtual ~InputManager() = default;
@@ -35,6 +36,11 @@ namespace Integrian
 		All input gets processed, and commands linked to those inputs get executed
 		*/
 		void HandleInput();
+
+		void AddCommand(const GameInput& gameInput, const std::function<void()>& pCommand, const State keyState, const uint8_t controllerIndex = 0);
+		void RemoveCommandFromInput(const GameInput& input, std::function<void()>& pCommand, const uint8_t controllerIndex = 0);
+		void RemoveCommand(const std::function<void()>& pCommand, const uint8_t controllerIndex = 0);
+		void RemoveAllCommands();
 
 		/* At the moment, this does nothing, so don't use it*/
 		void SetWindowSize(const uint32_t width, const uint32_t height);
@@ -49,7 +55,7 @@ namespace Integrian
 		This does not return how much of a Trigger is pressed, use GetTriggerMovement() for that
 		*/
 		[[nodiscard]] bool IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex = 0) const;
-		
+
 		/* Get current mouse position */
 		[[nodiscard]] const Point2f& GetMousePosition() const;
 
@@ -59,14 +65,23 @@ namespace Integrian
 		/* Get how much a Trigger is pressed mapped to a range of [0, 1] */
 		[[nodiscard]] double GetTriggerMovement(const ControllerInput axis, const uint8_t playerIndex = 0) const;
 
-	private:
-		friend struct App_Info;
-		friend class CommandManager;
-		InputManager(EventQueue& eventQueue);
+		/* Returns the map containing all inputs (with corresponding commands) linked to keyboard buttons */
+		[[nodiscard]] const std::unordered_map<KeyboardInput, std::vector<CommandAndButton>>& GetKeyboardCommands() const;
+		
+		/* Returns the map containing all inputs (with corresponding commands) linked to mouse buttons */
+		[[nodiscard]] const std::unordered_map<MouseButton, std::vector<CommandAndButton>>& GetMouseCommands() const;
 
-		void AddCommand(const GameInput& gameInput, std::function<void()>& pCommand, const State keyState, const uint8_t controllerIndex = 0);
-		void RemoveCommandFromInput(const GameInput& input, std::function<void()>& pCommand, const uint8_t controllerIndex = 0);
-		void RemoveCommand(std::function<void()>& pCommand, const uint8_t controllerIndex = 0);
+		/* Returns the map containing all inputs (with corresponding commands) linked to controller buttons */
+		[[nodiscard]] const std::unordered_map<ControllerInput, std::vector<CommandAndButton>>& GetControllerCommands(const uint8_t index) const;
+
+	private:
+		friend class App;
+		friend class Singleton<InputManager>;
+		InputManager();
+
+		void SetControllerCommands(std::unordered_map<ControllerInput, std::vector<CommandAndButton>> commands, const uint8_t index);
+		void SetKeyboardCommands(std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> commands);
+		void SetMouseCommands(std::unordered_map<MouseButton, std::vector<CommandAndButton>> commands);
 
 		Point2f m_MousePosition;
 		uint32_t m_WindowWidth;
@@ -77,8 +92,6 @@ namespace Integrian
 		std::array<GameController, m_MaxAmountOfControllers> m_Controllers;
 		Keyboard m_Keyboard;
 		Mouse m_Mouse;
-
-		EventQueue& m_EventQueue;
 	};
 }
 
