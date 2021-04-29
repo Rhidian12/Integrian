@@ -47,6 +47,7 @@ int main(int argc, char* args[])
 			//while (g_IsLooping.load())
 				appSelector.RunActiveApplication();
 		}
+		// test
 		catch (...)
 		{
 #pragma warning( push )
