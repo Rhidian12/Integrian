@@ -10,10 +10,13 @@ Qbert_MainGame::Qbert_MainGame()
 
 void Qbert_MainGame::Start()
 {
-	Integrian::TextureManager::GetInstance().AddTexture("Sabaton", "Resources/Images/Sabaton.jpg");
+	using namespace Integrian;
 
-	Integrian::GameObject* pGameObject{ new Integrian::GameObject{} };
-	pGameObject->AddComponent(new Integrian::TextureComponent{Integrian::TextureManager::GetInstance().GetTexture("Sabaton") });
+	TextureManager::GetInstance().AddTexture("QbertLevelOneInactiveTile", "Resources/Images/QbertLevelOneInactiveTile.png");
+	TextureManager::GetInstance().AddTexture("QbertLevelOneActiveTile", "Resources/Images/QbertLevelOneActiveTile.png");
+
+	GameObject* pGameObject{ new GameObject{} };
+	pGameObject->AddComponent(new TextureComponent{ TextureManager::GetInstance().GetTexture("Sabaton") });
 	m_pGameObjects.push_back(pGameObject);
 }
 
