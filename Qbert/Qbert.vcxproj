@@ -173,10 +173,12 @@ xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)" /y
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="PyramidComponent.cpp" />
     <ClCompile Include="Qbert.cpp" />
     <ClCompile Include="Qbert_MainGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PyramidComponent.h" />
     <ClInclude Include="Qbert_MainGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
