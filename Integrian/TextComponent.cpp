@@ -4,23 +4,24 @@
 #include "Texture.h" // texture
 #include "PrinterManager.h" // printermanager
 
-Integrian::TextComponent::TextComponent()
-	: TextComponent{ "" }
+Integrian::TextComponent::TextComponent(GameObject* pParent)
+	: TextComponent{ pParent, "" }
 {
 }
 
-Integrian::TextComponent::TextComponent(const int size, const RGBColour& colour)
-	: TextComponent{ "",size,colour }
+Integrian::TextComponent::TextComponent(GameObject* pParent, const int size, const RGBColour& colour)
+	: TextComponent{ pParent, "",size,colour }
 {
 }
 
-Integrian::TextComponent::TextComponent(const std::string& textToBeRendered)
-	: TextComponent{ textToBeRendered, 20, RGBColour{} } // default colour is white
+Integrian::TextComponent::TextComponent(GameObject* pParent, const std::string& textToBeRendered)
+	: TextComponent{ pParent, textToBeRendered, 20, RGBColour{} } // default colour is white
 {
 }
 
-Integrian::TextComponent::TextComponent(const std::string& textToRender, const int size, const RGBColour& colour)
-	: m_TextToBeRendered{ textToRender }
+Integrian::TextComponent::TextComponent(GameObject* pParent, const std::string& textToRender, const int size, const RGBColour& colour)
+	: Component{ pParent }
+	, m_TextToBeRendered{ textToRender }
 	, m_pPrinter{ PrinterManager::GetInstance().AddPrinter(size,colour) }
 {
 }

@@ -25,7 +25,7 @@ namespace Integrian
 		void Update(const float elapsedSeconds);
 		void FixedUpdate(const float elapsedSeconds);
 		void LateUpdate(const float elapsedSeconds);
-		
+
 		void Render() const;
 
 		template<typename Type, typename = std::enable_if_t<std::is_base_of_v<Component, Type>>> // sfinae
@@ -38,9 +38,9 @@ namespace Integrian
 			Logger::LogWarning("GetComponentByType returned a nullptr\n");
 			return nullptr;
 		}
-		
-		TransformComponent transform{};
-	
+
+		TransformComponent transform{ this };
+
 	private:
 		std::vector<Component*> m_pComponents;
 	};

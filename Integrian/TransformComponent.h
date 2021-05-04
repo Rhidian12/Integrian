@@ -6,11 +6,12 @@
 
 namespace Integrian
 {
+	class GameObject;
 	class TransformComponent final : public Component
 	{
 	public:
-		TransformComponent();
-		TransformComponent(const Point2f& position);
+		TransformComponent(GameObject* pParent);
+		TransformComponent(GameObject* pParent, const Point2f& position);
 		~TransformComponent() = default;
 
 		void SetPosition(const Point2f& position);

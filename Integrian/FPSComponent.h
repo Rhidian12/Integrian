@@ -7,11 +7,12 @@
 
 namespace Integrian
 {
+	class GameObject;
 	class TextComponent;
 	class FPSComponent final : public Component
 	{
 	public:
-		explicit FPSComponent(TextComponent* pTextComponent);
+		explicit FPSComponent(GameObject* pParent, TextComponent* pTextComponent);
 		virtual ~FPSComponent() = default;
 
 		virtual void Update(const float) override;

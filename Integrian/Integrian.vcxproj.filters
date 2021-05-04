@@ -78,13 +78,6 @@
     <Filter Include="Engine\PossibleInputs">
       <UniqueIdentifier>{ce408f37-0268-477d-a252-ea36c43bc673}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Applications">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Applications\Test_App">
-      <UniqueIdentifier>{750c1981-6cc9-4638-a1e6-303b343ad768}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\ImGui">
       <UniqueIdentifier>{f1afba84-eddb-4304-9f68-b8ae79755c45}</UniqueIdentifier>
     </Filter>
@@ -103,26 +96,11 @@
     <Filter Include="Engine\Subject">
       <UniqueIdentifier>{ee02623b-b158-4c83-9720-661085125f95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Applications\Test_App\Components">
-      <UniqueIdentifier>{e4649bea-8811-401a-af57-b6b626a336e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App\Components\HealthComponent">
-      <UniqueIdentifier>{cbc5b3a0-673e-4b77-acf3-d3ae61fc67f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App\Components\ScoreDisplayComponent">
-      <UniqueIdentifier>{260060a5-2f22-4609-b009-3f46a620c2eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App\Components\ScoreComponent">
-      <UniqueIdentifier>{6402a466-1582-4249-8973-880cfcdb1c08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Keyboard">
       <UniqueIdentifier>{2e04a266-46a7-4b85-8f5f-45c791b403d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\RapidJSON">
       <UniqueIdentifier>{a8938304-d79f-4af8-8520-66af12bbee40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App\Components\HealthDisplayComponent">
-      <UniqueIdentifier>{6684b9eb-1a55-439c-9020-7459598c25d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Managers\CommandManager">
       <UniqueIdentifier>{539df794-c972-4892-88b1-10aa05cf9aac}</UniqueIdentifier>
@@ -156,9 +134,6 @@
     </Filter>
     <Filter Include="Engine\AudioLocator\NullAudioSystem">
       <UniqueIdentifier>{42cbc4a6-4629-4e7b-bb9d-de860a48aff2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Applications\Test_App_2_Boogaloo">
-      <UniqueIdentifier>{3f3fd812-6dbe-44a9-8265-f57ee5889c1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -210,9 +185,6 @@
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Engine\Components\TransformComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Test_App.cpp">
-      <Filter>Applications\Test_App</Filter>
-    </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Engine\Components\TextureComponent</Filter>
     </ClCompile>
@@ -258,18 +230,6 @@
     <ClCompile Include="Subject.cpp">
       <Filter>Engine\Subject</Filter>
     </ClCompile>
-    <ClCompile Include="HealthDisplayComponent.cpp">
-      <Filter>Applications\Test_App\Components\HealthDisplayComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Applications\Test_App\Components\HealthComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreDisplayComponent.cpp">
-      <Filter>Applications\Test_App\Components\ScoreDisplayComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Applications\Test_App\Components\ScoreComponent</Filter>
-    </ClCompile>
     <ClCompile Include="AudioLocator.cpp">
       <Filter>Engine\AudioLocator</Filter>
     </ClCompile>
@@ -293,9 +253,6 @@
     </ClCompile>
     <ClCompile Include="App_Selector.cpp">
       <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Test_App_2_Boogaloo.cpp">
-      <Filter>Applications\Test_App_2_Boogaloo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -377,9 +334,6 @@
     <ClInclude Include="Singleton.h">
       <Filter>Engine\Singleton</Filter>
     </ClInclude>
-    <ClInclude Include="Test_App.h">
-      <Filter>Applications\Test_App</Filter>
-    </ClInclude>
     <ClInclude Include="TextureComponent.h">
       <Filter>Engine\Components\TextureComponent</Filter>
     </ClInclude>
@@ -439,18 +393,6 @@
     </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>Engine\Subject</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthDisplayComponent.h">
-      <Filter>Applications\Test_App\Components\HealthDisplayComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Applications\Test_App\Components\HealthComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreDisplayComponent.h">
-      <Filter>Applications\Test_App\Components\ScoreDisplayComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Applications\Test_App\Components\ScoreComponent</Filter>
     </ClInclude>
     <ClInclude Include="allocators.h">
       <Filter>Engine\RapidJSON</Filter>
@@ -544,9 +486,6 @@
     </ClInclude>
     <ClInclude Include="ThreadManager.h">
       <Filter>Engine\Managers\ThreadManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Test_App_2_Boogaloo.h">
-      <Filter>Applications\Test_App_2_Boogaloo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

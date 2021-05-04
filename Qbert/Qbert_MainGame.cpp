@@ -16,7 +16,7 @@ void Qbert_MainGame::Start()
 	TextureManager::GetInstance().AddTexture("QbertLevelOneActiveTile", "Resources/Images/QbertLevelOneActiveTile.png");
 
 	GameObject* pGameObject{ new GameObject{} };
-	pGameObject->AddComponent(new TextureComponent{ TextureManager::GetInstance().GetTexture("Sabaton") });
+	pGameObject->AddComponent(new TextureComponent{ pGameObject, TextureManager::GetInstance().GetTexture("Sabaton") });
 	m_pGameObjects.push_back(pGameObject);
 }
 

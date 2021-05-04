@@ -6,12 +6,13 @@
 
 namespace Integrian
 {
+	class GameObject;
 	class Texture;
 	class TextureComponent final : public Component
 	{
 	public:
-		TextureComponent();
-		TextureComponent(Texture* pTexture);
+		TextureComponent(GameObject* pParent);
+		TextureComponent(GameObject* pParent, Texture* pTexture);
 		~TextureComponent() = default;
 
 		virtual void Render(const Point2f& pos) const override;

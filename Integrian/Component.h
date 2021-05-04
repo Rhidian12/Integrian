@@ -7,10 +7,11 @@
 
 namespace Integrian
 {
+	class GameObject;
 	class Component abstract
 	{
 	public:
-		Component() = default;
+		Component(GameObject* pParent);
 		virtual ~Component() = default;
 
 		virtual void Update(const float) {}
@@ -20,7 +21,7 @@ namespace Integrian
 		virtual void Render(const Point2f&) const {}
 
 	protected:
-
+		GameObject* m_pParent{};
 	private:
 	};
 }

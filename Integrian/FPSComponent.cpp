@@ -3,8 +3,9 @@
 #include "TextComponent.h" // text component
 #include "Timer.h" // Timer
 
-Integrian::FPSComponent::FPSComponent(TextComponent* pTextComponent)
-	: m_pTextComponent{ pTextComponent }
+Integrian::FPSComponent::FPSComponent(GameObject* pParent, TextComponent* pTextComponent)
+	:Component{ pParent }
+	, m_pTextComponent{ pTextComponent }
 {
 }
 

@@ -1,13 +1,14 @@
 #include "IntegrianPCH.h" // precompiled header
 #include "TransformComponent.h" // header
 
-Integrian::TransformComponent::TransformComponent()
-	: TransformComponent{ {} }
+Integrian::TransformComponent::TransformComponent(GameObject* pParent)
+	: TransformComponent{ pParent, {} }
 {
 }
 
-Integrian::TransformComponent::TransformComponent(const Point2f& position)
-	: m_Position{ position }
+Integrian::TransformComponent::TransformComponent(GameObject* pParent, const Point2f& position)
+	: Component{ pParent }
+	, m_Position{ position }
 {
 }
 

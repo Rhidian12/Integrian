@@ -2,13 +2,14 @@
 #include "TextureComponent.h" // header
 #include "Texture.h" // texture
 
-Integrian::TextureComponent::TextureComponent()
-	: TextureComponent{ nullptr }
+Integrian::TextureComponent::TextureComponent(GameObject* pParent)
+	: TextureComponent{ pParent, nullptr }
 {
 }
 
-Integrian::TextureComponent::TextureComponent(Texture* pTexture)
-	: m_pTexture{ pTexture }
+Integrian::TextureComponent::TextureComponent(GameObject* pParent, Texture* pTexture)
+	: Component{ pParent }
+	, m_pTexture{ pTexture }
 {
 }
 

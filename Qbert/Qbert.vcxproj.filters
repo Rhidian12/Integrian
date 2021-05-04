@@ -16,6 +16,12 @@
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{7903291e-edc8-466d-b185-d6f82dd4c0ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\PyramidComponent">
+      <UniqueIdentifier>{64f2b9b9-c391-4aca-a4f0-227db44a358c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\TileComponent">
+      <UniqueIdentifier>{c49f96b4-7453-4352-abc5-8ac542121d4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -25,15 +31,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PyramidComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components\PyramidComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="PyramidComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Components\PyramidComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
