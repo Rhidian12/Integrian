@@ -2,6 +2,7 @@
 #include <Texture.h>
 #include <TextureComponent.h>
 #include <TextureManager.h>
+#include "PyramidComponent.h"
 
 Qbert_MainGame::Qbert_MainGame()
 	: Integrian::App{ "Qbert_MainGame" }
@@ -15,9 +16,15 @@ void Qbert_MainGame::Start()
 	TextureManager::GetInstance().AddTexture("QbertLevelOneInactiveTile", "Resources/Images/QbertLevelOneInactiveTile.png");
 	TextureManager::GetInstance().AddTexture("QbertLevelOneActiveTile", "Resources/Images/QbertLevelOneActiveTile.png");
 
-	GameObject* pGameObject{ new GameObject{} };
-	pGameObject->AddComponent(new TextureComponent{ pGameObject, TextureManager::GetInstance().GetTexture("Sabaton") });
-	m_pGameObjects.push_back(pGameObject);
+	GameObject* pPyramidRoot{ new GameObject{} };
+	pPyramidRoot->transform.SetPosition(Point2f{ m_WindowWidth / 2.f, (m_WindowHeight / 2.f) - 100.f });
+
+	PyramidComponent* pPyramidComponent{ new PyramidComponent{pPyramidRoot} };
+	pPyramidComponent->CreateTiles(7, TextureManager::GetInstance().GetTexture("QbertLevelOneInactiveTile"));
+
+	pPyramidRoot->AddComponent(pPyramidComponent);
+
+	m_pGameObjects.push_back(std::move(pPyramidRoot));
 }
 
 void Qbert_MainGame::Update(const float elapsedSeconds)
