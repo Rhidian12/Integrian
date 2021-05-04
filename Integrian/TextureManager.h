@@ -32,7 +32,6 @@ namespace Integrian
 		TextureManager();
 		friend class Singleton<TextureManager>;
 
-		std::string m_DataPath;
 		std::unordered_map<std::string, Texture*> m_pTextures;
 	};
 }

@@ -3,13 +3,7 @@
 #include "Texture.h" // texture
 #include "Logger.h" // logger
 Integrian::TextureManager::TextureManager()
-	: m_DataPath{}
 {
-}
-
-void Integrian::TextureManager::Init(const std::string& path)
-{
-	m_DataPath = path;
 }
 
 Integrian::TextureManager::~TextureManager()
@@ -20,13 +14,13 @@ Integrian::TextureManager::~TextureManager()
 
 void Integrian::TextureManager::AddTexture(const std::string& name, const std::string& path)
 {
-	if (!m_pTextures.insert(std::make_pair(name, new Texture{ m_DataPath + path })).second)
+	if (!m_pTextures.insert(std::make_pair(name, new Texture{ path })).second)
 		Logger::LogWarning(name + " was not inserted!\n");
 }
 
 void Integrian::TextureManager::AddTexture(const std::string& name, const std::string& path, const std::string& textToRender, const int size, const RGBColour& colour)
 {
-	if(!m_pTextures.insert(std::make_pair(name, new Texture{ textToRender,m_DataPath + path,size,colour})).second)
+	if(!m_pTextures.insert(std::make_pair(name, new Texture{ textToRender,path,size,colour})).second)
 		Logger::LogWarning(name + " was not inserted!\n");
 }
 

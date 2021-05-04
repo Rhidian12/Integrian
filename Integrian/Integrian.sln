@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Integrian", "Integrian.vcxproj", "{B9D76A9B-2129-4310-A75E-62E7E8C8E21E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Qbert", "..\Qbert\Qbert.vcxproj", "{75B0CFF6-6805-4E74-A31B-545EB2B5654A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B9D76A9B-2129-4310-A75E-62E7E8C8E21E} = {B9D76A9B-2129-4310-A75E-62E7E8C8E21E}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +26,14 @@ Global
 		{B9D76A9B-2129-4310-A75E-62E7E8C8E21E}.Release|x64.Build.0 = Release|x64
 		{B9D76A9B-2129-4310-A75E-62E7E8C8E21E}.Release|x86.ActiveCfg = Release|Win32
 		{B9D76A9B-2129-4310-A75E-62E7E8C8E21E}.Release|x86.Build.0 = Release|Win32
+		{75B0CFF6-6805-4E74-A31B-545EB2B5654A}.Debug|x64.ActiveCfg = Debug|x64
+		{75B0CFF6-6805-4E74-A31B-545EB2B5654A}.Debug|x64.Build.0 = Debug|x64
+		{75B0CFF6-6805-4E74-A31B-545EB2B5654A}.Debug|x86.ActiveCfg = Debug|Win32
+		{75B0CFF6-6805-4E74-A31B-545EB2B5654A}.Debug|x86.Build.0 = Debug|Win32
+		{75B0CFF6-6805-4E74-A31B-545EB2B5654A}.Release|x64.ActiveCfg = Release|x64
+		{75B0CFF6-6805-4E74-A31B-545EB2B5654A}.Release|x64.Build.0 = Release|x64
+		{75B0CFF6-6805-4E74-A31B-545EB2B5654A}.Release|x86.ActiveCfg = Release|Win32
+		{75B0CFF6-6805-4E74-A31B-545EB2B5654A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -52,7 +52,7 @@ void Integrian::App::RemoveCommand(const std::string& commandName)
 
 Integrian::App::~App()
 {
-	for (GameObject* pGameObject : m_pGameObjects)
+	for (GameObject*& pGameObject : m_pGameObjects)
 		SafeDelete(pGameObject);
 
 	m_pGameObjects.clear();
@@ -76,9 +76,6 @@ bool Integrian::App::Initialize()
 
 	// == Seed rand() ==
 	srand(static_cast<unsigned int>(time(nullptr)));
-
-	// Initialise Datapath
-	TextureManager::GetInstance().Init("Data/");
 
 	return true;
 }
