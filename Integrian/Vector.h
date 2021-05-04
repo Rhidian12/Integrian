@@ -50,17 +50,17 @@ namespace Integrian
 		return temp;
 	}
 	
-	//template<int V, typename Type>
-	//Type Dot(const Vector<V, Type>& v1, const Vector<V, Type>& v2)
-	//{
-	//	return v1.x * v2.x + v1.y * v2.y;
-	//}
+	template<int V, typename Type>
+	Type Dot(const Vector<V, Type>& v1, const Vector<V, Type>& v2)
+	{
+		return v1.x * v2.x + v1.y * v2.y;
+	}
 
-	//template<int V, typename Type>
-	//Type Cross(const Vector<V, Type>& v1, const Vector<V, Type>& v2)
-	//{
-	//	return v1.x * v2.y - v1.y * v2.x;
-	//}
+	template<int V, typename Type>
+	Type Cross(const Vector<V, Type>& v1, const Vector<V, Type>& v2)
+	{
+		return v1.x * v2.y - v1.y * v2.x;
+	}
 }
 
 #endif // !ENGINE_VECTOR_H

@@ -4,7 +4,7 @@
 
 Integrian::GameObject::~GameObject()
 {
-	for (Component* pComponent : m_pComponents)
+	for (Component*& pComponent : m_pComponents)
 		SafeDelete(pComponent);
 }
 
