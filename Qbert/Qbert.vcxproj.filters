@@ -22,6 +22,9 @@
     <Filter Include="Source Files\Components\TileFactoryComponent">
       <UniqueIdentifier>{c49f96b4-7453-4352-abc5-8ac542121d4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\TileComponent">
+      <UniqueIdentifier>{c8ce2579-f643-4158-8157-7aa4cadb57ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -36,6 +39,9 @@
     <ClCompile Include="TileFactoryComponent.cpp">
       <Filter>Source Files\Components\TileFactoryComponent</Filter>
     </ClCompile>
+    <ClCompile Include="TileComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
@@ -46,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="TileFactoryComponent.h">
       <Filter>Source Files\Components\TileFactoryComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="TileComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
