@@ -3,6 +3,7 @@
 #include <TextureComponent.h>
 #include <TextureManager.h>
 #include "PyramidComponent.h"
+#include "TileFactoryComponent.h"
 
 Qbert_MainGame::Qbert_MainGame()
 	: Integrian::App{ "Qbert_MainGame" }
@@ -17,17 +18,14 @@ void Qbert_MainGame::Start()
 	TextureManager::GetInstance().AddTexture("QbertLevelOneActiveTile", "Resources/Images/QbertLevelOneActiveTile.png");
 
 	GameObject* pPyramidRoot{ new GameObject{} };
-	pPyramidRoot->transform.SetPosition(Point2f{ m_WindowWidth / 2.f, (m_WindowHeight / 2.f) - 100.f });
+	pPyramidRoot->transform.SetPosition(Point2f{ m_WindowWidth / 2.f, (m_WindowHeight / 2.f) });
 
 	PyramidComponent* pPyramidComponent{ new PyramidComponent{pPyramidRoot} };
-
-	std::vector<GameObject*> tiles{ pPyramidComponent->CreateTiles(7, TextureManager::GetInstance().GetTexture("QbertLevelOneInactiveTile")) };
-
-	for (GameObject* pTile : tiles)
-		m_pGameObjects.push_back(std::move(pTile));
-	tiles.clear();
-
 	pPyramidRoot->AddComponent(pPyramidComponent);
+	
+	TileFactoryComponent* pTileFactoryComponent{ new TileFactoryComponent{pPyramidRoot} };
+	pTileFactoryComponent->CreateTiles(7, TextureManager::GetInstance().GetTexture("QbertLevelOneInactiveTile"));
+	pPyramidRoot->AddComponent(pTileFactoryComponent);
 
 	m_pGameObjects.push_back(std::move(pPyramidRoot));
 }

@@ -4,6 +4,7 @@
 #include <TextureComponent.h>
 #include <App_Selector.h>
 #include <App.h>
+#include "PyramidComponent.h"
 
 TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -15,6 +16,8 @@ void TileFactoryComponent::CreateTiles(const unsigned int size, Integrian::Textu
 	using namespace Integrian;
 
 	// we need to make a size x size triangle
+	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
+	PyramidComponent* pPyramid{ m_pParent->GetComponentByType<PyramidComponent>() };
 
 	const Point2f& parentTransform{ m_pParent->transform.GetPosition() };
 	const float textureWidth{ pInactiveTileTexture->GetWidth() };
@@ -32,7 +35,10 @@ void TileFactoryComponent::CreateTiles(const unsigned int size, Integrian::Textu
 			else
 				temp = Point2f{ parentTransform.x - y * textureWidthDivTwo + (x * textureWidth), parentTransform.y - (y * heightOffset) };
 
-			App_Selector::GetInstance().GetActiveApplication()->m_pGameObjects.push_back(CreateTile(temp, pInactiveTileTexture));
+			GameObject* pTile{ CreateTile(temp, pInactiveTileTexture) };
+
+			pActiveApp->m_pGameObjects.push_back(pTile);
+			pPyramid->AddTile(pTile);
 		}
 	}
 }

@@ -16,9 +16,8 @@ public:
 
 	virtual void Update(const float elapsedSeconds) override;
 
-	[[nodiscard]] std::vector<Integrian::GameObject*> CreateTiles(const unsigned int size, Integrian::Texture* pInactiveTileTexture);
-	Integrian::GameObject* CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture);
+	void AddTile(Integrian::GameObject* pTile);
 
 private:
-	std::vector<Integrian::GameObject*>* m_pTiles;
+	std::vector<Integrian::GameObject*> m_pTiles;
 };
