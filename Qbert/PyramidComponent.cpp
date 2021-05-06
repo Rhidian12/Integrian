@@ -6,50 +6,47 @@
 
 PyramidComponent::PyramidComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
+	, m_pTiles{}
 {
 }
 
-PyramidComponent::~PyramidComponent()
+void PyramidComponent::Update(const float /*elapsedSeconds*/)
 {
-	for (Integrian::GameObject* pGameObject : m_pGameObjects)
-		Integrian::SafeDelete(pGameObject);
+	if (!m_pTiles->empty())
+	{
+		std::cout << "UWU";
+	}
 }
 
-void PyramidComponent::Update(const float elapsedSeconds)
-{
-	for (Integrian::GameObject* pGameObject : m_pGameObjects)
-		pGameObject->Update(elapsedSeconds);
-}
-
-void PyramidComponent::Render(const Integrian::Point2f&) const
-{
-	for (Integrian::GameObject* pGameObject : m_pGameObjects)
-		pGameObject->Render();
-}
-
-void PyramidComponent::CreateTiles(const unsigned int size, Integrian::Texture* pInactiveTileTexture)
+std::vector<Integrian::GameObject*> PyramidComponent::CreateTiles(const unsigned int size, Integrian::Texture* pInactiveTileTexture)
 {
 	using namespace Integrian;
 
 	// we need to make a size x size triangle
-	// so let's start by adding the tiles at the 3 angles
+
+	std::vector<GameObject*> gameObjects{};
+
 	const Point2f& parentTransform{ m_pParent->transform.GetPosition() };
+	const float textureWidth{ pInactiveTileTexture->GetWidth() };
+	const float textureWidthDivTwo{ textureWidth * 0.5f };
+	const float heightOffset{ 24.f }; // texture height offset since the devs of Qbert are evil
 
-	// top angle
-	m_pGameObjects.push_back(CreateTile(Point2f{ parentTransform.x, parentTransform.y + size * pInactiveTileTexture->GetHeight() }, pInactiveTileTexture));
-
-	// left angle
-	m_pGameObjects.push_back(CreateTile(Point2f{ parentTransform.x - size * pInactiveTileTexture->GetWidth(), parentTransform.y }, pInactiveTileTexture));
-
-	// right angle
-	m_pGameObjects.push_back(CreateTile(Point2f{ parentTransform.x + size * pInactiveTileTexture->GetWidth(), parentTransform.y }, pInactiveTileTexture));
-
-	// now we need to go down in rows equal to size - 1 (since top row == top angle which is already made)
-	for (unsigned int i{}; i < size - 1; ++i)
+	for (unsigned int y{}; y < size; ++y)
 	{
-		
+		for (unsigned int x{}; x <= y; ++x)
+		{
+			Point2f temp{};
 
+			if (x == 0)
+				temp = Point2f{ parentTransform.x - y * textureWidthDivTwo, parentTransform.y - (y * heightOffset) };
+			else
+				temp = Point2f{ parentTransform.x - y * textureWidthDivTwo + (x * textureWidth), parentTransform.y - (y * heightOffset) };
+
+			gameObjects.push_back(CreateTile(temp, pInactiveTileTexture));
+		}
 	}
+
+	return gameObjects;
 }
 
 Integrian::GameObject* PyramidComponent::CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture)

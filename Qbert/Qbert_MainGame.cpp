@@ -20,7 +20,12 @@ void Qbert_MainGame::Start()
 	pPyramidRoot->transform.SetPosition(Point2f{ m_WindowWidth / 2.f, (m_WindowHeight / 2.f) - 100.f });
 
 	PyramidComponent* pPyramidComponent{ new PyramidComponent{pPyramidRoot} };
-	pPyramidComponent->CreateTiles(7, TextureManager::GetInstance().GetTexture("QbertLevelOneInactiveTile"));
+
+	std::vector<GameObject*> tiles{ pPyramidComponent->CreateTiles(7, TextureManager::GetInstance().GetTexture("QbertLevelOneInactiveTile")) };
+
+	for (GameObject* pTile : tiles)
+		m_pGameObjects.push_back(std::move(pTile));
+	tiles.clear();
 
 	pPyramidRoot->AddComponent(pPyramidComponent);
 
