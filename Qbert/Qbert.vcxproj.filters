@@ -19,7 +19,7 @@
     <Filter Include="Source Files\Components\PyramidComponent">
       <UniqueIdentifier>{64f2b9b9-c391-4aca-a4f0-227db44a358c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components\TileComponent">
+    <Filter Include="Source Files\Components\TileFactoryComponent">
       <UniqueIdentifier>{c49f96b4-7453-4352-abc5-8ac542121d4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -33,6 +33,9 @@
     <ClCompile Include="PyramidComponent.cpp">
       <Filter>Source Files\Components\PyramidComponent</Filter>
     </ClCompile>
+    <ClCompile Include="TileFactoryComponent.cpp">
+      <Filter>Source Files\Components\TileFactoryComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
@@ -40,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="PyramidComponent.h">
       <Filter>Source Files\Components\PyramidComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="TileFactoryComponent.h">
+      <Filter>Source Files\Components\TileFactoryComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

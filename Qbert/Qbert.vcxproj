@@ -176,10 +176,12 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
     <ClCompile Include="PyramidComponent.cpp" />
     <ClCompile Include="Qbert.cpp" />
     <ClCompile Include="Qbert_MainGame.cpp" />
+    <ClCompile Include="TileFactoryComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidComponent.h" />
     <ClInclude Include="Qbert_MainGame.h" />
+    <ClInclude Include="TileFactoryComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

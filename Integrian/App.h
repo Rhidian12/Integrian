@@ -47,6 +47,8 @@ namespace Integrian
 		void SetWindowSize(const uint32_t windowWidth, const uint32_t windowHeight);
 
 		virtual bool OnEvent(const Event& event) override;
+		
+		std::vector<GameObject*> m_pGameObjects{};
 
 	protected:
 		Rectf m_Target{};
@@ -55,7 +57,6 @@ namespace Integrian
 		std::string m_AppName{};
 
 		std::unique_ptr<OrthographicCamera> m_pCamera{};
-		std::vector<GameObject*> m_pGameObjects{};
 		std::unordered_map<std::string, std::function<void()>> m_Commands{};
 
 		inline static uint32_t m_WindowWidth{};
