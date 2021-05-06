@@ -6,6 +6,8 @@
 #define INTEGRIAN_TEXTURE_H
 
 #include <string> // std::string
+#include <SDL_opengl.h> // GLUint
+#include <SDL_ttf.h> // TTF_Font
 
 struct SDL_Surface;
 namespace Integrian
