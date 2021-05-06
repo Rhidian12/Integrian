@@ -5,6 +5,7 @@
 #include <App_Selector.h>
 #include <App.h>
 #include "PyramidComponent.h"
+#include "TileComponent.h"
 
 TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -49,8 +50,9 @@ Integrian::GameObject* TileFactoryComponent::CreateTile(const Integrian::Point2f
 
 	GameObject* pTile{ new GameObject{} };
 
-	pTile->AddComponent(new TextureComponent{ pTile, pInactiveTileTexture });
 	pTile->transform.SetPosition(location);
+	pTile->AddComponent(new TextureComponent{ pTile, pInactiveTileTexture });
+	pTile->AddComponent(new TileComponent{ pTile });
 
 	return pTile;
 }

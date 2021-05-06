@@ -17,6 +17,7 @@ public:
 	virtual void Update(const float elapsedSeconds) override;
 
 	void AddTile(Integrian::GameObject* pTile);
+	Integrian::Point2f GetTopTileCenter() const noexcept;
 
 private:
 	std::vector<Integrian::GameObject*> m_pTiles;

@@ -40,7 +40,7 @@
       <Filter>Source Files\Components\TileFactoryComponent</Filter>
     </ClCompile>
     <ClCompile Include="TileComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components\TileComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +54,7 @@
       <Filter>Source Files\Components\TileFactoryComponent</Filter>
     </ClInclude>
     <ClInclude Include="TileComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Components\TileComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
