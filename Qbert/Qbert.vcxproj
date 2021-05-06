@@ -141,7 +141,7 @@
 xcopy "$(SolutionDir)Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
 xcopy "$(SolutionDir)Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
 xcopy "$(SolutionDir)Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
-xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D </Command>
+rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -169,7 +169,7 @@ xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)" /y
 xcopy "$(SolutionDir)Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
 xcopy "$(SolutionDir)Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
 xcopy "$(SolutionDir)Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
-xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D </Command>
+rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
