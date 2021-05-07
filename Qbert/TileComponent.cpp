@@ -26,3 +26,8 @@ void TileComponent::AddConnection(TileComponent* pTile, const Direction directio
 	if(pTile)
 		m_ActiveConnections++;
 }
+
+const std::array<TileComponent*, 4>& TileComponent::GetConnections() const noexcept
+{
+	return m_pConnections;
+}

@@ -23,6 +23,8 @@ public:
 	Integrian::Point2f GetCenter() const noexcept;
 	void AddConnection(TileComponent* pTile, const Direction direction);
 
+	[[nodiscard]] const std::array<TileComponent*, 4>& GetConnections() const noexcept;
+
 private:
 	Integrian::Point2f m_Center;
 	std::array<TileComponent*, 4> m_pConnections; // there are only ever 4 possible connections
