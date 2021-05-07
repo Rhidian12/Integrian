@@ -175,12 +175,14 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
   <ItemGroup>
     <ClCompile Include="PyramidComponent.cpp" />
     <ClCompile Include="Qbert.cpp" />
+    <ClCompile Include="QbertMovementComponent.cpp" />
     <ClCompile Include="Qbert_MainGame.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileFactoryComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidComponent.h" />
+    <ClInclude Include="QbertMovementComponent.h" />
     <ClInclude Include="Qbert_MainGame.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileFactoryComponent.h" />

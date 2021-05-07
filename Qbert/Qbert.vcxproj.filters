@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Components\TileComponent">
       <UniqueIdentifier>{c8ce2579-f643-4158-8157-7aa4cadb57ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\QbertMovementComponent">
+      <UniqueIdentifier>{5d1c5731-4471-4422-8439-a45031b37a55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -42,6 +45,9 @@
     <ClCompile Include="TileComponent.cpp">
       <Filter>Source Files\Components\TileComponent</Filter>
     </ClCompile>
+    <ClCompile Include="QbertMovementComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
@@ -55,6 +61,9 @@
     </ClInclude>
     <ClInclude Include="TileComponent.h">
       <Filter>Source Files\Components\TileComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertMovementComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
