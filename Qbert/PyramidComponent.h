@@ -8,6 +8,7 @@ namespace Integrian
 	class GameObject;
 }
 
+class TileComponent;
 class PyramidComponent final : public Integrian::Component
 {
 public:
@@ -20,6 +21,8 @@ public:
 
 	void AddTile(Integrian::GameObject* pTile);
 	Integrian::Point2f GetTopTileCenter() const noexcept;
+
+	TileComponent* GetTile(const Integrian::Point2f& location) const;
 
 	const std::vector<Integrian::GameObject*>& GetTiles() const noexcept;
 

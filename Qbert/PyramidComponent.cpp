@@ -79,6 +79,21 @@ Integrian::Point2f PyramidComponent::GetTopTileCenter() const noexcept
 	return m_pTiles[0]->GetComponentByType<TileComponent>()->GetCenter();
 }
 
+TileComponent* PyramidComponent::GetTile(const Integrian::Point2f& location) const
+{
+	using namespace Integrian;
+
+	const std::vector<GameObject*>::const_iterator cIt{ std::find_if(m_pTiles.cbegin(), m_pTiles.cend(), [location](GameObject* pTile)
+		{
+			return pTile->transform.GetPosition() == location;
+		}) };
+
+	if (cIt != m_pTiles.cend())
+		return (*cIt)->GetComponentByType<TileComponent>();
+	else
+		Logger::LogWarning("PyramidComponent::GetTile returned a nullptr\n");
+}
+
 const std::vector<Integrian::GameObject*>& PyramidComponent::GetTiles() const noexcept
 {
 	return m_pTiles;
