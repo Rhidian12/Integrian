@@ -16,4 +16,7 @@ public:
 
 private:
 	Integrian::GameObject* CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture);
+	void FillConnections();
+
+	unsigned int m_Size;
 };
