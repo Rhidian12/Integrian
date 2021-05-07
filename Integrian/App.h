@@ -11,6 +11,7 @@
 #include "GameInput.h" // CommandAndButton
 #include <functional> // std::function
 #include <array> // std::array
+#include <unordered_map> // std::unordered_map
 
 struct SDL_Window;
 namespace Integrian
@@ -43,12 +44,14 @@ namespace Integrian
 		[[nodiscard]] uint32_t GetWindowWidth() const;
 		[[nodiscard]] uint32_t GetWindowHeight() const;
 		[[nodiscard]] std::string GetAppName() const;
+		[[nodiscard]] GameObject* GetGameObject(const std::string& name) const;
+		[[nodiscard]] const std::unordered_map<std::string, GameObject*>& GetGameObjects() const;
 
 		void SetWindowSize(const uint32_t windowWidth, const uint32_t windowHeight);
 
 		virtual bool OnEvent(const Event& event) override;
 		
-		std::vector<GameObject*> m_pGameObjects{};
+		std::unordered_map<std::string, GameObject*> m_pGameObjects{};
 
 	protected:
 		Rectf m_Target{};

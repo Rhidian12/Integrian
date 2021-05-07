@@ -32,30 +32,30 @@ void Qbert_MainGame::Start()
 	pQbert->AddComponent(new TextureComponent{ pQbert, TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation") });
 	pQbert->transform.SetPosition(pPyramidComponent->GetTopTileCenter());
 
-	m_pGameObjects.push_back(std::move(pPyramidRoot));
-	m_pGameObjects.push_back(std::move(pQbert));
+	m_pGameObjects.insert(std::make_pair("PyramidRoot", pPyramidRoot));
+	m_pGameObjects.insert(std::make_pair("Qbert", pQbert));
 }
 
 void Qbert_MainGame::Update(const float elapsedSeconds)
 {
-	for (Integrian::GameObject* pGameObject : m_pGameObjects)
-		pGameObject->Update(elapsedSeconds);
+	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
+		pGameObject.second->Update(elapsedSeconds);
 }
 
 void Qbert_MainGame::FixedUpdate(const float elapsedSeconds)
 {
-	for (Integrian::GameObject* pGameObject : m_pGameObjects)
-		pGameObject->FixedUpdate(elapsedSeconds);
+	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
+		pGameObject.second->FixedUpdate(elapsedSeconds);
 }
 
 void Qbert_MainGame::LateUpdate(const float elapsedSeconds)
 {
-	for (Integrian::GameObject* pGameObject : m_pGameObjects)
-		pGameObject->LateUpdate(elapsedSeconds);
+	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
+		pGameObject.second->LateUpdate(elapsedSeconds);
 }
 
 void Qbert_MainGame::Render() const
 {
-	for (Integrian::GameObject* pGameObject : m_pGameObjects)
-		pGameObject->Render();
+	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
+		pGameObject.second->Render();
 }

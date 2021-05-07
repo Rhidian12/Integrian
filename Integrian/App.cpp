@@ -52,8 +52,8 @@ void Integrian::App::RemoveCommand(const std::string& commandName)
 
 Integrian::App::~App()
 {
-	for (GameObject*& pGameObject : m_pGameObjects)
-		SafeDelete(pGameObject);
+	for (std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+		SafeDelete(pGameObject.second);
 
 	m_pGameObjects.clear();
 
@@ -298,6 +298,27 @@ uint32_t Integrian::App::GetWindowHeight() const
 std::string Integrian::App::GetAppName() const
 {
 	return m_AppName;
+}
+
+Integrian::GameObject* Integrian::App::GetGameObject(const std::string& name) const
+{
+	using UMapCIt = std::unordered_map<std::string, GameObject*>::const_iterator;
+	
+	const UMapCIt cIt{ m_pGameObjects.find(name) };
+
+	if (cIt != m_pGameObjects.cend())
+		return cIt->second;
+#ifdef _DEBUG
+	else
+		Logger::LogWarning("GameObject with name: " + name + " was not found and returned a nullptr!\n");
+#endif // _DEBUG
+
+	return nullptr;
+}
+
+const std::unordered_map<std::string, Integrian::GameObject*>& Integrian::App::GetGameObjects() const
+{
+	return m_pGameObjects;
 }
 
 void Integrian::App::ClearBackground() const

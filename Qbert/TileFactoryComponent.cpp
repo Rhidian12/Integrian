@@ -28,6 +28,7 @@ void TileFactoryComponent::CreateTiles(const unsigned int size, Integrian::Textu
 	const float textureWidthDivTwo{ textureWidth * 0.5f };
 	const float heightOffset{ 24.f }; // texture height offset since the devs of Qbert are evil
 
+	uint64_t counter{};
 	for (unsigned int y{}; y < size; ++y)
 	{
 		for (unsigned int x{}; x <= y; ++x)
@@ -41,7 +42,7 @@ void TileFactoryComponent::CreateTiles(const unsigned int size, Integrian::Textu
 
 			GameObject* pTile{ CreateTile(temp, pInactiveTileTexture) };
 
-			pActiveApp->m_pGameObjects.push_back(pTile);
+			pActiveApp->m_pGameObjects.insert(std::make_pair("Tile" + std::to_string(counter++), pTile));
 			pPyramid->AddTile(pTile);
 		}
 	}
