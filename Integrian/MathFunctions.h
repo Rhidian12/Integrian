@@ -7,6 +7,7 @@
 #define INTEGRIAN_MATH_FUNCTIONS_H
 
 #include <vector> // std::vector
+#include "TypeDefines.h"
 
 namespace Integrian
 {

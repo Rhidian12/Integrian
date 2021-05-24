@@ -94,7 +94,7 @@ namespace Integrian
 		// == Relational Operators
 		bool operator==(const Vector<2, Type>& other) const
 		{
-			return AreEqual(x, other.x) && AreEqual(y, other.y);
+			return AreEqual(*this, other);
 		}
 
 		bool operator!=(const Vector<2, Type>& other) const

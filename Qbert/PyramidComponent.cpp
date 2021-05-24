@@ -91,7 +91,10 @@ TileComponent* PyramidComponent::GetTile(const Integrian::Point2f& location) con
 	if (cIt != m_pTiles.cend())
 		return (*cIt)->GetComponentByType<TileComponent>();
 	else
+	{
 		Logger::LogWarning("PyramidComponent::GetTile returned a nullptr\n");
+		return nullptr;
+	}
 }
 
 const std::vector<Integrian::GameObject*>& PyramidComponent::GetTiles() const noexcept

@@ -69,7 +69,7 @@ namespace Integrian
 		// == Relational Operators
 		bool operator==(const Point<2, Type>& other) const
 		{
-			return AreEqual(x, other.x) && AreEqual(y, other.y);
+			return AreEqual(*this, other);
 		}
 #pragma endregion
 	};

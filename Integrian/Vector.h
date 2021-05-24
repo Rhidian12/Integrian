@@ -61,6 +61,12 @@ namespace Integrian
 	{
 		return v1.x * v2.y - v1.y * v2.x;
 	}
+
+	template<int V, typename Type>
+	bool AreEqual(const Vector<V, Type>& p1, const Vector<V, Type>& p2, const float epsilon = std::numeric_limits<float>::epsilon())
+	{
+		return (abs(p1.x - p2.x) <= epsilon) && (abs(p1.y - p2.y) <= epsilon);
+	}
 }
 
 #endif // !ENGINE_VECTOR_H
