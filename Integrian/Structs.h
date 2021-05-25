@@ -13,7 +13,7 @@
 namespace Integrian
 {
 	// == Structs ==
-	struct Rectf
+	struct Rectf final
 	{
 		explicit Rectf()
 			: leftBottom{}
@@ -62,7 +62,7 @@ namespace Integrian
 		float width;
 		float height;
 	};
-	struct Circlef
+	struct Circlef final
 	{
 		explicit Circlef()
 			: center{}
@@ -95,7 +95,7 @@ namespace Integrian
 		Point2f center;
 		float radius;
 	};
-	struct RGBColour
+	struct RGBColour final
 	{
 		explicit RGBColour()
 			: RGBColour{ 255.f,255.f,255.f }
@@ -175,7 +175,7 @@ namespace Integrian
 
 		float r, g, b, a;
 	};
-	struct TextureLocation
+	struct TextureLocation final
 	{
 		explicit TextureLocation()
 			: destRect{}
