@@ -325,7 +325,7 @@ Integrian::GameObject* Integrian::App::GetGameObject(const std::string& name) co
 		return cIt->second;
 #ifdef _DEBUG
 	else
-		Logger::LogWarning("GameObject with name: " + name + " was not found and returned a nullptr!\n");
+		Logger::LogError("GameObject with name: " + name + " was not found and returned a nullptr!\n");
 #endif // _DEBUG
 
 	return nullptr;

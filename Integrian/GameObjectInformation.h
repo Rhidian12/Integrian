@@ -17,6 +17,10 @@ namespace Integrian
 		{
 			return m_Identifier == a.m_Identifier;
 		}
+		bool operator()(const GameObjectInformation& a) const noexcept
+		{
+			return m_Identifier == a.m_Identifier;
+		}
 
 	private:
 		friend class App;
@@ -24,7 +28,7 @@ namespace Integrian
 		GameObjectInformation(const std::string& identifier);
 	};
 
-	struct GameObjectInformationComparer
+	struct GameObjectInformationComparer final
 	{
 		bool operator()(const GameObjectInformation& a, const GameObjectInformation& b) const noexcept
 		{
