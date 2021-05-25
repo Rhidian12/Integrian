@@ -30,14 +30,14 @@ namespace Integrian
 
 		virtual void Start() = 0;
 
-		virtual void Update(const float elapsedSeconds) = 0;
-		virtual void FixedUpdate(const float elapsedSeconds) = 0;
-		virtual void LateUpdate(const float elapsedSeconds) = 0;
+		virtual void Update(const float) {}
+		virtual void FixedUpdate(const float) {}
+		virtual void LateUpdate(const float) {}
 
 		virtual void OnAppEnter();
 		virtual void OnAppExit();
 
-		virtual void Render() const = 0;
+		virtual void Render() const {}
 
 		[[nodiscard]] virtual Rectf GetLevelBoundaries() const = 0;
 		[[nodiscard]] virtual Rectf GetTarget() const = 0;

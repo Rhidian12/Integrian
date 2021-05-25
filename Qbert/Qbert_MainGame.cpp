@@ -38,26 +38,26 @@ void Qbert_MainGame::Start()
 	AddGameObject("Qbert", pQbert);
 }
 
-void Qbert_MainGame::Update(const float elapsedSeconds)
-{
-	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
-		pGameObject.second->Update(elapsedSeconds);
-}
+//void Qbert_MainGame::Update(const float elapsedSeconds)
+//{
+//	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
+//		pGameObject.second->Update(elapsedSeconds);
+//}
+//
+//void Qbert_MainGame::FixedUpdate(const float elapsedSeconds)
+//{
+//	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
+//		pGameObject.second->FixedUpdate(elapsedSeconds);
+//}
+//
+//void Qbert_MainGame::LateUpdate(const float elapsedSeconds)
+//{
+//	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
+//		pGameObject.second->LateUpdate(elapsedSeconds);
+//}
 
-void Qbert_MainGame::FixedUpdate(const float elapsedSeconds)
-{
-	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
-		pGameObject.second->FixedUpdate(elapsedSeconds);
-}
-
-void Qbert_MainGame::LateUpdate(const float elapsedSeconds)
-{
-	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
-		pGameObject.second->LateUpdate(elapsedSeconds);
-}
-
-void Qbert_MainGame::Render() const
-{
-	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
-		pGameObject.second->Render();
-}
+//void Qbert_MainGame::Render() const
+//{
+//	for (const std::pair<std::string, Integrian::GameObject*>& pGameObject : m_pGameObjects)
+//		pGameObject.second->Render();
+//}

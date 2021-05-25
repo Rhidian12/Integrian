@@ -235,6 +235,10 @@ void Integrian::App::TransformCameraAndRender() const
 	glPushMatrix();
 	{
 		m_pCamera->Transform(m_Target);
+		
+		for (const std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+			pGameObject.second->Render();
+
 		Render();
 	}
 	glPopMatrix();
@@ -254,6 +258,9 @@ void Integrian::App::UpdateApplication()
 
 	while (m_TimeSinceLastUpdate > timePerFrame)
 	{
+		for (const std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+			pGameObject.second->FixedUpdate(timePerFrame);
+
 		FixedUpdate(timePerFrame);
 		m_TimeSinceLastUpdate -= timePerFrame;
 	}
@@ -263,10 +270,16 @@ void Integrian::App::UpdateApplication()
 	// Update the timer for the fixed update
 	m_TimeSinceLastUpdate += dt;
 
+	for (const std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+		pGameObject.second->Update(dt);
+
 	Update(dt);
 
 	AudioLocator::GetAudio()->Update(dt); // update the audio
 	EventQueue::GetInstance().Update(); // Update the event queue
+
+	for (const std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+		pGameObject.second->LateUpdate(dt);
 
 	LateUpdate(dt);
 
