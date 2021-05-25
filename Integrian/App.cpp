@@ -317,14 +317,11 @@ std::string Integrian::App::GetAppName() const
 
 Integrian::GameObject* Integrian::App::GetGameObject(const std::string& name) const
 {
-	using UMapCIt = std::map<GameObjectInformation, GameObject*, GameObjectInformationComparer>::const_iterator;
+	for (const std::pair<GameObjectInformation, GameObject*>& pGameObject : m_pGameObjects)
+		if (pGameObject.first.m_Identifier == name)
+			return pGameObject.second;
 
-	const UMapCIt cIt{ m_pGameObjects.find(GameObjectInformation{ name }) };
-
-	if (cIt != m_pGameObjects.cend())
-		return cIt->second;
 #ifdef _DEBUG
-	else
 		Logger::LogError("GameObject with name: " + name + " was not found and returned a nullptr!\n");
 #endif // _DEBUG
 
