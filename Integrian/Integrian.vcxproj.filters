@@ -135,6 +135,9 @@
     <Filter Include="Engine\AudioLocator\NullAudioSystem">
       <UniqueIdentifier>{42cbc4a6-4629-4e7b-bb9d-de860a48aff2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\App\GameObjectInformation">
+      <UniqueIdentifier>{1406a996-7587-4856-9984-231ca09a65c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -253,6 +256,9 @@
     </ClCompile>
     <ClCompile Include="App_Selector.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectInformation.cpp">
+      <Filter>Engine\App\GameObjectInformation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -489,6 +495,9 @@
     </ClInclude>
     <ClInclude Include="MagnitudeZeroException.h">
       <Filter>Engine\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectInformation.h">
+      <Filter>Engine\App\GameObjectInformation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,11 +7,13 @@
 #include "Structs.h" // Rectf
 #include <string> // std::string
 #include "ListenerInterface.h" // IListener
+#include <map> // std::map
 #include <unordered_map> // std::unordered_map
 #include "GameInput.h" // CommandAndButton
 #include <functional> // std::function
 #include <array> // std::array
 #include <unordered_map> // std::unordered_map
+#include "GameObjectInformation.h"
 
 struct SDL_Window;
 namespace Integrian
@@ -45,7 +47,7 @@ namespace Integrian
 		[[nodiscard]] uint32_t GetWindowHeight() const;
 		[[nodiscard]] std::string GetAppName() const;
 		[[nodiscard]] GameObject* GetGameObject(const std::string& name) const;
-		[[nodiscard]] const std::unordered_map<std::string, GameObject*>& GetGameObjects() const;
+		[[nodiscard]] const std::map<GameObjectInformation, GameObject*, GameObjectInformationComparer>& GetGameObjects() const;
 
 		void AddGameObject(const std::string& name, GameObject* pGameObject);
 
@@ -61,7 +63,7 @@ namespace Integrian
 
 		std::unique_ptr<OrthographicCamera> m_pCamera{};
 		std::unordered_map<std::string, std::function<void()>> m_Commands{};
-		std::unordered_map<std::string, GameObject*> m_pGameObjects{};
+		std::map<GameObjectInformation, GameObject*, GameObjectInformationComparer> m_pGameObjects{};
 
 		inline static uint32_t m_WindowWidth{};
 		inline static uint32_t m_WindowHeight{};
@@ -90,7 +92,7 @@ namespace Integrian
 
 		inline static bool m_IsLibraryInitialised{ false };
 		inline static bool m_IsLibraryDestroyed{ false };
-
+		unsigned int m_GameObjectID;
 		float m_TimeSinceLastUpdate;
 
 		std::array<std::unordered_map<ControllerInput, std::vector<CommandAndButton>>, 4> m_CC;

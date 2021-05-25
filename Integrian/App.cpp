@@ -15,6 +15,7 @@ extern std::atomic<bool> volatile g_IsLooping; // Used by the inputmanager, thre
 
 Integrian::App::App(const std::string& name)
 	: m_AppName{ name }
+	, m_GameObjectID{}
 	, m_TimeSinceLastUpdate{}
 {
 	if (!Initialize())
@@ -53,7 +54,7 @@ void Integrian::App::RemoveCommand(const std::string& commandName)
 
 Integrian::App::~App()
 {
-	for (std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+	for (std::pair<GameObjectInformation, GameObject*> pGameObject : m_pGameObjects)
 		SafeDelete(pGameObject.second);
 
 	m_pGameObjects.clear();
@@ -235,8 +236,8 @@ void Integrian::App::TransformCameraAndRender() const
 	glPushMatrix();
 	{
 		m_pCamera->Transform(m_Target);
-		
-		for (const std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+
+		for (const std::pair<GameObjectInformation, GameObject*> pGameObject : m_pGameObjects)
 			pGameObject.second->Render();
 
 		Render();
@@ -258,7 +259,7 @@ void Integrian::App::UpdateApplication()
 
 	while (m_TimeSinceLastUpdate > timePerFrame)
 	{
-		for (const std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+		for (const std::pair<GameObjectInformation, GameObject*> pGameObject : m_pGameObjects)
 			pGameObject.second->FixedUpdate(timePerFrame);
 
 		FixedUpdate(timePerFrame);
@@ -270,7 +271,7 @@ void Integrian::App::UpdateApplication()
 	// Update the timer for the fixed update
 	m_TimeSinceLastUpdate += dt;
 
-	for (const std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+	for (const std::pair<GameObjectInformation, GameObject*> pGameObject : m_pGameObjects)
 		pGameObject.second->Update(dt);
 
 	Update(dt);
@@ -278,7 +279,7 @@ void Integrian::App::UpdateApplication()
 	AudioLocator::GetAudio()->Update(dt); // update the audio
 	EventQueue::GetInstance().Update(); // Update the event queue
 
-	for (const std::pair<std::string, GameObject*> pGameObject : m_pGameObjects)
+	for (const std::pair<GameObjectInformation, GameObject*> pGameObject : m_pGameObjects)
 		pGameObject.second->LateUpdate(dt);
 
 	LateUpdate(dt);
@@ -316,9 +317,9 @@ std::string Integrian::App::GetAppName() const
 
 Integrian::GameObject* Integrian::App::GetGameObject(const std::string& name) const
 {
-	using UMapCIt = std::unordered_map<std::string, GameObject*>::const_iterator;
-	
-	const UMapCIt cIt{ m_pGameObjects.find(name) };
+	using UMapCIt = std::map<GameObjectInformation, GameObject*, GameObjectInformationComparer>::const_iterator;
+
+	const UMapCIt cIt{ m_pGameObjects.find(GameObjectInformation{ name }) };
 
 	if (cIt != m_pGameObjects.cend())
 		return cIt->second;
@@ -330,7 +331,7 @@ Integrian::GameObject* Integrian::App::GetGameObject(const std::string& name) co
 	return nullptr;
 }
 
-const std::unordered_map<std::string, Integrian::GameObject*>& Integrian::App::GetGameObjects() const
+const std::map<Integrian::GameObjectInformation, Integrian::GameObject*, Integrian::GameObjectInformationComparer>& Integrian::App::GetGameObjects() const
 {
 	return m_pGameObjects;
 }
@@ -338,7 +339,7 @@ const std::unordered_map<std::string, Integrian::GameObject*>& Integrian::App::G
 void Integrian::App::AddGameObject(const std::string& name, GameObject* pGameObject)
 {
 	pGameObject->Initialize();
-	m_pGameObjects.insert(std::make_pair(name, pGameObject));
+	m_pGameObjects.insert(std::make_pair(GameObjectInformation{ name, m_GameObjectID++ }, pGameObject));
 	pGameObject->PostInitialize();
 }
 
@@ -356,7 +357,7 @@ void Integrian::App::OnAppEnter()
 			InputManager::GetInstance().SetControllerCommands(m_CC[i], i);
 
 		InputManager::GetInstance().SetKeyboardCommands(m_KC);
-		
+
 		InputManager::GetInstance().SetMouseCommands(m_MC);
 	}
 

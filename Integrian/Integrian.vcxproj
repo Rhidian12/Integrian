@@ -181,6 +181,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="App_Selector.cpp" />
+    <ClCompile Include="GameObjectInformation.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
     <ClCompile Include="SDLAudioSystem.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="allocators.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
+    <ClInclude Include="GameObjectInformation.h" />
     <ClInclude Include="LoggedAudioSystem.h" />
     <ClInclude Include="MagnitudeZeroException.h" />
     <ClInclude Include="SDLAudioSystem.h" />
