@@ -42,7 +42,7 @@ void TileFactoryComponent::CreateTiles(const unsigned int size, Integrian::Textu
 
 			GameObject* pTile{ CreateTile(temp, pInactiveTileTexture) };
 
-			pActiveApp->m_pGameObjects.insert(std::make_pair("Tile" + std::to_string(counter++), pTile));
+			pActiveApp->AddGameObject("Tile" + std::to_string(counter++), pTile);
 			pPyramid->AddTile(pTile);
 		}
 	}

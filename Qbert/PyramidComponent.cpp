@@ -85,7 +85,7 @@ TileComponent* PyramidComponent::GetTile(const Integrian::Point2f& location) con
 
 	const std::vector<GameObject*>::const_iterator cIt{ std::find_if(m_pTiles.cbegin(), m_pTiles.cend(), [location](GameObject* pTile)
 		{
-			return pTile->transform.GetPosition() == location;
+			return pTile->GetComponentByType<TileComponent>()->GetCenter() == location;
 		}) };
 
 	if (cIt != m_pTiles.cend())

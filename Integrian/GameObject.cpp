@@ -8,6 +8,18 @@ Integrian::GameObject::~GameObject()
 		SafeDelete(pComponent);
 }
 
+void Integrian::GameObject::Initialize()
+{
+	for (Component* pComponent : m_pComponents)
+		pComponent->Initialize();
+}
+
+void Integrian::GameObject::PostInitialize()
+{
+	for (Component* pComponent : m_pComponents)
+		pComponent->PostInitialize();
+}
+
 void Integrian::GameObject::AddComponent(Component* pComponent)
 {
 	const std::vector<Component*>::const_iterator isComponentAlreadyInList =

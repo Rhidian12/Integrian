@@ -487,5 +487,8 @@
     <ClInclude Include="ThreadManager.h">
       <Filter>Engine\Managers\ThreadManager</Filter>
     </ClInclude>
+    <ClInclude Include="MagnitudeZeroException.h">
+      <Filter>Engine\Exceptions</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

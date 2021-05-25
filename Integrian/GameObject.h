@@ -20,6 +20,9 @@ namespace Integrian
 		GameObject() = default;
 		~GameObject();
 
+		void Initialize();
+		void PostInitialize();
+
 		void AddComponent(Component* pComponent);
 
 		void Update(const float elapsedSeconds);

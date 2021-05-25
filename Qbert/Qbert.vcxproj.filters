@@ -46,7 +46,7 @@
       <Filter>Source Files\Components\TileComponent</Filter>
     </ClCompile>
     <ClCompile Include="QbertMovementComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components\QbertMovementComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +63,7 @@
       <Filter>Source Files\Components\TileComponent</Filter>
     </ClInclude>
     <ClInclude Include="QbertMovementComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Components\QbertMovementComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -14,6 +14,9 @@ namespace Integrian
 		Component(GameObject* pParent);
 		virtual ~Component() = default;
 
+		virtual void Initialize() {}
+		virtual void PostInitialize() {}
+
 		virtual void Update(const float) {}
 		virtual void FixedUpdate(const float) {}
 		virtual void LateUpdate(const float) {}

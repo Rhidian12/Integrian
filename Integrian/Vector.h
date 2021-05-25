@@ -6,7 +6,9 @@
 #ifndef INTEGRIAN_VECTOR_H
 #define INTEGRIAN_VECTOR_H
 
+#include "MagnitudeZeroException.h"
 #include <math.h>
+#include <limits> // std::numeric_limits
 namespace Integrian
 {
 	template<int V, typename Type>
@@ -17,13 +19,13 @@ namespace Integrian
 
 	// == Non-Member Methods That Are Useful For All Vectors ==
 	template<int V, typename Type>
-	Type MagnitudeSquared(const Vector<V, Type>& v1)
+	Type MagnitudeSquared(const Vector<V, Type>& v1) noexcept
 	{
 		return v1.Dot(v1);
 	}
 
 	template<int V, typename Type>
-	Type Magnitude(const Vector<V, Type>& v1)
+	Type Magnitude(const Vector<V, Type>& v1) noexcept
 	{
 		return static_cast<Type>(sqrt(MagnitudeSquared(v1)));
 	}
@@ -32,11 +34,9 @@ namespace Integrian
 	Type Normalize(Vector<V, Type>& v1)
 	{
 		const Type magnitude{ Magnitude(v1) };
+
 		if (magnitude == static_cast<Type>(0))
-		{
-			v1 = Vector<V, Type>{};
-			return magnitude;
-		}
+			throw MagnitudeZeroException{};
 
 		v1 /= magnitude;
 		return magnitude;
@@ -50,23 +50,17 @@ namespace Integrian
 		return temp;
 	}
 	
-	template<int V, typename Type>
-	Type Dot(const Vector<V, Type>& v1, const Vector<V, Type>& v2)
-	{
-		return v1.x * v2.x + v1.y * v2.y;
-	}
-
-	template<int V, typename Type>
-	Type Cross(const Vector<V, Type>& v1, const Vector<V, Type>& v2)
-	{
-		return v1.x * v2.y - v1.y * v2.x;
-	}
-
-	template<int V, typename Type>
-	bool AreEqual(const Vector<V, Type>& p1, const Vector<V, Type>& p2, const float epsilon = std::numeric_limits<float>::epsilon())
-	{
-		return (abs(p1.x - p2.x) <= epsilon) && (abs(p1.y - p2.y) <= epsilon);
-	}
+	//template<int V, typename Type>
+	//Type Dot(const Vector<V, Type>& v1, const Vector<V, Type>& v2)
+	//{
+	//	return v1.x * v2.x + v1.y * v2.y;
+	//}
+	//
+	//template<int V, typename Type>
+	//Type Cross(const Vector<V, Type>& v1, const Vector<V, Type>& v2)
+	//{
+	//	return v1.x * v2.y - v1.y * v2.x;
+	//}
 }
 
 #endif // !ENGINE_VECTOR_H

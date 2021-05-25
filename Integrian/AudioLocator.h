@@ -20,6 +20,8 @@ namespace Integrian
 		template<typename Type>
 		static void Provide(Type* pAudio)
 		{
+			m_HasWarningBeenPrinted = false;
+
 			if constexpr (std::is_base_of_v<AudioSystem, Type>)
 			{
 				if (pAudio != nullptr && !std::is_same_v<Type, NullAudioSystem>) // maybe change this later to make NullAudioSystem private?
@@ -33,6 +35,8 @@ namespace Integrian
 
 	private:
 		AudioLocator() = default;
+
+		inline static bool m_HasWarningBeenPrinted{};
 
 		inline static AudioSystem* m_pAudioSystem{};
 		inline static AudioSystem* m_pNullService{ new NullAudioSystem{} };

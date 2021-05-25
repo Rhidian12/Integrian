@@ -15,6 +15,7 @@ extern std::atomic<bool> volatile g_IsLooping; // Used by the inputmanager, thre
 
 Integrian::App::App(const std::string& name)
 	: m_AppName{ name }
+	, m_TimeSinceLastUpdate{}
 {
 	if (!Initialize())
 		throw InitialisationFailedException{};
@@ -202,8 +203,6 @@ void Integrian::App::Run()
 
 	Timer& timer = Timer::GetInstance();
 
-	float timeSinceLastUpdate{};
-
 	// == Event Loop ==
 	//while (continueRunning)
 	{
@@ -214,13 +213,10 @@ void Integrian::App::Run()
 		InputManager::GetInstance().HandleInput();
 
 		// == Update ==
-		UpdateApplication(timeSinceLastUpdate);
+		UpdateApplication();
 
 		// == Render ==
 		TransformCameraAndRender();
-
-		// == Update The Timer For The Fixed Update ==
-		timeSinceLastUpdate += timer.GetElapsedSeconds();
 
 		// == Send New Frame ==
 		EventQueue::GetInstance().QueueEvent(Event{ "EndOfFrame" });
@@ -250,17 +246,22 @@ void Integrian::App::TransformCameraAndRender() const
 	SDL_GL_SwapWindow(m_pWindow);
 }
 
-void Integrian::App::UpdateApplication(float& timeSinceLastUpdate)
+void Integrian::App::UpdateApplication()
 {
 	Timer& timer = Timer::GetInstance();
 
-	while (timeSinceLastUpdate > timer.GetTimePerFrame())
+	const float timePerFrame{ timer.GetTimePerFrame() };
+
+	while (m_TimeSinceLastUpdate > timePerFrame)
 	{
-		FixedUpdate(timer.GetTimePerFrame());
-		timeSinceLastUpdate -= timer.GetTimePerFrame();
+		FixedUpdate(timePerFrame);
+		m_TimeSinceLastUpdate -= timePerFrame;
 	}
 
 	const float dt{ timer.GetElapsedSeconds() };
+
+	// Update the timer for the fixed update
+	m_TimeSinceLastUpdate += dt;
 
 	Update(dt);
 
@@ -319,6 +320,13 @@ Integrian::GameObject* Integrian::App::GetGameObject(const std::string& name) co
 const std::unordered_map<std::string, Integrian::GameObject*>& Integrian::App::GetGameObjects() const
 {
 	return m_pGameObjects;
+}
+
+void Integrian::App::AddGameObject(const std::string& name, GameObject* pGameObject)
+{
+	pGameObject->Initialize();
+	m_pGameObjects.insert(std::make_pair(name, pGameObject));
+	pGameObject->PostInitialize();
 }
 
 void Integrian::App::ClearBackground() const

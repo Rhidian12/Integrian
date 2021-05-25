@@ -3,7 +3,7 @@
 #include <cmath> // atan
 #include <algorithm> // std::min_element
 #include <limits> // std::numeric_limits
-const float Integrian::CalculateAngle(const Point2f& line1Start, const Point2f& line1End, const Point2f& line2Start, const Point2f& line2End)
+const float Integrian::CalculateAngle(const Point2f& line1Start, const Point2f& line1End, const Point2f& line2Start, const Point2f& line2End) noexcept
 {
 	const float slopeLine1{ line1End.y - line1Start.y / line1End.x - line1Start.x };
 	const float slopeLine2{ line2End.y - line2Start.y / line2End.x - line2Start.x };
@@ -11,32 +11,32 @@ const float Integrian::CalculateAngle(const Point2f& line1Start, const Point2f& 
 	const float inclineLine2{ atan(slopeLine2) };
 	return abs(inclineLine1 - inclineLine2);
 }
-const float Integrian::ToDegrees(const float radians)
+const float Integrian::ToDegrees(const float radians) noexcept
 {
 	return radians * 180.f / float(M_PI);
 }
-const double Integrian::ToDegrees(const double radians)
+const double Integrian::ToDegrees(const double radians) noexcept
 {
 	return radians * 180.0 / M_PI;
 }
-const float Integrian::ToRadians(const float degrees)
+const float Integrian::ToRadians(const float degrees) noexcept
 {
 	return degrees * float(M_PI) / 180.f;
 }
-const double Integrian::ToRadians(const double degrees)
+const double Integrian::ToRadians(const double degrees) noexcept
 {
 	return degrees * M_PI / 180.0;
 }
-bool Integrian::AreEqual(const float a, const float b, const float epsilon)
+bool Integrian::AreEqual(const float a, const float b, const float epsilon) noexcept
 {
 	return abs(a - b) <= epsilon;
 }
-bool Integrian::AreEqual(const double a, const double b, const double epsilon)
+bool Integrian::AreEqual(const double a, const double b, const double epsilon) noexcept
 {
 	return abs(a - b) <= epsilon;
 }
 
-bool Integrian::IsOverlapping(const Rectf& r1, const Rectf& r2)
+bool Integrian::IsOverlapping(const Rectf& r1, const Rectf& r2) noexcept
 {
 	// If one rectangle is on left side of the other
 	if ((r1.leftBottom.x + r1.width) < r2.leftBottom.x || (r2.leftBottom.x + r2.width) < r1.leftBottom.x)
@@ -49,7 +49,7 @@ bool Integrian::IsOverlapping(const Rectf& r1, const Rectf& r2)
 	return true;
 }
 
-bool Integrian::IsPointOnLineSegment(const Point2f& p, const Point2f& a, const Point2f& b)
+bool Integrian::IsPointOnLineSegment(const Point2f& p, const Point2f& a, const Point2f& b) noexcept
 {
 	Vector2f ap{ a, p }, bp{ b, p };
 	// If not on same line, return false
@@ -67,7 +67,7 @@ bool Integrian::IsPointOnLineSegment(const Point2f& p, const Point2f& a, const P
 	return true;
 }
 
-bool Integrian::IntersectLineSegments(const Point2f& p1, const Point2f& p2, const Point2f& q1, const Point2f& q2, float& outLambda1, float& outLambda2, float epsilon)
+bool Integrian::IntersectLineSegments(const Point2f& p1, const Point2f& p2, const Point2f& q1, const Point2f& q2, float& outLambda1, float& outLambda2, float epsilon) noexcept
 {
 	bool intersecting{ false };
 
@@ -116,12 +116,12 @@ bool Integrian::IntersectLineSegments(const Point2f& p1, const Point2f& p2, cons
 	return intersecting;
 }
 
-bool Integrian::Raycast(const std::vector<Point2f>& vertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo)
+bool Integrian::Raycast(const std::vector<Point2f>& vertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo) noexcept
 {
 	return Integrian::Raycast(vertices.data(), vertices.size(), rayP1, rayP2, hitInfo);
 }
 
-bool Integrian::Raycast(const Point2f* vertices, const size_t nrVertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo)
+bool Integrian::Raycast(const Point2f* vertices, const size_t nrVertices, const Point2f& rayP1, const Point2f& rayP2, HitInfo& hitInfo) noexcept
 {
 	if (nrVertices == 0)
 	{

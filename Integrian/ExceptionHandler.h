@@ -12,6 +12,7 @@
 #include "RuntimeInitFailed.h"
 #include "CameraInitialisationFailed.h"
 #include "StaticInstanceAlreadyCreated.h"
+#include "MagnitudeZeroException.h"
 
 #include <exception> // std::exception
 #include <system_error> // std::system_error
@@ -53,17 +54,15 @@ namespace Integrian
 				std::cerr << "EXCEPTION: " << e.what() << std::endl;
 			}
 			catch (const Integrian::InitialisationFailedException&)
-			{
-			}
+			{}
 			catch (const Integrian::RuntimeInitialisationFailed&)
-			{
-			}
+			{}
 			catch (const Integrian::CameraInitialisationFailedException&)
-			{
-			}
+			{}
 			catch (const Integrian::StaticInstanceAlreadyCreated&)
-			{
-			}
+			{}
+			catch (const Integrian::MagnitudeZeroException&)
+			{}
 			catch (...)
 			{
 				std::cerr << "EXCEPTION (unknown)" << std::endl;

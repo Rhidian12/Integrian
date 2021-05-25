@@ -224,6 +224,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
     <ClInclude Include="LoggedAudioSystem.h" />
+    <ClInclude Include="MagnitudeZeroException.h" />
     <ClInclude Include="SDLAudioSystem.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />

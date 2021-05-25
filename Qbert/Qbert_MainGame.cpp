@@ -3,6 +3,7 @@
 #include <TextureComponent.h>
 #include <TextureManager.h>
 #include "PyramidComponent.h"
+#include "QbertMovementComponent.h"
 #include "TileFactoryComponent.h"
 
 Qbert_MainGame::Qbert_MainGame()
@@ -30,10 +31,11 @@ void Qbert_MainGame::Start()
 
 	GameObject* pQbert{ new GameObject{} };
 	pQbert->AddComponent(new TextureComponent{ pQbert, TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation") });
+	pQbert->AddComponent(new QbertMovementComponent{ pQbert });
 	pQbert->transform.SetPosition(pPyramidComponent->GetTopTileCenter());
 
-	m_pGameObjects.insert(std::make_pair("PyramidRoot", pPyramidRoot));
-	m_pGameObjects.insert(std::make_pair("Qbert", pQbert));
+	AddGameObject("PyramidRoot", pPyramidRoot);
+	AddGameObject("Qbert", pQbert);
 }
 
 void Qbert_MainGame::Update(const float elapsedSeconds)

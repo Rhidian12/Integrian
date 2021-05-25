@@ -47,11 +47,11 @@ namespace Integrian
 		[[nodiscard]] GameObject* GetGameObject(const std::string& name) const;
 		[[nodiscard]] const std::unordered_map<std::string, GameObject*>& GetGameObjects() const;
 
+		void AddGameObject(const std::string& name, GameObject* pGameObject);
+
 		void SetWindowSize(const uint32_t windowWidth, const uint32_t windowHeight);
 
 		virtual bool OnEvent(const Event& event) override;
-		
-		std::unordered_map<std::string, GameObject*> m_pGameObjects{};
 
 	protected:
 		Rectf m_Target{};
@@ -61,6 +61,7 @@ namespace Integrian
 
 		std::unique_ptr<OrthographicCamera> m_pCamera{};
 		std::unordered_map<std::string, std::function<void()>> m_Commands{};
+		std::unordered_map<std::string, GameObject*> m_pGameObjects{};
 
 		inline static uint32_t m_WindowWidth{};
 		inline static uint32_t m_WindowHeight{};
@@ -75,7 +76,7 @@ namespace Integrian
 	private:
 		friend class App_Selector; // TODO: Make this a friend function for Run()
 		void TransformCameraAndRender() const;
-		void UpdateApplication(float& timeSinceLastUpdate);
+		void UpdateApplication();
 
 		bool Initialize();
 		bool InitializeCamera();
@@ -89,6 +90,8 @@ namespace Integrian
 
 		inline static bool m_IsLibraryInitialised{ false };
 		inline static bool m_IsLibraryDestroyed{ false };
+
+		float m_TimeSinceLastUpdate;
 
 		std::array<std::unordered_map<ControllerInput, std::vector<CommandAndButton>>, 4> m_CC;
 		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_KC;
