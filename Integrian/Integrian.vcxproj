@@ -183,7 +183,6 @@
     <ClCompile Include="App_Selector.cpp" />
     <ClCompile Include="GameObjectInformation.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
-    <ClCompile Include="MatrixDivisionNotPossibleException.cpp" />
     <ClCompile Include="SDLAudioSystem.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
     <ClCompile Include="Component.cpp" />

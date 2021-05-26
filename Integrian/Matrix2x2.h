@@ -3,7 +3,9 @@
 #ifndef INTEGRIAN_MATRIX2x2_H
 #define INTEGRIAN_MATRIX2x2_H
 
+#include "MatrixDivisionNotPossibleException.h" // MatrixDivisionNotPossibleException
 #include "Matrix.h" // Matrix
+#include <iostream> // std::ostream
 
 namespace Integrian
 {
@@ -38,10 +40,132 @@ namespace Integrian
 #pragma endregion
 
 #pragma region Member Functions
-		Matrix<2, Type> Inverse(const Matrix<2, Type>& other) const noexcept
+		Matrix<2, Type> Inverse() const
 		{
-			const Type determinant{ static_cast<Type>(1.f) / (other.matrix[0][0] * other.matrix[1][1] - other.matrix[0][1] * other.matrix[1][0]) };
-			return determinant * other;
+			const Type determinant{ static_cast<Type>(1.f) / (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]) };
+
+			if (determinant == static_cast<Type>(0.f))
+				throw MatrixDivisionNotPossibleException{};
+
+			return determinant * (*this);
+		}
+
+		Matrix<2, Type> Transpose() const noexcept
+		{
+			Matrix<2, Type> tempMatrix{ *this };
+			const Type tempValue{ tempMatrix[0][1] }; // [ A B ] == [ A C ]
+			tempMatrix[0][1] = tempMatrix[1][0];	  // [ C D ] == [ B D ]
+			tempMatrix[1][0] = tempValue;
+			return tempMatrix;
+		}
+#pragma endregion
+
+#pragma region Arithmetic Operators
+		Matrix<2, Type> operator+(const Matrix<2, Type>& lhs, const Matrix<2, Type>& rhs) const noexcept
+		{
+			return Matrix<2, Type>{
+				lhs.matrix[0][0] + rhs.matrix[0][0],
+					lhs.matrix[0][1] + rhs.matrix[0][1],
+					lhs.matrix[1][0] + rhs.matrix[1][0],
+					lhs.matrix[1][1] + rhs.matrix[1][1] };
+		}
+		Matrix<2, Type> operator-(const Matrix<2, Type>& lhs, const Matrix<2, Type>& rhs) const noexcept
+		{
+			return Matrix<2, Type>{
+				lhs.matrix[0][0] - rhs.matrix[0][0],
+					lhs.matrix[0][1] - rhs.matrix[0][1],
+					lhs.matrix[1][0] - rhs.matrix[1][0],
+					lhs.matrix[1][1] - rhs.matrix[1][1] };
+		}
+		Matrix<2, Type> operator*(const Matrix<2, Type>& lhs, const Matrix<2, Type>& rhs) const noexcept
+		{
+			return Matrix<2, Type>{
+				lhs.matrix[0][0] * rhs.matrix[0][0] + lhs.matrix[0][1] * rhs.matrix[1][0],
+					lhs.matrix[0][0] * rhs.matrix[0][1] + lhs.matrix[0][1] * rhs.matrix[1][1], // [ A B ] * [ E F ] == [ A*E + B*G  |  A*F + B*H ]
+					lhs.matrix[1][0] * rhs.matrix[0][0] + lhs.matrix[1][1] * rhs.matrix[1][0], // [ C D ] * [ G H ] == [ C*E + D*G  |  C*F + D*H ]
+					lhs.matrix[1][0] * rhs.matrix[0][1] + lhs.matrix[1][1] * rhs.matrix[1][1] };
+		}
+		Matrix<2, Type> operator*(const Matrix<2, Type>& lhs, const Type constant) const noexcept
+		{
+			return Matrix<2, Type>{
+				lhs.matrix[0][0] * constant,
+					lhs.matrix[0][1] * constant,
+					lhs.matrix[1][0] * constant,
+					lhs.matrix[1][1] * constant };
+		}
+		Matrix<2, Type> operator*(const Type constant, const Matrix<2, Type>& rhs) const noexcept
+		{
+			return rhs * constant;
+		}
+		Matrix<2, Type> operator/(const Matrix<2, Type>& lhs, const Matrix<2, Type>& rhs) const
+		{
+			Matrix<2, Type> inverse{ rhs.Inverse() };
+
+			if (rhs * inverse != identityMatrix)
+				throw MatrixDivisionNotPossibleException{};
+
+			return lhs * inverse;
+		}
+#pragma endregion
+
+#pragma region Compound Assignment Operators
+		Matrix<2, Type>& operator+=(const Matrix<2, Type>& rhs) const noexcept
+		{
+			matrix[0][0] += rhs.matrix[0][0];
+			matrix[0][1] += rhs.matrix[0][1];
+			matrix[1][0] += rhs.matrix[1][0];
+			matrix[1][1] += rhs.matrix[1][1];
+			return *this;
+		}
+		Matrix<2, Type> operator-=(const Matrix<2, Type>& rhs) const noexcept
+		{
+			matrix[0][0] -= rhs.matrix[0][0];
+			matrix[0][1] -= rhs.matrix[0][1];
+			matrix[1][0] -= rhs.matrix[1][0];
+			matrix[1][1] -= rhs.matrix[1][1];
+			return *this;
+		}
+		Matrix<2, Type> operator*=(const Matrix<2, Type>& rhs) const noexcept
+		{
+			matrix[0][0] *= rhs.matrix[0][0] + matrix[0][1] * rhs.matrix[1][0];
+			matrix[0][0] *= rhs.matrix[0][1] + matrix[0][1] * rhs.matrix[1][1]; // [ A B ] * [ E F ] == [ A*E + B*G  |  A*F + B*H ]
+			matrix[1][0] *= rhs.matrix[0][0] + matrix[1][1] * rhs.matrix[1][0]; // [ C D ] * [ G H ] == [ C*E + D*G  |  C*F + D*H ]
+			matrix[1][0] *= rhs.matrix[0][1] + matrix[1][1] * rhs.matrix[1][1];
+			return *this;
+		}
+		Matrix<2, Type> operator*=(const Type constant) const noexcept
+		{
+			matrix[0][0] * constant;
+			matrix[0][1] * constant;
+			matrix[1][0] * constant;
+			matrix[1][1] * constant;
+			return *this;
+		}
+		Matrix<2, Type> operator/=(const Matrix<2, Type>& rhs) const
+		{
+			Matrix<2, Type> inverse{ rhs.Inverse() };
+
+			if (rhs * inverse != identityMatrix)
+				throw MatrixDivisionNotPossibleException{};
+
+			matrix *= inverse;
+			return *this;
+		}
+#pragma endregion
+
+#pragma region Relational Operators
+		bool operator==(const Matrix<2, Type>& rhs) const noexcept
+		{
+			for (int i{}; i < 2; ++i)
+				for (int j{}; j < 2; ++j)
+					if (matrix[i][j] != rhs.matrix[i][j])
+						return false;
+
+			return true;
+		}
+		bool operator!=(const Matrix<2, Type>& rhs) const noexcept
+		{
+			return !(matrix == rhs.matrix);
 		}
 #pragma endregion
 
@@ -52,53 +176,19 @@ namespace Integrian
 				for (int j{}; j < 2; ++j)
 					matrix[i][j] = -matrix[i][j];
 		}
-#pragma endregion
 
-#pragma region Arithmetic Operators
-		Matrix<2, Type> operator+(const Matrix<2, Type>& rhs) const noexcept
+		friend std::ostream& operator<<(std::ostream& os, const Matrix<2, Type>& rhs) noexcept
 		{
-			return Matrix<2, Type>{
-				matrix[0][0] + rhs.matrix[0][0],
-					matrix[0][1] + rhs.matrix[0][1],
-					matrix[1][0] + rhs.matrix[1][0],
-					matrix[1][1] + rhs.matrix[1][1] };
+			for (int i{}; i < 2; ++i)
+			{
+				for (int j{}; j < 2; ++j)
+				{
+					os << matrix[i][j] << ", ";
+				}
+				os << std::endl;
+			}
+			return os;
 		}
-		Matrix<2, Type> operator-(const Matrix<2, Type>& rhs) const noexcept
-		{
-			return Matrix<2, Type>{
-				matrix[0][0] - rhs.matrix[0][0],
-					matrix[0][1] - rhs.matrix[0][1],
-					matrix[1][0] - rhs.matrix[1][0],
-					matrix[1][1] - rhs.matrix[1][1] };
-		}
-		Matrix<2, Type> operator*(const Matrix<2, Type>& rhs) const noexcept
-		{
-			return Matrix<2, Type>{
-				matrix[0][0] * rhs.matrix[0][0] + matrix[0][1] * rhs.matrix[1][0],
-					matrix[0][0] * rhs.matrix[0][1] + matrix[0][1] * rhs.matrix[1][1], // [ A B ] * [ E F ] == [ A*E + B*G  |  A*F + B*H ]
-					matrix[1][0] * rhs.matrix[0][0] + matrix[1][1] * rhs.matrix[1][0], // [ C D ] * [ G H ] == [ C*E + D*G  |  C*F + D*H ]
-					matrix[1][0] * rhs.matrix[0][1] + matrix[1][1] * rhs.matrix[1][1] };
-		}
-		Matrix<2, Type> operator*(const Matrix<2, Type>& lhs, const Type constant) const noexcept
-		{
-			return Matrix<2, Type>{
-				lhs.matrix[0][0] * constant,
-				lhs.matrix[0][1] * constant,
-				lhs.matrix[1][0] * constant,
-				lhs.matrix[1][1] * constant };
-		}
-		Matrix<2, Type> operator*(const Type constant, const Matrix<2, Type>& rhs) const noexcept
-		{
-			return rhs * constant;
-		}
-		Matrix<2, Type> operator/(const Matrix<2, Type>& lhs, const Matrix<2, Type>& rhs) const
-		{
-
-		}
-#pragma endregion
-
-#pragma region Compound Assignment Operators
-		Matrix<2, Type> opr
 #pragma endregion
 	};
 }
