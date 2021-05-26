@@ -16,7 +16,7 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 {
 	using UnderlyingType = std::underlying_type_t<TransformChanged>;
 
-	if (static_cast<UnderlyingType>(m_TransformChanged) | static_cast<UnderlyingType>(TransformChanged::Translation))
+	if (static_cast<UnderlyingType>(m_TransformChanged) & static_cast<UnderlyingType>(TransformChanged::Translation))
 	{
 		m_DestRect[VertexLocation::LeftBottom] = m_DestRect[VertexLocation::LeftBottom] + m_Translation;
 		m_DestRect[VertexLocation::LeftTop] = m_DestRect[VertexLocation::LeftTop] + m_Translation;
@@ -25,13 +25,13 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 
 		m_Translation = {};
 	}
-	if (static_cast<UnderlyingType>(m_TransformChanged) | static_cast<UnderlyingType>(TransformChanged::Scale))
+	if (static_cast<UnderlyingType>(m_TransformChanged) & static_cast<UnderlyingType>(TransformChanged::Scale))
 	{
 		m_DestRect[VertexLocation::LeftTop] = Point2f{ m_DestRect[VertexLocation::LeftTop].x, m_DestRect[VertexLocation::LeftTop].y * m_Scale.y };
 		m_DestRect[VertexLocation::RightBottom] = Point2f{ m_DestRect[VertexLocation::RightBottom].x * m_Scale.x, m_DestRect[VertexLocation::RightBottom].y };
 		m_DestRect[VertexLocation::RightTop] = Point2f{ m_DestRect[VertexLocation::RightTop] * m_Scale };
 	}
-	if (static_cast<UnderlyingType>(m_TransformChanged) | static_cast<UnderlyingType>(TransformChanged::Rotation))
+	if (static_cast<UnderlyingType>(m_TransformChanged) & static_cast<UnderlyingType>(TransformChanged::Rotation))
 	{
 		m_DestRect[VertexLocation::LeftBottom] = RotatePoint(m_DestRect[VertexLocation::LeftBottom]);
 		m_DestRect[VertexLocation::LeftTop] = RotatePoint(m_DestRect[VertexLocation::LeftTop]);
