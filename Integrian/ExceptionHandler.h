@@ -13,6 +13,7 @@
 #include "CameraInitialisationFailed.h"
 #include "StaticInstanceAlreadyCreated.h"
 #include "MagnitudeZeroException.h"
+#include "MatrixDivisionNotPossibleException.h"
 
 #include <exception> // std::exception
 #include <system_error> // std::system_error
@@ -62,6 +63,8 @@ namespace Integrian
 			catch (const Integrian::StaticInstanceAlreadyCreated&)
 			{}
 			catch (const Integrian::MagnitudeZeroException&)
+			{}
+			catch (const Integrian::MatrixDivisionNotPossibleException&)
 			{}
 			catch (...)
 			{

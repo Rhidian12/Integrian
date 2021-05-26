@@ -183,6 +183,7 @@
     <ClCompile Include="App_Selector.cpp" />
     <ClCompile Include="GameObjectInformation.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
+    <ClCompile Include="MatrixDivisionNotPossibleException.cpp" />
     <ClCompile Include="SDLAudioSystem.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -228,6 +229,9 @@
     <ClInclude Include="GameObjectInformation.h" />
     <ClInclude Include="LoggedAudioSystem.h" />
     <ClInclude Include="MagnitudeZeroException.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Matrix2x2.h" />
+    <ClInclude Include="MatrixDivisionNotPossibleException.h" />
     <ClInclude Include="SDLAudioSystem.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />

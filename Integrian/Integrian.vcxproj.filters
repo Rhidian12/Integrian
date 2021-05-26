@@ -263,6 +263,7 @@
     <ClCompile Include="Shape.cpp">
       <Filter>Engine\Components\TransformComponent\Shape</Filter>
     </ClCompile>
+    <ClCompile Include="MatrixDivisionNotPossibleException.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IntegrianPCH.h">
@@ -504,6 +505,15 @@
     </ClInclude>
     <ClInclude Include="Shape.h">
       <Filter>Engine\Components\TransformComponent\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix2x2.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixDivisionNotPossibleException.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
