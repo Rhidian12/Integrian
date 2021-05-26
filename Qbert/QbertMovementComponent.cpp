@@ -15,7 +15,6 @@ QbertMovementComponent::QbertMovementComponent(Integrian::GameObject* pParent, c
 	, m_Speed{ 100.f }
 	, m_Index{ index }
 {
-
 }
 
 void QbertMovementComponent::PostInitialize()
@@ -29,7 +28,7 @@ void QbertMovementComponent::PostInitialize()
 		m_pPyramidComponent->GetTiles()[1]->GetComponentByType<TileComponent>()->GetCenter(),
 		m_pPyramidComponent->GetTiles()[0]->GetComponentByType<TileComponent>()->GetCenter() };
 
-	auto movement = [this]()
+	auto leftBottomMovement = [this]()
 	{
 		const Point2f qbertPosition{ m_pParent->transform.GetPosition() };
 
@@ -45,8 +44,8 @@ void QbertMovementComponent::PostInitialize()
 		Integrian::Normalize(m_Velocity);
 	};
 
-	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::A }, movement, State::OnRelease);
-	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::DPAD_Left }, movement, State::OnPress, m_Index);
+	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::A }, leftBottomMovement, State::OnRelease);
+	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::DPAD_Left }, leftBottomMovement, State::OnPress, m_Index);
 }
 
 void QbertMovementComponent::Update(const float)
