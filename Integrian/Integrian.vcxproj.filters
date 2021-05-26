@@ -135,6 +135,9 @@
     <Filter Include="Engine\App\GameObjectInformation">
       <UniqueIdentifier>{1406a996-7587-4856-9984-231ca09a65c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Components\TransformComponent\Shape">
+      <UniqueIdentifier>{5f690708-5b08-443a-aa68-d887b603039e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -256,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="GameObjectInformation.cpp">
       <Filter>Engine\App\GameObjectInformation</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>Engine\Components\TransformComponent\Shape</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -495,6 +501,9 @@
     </ClInclude>
     <ClInclude Include="GameObjectInformation.h">
       <Filter>Engine\App\GameObjectInformation</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>Engine\Components\TransformComponent\Shape</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
