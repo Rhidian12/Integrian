@@ -28,39 +28,37 @@ namespace Integrian
 
 #pragma region Arithmetic Operators
 		// == Arithmetic Operators ==
-		template<typename P>
-		Vector<2, Type> operator-(const Point<2, P>& rhs) const noexcept
+		Vector<2, Type> operator-(const Point<2, Type>& rhs) const noexcept
 		{
-			return Vector<2, Type>{x - static_cast<Type>(rhs.x), y - static_cast<Type>(rhs.y)};
+			return Vector<2, Type>{x - rhs.x, y - rhs.y};
 		}
-		template<typename V>
-		Point<2, Type> operator-(const Vector<2, V>& rhs) const noexcept
+		Point<2, Type> operator-(const Vector<2, Type>& rhs) const noexcept
 		{
-			return Point<2, Type>{x - static_cast<Type>(rhs.x), y - static_cast<Type>(rhs.y)};
+			return Point<2, Type>{x - rhs.x, y - rhs.y};
 		}
-		template<typename P>
 		Vector<2, Type> operator+(const Point<2, Type>& rhs) const noexcept
 		{
-			return Vector<2, Type>{x + static_cast<Type>(rhs.x), y + static_cast<Type>(rhs.y)};
+			return Vector<2, Type>{x + rhs.x, y + rhs.y};
 		}
-		template<typename V>
-		Point<2, Type> operator+(const Vector<2, V>& rhs) const noexcept
+		Point<2, Type> operator+(const Vector<2, Type>& rhs) const noexcept
 		{
-			return Point<2, Type>{x + static_cast<Type>(rhs.x), y + static_cast<Type>(rhs.y)};
+			return Point<2, Type>{x + rhs.x, y + rhs.y};
+		}
+		Point<2, Type> operator*(const Point<2, Type>& rhs) const noexcept
+		{
+			return Point<2, Type>{x* rhs.x, y* rhs.y};
 		}
 #pragma endregion
 
 #pragma region Compound Assignment Operators
 		// == Compound Assignment Operators ==
-		template<typename V>
-		Point<2, Type> operator+=(const Vector<2, V>& rhs) noexcept
+		Point<2, Type> operator+=(const Vector<2, Type>& rhs) noexcept
 		{
 			x += static_cast<Type>(rhs.x);
 			y += static_cast<Type>(rhs.y);
 			return *this;
 		}
-		template<typename V>
-		Point<2, Type> operator-=(const Vector<2, V>& rhs) noexcept
+		Point<2, Type> operator-=(const Vector<2, Type>& rhs) noexcept
 		{
 			x -= static_cast<Type>(rhs.x);
 			y -= static_cast<Type>(rhs.y);
