@@ -16,9 +16,9 @@ namespace Integrian
 	enum class VertexLocation : uint8_t
 	{
 		LeftBottom = 0,
-		LeftTop = 1,
+		RightBottom = 1,
 		RightTop = 2,
-		RightBottom = 3
+		LeftTop = 3
 	};
 	// == Structs ==
 	struct Rectf final
@@ -49,7 +49,7 @@ namespace Integrian
 		{
 			return vertices[static_cast<std::underlying_type_t<VertexLocation>>(vertexLocation)];
 		}
-		const Point2f operator[](const VertexLocation vertexLocation) const noexcept
+		const Point2f& operator[](const VertexLocation vertexLocation) const noexcept
 		{
 			return vertices[static_cast<std::underlying_type_t<VertexLocation>>(vertexLocation)];
 		}

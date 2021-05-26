@@ -321,10 +321,10 @@ void Integrian::Texture::DrawFilledRect(const Rectf& rect) const
 	glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
 	glBegin(GL_POLYGON);
 	{
-		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y); 
-		glVertex2f(rect[VertexLocation::RightBottom].x, rect[VertexLocation::RightBottom].y);
-		glVertex2f(rect[VertexLocation::RightTop].x, rect[VertexLocation::RightTop].y);
-		glVertex2f(rect[VertexLocation::LeftTop].x, rect[VertexLocation::LeftTop].y);
+		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y);
+		glVertex2f(rect[VertexLocation::LeftBottom].x + rect.width, rect[VertexLocation::LeftBottom].y);
+		glVertex2f(rect[VertexLocation::LeftBottom].x + rect.width, rect[VertexLocation::LeftBottom].y + rect.height);
+		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y + rect.height);
 	}
 	glEnd();
 }

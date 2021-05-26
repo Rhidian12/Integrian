@@ -14,7 +14,10 @@ namespace Integrian
 	template<typename Type>
 	struct Point<2, Type>
 	{
-		Point<2, Type>() = default;
+		Point<2, Type>()
+			: x{}
+			, y{}
+		{}
 		Point<2, Type>(const Type x, const Type y)
 			: x{ x }
 			, y{ y }

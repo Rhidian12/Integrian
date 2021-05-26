@@ -237,7 +237,7 @@ void Integrian::App::TransformCameraAndRender() const
 	{
 		m_pCamera->Transform(m_Target);
 
-		for (const std::pair<GameObjectInformation, GameObject*> pGameObject : m_pGameObjects)
+		for (const std::pair<GameObjectInformation, GameObject*>& pGameObject : m_pGameObjects)
 			pGameObject.second->Render();
 
 		Render();

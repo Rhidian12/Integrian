@@ -12,7 +12,6 @@ namespace Integrian
 	{
 	public:
 		TransformComponent(GameObject* pParent);
-		TransformComponent(GameObject* pParent, const TypeOfShape typeOfShape = TypeOfShape::Point);
 		~TransformComponent() = default;
 
 		virtual void FixedUpdate(const float) override;

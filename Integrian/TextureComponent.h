@@ -15,6 +15,8 @@ namespace Integrian
 		TextureComponent(GameObject* pParent, Texture* pTexture);
 		~TextureComponent() = default;
 
+		virtual void Initialize() override;
+
 		virtual void Render(const Point2f& pos) const override;
 		
 		void AddTexture(Texture* pTexture);

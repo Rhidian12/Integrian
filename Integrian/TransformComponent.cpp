@@ -3,15 +3,10 @@
 #include "Timer.h"
 
 Integrian::TransformComponent::TransformComponent(GameObject* pParent)
-	: TransformComponent{ pParent, {} }
-{
-}
-
-Integrian::TransformComponent::TransformComponent(GameObject* pParent, const TypeOfShape typeOfShape)
 	: Component{ pParent }
 	, m_Scale{ 1.f, 1.f }
 	, m_Angle{}
-	, m_Shape{ typeOfShape }
+	, m_Shape{ TypeOfShape::Rectangle }
 	, m_TransformChanged{}
 	, m_Translation{}
 {
