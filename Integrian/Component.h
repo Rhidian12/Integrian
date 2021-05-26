@@ -25,6 +25,7 @@ namespace Integrian
 
 	protected:
 		GameObject* m_pParent{};
+
 	private:
 	};
 }
