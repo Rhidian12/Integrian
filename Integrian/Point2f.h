@@ -75,6 +75,10 @@ namespace Integrian
 			constexpr float epsilon{ std::numeric_limits<float>::epsilon() };
 			return (abs(x - other.x) <= epsilon) && (abs(y - other.y) <= epsilon);
 		}
+		bool operator!=(const Point<2, Type>& other) const noexcept
+		{
+			return !(*this == other);
+		}
 #pragma endregion
 
 #pragma region Miscellaneous Operators

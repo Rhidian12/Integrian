@@ -249,18 +249,18 @@ void Integrian::Texture::Draw(const Rectf& dstRect, const Rectf& srcRect) const
 	else // srcRect specified
 	{
 		// Convert to the range [0.0, 1.0]
-		textLeft = srcRect.leftBottom.x / m_Width;
-		textRight = (srcRect.leftBottom.x + srcRect.width) / m_Width;
-		textTop = (srcRect.leftBottom.y - srcRect.height) / m_Height;
-		textBottom = srcRect.leftBottom.y / m_Height;
+		textLeft = srcRect[VertexLocation::LeftBottom].x / m_Width;
+		textRight = (srcRect[VertexLocation::LeftBottom].x + srcRect.width) / m_Width;
+		textTop = (srcRect[VertexLocation::LeftBottom].y - srcRect.height) / m_Height;
+		textBottom = srcRect[VertexLocation::LeftBottom].y / m_Height;
 
 		defaultDestHeight = srcRect.height;
 		defaultDestWidth = srcRect.width;
 	}
 
 	// Determine vertex coordinates
-	const float vertexLeft{ dstRect.leftBottom.x };
-	const float vertexBottom{ dstRect.leftBottom.y };
+	const float vertexLeft{ dstRect[VertexLocation::LeftBottom].x };
+	const float vertexBottom{ dstRect[VertexLocation::LeftBottom].y };
 	float vertexRight{};
 	float vertexTop{};
 	if (!(dstRect.width > 0.001f && dstRect.height > 0.001f)) // If no size specified use default size
@@ -321,10 +321,10 @@ void Integrian::Texture::DrawFilledRect(const Rectf& rect) const
 	glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
 	glBegin(GL_POLYGON);
 	{
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y + rect.height);
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y + rect.height);
+		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y); 
+		glVertex2f(rect[VertexLocation::RightBottom].x, rect[VertexLocation::RightBottom].y);
+		glVertex2f(rect[VertexLocation::RightTop].x, rect[VertexLocation::RightTop].y);
+		glVertex2f(rect[VertexLocation::LeftTop].x, rect[VertexLocation::LeftTop].y);
 	}
 	glEnd();
 }

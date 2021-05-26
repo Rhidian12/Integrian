@@ -6,10 +6,10 @@ void Integrian::DrawRectangle(const Rectf& rect)
 {
 	glBegin(GL_LINE_LOOP);
 	{
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y + rect.height);
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y + rect.height);
+		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y);
+		glVertex2f(rect[VertexLocation::RightBottom].x, rect[VertexLocation::RightBottom].y);
+		glVertex2f(rect[VertexLocation::RightTop].x, rect[VertexLocation::RightTop].y);
+		glVertex2f(rect[VertexLocation::LeftTop].x, rect[VertexLocation::LeftTop].y);
 	}
 	glEnd();
 }
@@ -19,10 +19,10 @@ void Integrian::DrawRectangle(const Rectf& rect, const RGBColour& colour)
 	glColor3f(colour.r, colour.g, colour.b);
 	glBegin(GL_LINE_LOOP);
 	{
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y + rect.height);
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y + rect.height);
+		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y);
+		glVertex2f(rect[VertexLocation::RightBottom].x, rect[VertexLocation::RightBottom].y);
+		glVertex2f(rect[VertexLocation::RightTop].x, rect[VertexLocation::RightTop].y);
+		glVertex2f(rect[VertexLocation::LeftTop].x, rect[VertexLocation::LeftTop].y);
 	}
 	glEnd();
 }
@@ -31,10 +31,10 @@ void Integrian::DrawFilledRectangle(const Rectf& rect)
 {
 	glBegin(GL_POLYGON);
 	{
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y + rect.height);
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y + rect.height);
+		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y);
+		glVertex2f(rect[VertexLocation::RightBottom].x, rect[VertexLocation::RightBottom].y);
+		glVertex2f(rect[VertexLocation::RightTop].x, rect[VertexLocation::RightTop].y);
+		glVertex2f(rect[VertexLocation::LeftTop].x, rect[VertexLocation::LeftTop].y);
 	}
 	glEnd();
 }
@@ -43,10 +43,10 @@ void Integrian::DrawFilledRectangle(const Rectf& rect, const RGBColour& colour)
 	glColor3f(colour.r, colour.g, colour.b);
 	glBegin(GL_POLYGON);
 	{
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y);
-		glVertex2f(rect.leftBottom.x + rect.width, rect.leftBottom.y + rect.height);
-		glVertex2f(rect.leftBottom.x, rect.leftBottom.y + rect.height);
+		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y);
+		glVertex2f(rect[VertexLocation::RightBottom].x, rect[VertexLocation::RightBottom].y);
+		glVertex2f(rect[VertexLocation::RightTop].x, rect[VertexLocation::RightTop].y);
+		glVertex2f(rect[VertexLocation::LeftTop].x, rect[VertexLocation::LeftTop].y);
 	}
 	glEnd();
 }

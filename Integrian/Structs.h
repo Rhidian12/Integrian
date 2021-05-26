@@ -9,56 +9,79 @@
 #include "TypeDefines.h" // Point2f && Vector2f
 #include <cmath> //
 #include <string> // std::string
+#include <array> // std::array
 
 namespace Integrian
 {
+	enum class VertexLocation : uint8_t
+	{
+		LeftBottom = 0,
+		LeftTop = 1,
+		RightTop = 2,
+		RightBottom = 3
+	};
 	// == Structs ==
 	struct Rectf final
 	{
 		explicit Rectf()
-			: leftBottom{}
+			: vertices{}
 			, width{}
 			, height{}
 		{
 		}
-		explicit Rectf(const Point2f& leftBottom, const float width, const float height)
-			: leftBottom{ leftBottom }
-			, width{ width }
-			, height{ height }
+		explicit Rectf(const float left, const float bottom, const float width, const float height)
+			: Rectf{ { left, bottom }, width, height }
 		{
 		}
-		explicit Rectf(const float left, const float bottom, const float width, const float height)
-			: leftBottom{ left, bottom }
+		explicit Rectf(const Point2f& leftBottom, const float width, const float height)
+			: vertices{}
 			, width{ width }
 			, height{ height }
 		{
+			vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::LeftBottom)] = leftBottom;
+			vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::LeftTop)] = { leftBottom.x, leftBottom.y + height };
+			vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::RightTop)] = { leftBottom.x + width, leftBottom.y + height };
+			vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::RightBottom)] = { leftBottom.x + width, leftBottom.y };
 		}
 
-		bool operator==(const Rectf& other) const
+#pragma region RectfOperators
+		Point2f& operator[](const VertexLocation vertexLocation) noexcept
+		{
+			return vertices[static_cast<std::underlying_type_t<VertexLocation>>(vertexLocation)];
+		}
+		const Point2f operator[](const VertexLocation vertexLocation) const noexcept
+		{
+			return vertices[static_cast<std::underlying_type_t<VertexLocation>>(vertexLocation)];
+		}
+		bool operator==(const Rectf& other) const noexcept
 		{
 			const float epsilon{ 0.001f };
-			if (fabs(static_cast<double>(leftBottom.x) - other.leftBottom.x) > epsilon)
-				return false;
-			if (fabs(static_cast<double>(leftBottom.y) - other.leftBottom.y) > epsilon)
-				return false;
+			for (uint8_t i{}; i < 4; ++i)
+				if ((*this)[static_cast<VertexLocation>(i)] != other[static_cast<VertexLocation>(i)])
+					return false;
+
 			if (fabs(static_cast<double>(width) - other.width) > epsilon)
 				return false;
+
 			if (fabs(static_cast<double>(height) - other.height) > epsilon)
 				return false;
+
 			return true;
 		}
-		bool operator!=(const Rectf& other) const
+		bool operator!=(const Rectf& other) const noexcept
 		{
 			return !Rectf::operator==(other);
 		}
-		void operator=(const Rectf& other)
+		void operator=(const Rectf& other) noexcept
 		{
-			leftBottom = other.leftBottom;
+			vertices = other.vertices;
 			width = other.width;
 			height = other.height;
 		}
 
-		Point2f leftBottom;
+#pragma endregion
+
+		std::array<Point2f, 4> vertices;
 		float width;
 		float height;
 	};
@@ -141,7 +164,7 @@ namespace Integrian
 			return *this;
 		}
 #pragma endregion
-		
+
 		bool operator==(const RGBColour& other) const
 		{
 			const float epsilon{ 0.1f };
