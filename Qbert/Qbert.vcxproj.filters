@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Components\QbertMovementComponent">
       <UniqueIdentifier>{5d1c5731-4471-4422-8439-a45031b37a55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\QbertSpriteComponent">
+      <UniqueIdentifier>{2a1ff629-b3b2-4605-b36b-09198a27d93a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -48,6 +51,9 @@
     <ClCompile Include="QbertMovementComponent.cpp">
       <Filter>Source Files\Components\QbertMovementComponent</Filter>
     </ClCompile>
+    <ClCompile Include="QbertSpriteComponent.cpp">
+      <Filter>Source Files\Components\QbertSpriteComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
@@ -64,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="QbertMovementComponent.h">
       <Filter>Source Files\Components\QbertMovementComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertSpriteComponent.h">
+      <Filter>Source Files\Components\QbertSpriteComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

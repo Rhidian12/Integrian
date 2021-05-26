@@ -102,9 +102,6 @@
     <Filter Include="Engine\RapidJSON">
       <UniqueIdentifier>{a8938304-d79f-4af8-8520-66af12bbee40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Managers\CommandManager">
-      <UniqueIdentifier>{539df794-c972-4892-88b1-10aa05cf9aac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Audio">
       <UniqueIdentifier>{384d9f7e-ca8e-480d-9cb1-ca68f9a164b6}</UniqueIdentifier>
     </Filter>
