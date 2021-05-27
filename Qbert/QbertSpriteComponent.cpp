@@ -31,5 +31,5 @@ void QbertSpriteComponent::Update(const float)
 
 void QbertSpriteComponent::Render(const Integrian::Point2f& pos) const
 {
-	m_pTexture->Draw(pos, m_SourceRect);
+	m_pTexture->Draw(Integrian::Point2f{pos.x - m_pTexture->GetWidth() * 0.25f, pos.y}, m_SourceRect);
 }
