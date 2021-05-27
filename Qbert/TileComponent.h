@@ -7,7 +7,7 @@ namespace Integrian
 	class GameObject;
 }
 
-enum class Direction : int8_t
+enum class Direction : uint8_t
 {
 	LeftBottom = 0,
 	LeftTop = 1,

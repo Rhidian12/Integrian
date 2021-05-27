@@ -28,24 +28,52 @@ void QbertMovementComponent::PostInitialize()
 		m_pPyramidComponent->GetTiles()[1]->GetComponentByType<TileComponent>()->GetCenter(),
 		m_pPyramidComponent->GetTiles()[0]->GetComponentByType<TileComponent>()->GetCenter() };
 
-	auto leftBottomMovement = [this]()
+	auto movement = [this]()
 	{
 		const Point2f qbertPosition{ m_pParent->transform.GetPosition() };
 
 		TileComponent* pQbertTile{ m_pPyramidComponent->GetTile(qbertPosition) };
-		TileComponent* pEndTile{ pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)] };
+		TileComponent* pEndTile{};
+
+		InputManager& inputManager{ InputManager::GetInstance() };
+
+		Vector2f vectorTowardsOtherTile{};
+
+		if (inputManager.IsKeyboardKeyPressed(KeyboardInput::A)) // Left Bottom Movement
+		{
+			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)];
+			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
+		}
+		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::D)) // Right Bottom Movement
+		{
+			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)];
+			vectorTowardsOtherTile = Vector2f{ m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
+		}
+		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::Q)) // Left Top Movement
+		{
+			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)];
+			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, m_VectorTowardsOtherTile.y };
+		}
+		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::E)) // Right Top Movement
+		{
+			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)];
+			vectorTowardsOtherTile = m_VectorTowardsOtherTile;
+		}
 
 		if (pEndTile) // is there a connection to the tile
 			m_EndPosition = pEndTile->GetCenter();
 		else // there is no connection == jumping off the map
-			m_EndPosition = qbertPosition + Vector2f{ -m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
+			m_EndPosition = qbertPosition + vectorTowardsOtherTile;
 
 		m_Velocity = m_EndPosition - qbertPosition;
 		Integrian::Normalize(m_Velocity);
 	};
 
-	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::A }, leftBottomMovement, State::OnRelease);
-	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::DPAD_Left }, leftBottomMovement, State::OnPress, m_Index);
+	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::A }, movement, State::OnPress);
+	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::Q }, movement, State::OnPress);
+	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::E }, movement, State::OnPress);
+	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::D }, movement, State::OnPress);
+	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::DPAD_Left }, movement, State::OnPress, m_Index);
 }
 
 void QbertMovementComponent::Update(const float)

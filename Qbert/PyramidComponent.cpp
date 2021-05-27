@@ -15,6 +15,21 @@ PyramidComponent::PyramidComponent(Integrian::GameObject* pParent)
 
 void PyramidComponent::Render(const Integrian::Point2f&) const
 {
+	using namespace Integrian;
+
+	for (GameObject* pTile : m_pTiles)
+	{
+		//if (pTile->GetComponentByType<TileComponent>()->GetConnections()[3] != nullptr)
+		//{
+		//	DrawLine(pTile->GetComponentByType<TileComponent>()->GetCenter(), pTile->GetComponentByType<TileComponent>()->GetConnections()[3]->GetCenter(), RGBColour{ 255.f, 0.f, 0.f });
+		//}
+
+		if (pTile->GetComponentByType<TileComponent>()->GetConnections()[static_cast<uint8_t>(Direction::RightTop)] != nullptr)
+		{
+			DrawLine(pTile->GetComponentByType<TileComponent>()->GetCenter(), pTile->GetComponentByType<TileComponent>()->GetConnections()[static_cast<uint8_t>(Direction::RightTop)]->GetCenter(), RGBColour{ 255.f, 0.f, 0.f });
+		}
+	}
+
 	//uint64_t counter{};
 	//for (unsigned int y{}; y < 6; ++y)
 	//{

@@ -67,17 +67,20 @@ void TileFactoryComponent::FillConnections()
 {
 	using namespace Integrian;
 
-	PyramidComponent* pPyramid{ m_pParent->GetComponentByType<PyramidComponent>() };
-
-	const std::vector<GameObject*>* pTiles{ &pPyramid->GetTiles() };
+	const std::vector<GameObject*>* pTiles{ &m_pParent->GetComponentByType<PyramidComponent>()->GetTiles() };
 
 	uint64_t counter{};
 	for (unsigned int y{}; y < m_Size - 1; ++y)
 	{
 		for (unsigned int x{}; x <= y; ++x)
 		{
-			(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter + (y - x) + x + 1]->GetComponentByType<TileComponent>(), Direction::LeftBottom);
-			(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter + (y - x) + x + 2]->GetComponentByType<TileComponent>(), Direction::RightBottom);
+			const uint64_t leftBottomIndex{ counter + (y - x) + x + 1 };
+			const uint64_t rightBottomIndex{ counter + (y - x) + x + 2 };
+			(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[leftBottomIndex]->GetComponentByType<TileComponent>(), Direction::LeftBottom);
+			(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[rightBottomIndex]->GetComponentByType<TileComponent>(), Direction::RightBottom);
+
+			(*pTiles)[leftBottomIndex]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter]->GetComponentByType<TileComponent>(), Direction::RightTop);
+			(*pTiles)[rightBottomIndex]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter]->GetComponentByType<TileComponent>(), Direction::LeftTop);
 
 			++counter;
 		}
@@ -93,53 +96,4 @@ void TileFactoryComponent::FillConnections()
 
 	// left side : 0 | 1 | 3 | 6 | 10 | 15 | 21
 	// right side: 0 | 2 | 5 | 9 | 14 | 20 | 27
-
-	std::vector<size_t> leftSide{};
-	std::vector<size_t> rightSide{};
-
-	size_t increment{ 2 };
-	for (size_t i{}; i < pTiles->size();)
-	{
-		leftSide.push_back(i);
-
-		if (i == 0)
-			++i;
-		else
-			i += increment++;
-	}
-
-	increment = 2;
-	for (size_t i{}; i < pTiles->size();)
-	{
-		rightSide.push_back(i);
-
-		i += increment++;
-	}
-
-	for (int y{ int(m_Size) - 1 }; y >= 0; --y)
-	{
-		for (int x{ y }; x >= y; --x)
-		{
-			const std::vector<size_t>::const_iterator leftCIt{ std::find(leftSide.cbegin(), leftSide.cend(), counter) };
-			const std::vector<size_t>::const_iterator rightCIt{ std::find(rightSide.cbegin(), rightSide.cend(), counter) };
-
-			if (rightCIt == rightSide.cend() && leftCIt != leftSide.cend()) // the tile only has a left top connection
-			{
-				(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter - y]->GetComponentByType<TileComponent>(), Direction::RightTop);
-			}
-			else if (leftCIt == leftSide.cend() && rightCIt != rightSide.cend()) // the tile only has a right top connection
-			{
-				if (counter == 2)
-					(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[0]->GetComponentByType<TileComponent>(), Direction::RightTop);
-				else
-					(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter - y - 1]->GetComponentByType<TileComponent>(), Direction::RightTop);
-			}
-			else // the tile has both a right top and left top connection
-			{
-				(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter - (int64_t(y) - x) - x + 1]->GetComponentByType<TileComponent>(), Direction::LeftTop);
-				(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter - (int64_t(y) - x) - x + 2]->GetComponentByType<TileComponent>(), Direction::RightTop);
-			}
-			--counter;
-		}
-	}
 }
