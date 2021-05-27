@@ -4,11 +4,11 @@
 // December 2020 ---- Last Edited: December 2020
 // ====================================
 
-#include "Point.h" // Point 
-#include "Vector.h" // Vector
-
 #ifndef INTEGRIAN_POINT2_H
 #define INTEGRIAN_POINT2_H
+
+#include "Point.h" // Point 
+#include "Vector.h" // Vector
 
 namespace Integrian
 {

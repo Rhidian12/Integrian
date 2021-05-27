@@ -28,6 +28,11 @@ namespace Integrian
 		//	: x{ to.x - from.x }
 		//	, y{ to.y - from.y }
 		//{}
+		Vector<3, Type>(const Vector<2, Type>& v1)
+			: x{ v1.x }
+			, y{ v1.y }
+			, z{}
+		{}
 		Vector<3, Type>(const Vector<3, Type>& v1)
 			: x{ v1.x }
 			, y{ v1.y }
@@ -127,6 +132,21 @@ namespace Integrian
 		bool operator!=(const Vector<3, Type>& other) const noexcept
 		{
 			return !operator==(other);
+		}
+#pragma endregion
+
+#pragma region Member Access Operators
+		Type& operator[](const int element) noexcept
+		{
+			// TODO: Switch Vector to use a Type[] array
+			if (element == 0)
+				return x;
+			if (element == 1)
+				return y;
+			if (element == 2)
+				return z;
+			// TODO: Add an exception here
+			return x;
 		}
 #pragma endregion
 

@@ -23,6 +23,18 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 		translationMatrix[0].z = m_Translation.x;
 		translationMatrix[1].z = m_Translation.y;
 
+		Matrix3f scaleMatrix{ Matrix3f::GetIdentity() };
+		scaleMatrix[0].x = m_Scale.x;
+		scaleMatrix[1].y = m_Scale.y;
+
+		Matrix3f rotationMatrix{ Matrix3f::GetIdentity() };
+		rotationMatrix[0].x = cos(m_Angle);
+		rotationMatrix[0].y = -sin(m_Angle);
+		rotationMatrix[1].x = sin(m_Angle);
+		rotationMatrix[1].y = cos(m_Angle);
+
+		Matrix3f transformationMatrix{ transformationMatrix * rotationMatrix * scaleMatrix };
+
 		m_DestRect[VertexLocation::LeftBottom] = m_DestRect[VertexLocation::LeftBottom] + m_Translation;
 		m_DestRect[VertexLocation::LeftTop] = m_DestRect[VertexLocation::LeftTop] + m_Translation;
 		m_DestRect[VertexLocation::RightBottom] = m_DestRect[VertexLocation::RightBottom] + m_Translation;

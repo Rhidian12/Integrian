@@ -182,6 +182,24 @@ namespace Integrian
 
 			return matrix * inverse;
 		}
+		Vector<3, Type> operator*(const Vector<3, Type>& rhs) const noexcept
+		{
+			Vector<3, Type> vector{};
+			for (int row{}; row < 3; ++row)
+				for (int column{}; column < 3; ++column)
+					vector[row] += matrix[row][column] * rhs[row];
+
+			return vector;
+		}
+		Point<3, Type> operator*(const Point<3, Type>& rhs) const noexcept
+		{
+			Point<3, Type> vector{};
+			for (int row{}; row < 3; ++row)
+				for (int column{}; column < 3; ++column)
+					vector[row] += matrix[row][column] * rhs[row];
+
+			return vector;
+		}
 #pragma endregion
 
 #pragma region Compound Assignment Operators
@@ -274,7 +292,7 @@ namespace Integrian
 #pragma region Access Operators
 		Vector<3, Type>& operator[](const int row) noexcept
 		{
-			return matrix[row];
+			return *((Vector<3, Type>*)matrix[row]);
 		}
 #pragma endregion
 
@@ -306,7 +324,7 @@ namespace Integrian
 	};
 
 	template<typename Type>
-	inline Matrix<3, Type> GetIdentity()
+	inline Matrix<3, Type> Matrix<3, Type>::GetIdentity()
 	{
 		return Matrix<3, Type>{
 			static_cast<Type>(1.f), static_cast<Type>(0.f), static_cast<Type>(0.f),

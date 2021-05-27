@@ -523,5 +523,8 @@
     <ClInclude Include="DivisionByZeroNotPossibleException.h">
       <Filter>Engine\Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="Point3f.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
