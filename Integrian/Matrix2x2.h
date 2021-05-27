@@ -29,7 +29,7 @@ namespace Integrian
 			: matrix{ other.matrix }
 		{}
 		Matrix<2, Type>(Matrix<2, Type>&& other) noexcept
-			: matrix{ other.matrix }
+			: matrix{ std::move(other.matrix) }
 		{
 			other.matrix = nullptr;
 		}

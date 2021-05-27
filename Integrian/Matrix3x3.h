@@ -35,7 +35,7 @@ namespace Integrian
 			: matrix{ other.matrix }
 		{}
 		Matrix<3, Type>(Matrix<3, Type>&& other) noexcept
-			: matrix{ other.matrix }
+			: matrix{ std::move(other.matrix) }
 		{
 			other.matrix = nullptr;
 		}
@@ -47,12 +47,6 @@ namespace Integrian
 
 #pragma region Member Variables
 		Type(*matrix)[3]{ new Type[3][3] };
-
-		inline static Matrix<3, Type> identityMatrix{
-			static_cast<Type>(1.f), static_cast<Type>(0.f), static_cast<Type>(0.f),
-			static_cast<Type>(0.f), static_cast<Type>(1.f), static_cast<Type>(0.f),
-			static_cast<Type>(0.f), static_cast<Type>(0.f), static_cast<Type>(1.f)
-		};
 #pragma endregion
 
 #pragma region Member Functions
@@ -183,7 +177,7 @@ namespace Integrian
 		{
 			Matrix<3, Type> inverse{ rhs.Inverse() };
 
-			if (rhs * inverse != identityMatrix)
+			if (rhs * inverse != GetIdentity())
 				throw MatrixDivisionNotPossibleException{};
 
 			return matrix * inverse;
@@ -253,7 +247,7 @@ namespace Integrian
 		{
 			Matrix<3, Type> inverse{ rhs.Inverse() };
 
-			if (rhs * inverse != identityMatrix)
+			if (rhs * inverse != GetIdentity())
 				throw MatrixDivisionNotPossibleException{};
 
 			matrix *= inverse;
@@ -305,7 +299,21 @@ namespace Integrian
 			return os;
 		}
 #pragma endregion
+
+#pragma region Static Member Functions
+		static Matrix<3, Type> GetIdentity();
+#pragma endregion
 	};
+
+	template<typename Type>
+	inline Matrix<3, Type> GetIdentity()
+	{
+		return Matrix<3, Type>{
+			static_cast<Type>(1.f), static_cast<Type>(0.f), static_cast<Type>(0.f),
+			static_cast<Type>(0.f), static_cast<Type>(1.f), static_cast<Type>(0.f),
+			static_cast<Type>(0.f), static_cast<Type>(0.f), static_cast<Type>(1.f)
+		};
+	}
 }
 
 #endif // !INTEGRIAN_MATRIX3x3_H

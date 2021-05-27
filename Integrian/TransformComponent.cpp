@@ -19,10 +19,9 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 	if (static_cast<UnderlyingType>(m_TransformChanged) & static_cast<UnderlyingType>(TransformChanged::Translation))
 	{
 		// calculate translation matrix
-		//Matrix3f translationMatrix{ Matrix3f::identityMatrix };
-		//translationMatrix[0][2] = m_Translation.x;
-		//translationMatrix[0][2] = m_Translation.x;
-
+		Matrix3f translationMatrix{ Matrix3f::GetIdentity() };
+		translationMatrix[0].z = m_Translation.x;
+		translationMatrix[1].z = m_Translation.y;
 
 		m_DestRect[VertexLocation::LeftBottom] = m_DestRect[VertexLocation::LeftBottom] + m_Translation;
 		m_DestRect[VertexLocation::LeftTop] = m_DestRect[VertexLocation::LeftTop] + m_Translation;

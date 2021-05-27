@@ -16,6 +16,7 @@ namespace Integrian
 	template<typename Type>
 	struct Point<2, Type>
 	{
+#pragma region Constructors
 		Point<2, Type>()
 			: x{}
 			, y{}
@@ -29,11 +30,29 @@ namespace Integrian
 			, y{ p.y }
 		{}
 		Point<2, Type>(Point<2, Type>&& other)
-			: x{ other.x }
-			, y{ other.y }
+			: x{ std::move(other.x) }
+			, y{ std::move(other.y) }
 		{}
+#pragma endregion
 
+#pragma region Copy and Move operator
+		Point<2, Type>& operator=(const Point<2, Type>& p)
+		{
+			x = p.x;
+			y = p.y;
+			return *this;
+		}
+		Point<2, Type>& operator=(Point<2, Type>&& p)
+		{
+			x = std::move(p.x);
+			y = std::move(p.y);
+			return *this;
+		}
+#pragma endregion
+
+#pragma region Member Variables
 		Type x, y;
+#pragma endregion
 
 #pragma region Arithmetic Operators
 		// == Arithmetic Operators ==
