@@ -96,6 +96,7 @@ void QbertMovementComponent::Update(const float)
 	{
 		m_Velocity = Integrian::Vector2f{};
 		m_pParent->transform.SetPosition(m_EndPosition);
+		EventQueue::GetInstance().QueueEvent(Event{ "QbertMovementEnded" });
 	}
 }
 
