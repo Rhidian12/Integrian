@@ -16,7 +16,7 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 {
 	using UnderlyingType = std::underlying_type_t<TransformChanged>;
 
-	if (static_cast<UnderlyingType>(m_TransformChanged) & static_cast<UnderlyingType>(TransformChanged::Translation))
+	if (static_cast<UnderlyingType>(m_TransformChanged)/* & static_cast<UnderlyingType>(TransformChanged::Translation)*/)
 	{
 		// calculate translation matrix
 		Matrix3f translationMatrix{ Matrix3f::GetIdentity() };
@@ -35,26 +35,31 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 
 		Matrix3f transformationMatrix{ transformationMatrix * rotationMatrix * scaleMatrix };
 
-		m_DestRect[VertexLocation::LeftBottom] = m_DestRect[VertexLocation::LeftBottom] + m_Translation;
-		m_DestRect[VertexLocation::LeftTop] = m_DestRect[VertexLocation::LeftTop] + m_Translation;
-		m_DestRect[VertexLocation::RightBottom] = m_DestRect[VertexLocation::RightBottom] + m_Translation;
-		m_DestRect[VertexLocation::RightTop] = m_DestRect[VertexLocation::RightTop] + m_Translation;
+		m_DestRect[VertexLocation::LeftBottom] = Point2f{ (transformationMatrix * m_DestRect[VertexLocation::LeftBottom]) };
+		m_DestRect[VertexLocation::LeftTop] = Point2f{ (transformationMatrix * m_DestRect[VertexLocation::LeftTop]) };
+		m_DestRect[VertexLocation::RightBottom] = Point2f{ (transformationMatrix * m_DestRect[VertexLocation::RightBottom]) };
+		m_DestRect[VertexLocation::RightTop] = Point2f{ (transformationMatrix * m_DestRect[VertexLocation::RightTop]) };
 
+		//m_DestRect[VertexLocation::LeftBottom] = m_DestRect[VertexLocation::LeftBottom] + m_Translation;
+		//m_DestRect[VertexLocation::LeftTop] = m_DestRect[VertexLocation::LeftTop] + m_Translation;
+		//m_DestRect[VertexLocation::RightBottom] = m_DestRect[VertexLocation::RightBottom] + m_Translation;
+		//m_DestRect[VertexLocation::RightTop] = m_DestRect[VertexLocation::RightTop] + m_Translation;
+	   
 		m_Translation = {};
 	}
-	if (static_cast<UnderlyingType>(m_TransformChanged) & static_cast<UnderlyingType>(TransformChanged::Scale))
-	{
-		m_DestRect[VertexLocation::LeftTop] = Point2f{ m_DestRect[VertexLocation::LeftTop].x, m_DestRect[VertexLocation::LeftTop].y * m_Scale.y };
-		m_DestRect[VertexLocation::RightBottom] = Point2f{ m_DestRect[VertexLocation::RightBottom].x * m_Scale.x, m_DestRect[VertexLocation::RightBottom].y };
-		m_DestRect[VertexLocation::RightTop] = Point2f{ m_DestRect[VertexLocation::RightTop] * m_Scale };
-	}
-	if (static_cast<UnderlyingType>(m_TransformChanged) & static_cast<UnderlyingType>(TransformChanged::Rotation))
-	{
-		m_DestRect[VertexLocation::LeftBottom] = RotatePoint(m_DestRect[VertexLocation::LeftBottom]);
-		m_DestRect[VertexLocation::LeftTop] = RotatePoint(m_DestRect[VertexLocation::LeftTop]);
-		m_DestRect[VertexLocation::RightBottom] = RotatePoint(m_DestRect[VertexLocation::RightBottom]);
-		m_DestRect[VertexLocation::RightTop] = RotatePoint(m_DestRect[VertexLocation::RightTop]);
-	}
+	//if (static_cast<UnderlyingType>(m_TransformChanged) & static_cast<UnderlyingType>(TransformChanged::Scale))
+	//{
+	//	m_DestRect[VertexLocation::LeftTop] = Point2f{ m_DestRect[VertexLocation::LeftTop].x, m_DestRect[VertexLocation::LeftTop].y * m_Scale.y };
+	//	m_DestRect[VertexLocation::RightBottom] = Point2f{ m_DestRect[VertexLocation::RightBottom].x * m_Scale.x, m_DestRect[VertexLocation::RightBottom].y };
+	//	m_DestRect[VertexLocation::RightTop] = Point2f{ m_DestRect[VertexLocation::RightTop] * m_Scale };
+	//}
+	//if (static_cast<UnderlyingType>(m_TransformChanged) & static_cast<UnderlyingType>(TransformChanged::Rotation))
+	//{
+	//	m_DestRect[VertexLocation::LeftBottom] = RotatePoint(m_DestRect[VertexLocation::LeftBottom]);
+	//	m_DestRect[VertexLocation::LeftTop] = RotatePoint(m_DestRect[VertexLocation::LeftTop]);
+	//	m_DestRect[VertexLocation::RightBottom] = RotatePoint(m_DestRect[VertexLocation::RightBottom]);
+	//	m_DestRect[VertexLocation::RightTop] = RotatePoint(m_DestRect[VertexLocation::RightTop]);
+	//}
 
 	m_TransformChanged = TransformChanged::None;
 }

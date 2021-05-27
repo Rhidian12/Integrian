@@ -25,6 +25,10 @@ namespace Integrian
 			: x{ x }
 			, y{ y }
 		{}
+		Point<2, Type>(const Point<3, Type>& p)
+			: x{ p.x }
+			, y{ p.y }
+		{}
 		Point<2, Type>(const Point<2, Type>& p)
 			: x{ p.x }
 			, y{ p.y }

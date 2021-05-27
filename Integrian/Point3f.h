@@ -143,6 +143,18 @@ namespace Integrian
 			// TODO: Add an exception here
 			return x;
 		}
+		const Type& operator[](const int element) const noexcept
+		{
+			// TODO: Switch Point to use a Type[] array
+			if (element == 0)
+				return x;
+			if (element == 1)
+				return y;
+			if (element == 2)
+				return z;
+			// TODO: Add an exception here
+			return x;
+		}
 #pragma endregion
 
 #pragma region Miscellaneous Operators
