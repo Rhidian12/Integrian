@@ -50,6 +50,7 @@ namespace Integrian
 
 		/* Returns whether a mouse button is pressed now */
 		[[nodiscard]] bool IsMouseButtonPressed(const MouseButton gameInput) const;
+
 		/*
 		Returns whether a controller button is pressed now.
 		This does not return how much of a Trigger is pressed, use GetTriggerMovement() for that
