@@ -12,11 +12,13 @@
 #include "Vector2f.h" // Vector<2, Type>
 #include "Matrix.h" // Matrix
 #include "Matrix2x2.h" // Matrix<2, Type>
+#include "Matrix3x3.h" // Matrix<3, Type>
 namespace Integrian
 {
 	typedef Vector<2, float> Vector2f;
 	typedef Point<2, float> Point2f;
 	typedef Matrix<2, float> Matrix2f;
+	typedef Matrix<3, float> Matrix3f;
 }
 
 #endif // !ENGINE_TYPEDEFINES_H

@@ -21,7 +21,7 @@ namespace Integrian
 			: matrix{}
 		{
 			matrix[0][0] = a;
-			matrix[1][0] = b; // [ A B ]
+			matrix[0][1] = b; // [ A B ]
 			matrix[1][0] = c; // [ C D ]
 			matrix[1][1] = d;
 		}
@@ -33,21 +33,30 @@ namespace Integrian
 		{
 			other.matrix = nullptr;
 		}
+		~Matrix<2, Type>()
+		{
+			delete[] matrix;
+		}
 #pragma endregion
 
-#pragma region Special Member Variables
+#pragma region Member Variables
+		Type(*matrix)[2] { new Type[2][2] };
+
 		inline static Matrix<2, Type> identityMatrix{ static_cast<Type>(1.f), static_cast<Type>(0.f), static_cast<Type>(0.f), static_cast<Type>(1.f) };
 #pragma endregion
 
 #pragma region Member Functions
-		Matrix<2, Type> Inverse() const
+		const Type GetDeterminant() const
 		{
-			const Type determinant{ static_cast<Type>(1.f) / (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]) };
-
-			if (determinant == static_cast<Type>(0.f))
+			if((matrix[0][0] == static_cast<Type>(0.f) || matrix[1][1] == static_cast<Type>(0.f)) && (matrix[0][1] == static_cast<Type>(0.f) || matrix[1][0] == static_cast<Type>(0.f)))
 				throw MatrixDivisionNotPossibleException{};
 
-			return determinant * (*this);
+			return static_cast<Type>(1.f) / (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]);
+		}
+
+		Matrix<2, Type> Inverse() const
+		{
+			return GetDeterminant() * (*this);
 		}
 
 		Matrix<2, Type> Transpose() const noexcept
@@ -61,55 +70,51 @@ namespace Integrian
 #pragma endregion
 
 #pragma region Arithmetic Operators
-		Matrix<2, Type> operator+(const Matrix<2, Type>& lhs, const Matrix<2, Type>& rhs) const noexcept
+		Matrix<2, Type> operator+(const Matrix<2, Type>& rhs) const noexcept
 		{
 			return Matrix<2, Type>{
-				lhs.matrix[0][0] + rhs.matrix[0][0],
-					lhs.matrix[0][1] + rhs.matrix[0][1],
-					lhs.matrix[1][0] + rhs.matrix[1][0],
-					lhs.matrix[1][1] + rhs.matrix[1][1] };
+					matrix[0][0] + rhs.matrix[0][0],
+					matrix[0][1] + rhs.matrix[0][1],
+					matrix[1][0] + rhs.matrix[1][0],
+					matrix[1][1] + rhs.matrix[1][1] };
 		}
-		Matrix<2, Type> operator-(const Matrix<2, Type>& lhs, const Matrix<2, Type>& rhs) const noexcept
+		Matrix<2, Type> operator-(const Matrix<2, Type>& rhs) const noexcept
 		{
 			return Matrix<2, Type>{
-				lhs.matrix[0][0] - rhs.matrix[0][0],
-					lhs.matrix[0][1] - rhs.matrix[0][1],
-					lhs.matrix[1][0] - rhs.matrix[1][0],
-					lhs.matrix[1][1] - rhs.matrix[1][1] };
+					matrix[0][0] - rhs.matrix[0][0],
+					matrix[0][1] - rhs.matrix[0][1],
+					matrix[1][0] - rhs.matrix[1][0],
+					matrix[1][1] - rhs.matrix[1][1] };
 		}
-		Matrix<2, Type> operator*(const Matrix<2, Type>& lhs, const Matrix<2, Type>& rhs) const noexcept
+		Matrix<2, Type> operator*(const Matrix<2, Type>& rhs) const noexcept
 		{
 			return Matrix<2, Type>{
-				lhs.matrix[0][0] * rhs.matrix[0][0] + lhs.matrix[0][1] * rhs.matrix[1][0],
-					lhs.matrix[0][0] * rhs.matrix[0][1] + lhs.matrix[0][1] * rhs.matrix[1][1], // [ A B ] * [ E F ] == [ A*E + B*G  |  A*F + B*H ]
-					lhs.matrix[1][0] * rhs.matrix[0][0] + lhs.matrix[1][1] * rhs.matrix[1][0], // [ C D ] * [ G H ] == [ C*E + D*G  |  C*F + D*H ]
-					lhs.matrix[1][0] * rhs.matrix[0][1] + lhs.matrix[1][1] * rhs.matrix[1][1] };
+					matrix[0][0] * rhs.matrix[0][0] + matrix[0][1] * rhs.matrix[1][0],
+					matrix[0][0] * rhs.matrix[0][1] + matrix[0][1] * rhs.matrix[1][1], // [ A B ] * [ E F ] == [ A*E + B*G  |  A*F + B*H ]
+					matrix[1][0] * rhs.matrix[0][0] + matrix[1][1] * rhs.matrix[1][0], // [ C D ] * [ G H ] == [ C*E + D*G  |  C*F + D*H ]
+					matrix[1][0] * rhs.matrix[0][1] + matrix[1][1] * rhs.matrix[1][1] };
 		}
-		Matrix<2, Type> operator*(const Matrix<2, Type>& lhs, const Type constant) const noexcept
+		Matrix<2, Type> operator*(const Type constant) const noexcept
 		{
 			return Matrix<2, Type>{
-				lhs.matrix[0][0] * constant,
-					lhs.matrix[0][1] * constant,
-					lhs.matrix[1][0] * constant,
-					lhs.matrix[1][1] * constant };
+					matrix[0][0] * constant,
+					matrix[0][1] * constant,
+					matrix[1][0] * constant,
+					matrix[1][1] * constant };
 		}
-		Matrix<2, Type> operator*(const Type constant, const Matrix<2, Type>& rhs) const noexcept
-		{
-			return rhs * constant;
-		}
-		Matrix<2, Type> operator/(const Matrix<2, Type>& lhs, const Matrix<2, Type>& rhs) const
+		Matrix<2, Type> operator/(const Matrix<2, Type>& rhs) const
 		{
 			Matrix<2, Type> inverse{ rhs.Inverse() };
 
 			if (rhs * inverse != identityMatrix)
 				throw MatrixDivisionNotPossibleException{};
 
-			return lhs * inverse;
+			return matrix * inverse;
 		}
 #pragma endregion
 
 #pragma region Compound Assignment Operators
-		Matrix<2, Type>& operator+=(const Matrix<2, Type>& rhs) const noexcept
+		Matrix<2, Type>& operator+=(const Matrix<2, Type>& rhs) noexcept
 		{
 			matrix[0][0] += rhs.matrix[0][0];
 			matrix[0][1] += rhs.matrix[0][1];
@@ -117,7 +122,7 @@ namespace Integrian
 			matrix[1][1] += rhs.matrix[1][1];
 			return *this;
 		}
-		Matrix<2, Type> operator-=(const Matrix<2, Type>& rhs) const noexcept
+		Matrix<2, Type>& operator-=(const Matrix<2, Type>& rhs) noexcept
 		{
 			matrix[0][0] -= rhs.matrix[0][0];
 			matrix[0][1] -= rhs.matrix[0][1];
@@ -125,7 +130,7 @@ namespace Integrian
 			matrix[1][1] -= rhs.matrix[1][1];
 			return *this;
 		}
-		Matrix<2, Type> operator*=(const Matrix<2, Type>& rhs) const noexcept
+		Matrix<2, Type>& operator*=(const Matrix<2, Type>& rhs) noexcept
 		{
 			matrix[0][0] *= rhs.matrix[0][0] + matrix[0][1] * rhs.matrix[1][0];
 			matrix[0][0] *= rhs.matrix[0][1] + matrix[0][1] * rhs.matrix[1][1]; // [ A B ] * [ E F ] == [ A*E + B*G  |  A*F + B*H ]
@@ -133,7 +138,7 @@ namespace Integrian
 			matrix[1][0] *= rhs.matrix[0][1] + matrix[1][1] * rhs.matrix[1][1];
 			return *this;
 		}
-		Matrix<2, Type> operator*=(const Type constant) const noexcept
+		Matrix<2, Type>& operator*=(const Type constant) noexcept
 		{
 			matrix[0][0] * constant;
 			matrix[0][1] * constant;
@@ -141,7 +146,7 @@ namespace Integrian
 			matrix[1][1] * constant;
 			return *this;
 		}
-		Matrix<2, Type> operator/=(const Matrix<2, Type>& rhs) const
+		Matrix<2, Type>& operator/=(const Matrix<2, Type>& rhs) 
 		{
 			Matrix<2, Type> inverse{ rhs.Inverse() };
 

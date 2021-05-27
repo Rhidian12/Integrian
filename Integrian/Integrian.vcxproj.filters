@@ -514,5 +514,8 @@
     <ClInclude Include="MatrixDivisionNotPossibleException.h">
       <Filter>Engine\Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix3x3.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
