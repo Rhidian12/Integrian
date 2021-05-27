@@ -17,8 +17,7 @@ void QbertSpriteComponent::Initialize()
 	m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation");
 
 	const Integrian::Rectf sourceRect{
-		m_pParent->transform.GetPosition().x - m_pTexture->GetWidth() / 2.f,
-		m_pParent->transform.GetPosition().y - m_pTexture->GetHeight() / 2.f,
+		0.f, 0.f,
 		m_pTexture->GetWidth() / 2.f,
 		m_pTexture->GetHeight()
 	};
@@ -31,5 +30,56 @@ void QbertSpriteComponent::Update(const float)
 
 void QbertSpriteComponent::Render(const Integrian::Point2f& pos) const
 {
-	m_pTexture->Draw(Integrian::Point2f{pos.x - m_pTexture->GetWidth() * 0.25f, pos.y}, m_SourceRect);
+	m_pTexture->Draw(Integrian::Point2f{ pos.x - m_pTexture->GetWidth() * 0.25f, pos.y }, m_SourceRect);
+}
+
+bool QbertSpriteComponent::OnEvent(const Integrian::Event& event)
+{
+	const std::string& eventName{ event.GetEvent() };
+
+	if (eventName == "QbertMoveLeftBottom")
+	{
+		m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation");
+		const Integrian::Rectf sourceRect{
+			m_pTexture->GetWidth() / 2.f,
+			0.f, m_pTexture->GetWidth() / 2.f,
+			m_pTexture->GetHeight() };
+
+		return true;
+	}
+
+	if (eventName == "QbertMoveRightBottom")
+	{
+		m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation");
+		const Integrian::Rectf sourceRect{
+			m_pTexture->GetWidth() / 2.f,
+			0.f, m_pTexture->GetWidth() / 2.f,
+			m_pTexture->GetHeight() };
+
+		return true;
+	}
+
+	if (eventName == "QbertMoveLeftBottom")
+	{
+		m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation");
+		const Integrian::Rectf sourceRect{
+			m_pTexture->GetWidth() / 2.f,
+			0.f, m_pTexture->GetWidth() / 2.f,
+			m_pTexture->GetHeight() };
+
+		return true;
+	}
+
+	if (eventName == "QbertMoveLeftBottom")
+	{
+		m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation");
+		const Integrian::Rectf sourceRect{
+			m_pTexture->GetWidth() / 2.f,
+			0.f, m_pTexture->GetWidth() / 2.f,
+			m_pTexture->GetHeight() };
+
+		return true;
+	}
+
+	return false;
 }
