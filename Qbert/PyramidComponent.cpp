@@ -17,67 +17,18 @@ void PyramidComponent::Render(const Integrian::Point2f&) const
 {
 	using namespace Integrian;
 
-	for (GameObject* pTile : m_pTiles)
-	{
-		//if (pTile->GetComponentByType<TileComponent>()->GetConnections()[3] != nullptr)
-		//{
-		//	DrawLine(pTile->GetComponentByType<TileComponent>()->GetCenter(), pTile->GetComponentByType<TileComponent>()->GetConnections()[3]->GetCenter(), RGBColour{ 255.f, 0.f, 0.f });
-		//}
-
-		if (pTile->GetComponentByType<TileComponent>()->GetConnections()[static_cast<uint8_t>(Direction::RightTop)] != nullptr)
-		{
-			DrawLine(pTile->GetComponentByType<TileComponent>()->GetCenter(), pTile->GetComponentByType<TileComponent>()->GetConnections()[static_cast<uint8_t>(Direction::RightTop)]->GetCenter(), RGBColour{ 255.f, 0.f, 0.f });
-		}
-	}
-
-	//uint64_t counter{};
-	//for (unsigned int y{}; y < 6; ++y)
+	//for (GameObject* pTile : m_pTiles)
 	//{
-	//	for (unsigned int x{}; x <= y; ++x)
-	//	{
-	//		Integrian::DrawLine(m_pTiles[counter]->GetComponentByType<TileComponent>()->GetCenter(), m_pTiles[counter + (y - x) + x + 1]->GetComponentByType<TileComponent>()->GetCenter(), Integrian::RGBColour{ 255.f, 0.f,0.f });
-	//		Integrian::DrawLine(m_pTiles[counter]->GetComponentByType<TileComponent>()->GetCenter(), m_pTiles[counter + (y - x) + x + 2]->GetComponentByType<TileComponent>()->GetCenter(), Integrian::RGBColour{ 255.f, 0.f,0.f });
+	//	//if (pTile->GetComponentByType<TileComponent>()->GetConnections()[3] != nullptr)
+	//	//{
+	//	//	DrawLine(pTile->GetComponentByType<TileComponent>()->GetCenter(), pTile->GetComponentByType<TileComponent>()->GetConnections()[3]->GetCenter(), RGBColour{ 255.f, 0.f, 0.f });
+	//	//}
 	//
-	//		++counter;
-	//	}
+	//	//if (pTile->GetComponentByType<TileComponent>()->GetConnections()[static_cast<uint8_t>(Direction::RightTop)] != nullptr)
+	//	//{
+	//	//	DrawLine(pTile->GetComponentByType<TileComponent>()->GetCenter(), pTile->GetComponentByType<TileComponent>()->GetConnections()[static_cast<uint8_t>(Direction::RightTop)]->GetCenter(), RGBColour{ 255.f, 0.f, 0.f });
+	//	//}
 	//}
-	//std::vector<size_t> leftSide{};
-	//std::vector<size_t> rightSide{};
-	//
-	//size_t increment{ 2 };
-	//for (size_t i{}; i < m_pTiles.size();)
-	//{
-	//	leftSide.push_back(i);
-	//
-	//	if (i == 0)
-	//		++i;
-	//	else
-	//		i += increment++;
-	//}
-	//
-	//increment = 2;
-	//for (size_t i{}; i < m_pTiles.size();)
-	//{
-	//	rightSide.push_back(i);
-	//
-	//	i += increment++;
-	//}
-	//
-	//for (int y{ int(7) - 1 }; y >= 0; --y)
-	//{
-	//	for (int x{ y }; x >= 0; --x)
-	//	{
-	//		const std::vector<size_t>::const_iterator leftCIt{ std::find(leftSide.cbegin(), leftSide.cend(), counter) };
-	//		const std::vector<size_t>::const_iterator rightCIt{ std::find(rightSide.cbegin(), rightSide.cend(), counter) };
-	//
-	//		if(leftCIt != leftSide.cend() && rightCIt != rightSide.cend()) // the tile has both a right top and left top connection
-	//		{
-	//			Integrian::DrawLine(m_pTiles[counter]->GetComponentByType<TileComponent>()->GetCenter(), m_pTiles[counter - (int64_t(y) - x) - x + 1]->GetComponentByType<TileComponent>()->GetCenter(), Integrian::RGBColour{ 255.f, 0.f, 0.f });
-	//			Integrian::DrawLine(m_pTiles[counter]->GetComponentByType<TileComponent>()->GetCenter(), m_pTiles[counter - (int64_t(y) - x) - x + 2]->GetComponentByType<TileComponent>()->GetCenter(), Integrian::RGBColour{ 255.f, 0.f, 0.f });
-	//		}
-	//	}
-	//}
-	//Integrian::DrawFilledCircle(Integrian::Circlef{m_pTiles[i]->GetComponentByType<TileComponent>()->GetCenter(), 3.f}, Integrian::RGBColour{ 255.f,0.f,0.f });
 }
 
 void PyramidComponent::Update(const float /*elapsedSeconds*/)
