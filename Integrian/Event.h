@@ -5,6 +5,7 @@
 
 #include <tuple> // std::tuple
 #include <string> // std::string
+#include <memory> // std::shared_ptr
 
 namespace Integrian
 {
@@ -52,12 +53,12 @@ namespace Integrian
 		template<typename ... Args>
 		const std::tuple<Args...> GetData() const
 		{
-			return static_cast<EventData<Args...>*>(m_pData)->GetData();
+			return static_cast<EventData<Args...>*>(m_pData.get())->GetData();
 		}
 
 	private:
 		std::string m_Event;
-		IEventData* m_pData{};
+		std::shared_ptr<IEventData> m_pData{};
 	};
 }
 

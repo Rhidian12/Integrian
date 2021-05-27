@@ -16,7 +16,7 @@ Integrian::Event::Event(Event&& other) noexcept
 
 Integrian::Event::~Event()
 {
-	SafeDelete(m_pData);
+	//SafeDelete(m_pData);
 }
 
 const std::string Integrian::Event::GetEvent() const
