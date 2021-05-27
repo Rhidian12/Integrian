@@ -5,6 +5,7 @@
 #include <App.h>
 #include "PyramidComponent.h"
 #include "TileComponent.h"
+#include <EventQueue.h>
 
 QbertMovementComponent::QbertMovementComponent(Integrian::GameObject* pParent, const uint8_t index)
 	: Component{ pParent }
@@ -43,27 +44,38 @@ void QbertMovementComponent::PostInitialize()
 		{
 			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)];
 			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
+
+			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveLeftBottom" });
 		}
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::D)) // Right Bottom Movement
 		{
 			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)];
 			vectorTowardsOtherTile = Vector2f{ m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
+
+			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveRightBottom" });
 		}
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::Q)) // Left Top Movement
 		{
 			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)];
 			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, m_VectorTowardsOtherTile.y };
+
+			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveLeftTop" });
 		}
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::E)) // Right Top Movement
 		{
 			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)];
 			vectorTowardsOtherTile = m_VectorTowardsOtherTile;
+
+			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveRightTop" });
 		}
 
 		if (pEndTile) // is there a connection to the tile
 			m_EndPosition = pEndTile->GetCenter();
 		else // there is no connection == jumping off the map
+		{
 			m_EndPosition = qbertPosition + vectorTowardsOtherTile;
+			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveOffTheMap" });
+		}
 
 		m_Velocity = m_EndPosition - qbertPosition;
 		Integrian::Normalize(m_Velocity);
