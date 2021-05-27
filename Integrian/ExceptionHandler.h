@@ -14,6 +14,7 @@
 #include "StaticInstanceAlreadyCreated.h"
 #include "MagnitudeZeroException.h"
 #include "MatrixDivisionNotPossibleException.h"
+#include "DivisionByZeroNotPossibleException.h"
 
 #include <exception> // std::exception
 #include <system_error> // std::system_error
@@ -65,6 +66,8 @@ namespace Integrian
 			catch (const Integrian::MagnitudeZeroException&)
 			{}
 			catch (const Integrian::MatrixDivisionNotPossibleException&)
+			{}
+			catch(const Integrian::DivisionByZeroNotPossible&)
 			{}
 			catch (...)
 			{

@@ -5,6 +5,7 @@
 
 #include "MatrixDivisionNotPossibleException.h" // MatrixDivisionNotPossibleException
 #include "Matrix2x2.h" // Matrix2x2 and Matrix
+#include "Vector3f.h"
 #include <iostream> // std::ostream
 
 namespace Integrian
@@ -55,7 +56,7 @@ namespace Integrian
 #pragma endregion
 
 #pragma region Member Functions
-		Matrix<3, Type> Inverse() const
+		Matrix<3, Type> Inverse() const noexcept
 		{
 			// Guide to pain: https://www.mathsisfun.com/algebra/matrix-inverse-minors-cofactors-adjugate.html
 			// == Matrix of Minors ==
@@ -273,6 +274,13 @@ namespace Integrian
 		bool operator!=(const Matrix<3, Type>& rhs) const noexcept
 		{
 			return !(matrix == rhs.matrix);
+		}
+#pragma endregion
+
+#pragma region Access Operators
+		Vector<3, Type>& operator[](const int row) noexcept
+		{
+			return matrix[row];
 		}
 #pragma endregion
 

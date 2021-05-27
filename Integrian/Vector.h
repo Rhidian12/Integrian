@@ -14,7 +14,7 @@ namespace Integrian
 	template<int V, typename Type>
 	struct Vector
 	{
-		Type x, y;
+		Type x, y, z;
 	};
 
 	// == Non-Member Methods That Are Useful For All Vectors ==

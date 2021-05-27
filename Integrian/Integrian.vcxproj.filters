@@ -517,5 +517,11 @@
     <ClInclude Include="Matrix3x3.h">
       <Filter>Engine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Vector3f.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DivisionByZeroNotPossibleException.h">
+      <Filter>Engine\Exceptions</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

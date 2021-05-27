@@ -28,6 +28,10 @@ namespace Integrian
 			: x{ p.x }
 			, y{ p.y }
 		{}
+		Point<2, Type>(Point<2, Type>&& other)
+			: x{ other.x }
+			, y{ other.y }
+		{}
 
 		Type x, y;
 
@@ -57,16 +61,28 @@ namespace Integrian
 
 #pragma region Compound Assignment Operators
 		// == Compound Assignment Operators ==
-		Point<2, Type> operator+=(const Vector<2, Type>& rhs) noexcept
+		Point<2, Type>& operator+=(const Vector<2, Type>& rhs) noexcept
 		{
-			x += static_cast<Type>(rhs.x);
-			y += static_cast<Type>(rhs.y);
+			x += rhs.x;
+			y += rhs.y;
 			return *this;
 		}
-		Point<2, Type> operator-=(const Vector<2, Type>& rhs) noexcept
+		Point<2, Type>& operator-=(const Vector<2, Type>& rhs) noexcept
 		{
-			x -= static_cast<Type>(rhs.x);
-			y -= static_cast<Type>(rhs.y);
+			x -= rhs.x;
+			y -= rhs.y;
+			return *this;
+		}
+		Point<2, Type>& operator*=(const Vector<2, Type>& rhs) noexcept
+		{
+			x *= rhs.x;
+			y *= rhs.y;
+			return *this;
+		}
+		Point<2, Type>& operator/=(const Vector<2, Type>& rhs) noexcept
+		{
+			x /= rhs.x;
+			y /= rhs.y;
 			return *this;
 		}
 #pragma endregion
