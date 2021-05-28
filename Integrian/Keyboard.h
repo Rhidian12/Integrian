@@ -38,7 +38,6 @@ namespace Integrian
 		void RemoveCommand(const std::function<void()>& pCommand);
 
 		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_KeyboardCommands{};
-		std::vector<KeyboardInput> m_KeysToBeRemoved{};
 
 		using CommandPair = std::pair<KeyboardInput, std::vector<CommandAndButton>>;
 		using UMapIterator = std::unordered_map<KeyboardInput, std::vector<CommandAndButton>>::iterator;

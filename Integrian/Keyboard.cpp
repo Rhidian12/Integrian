@@ -17,24 +17,8 @@ Integrian::Keyboard::~Keyboard()
 bool Integrian::Keyboard::OnEvent(const Event& event)
 {
 	const std::string eventName{ event.GetEvent() };
-	if (eventName == "EndOfFrame")
-	{
-		for (const KeyboardInput& input : m_KeysToBeRemoved)
-			m_KeyboardCommands.erase(input);
 
-		m_KeysToBeRemoved.clear();
-		return true;
-	}
-	else if (eventName == "Change_Application")
-	{
-		for (const KeyboardInput& input : m_KeysToBeRemoved)
-			m_KeyboardCommands.erase(input);
-
-		m_KeysToBeRemoved.clear();
-		return true;
-	}
-	else
-		return false;
+	return false;
 }
 
 void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const State keyState, const std::function<void()>& pCommand)
@@ -95,5 +79,5 @@ void Integrian::Keyboard::RemoveCommand(const std::function<void()>& pCommand)
 	for (const CommandPair& commandPair : m_KeyboardCommands)
 		for (const CommandAndButton& commandAndButton : commandPair.second)
 			if (commandAndButton.pCommand.target_type().hash_code() == pCommand.target_type().hash_code())
-				m_KeysToBeRemoved.push_back(commandPair.first);
+				m_KeyboardCommands.erase(commandPair.first);
 }

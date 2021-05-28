@@ -15,24 +15,8 @@ Integrian::Mouse::~Mouse()
 bool Integrian::Mouse::OnEvent(const Event& event)
 {
 	const std::string eventName{ event.GetEvent() };
-	if (eventName == "EndOfFrame")
-	{
-		for (const MouseButton& input : m_KeysToBeRemoved)
-			m_MouseCommands.erase(input);
 
-		m_KeysToBeRemoved.clear();
-		return true;
-	}
-	else if (eventName == "Change_Application")
-	{
-		for (const MouseButton& input : m_KeysToBeRemoved)
-			m_MouseCommands.erase(input);
-
-		m_KeysToBeRemoved.clear();
-		return true;
-	}
-	else
-		return false;
+	return false;
 }
 
 void Integrian::Mouse::AddCommand(const MouseButton mouseButton, const State keyState, const std::function<void()>& pCommand)
@@ -93,5 +77,5 @@ void Integrian::Mouse::RemoveCommand(const std::function<void()>& pCommand)
 	for (const CommandPair& commandPair : m_MouseCommands)
 		for (const CommandAndButton& commandAndButton : commandPair.second)
 			if (commandAndButton.pCommand.target_type().hash_code() == pCommand.target_type().hash_code())
-				m_KeysToBeRemoved.push_back(commandPair.first);
+				m_MouseCommands.erase(commandPair.first);
 }

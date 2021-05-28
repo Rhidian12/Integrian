@@ -14,7 +14,7 @@ Integrian::AudioSystem* Integrian::AudioLocator::GetAudio()
 
 	if (!m_HasWarningBeenPrinted)
 	{
-		Logger::LogWarning("GetAudio returned NullAudioService\n");
+		Logger::LogWarning("AudioLocator::GetAudio() returned NullAudioService\n");
 		m_HasWarningBeenPrinted = true;
 	}
 

@@ -4,6 +4,7 @@
 #include "Logger.h" // Logger
 
 Integrian::EventQueue::EventQueue()
+	: m_NumberOfEventsProcessedPerFrame{ 5 }
 {
 	AddListener(this);
 }
@@ -18,12 +19,7 @@ bool Integrian::EventQueue::OnEvent(const Event& event)
 {
 	const std::string eventName{ event.GetEvent() };
 
-	if (eventName == "EndOfFrame") // let's see what to do with this
-	{
-		return true;
-	}
-	else
-		return false;
+	return false;
 }
 
 void Integrian::EventQueue::QueueEvent(Event&& event)
@@ -38,18 +34,24 @@ void Integrian::EventQueue::Update()
 	if (m_Events.empty())
 		return;
 
-	bool wasEventProcessed{};
-	for (IListener* pListener : m_pListeners)
-		if (pListener->OnEvent(m_Events.front()))
-			wasEventProcessed = true;
-
-	if (wasEventProcessed)
-		m_Events.pop_front();
-	else // Requeue event by pushing it to the back
+	for (int i{}; i < m_NumberOfEventsProcessedPerFrame; ++i)
 	{
-		Event tempEvent{ std::remove_reference_t<Event>(m_Events.front()) }; // make sure it copies the Event, and it doesn't reference it
-		m_Events.push_back(tempEvent);
-		m_Events.pop_front();
+		bool wasEventProcessed{};
+		for (IListener* pListener : m_pListeners)
+			if (pListener->OnEvent(m_Events.front()))
+				wasEventProcessed = true;
+
+		if (wasEventProcessed)
+			m_Events.pop_front();
+		else // Requeue event by pushing it to the back
+		{
+			Event tempEvent{ std::remove_reference_t<Event>(m_Events.front()) }; // make sure it copies the Event, and it doesn't reference it
+			m_Events.push_back(tempEvent);
+			m_Events.pop_front();
+		}
+
+		if (m_Events.empty())
+			break;
 	}
 }
 

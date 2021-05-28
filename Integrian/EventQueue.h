@@ -35,6 +35,8 @@ namespace Integrian
 
 		std::vector<IListener*> m_pListeners{};
 		std::deque<Event> m_Events{};
+
+		int m_NumberOfEventsProcessedPerFrame;
 	};
 }
 

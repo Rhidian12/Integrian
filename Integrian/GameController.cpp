@@ -79,24 +79,8 @@ bool Integrian::GameController::IsPressed(const ControllerInput controllerInput)
 bool Integrian::GameController::OnEvent(const Event& event)
 {
 	const std::string eventName{ event.GetEvent() };
-	if (eventName == "EndOfFrame")
-	{
-		for (const ControllerInput& input : m_KeysToBeRemoved)
-			m_pCommands.erase(input);
 
-		m_KeysToBeRemoved.clear();
-		return true;
-	}
-	else if (eventName == "Change_Application")
-	{
-		for (const ControllerInput& input : m_KeysToBeRemoved)
-			m_pCommands.erase(input);
-
-		m_KeysToBeRemoved.clear();
-		return true;
-	}
-	else
-		return false;
+	return false;
 }
 
 bool Integrian::GameController::WasPressed(const State previousState) const
@@ -156,5 +140,5 @@ void Integrian::GameController::RemoveCommand(const std::function<void()>& pComm
 	for (const CommandPair& commandPair : m_pCommands)
 		for (const CommandAndButton& commandAndButton : commandPair.second)
 			if (commandAndButton.pCommand.target_type().hash_code() == pCommand.target_type().hash_code())
-				m_KeysToBeRemoved.push_back(commandPair.first);
+				m_pCommands.erase(commandPair.first);
 }

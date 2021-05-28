@@ -34,7 +34,6 @@ namespace Integrian
 		void RemoveCommand(const std::function<void()>& pCommand);
 
 		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_MouseCommands{};
-		std::vector<MouseButton> m_KeysToBeRemoved{};
 
 		using CommandPair = std::pair<MouseButton, std::vector<CommandAndButton>>;
 		using UMapIterator = std::unordered_map<MouseButton, std::vector<CommandAndButton>>::iterator;
