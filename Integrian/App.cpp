@@ -220,7 +220,7 @@ void Integrian::App::Run()
 		TransformCameraAndRender();
 
 		// == Send New Frame ==
-		EventQueue::GetInstance().QueueEvent(Event{ "EndOfFrame" });
+		//EventQueue::GetInstance().QueueEvent(Event{ "EndOfFrame" });
 	}
 }
 
