@@ -19,7 +19,7 @@ namespace Integrian
 
 		virtual void Render(const Point2f& pos) const override;
 		
-		void AddTexture(Texture* pTexture);
+		void SetTexture(Texture* pTexture);
 		Texture* GetTexture() const;
 		
 	private:

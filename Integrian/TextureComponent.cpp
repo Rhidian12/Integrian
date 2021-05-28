@@ -14,7 +14,7 @@ Integrian::TextureComponent::TextureComponent(GameObject* pParent, Texture* pTex
 {
 }
 
-void Integrian::TextureComponent::AddTexture(Texture* pTexture)
+void Integrian::TextureComponent::SetTexture(Texture* pTexture)
 {
 	m_pTexture = pTexture;
 }
