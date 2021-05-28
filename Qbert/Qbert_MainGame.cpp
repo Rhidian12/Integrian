@@ -17,8 +17,8 @@ void Qbert_MainGame::Start()
 {
 	using namespace Integrian;
 
-	TextureManager::GetInstance().AddTexture("QbertLevelOneInactiveTile", "Resources/Images/QbertLevelOneInactiveTile.png");
-	TextureManager::GetInstance().AddTexture("QbertLevelOneActiveTile", "Resources/Images/QbertLevelOneActiveTile.png");
+	//TextureManager::GetInstance().AddTexture("QbertLevelOneInactiveTile", "Resources/Images/QbertLevelOneInactiveTile.png");
+	//TextureManager::GetInstance().AddTexture("QbertLevelOneActiveTile", "Resources/Images/QbertLevelOneActiveTile.png");
 
 	GameObject* pPyramidRoot{ new GameObject{} };
 	pPyramidRoot->transform.SetPosition(Point2f{ m_WindowWidth / 2.f, (m_WindowHeight / 2.f) });
@@ -27,7 +27,7 @@ void Qbert_MainGame::Start()
 	pPyramidRoot->AddComponent(pPyramidComponent);
 
 	TileFactoryComponent* pTileFactoryComponent{ new TileFactoryComponent{pPyramidRoot} };
-	pTileFactoryComponent->CreateTiles(7, TextureManager::GetInstance().GetTexture("QbertLevelOneInactiveTile"));
+	pTileFactoryComponent->CreateTiles(1);
 	pPyramidRoot->AddComponent(pTileFactoryComponent);
 
 	GameObject* pQbert{ new GameObject{} };

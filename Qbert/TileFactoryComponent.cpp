@@ -6,6 +6,10 @@
 #include <App.h>
 #include "PyramidComponent.h"
 #include "TileComponent.h"
+#include <fstream>
+#include <TextureManager.h>
+#include <iostream>
+#include <iomanip>
 
 TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -13,11 +17,19 @@ TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 {
 }
 
-void TileFactoryComponent::CreateTiles(const unsigned int size, Integrian::Texture* pInactiveTileTexture)
+void TileFactoryComponent::CreateTiles(const int level)
 {
 	using namespace Integrian;
+	using json = nlohmann::json;
 
-	m_Size = size;
+	json levelFormat{ ReadFile(level) };
+
+	m_Size = *levelFormat.find("Size");
+	
+	TextureManager::GetInstance().AddTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture",
+		"Resources/Images/" + std::string{ *levelFormat.find("Texture") });
+
+	Texture* pInactiveTileTexture{ TextureManager::GetInstance().GetTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture") };
 
 	// we need to make a size x size triangle
 	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
@@ -29,7 +41,7 @@ void TileFactoryComponent::CreateTiles(const unsigned int size, Integrian::Textu
 	const float heightOffset{ 24.f }; // texture height offset since the devs of Qbert are evil
 
 	uint64_t counter{};
-	for (unsigned int y{}; y < size; ++y)
+	for (unsigned int y{}; y < m_Size; ++y)
 	{
 		for (unsigned int x{}; x <= y; ++x)
 		{
@@ -96,4 +108,19 @@ void TileFactoryComponent::FillConnections()
 
 	// left side : 0 | 1 | 3 | 6 | 10 | 15 | 21
 	// right side: 0 | 2 | 5 | 9 | 14 | 20 | 27
+}
+
+nlohmann::json TileFactoryComponent::ReadFile(const int level)
+{
+	std::ifstream input{};
+	input.open("Resources/Levels/Level" + std::to_string(level) + ".json");
+
+	nlohmann::json json{};
+
+	if (input.is_open())
+		input >> json;
+
+	input.close();
+
+	return json;
 }
