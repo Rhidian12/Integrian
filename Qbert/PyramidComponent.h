@@ -12,7 +12,7 @@ class TileComponent;
 class PyramidComponent final : public Integrian::Component
 {
 public:
-	PyramidComponent(Integrian::GameObject* pParent);
+	PyramidComponent(Integrian::GameObject* pParent, const int level);
 	virtual ~PyramidComponent() = default;
 
 	virtual void Render(const Integrian::Point2f&) const override;
@@ -28,4 +28,5 @@ public:
 
 private:
 	std::vector<Integrian::GameObject*> m_pTiles;
+	int m_Level;
 };

@@ -7,9 +7,10 @@
 #include "TileComponent.h"
 #include <Utility Functions.h>
 
-PyramidComponent::PyramidComponent(Integrian::GameObject* pParent)
+PyramidComponent::PyramidComponent(Integrian::GameObject* pParent, const int level)
 	: Component{ pParent }
 	, m_pTiles{}
+	, m_Level{ level }
 {
 }
 
