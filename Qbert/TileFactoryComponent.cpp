@@ -10,6 +10,7 @@
 #include <TextureManager.h>
 #include <iostream>
 #include <iomanip>
+#include "TeleportationPadComponent.h"
 
 TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -25,7 +26,7 @@ void TileFactoryComponent::CreateTiles(const int level)
 	json levelFormat{ ReadFile(level) };
 
 	m_Size = *levelFormat.find("Size");
-	const std::string inactiveTextureName{ *levelFormat.find("Texture") };
+	const std::string inactiveTextureName{ *levelFormat.find("TileTexture") };
 	const size_t locationOfI{ inactiveTextureName.find_first_of('I') };
 	std::string activeTextureName{ inactiveTextureName.substr(0, locationOfI) };
 	activeTextureName += inactiveTextureName.substr(locationOfI + 2, inactiveTextureName.size() - locationOfI - 2); // +- 2 because we need to get rid of "In"
