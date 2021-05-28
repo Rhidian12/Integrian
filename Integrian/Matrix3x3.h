@@ -14,12 +14,26 @@ namespace Integrian
 	template<typename Type>
 	struct Matrix<3, Type>
 	{
+
+#pragma region Member Variables
+		//Type(*matrix)[3]{ new Type[3][3] };
+		Type matrix[3][3];
+#pragma endregion
+
 #pragma region Constructors
 		Matrix<3, Type>() noexcept
-			: matrix{}
-		{}
+		{
+			matrix[0][0] = 0.f;
+			matrix[0][1] = 0.f;
+			matrix[0][2] = 0.f;
+			matrix[1][0] = 0.f; // [ A B C ] 
+			matrix[1][1] = 0.f; // [ D E F ]
+			matrix[1][2] = 0.f; // [ G H I ]
+			matrix[2][0] = 0.f;
+			matrix[2][1] = 0.f;
+			matrix[2][2] = 0.f;
+		}
 		Matrix<3, Type>(const Type a, const Type b, const Type c, const Type d, const Type e, const Type f, const Type g, const Type h, const Type i) noexcept
-			: matrix{}
 		{
 			matrix[0][0] = a;
 			matrix[0][1] = b;
@@ -32,21 +46,33 @@ namespace Integrian
 			matrix[2][2] = i;
 		}
 		Matrix<3, Type>(const Matrix<3, Type>& other) noexcept
-			: matrix{ other.matrix }
-		{}
-		Matrix<3, Type>(Matrix<3, Type>&& other) noexcept
-			: matrix{ std::move(other.matrix) }
 		{
-			other.matrix = nullptr;
+			matrix[0][0] = other.matrix[0][0];
+			matrix[0][1] = other.matrix[0][1];
+			matrix[0][2] = other.matrix[0][2];
+			matrix[1][0] = other.matrix[1][0]; // [ A B C ] 
+			matrix[1][1] = other.matrix[1][1]; // [ D E F ]
+			matrix[1][2] = other.matrix[1][2]; // [ G H I ]
+			matrix[2][0] = other.matrix[2][0];
+			matrix[2][1] = other.matrix[2][1];
+			matrix[2][2] = other.matrix[2][2];
+		}
+		Matrix<3, Type>(Matrix<3, Type>&& other) noexcept
+		{
+			matrix[0][0] = std::move(other.matrix[0][0]);
+			matrix[0][1] = std::move(other.matrix[0][1]);
+			matrix[0][2] = std::move(other.matrix[0][2]);
+			matrix[1][0] = std::move(other.matrix[1][0]); // [ A B C ] 
+			matrix[1][1] = std::move(other.matrix[1][1]); // [ D E F ]
+			matrix[1][2] = std::move(other.matrix[1][2]); // [ G H I ]
+			matrix[2][0] = std::move(other.matrix[2][0]);
+			matrix[2][1] = std::move(other.matrix[2][1]);
+			matrix[2][2] = std::move(other.matrix[2][2]);
 		}
 		~Matrix<3, Type>()
 		{
-			delete[] matrix;
+			//delete[] matrix;
 		}
-#pragma endregion
-
-#pragma region Member Variables
-		Type(*matrix)[3]{ new Type[3][3] };
 #pragma endregion
 
 #pragma region Member Functions

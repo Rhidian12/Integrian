@@ -13,6 +13,12 @@ namespace Integrian
 	template<typename Type>
 	struct Matrix<2, Type>
 	{
+#pragma region Member Variables
+		Type(*matrix)[2]{ new Type[2][2] };
+
+		inline static Matrix<2, Type> identityMatrix{ static_cast<Type>(1.f), static_cast<Type>(0.f), static_cast<Type>(0.f), static_cast<Type>(1.f) };
+#pragma endregion
+
 #pragma region Constructors
 		Matrix<2, Type>() noexcept
 			: matrix{}
@@ -37,12 +43,6 @@ namespace Integrian
 		{
 			delete[] matrix;
 		}
-#pragma endregion
-
-#pragma region Member Variables
-		Type(*matrix)[2]{ new Type[2][2] };
-
-		inline static Matrix<2, Type> identityMatrix{ static_cast<Type>(1.f), static_cast<Type>(0.f), static_cast<Type>(0.f), static_cast<Type>(1.f) };
 #pragma endregion
 
 #pragma region Member Functions

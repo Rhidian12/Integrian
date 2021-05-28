@@ -34,4 +34,7 @@ void Qbert_MainGame::Start()
 
 	AddGameObject("PyramidRoot", pPyramidRoot);
 	AddGameObject("Qbert", pQbert);
+
+	//pPyramidRoot->transform.SetScale(2.f, 2.f);
+	//pQbert->transform.SetScale(2.f, 2.f);
 }

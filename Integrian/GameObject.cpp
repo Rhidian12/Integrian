@@ -35,18 +35,24 @@ void Integrian::GameObject::AddComponent(Component* pComponent)
 
 void Integrian::GameObject::Update(const float elapsedSeconds)
 {
+	transform.Update(elapsedSeconds);
+
 	for (Component* pComponent : m_pComponents)
 		pComponent->Update(elapsedSeconds);
 }
 
 void Integrian::GameObject::FixedUpdate(const float elapsedSeconds)
 {
+	transform.FixedUpdate(elapsedSeconds);
+
 	for (Component* pComponent : m_pComponents)
 		pComponent->FixedUpdate(elapsedSeconds);
 }
 
 void Integrian::GameObject::LateUpdate(const float elapsedSeconds)
 {
+	transform.LateUpdate(elapsedSeconds);
+
 	for (Component* pComponent : m_pComponents)
 		pComponent->LateUpdate(elapsedSeconds);
 }

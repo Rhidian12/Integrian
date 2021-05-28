@@ -17,7 +17,8 @@ public:
 
 private:
 	Integrian::GameObject* CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture);
-	void FillConnections();
+	void FillConnections() const;
+	void CreateTeleportationPads(const int level) const;
 	nlohmann::json ReadFile(const int level); // I can't return by reference because it crashes for reasons
 
 	unsigned int m_Size;

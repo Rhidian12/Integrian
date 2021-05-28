@@ -11,8 +11,6 @@ class TeleportationPadComponent final : public Integrian::Component
 public:
 	TeleportationPadComponent(Integrian::GameObject* pParent);
 
-	virtual void PostInitialize() override;
-
 	virtual void Update(const float elapsedSeconds) override;
 
 private:

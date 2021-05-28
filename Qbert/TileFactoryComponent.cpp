@@ -32,10 +32,14 @@ void TileFactoryComponent::CreateTiles(const int level)
 	activeTextureName += inactiveTextureName.substr(locationOfI + 2, inactiveTextureName.size() - locationOfI - 2); // +- 2 because we need to get rid of "In"
 	activeTextureName[activeTextureName.find_first_of('a')] = 'A';
 
-	TextureManager::GetInstance().AddTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture",
+	TextureManager& textureManager{ TextureManager::GetInstance() };
+
+	textureManager.AddTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture",
 		"Resources/Images/Tiles/" + inactiveTextureName);
-	TextureManager::GetInstance().AddTexture("QbertLevel" + std::to_string(level) + "ActiveTileTexture",
+	textureManager.AddTexture("QbertLevel" + std::to_string(level) + "ActiveTileTexture",
 		"Resources/Images/Tiles/" + activeTextureName);
+	textureManager.AddTexture("Level" + std::to_string(level) + "TPPad",
+		"Resources/Images/TP Pads/" + std::string{ *levelFormat.find("TeleportationPadTexture") });
 
 	Texture* pInactiveTileTexture{ TextureManager::GetInstance().GetTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture") };
 
@@ -67,6 +71,7 @@ void TileFactoryComponent::CreateTiles(const int level)
 		}
 	}
 
+	CreateTeleportationPads(level);
 	FillConnections();
 }
 
@@ -83,7 +88,7 @@ Integrian::GameObject* TileFactoryComponent::CreateTile(const Integrian::Point2f
 	return pTile;
 }
 
-void TileFactoryComponent::FillConnections()
+void TileFactoryComponent::FillConnections() const
 {
 	using namespace Integrian;
 
@@ -116,6 +121,35 @@ void TileFactoryComponent::FillConnections()
 
 	// left side : 0 | 1 | 3 | 6 | 10 | 15 | 21
 	// right side: 0 | 2 | 5 | 9 | 14 | 20 | 27
+}
+
+void TileFactoryComponent::CreateTeleportationPads(const int level) const
+{
+	using namespace Integrian;
+
+	const Point2f& parentTransform{ m_pParent->transform.GetPosition() };
+	const std::vector<GameObject*>* pTiles{ &m_pParent->GetComponentByType<PyramidComponent>()->GetTiles() };
+
+	float xCoordinate{ std::numeric_limits<float>::max() };
+
+	for (GameObject* pTile : (*pTiles))
+		if (pTile->transform.GetPosition().x < xCoordinate)
+			xCoordinate = pTile->transform.GetPosition().x;
+
+	float xDifference{ parentTransform.x - xCoordinate };
+	xDifference += (*pTiles)[0]->GetComponentByType<TextureComponent>()->GetTexture()->GetWidth();
+
+	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
+
+	int counter{};
+	for (int i{ -1 }; i < 2; i += 2)
+	{
+		GameObject* pTpPad{ new GameObject{} };
+		pTpPad->transform.SetPosition(Point2f{ parentTransform.x + i * xDifference, parentTransform.y });
+		pTpPad->AddComponent(new TeleportationPadComponent{ pTpPad });
+		pTpPad->AddComponent(new TextureComponent{ pTpPad, TextureManager::GetInstance().GetTexture("Level" + std::to_string(level) + "TPPad")});
+		pActiveApp->AddGameObject("TeleportationPad" + std::to_string(counter++) , pTpPad);
+	}
 }
 
 nlohmann::json TileFactoryComponent::ReadFile(const int level)

@@ -16,6 +16,9 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 {
 	using UnderlyingType = std::underlying_type_t<TransformChanged>;
 
+	if (m_Scale.x != 1.f)
+		std::cout << "uwu";
+
 	if (static_cast<UnderlyingType>(m_TransformChanged))
 	{
 		// set translation matrix
@@ -50,10 +53,10 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 
 void Integrian::TransformComponent::SetPosition(const Point2f& position) noexcept
 {
-	m_Translation = position - m_DestRect[VertexLocation::LeftBottom];
+	//m_Translation = position - m_DestRect[VertexLocation::LeftBottom];
 	m_DestRect[VertexLocation::LeftBottom] = position;
 
-	m_TransformChanged = TransformChanged::Translation;
+	//m_TransformChanged = TransformChanged::Translation;
 }
 
 void Integrian::TransformComponent::SetScale(const float x, const float y) noexcept

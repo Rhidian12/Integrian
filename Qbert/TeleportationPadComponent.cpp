@@ -9,19 +9,18 @@ TeleportationPadComponent::TeleportationPadComponent(Integrian::GameObject* pPar
 {
 }
 
-void TeleportationPadComponent::PostInitialize()
+void TeleportationPadComponent::Update(const float )
 {
 	using namespace Integrian;
 
-	App* pActiveApp{ Integrian::App_Selector::GetInstance().GetActiveApplication() };
+	if (!m_pQbert)
+	{
+		App* pActiveApp{ Integrian::App_Selector::GetInstance().GetActiveApplication() };
 
-	m_pQbert = pActiveApp->GetGameObject("Qbert");
-	m_EndPosition = pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>()->GetTopTileCenter();
+		m_pQbert = pActiveApp->GetGameObject("Qbert");
+		m_EndPosition = pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>()->GetTopTileCenter();
 
-	m_EndPosition.y += 20.f;
-}
-
-void TeleportationPadComponent::Update(const float elapsedSeconds)
-{
+		m_EndPosition.y += 20.f;
+	}
 
 }
