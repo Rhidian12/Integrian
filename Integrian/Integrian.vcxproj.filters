@@ -99,9 +99,6 @@
     <Filter Include="Engine\Keyboard">
       <UniqueIdentifier>{2e04a266-46a7-4b85-8f5f-45c791b403d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\RapidJSON">
-      <UniqueIdentifier>{a8938304-d79f-4af8-8520-66af12bbee40}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Audio">
       <UniqueIdentifier>{384d9f7e-ca8e-480d-9cb1-ca68f9a164b6}</UniqueIdentifier>
     </Filter>
@@ -403,66 +400,6 @@
     <ClInclude Include="Subject.h">
       <Filter>Engine\Subject</Filter>
     </ClInclude>
-    <ClInclude Include="allocators.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="cursorstreamwrapper.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="document.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="encodedstream.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="encodings.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="filereadstream.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="filewritestream.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="fwd.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="istreamwrapper.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="memorybuffer.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="memorystream.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="ostreamwrapper.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="pointer.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="prettywriter.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="rapidjson.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="reader.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="schema.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="stream.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="stringbuffer.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
-    <ClInclude Include="writer.h">
-      <Filter>Engine\RapidJSON</Filter>
-    </ClInclude>
     <ClInclude Include="StaticInstanceAlreadyCreated.h">
       <Filter>Engine\Exceptions</Filter>
     </ClInclude>
@@ -525,6 +462,9 @@
     </ClInclude>
     <ClInclude Include="Point3f.h">
       <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\JSON\json.hpp">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
