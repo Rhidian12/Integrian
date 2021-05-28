@@ -2,6 +2,7 @@
 #include "TextureManager.h" // header
 #include "Texture.h" // texture
 #include "Logger.h" // logger
+#include <algorithm> // std::find_if
 Integrian::TextureManager::TextureManager()
 {
 }
@@ -22,6 +23,24 @@ void Integrian::TextureManager::AddTexture(const std::string& name, const std::s
 {
 	if(!m_pTextures.insert(std::make_pair(name, new Texture{ textToRender,path,size,colour})).second)
 		Logger::LogWarning(name + " was not inserted!\n");
+}
+
+const std::string& Integrian::TextureManager::GetTextureName(Texture* pTexture) const noexcept
+{
+	const std::unordered_map<std::string, Texture*>::const_iterator cIt{ std::find_if(m_pTextures.cbegin(), m_pTextures.cend(), [this, pTexture](const std::pair<std::string, Texture*>& pair)->bool
+		{
+			return pair.second == pTexture;
+		}) };
+
+	if (cIt != m_pTextures.cend())
+		return cIt->first;
+	else
+	{
+#ifdef _DEBUG
+		Logger::LogWarning("TextureManager::GetTextureName() that texture was not found in the TextureManager!\n");
+#endif
+		return "";
+	}
 }
 
 Integrian::Texture* Integrian::TextureManager::GetTexture(const std::string& name) const

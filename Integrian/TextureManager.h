@@ -22,6 +22,7 @@ namespace Integrian
 
 		void AddTexture(const std::string& name, const std::string& path);
 		void AddTexture(const std::string& name, const std::string& path, const std::string& textToRender, const int size, const RGBColour& colour);
+		const std::string& GetTextureName(Texture* pTexture) const noexcept;
 		
 		Texture* GetTexture(const std::string& name) const;
 
