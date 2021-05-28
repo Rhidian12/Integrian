@@ -18,7 +18,7 @@ public:
 private:
 	Integrian::GameObject* CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture);
 	void FillConnections();
-	nlohmann::json ReadFile(const int level);
+	nlohmann::json ReadFile(const int level); // I can't return by reference because it crashes for reasons
 
 	unsigned int m_Size;
 };

@@ -13,7 +13,7 @@ namespace Integrian
 class QbertSpriteComponent final : public Integrian::Component, public Integrian::IListener
 {
 public:
-	QbertSpriteComponent(Integrian::GameObject* pGameobject, const std::string& filepath);
+	QbertSpriteComponent(Integrian::GameObject* pGameobject);
 
 	virtual void Initialize() override;
 
@@ -25,6 +25,5 @@ public:
 
 private:
 	Integrian::Texture* m_pTexture;
-	std::string m_Filepath;
 	Integrian::Rectf m_SourceRect;
 };

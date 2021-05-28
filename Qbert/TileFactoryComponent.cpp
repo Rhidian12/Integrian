@@ -25,9 +25,16 @@ void TileFactoryComponent::CreateTiles(const int level)
 	json levelFormat{ ReadFile(level) };
 
 	m_Size = *levelFormat.find("Size");
-	
+	const std::string inactiveTextureName{ *levelFormat.find("Texture") };
+	const size_t locationOfI{ inactiveTextureName.find_first_of('I') };
+	std::string activeTextureName{ inactiveTextureName.substr(0, locationOfI) };
+	activeTextureName += inactiveTextureName.substr(locationOfI + 2, inactiveTextureName.size() - locationOfI - 2); // +- 2 because we need to get rid of "In"
+	activeTextureName[activeTextureName.find_first_of('a')] = 'A';
+
 	TextureManager::GetInstance().AddTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture",
-		"Resources/Images/" + std::string{ *levelFormat.find("Texture") });
+		"Resources/Images/" + inactiveTextureName);
+	TextureManager::GetInstance().AddTexture("QbertLevel" + std::to_string(level) + "ActiveTileTexture",
+		"Resources/Images/" + activeTextureName);
 
 	Texture* pInactiveTileTexture{ TextureManager::GetInstance().GetTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture") };
 

@@ -3,17 +3,16 @@
 #include <TextureManager.h>
 #include <GameObject.h>
 
-QbertSpriteComponent::QbertSpriteComponent(Integrian::GameObject* pGameobject, const std::string& filepath)
+QbertSpriteComponent::QbertSpriteComponent(Integrian::GameObject* pGameobject)
 	: Component{ pGameobject }
 	, m_pTexture{}
-	, m_Filepath{ filepath }
 	, m_SourceRect{}
 {
 }
 
 void QbertSpriteComponent::Initialize()
 {
-	Integrian::TextureManager::GetInstance().AddTexture("QbertLeftBottomAnimation", m_Filepath);
+	Integrian::TextureManager::GetInstance().AddTexture("QbertLeftBottomAnimation", "Resources/Images/Qbert/QbertLeftBottomAnimation.png");
 	m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation");
 
 	const Integrian::Rectf sourceRect{
