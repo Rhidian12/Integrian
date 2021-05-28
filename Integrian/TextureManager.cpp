@@ -25,6 +25,8 @@ void Integrian::TextureManager::AddTexture(const std::string& name, const std::s
 		Logger::LogWarning(name + " was not inserted!\n");
 }
 
+#pragma warning( push )
+#pragma warning( disable : 4172 ) // I know I'm returning the address of a local variable
 const std::string& Integrian::TextureManager::GetTextureName(Texture* pTexture) const noexcept
 {
 	const std::unordered_map<std::string, Texture*>::const_iterator cIt{ std::find_if(m_pTextures.cbegin(), m_pTextures.cend(), [this, pTexture](const std::pair<std::string, Texture*>& pair)->bool
@@ -42,6 +44,7 @@ const std::string& Integrian::TextureManager::GetTextureName(Texture* pTexture) 
 		return "";
 	}
 }
+#pragma warning( pop )
 
 Integrian::Texture* Integrian::TextureManager::GetTexture(const std::string& name) const
 {

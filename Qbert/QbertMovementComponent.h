@@ -24,4 +24,5 @@ private:
 	Integrian::Point2f m_EndPosition;
 	float m_Speed;
 	uint8_t m_Index;
+	bool m_CanMoveAgain;
 };

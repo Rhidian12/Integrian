@@ -13,8 +13,9 @@ QbertMovementComponent::QbertMovementComponent(Integrian::GameObject* pParent, c
 	, m_VectorTowardsOtherTile{}
 	, m_Velocity{}
 	, m_EndPosition{}
-	, m_Speed{ 100.f }
+	, m_Speed{ 65.f }
 	, m_Index{ index }
+	, m_CanMoveAgain{ true }
 {
 }
 
@@ -31,6 +32,9 @@ void QbertMovementComponent::PostInitialize()
 
 	auto movement = [this]()
 	{
+		if (!m_CanMoveAgain)
+			return;
+
 		const Point2f qbertPosition{ m_pParent->transform.GetPosition() };
 
 		TileComponent* pQbertTile{ m_pPyramidComponent->GetTile(qbertPosition) };
@@ -77,6 +81,8 @@ void QbertMovementComponent::PostInitialize()
 			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveOffTheMap" });
 		}
 
+		m_CanMoveAgain = false; // make sure we cant move while we're still moving
+
 		m_Velocity = m_EndPosition - qbertPosition;
 		Integrian::Normalize(m_Velocity);
 	};
@@ -94,9 +100,13 @@ void QbertMovementComponent::Update(const float)
 
 	if (AreEqual(m_pParent->transform.GetPosition().x, m_EndPosition.x, 1.f) && AreEqual(m_pParent->transform.GetPosition().y, m_EndPosition.y, 1.f))
 	{
-		m_Velocity = Integrian::Vector2f{};
+		if (m_Velocity != Vector2f{})
+			EventQueue::GetInstance().QueueEvent(Event{ "QbertMovementEnded", m_pPyramidComponent->GetTile(m_EndPosition) });
+
+		m_Velocity = Vector2f{};
 		m_pParent->transform.SetPosition(m_EndPosition);
-		EventQueue::GetInstance().QueueEvent(Event{ "QbertMovementEnded" });
+
+		m_CanMoveAgain = true;
 	}
 }
 

@@ -28,16 +28,10 @@ void Qbert_MainGame::Start()
 	pPyramidRoot->AddComponent(pTileFactoryComponent);
 
 	GameObject* pQbert{ new GameObject{} };
-	//pQbert->AddComponent(new TextureComponent{ pQbert, TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation") });
 	pQbert->AddComponent(new QbertMovementComponent{ pQbert });
 	pQbert->AddComponent(new QbertSpriteComponent{ pQbert });
 	pQbert->transform.SetPosition(pPyramidComponent->GetTopTileCenter());
 
 	AddGameObject("PyramidRoot", pPyramidRoot);
 	AddGameObject("Qbert", pQbert);
-}
-
-void Qbert_MainGame::Render() const
-{
-	Integrian::DrawRectangle(Integrian::Rectf{ 0.f, 0.f, 150.f, 150.f });
 }

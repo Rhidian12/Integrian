@@ -1,6 +1,7 @@
 #pragma once
 #include <Component.h>
 #include <vector>
+#include <ListenerInterface.h>
 
 namespace Integrian
 {
@@ -9,10 +10,10 @@ namespace Integrian
 }
 
 class TileComponent;
-class PyramidComponent final : public Integrian::Component
+class PyramidComponent final : public Integrian::Component, public Integrian::IListener
 {
 public:
-	PyramidComponent(Integrian::GameObject* pParent, const int level);
+	PyramidComponent(Integrian::GameObject* pParent);
 	virtual ~PyramidComponent() = default;
 
 	virtual void Render(const Integrian::Point2f&) const override;
@@ -26,7 +27,8 @@ public:
 
 	const std::vector<Integrian::GameObject*>& GetTiles() const noexcept;
 
+	virtual bool OnEvent(const Integrian::Event& event) override;
+
 private:
 	std::vector<Integrian::GameObject*> m_pTiles;
-	int m_Level;
 };

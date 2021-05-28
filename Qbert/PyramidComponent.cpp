@@ -6,12 +6,13 @@
 #include <algorithm>
 #include "TileComponent.h"
 #include <Utility Functions.h>
+#include <EventQueue.h>
 
-PyramidComponent::PyramidComponent(Integrian::GameObject* pParent, const int level)
+PyramidComponent::PyramidComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
 	, m_pTiles{}
-	, m_Level{ level }
 {
+	Integrian::EventQueue::GetInstance().AddListener(this);
 }
 
 void PyramidComponent::Render(const Integrian::Point2f&) const
@@ -67,4 +68,32 @@ TileComponent* PyramidComponent::GetTile(const Integrian::Point2f& location) con
 const std::vector<Integrian::GameObject*>& PyramidComponent::GetTiles() const noexcept
 {
 	return m_pTiles;
+}
+
+
+bool PyramidComponent::OnEvent(const Integrian::Event& event)
+{
+	using namespace Integrian;
+
+	if (event.GetEvent() == "QbertMovementEnded")
+	{
+		TileComponent* pEndTile{ std::get<0>(event.GetData<TileComponent*>()) };
+ 		TextureComponent* pCurrentTexture{ pEndTile->GetParent()->GetComponentByType<TextureComponent>() };
+
+		const std::string& currentTextureName{ TextureManager::GetInstance().GetTextureName(pCurrentTexture->GetTexture()) };
+
+		if (currentTextureName.find('A') == std::string::npos) // if it's not already the active texture
+		{
+			const size_t locationOfI{ currentTextureName.find_first_of('I') };
+			std::string activeTextureName{ currentTextureName.substr(0, locationOfI) };
+			activeTextureName += currentTextureName.substr(locationOfI + 2, currentTextureName.size() - locationOfI - 2); // +- 2 because we need to get rid of "In"
+			activeTextureName[activeTextureName.find_first_of('a')] = 'A';
+
+			pEndTile->GetParent()->GetComponentByType<TextureComponent>()->SetTexture(Integrian::TextureManager::GetInstance().GetTexture(activeTextureName));
+		}
+
+		return true;
+	}
+
+	return false;
 }
