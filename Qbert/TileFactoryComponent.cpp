@@ -32,9 +32,9 @@ void TileFactoryComponent::CreateTiles(const int level)
 	activeTextureName[activeTextureName.find_first_of('a')] = 'A';
 
 	TextureManager::GetInstance().AddTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture",
-		"Resources/Images/" + inactiveTextureName);
+		"Resources/Images/Tiles/" + inactiveTextureName);
 	TextureManager::GetInstance().AddTexture("QbertLevel" + std::to_string(level) + "ActiveTileTexture",
-		"Resources/Images/" + activeTextureName);
+		"Resources/Images/Tiles/" + activeTextureName);
 
 	Texture* pInactiveTileTexture{ TextureManager::GetInstance().GetTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture") };
 
