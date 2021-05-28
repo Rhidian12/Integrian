@@ -85,11 +85,6 @@ void Integrian::TransformComponent::SetShape(const TypeOfShape typeOfShape) noex
 	m_Shape.SetShape(typeOfShape);
 }
 
-void Integrian::TransformComponent::SetSourceRect(const Rectf& sourceRect) noexcept
-{
-	m_SourceRect = sourceRect;
-}
-
 void Integrian::TransformComponent::SetDestRectWidth(const float width) noexcept
 {
 	m_DestRect.width = width;
@@ -124,11 +119,6 @@ const float Integrian::TransformComponent::GetRotation() const noexcept
 const Integrian::Rectf& Integrian::TransformComponent::GetDestRect() const noexcept
 {
 	return m_DestRect;
-}
-
-const Integrian::Rectf& Integrian::TransformComponent::GetSourceRect() const noexcept
-{
-	return m_SourceRect;
 }
 
 void Integrian::TransformComponent::Translate(const Vector2f& velocity) noexcept

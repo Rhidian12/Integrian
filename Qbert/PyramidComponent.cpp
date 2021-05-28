@@ -15,7 +15,7 @@ PyramidComponent::PyramidComponent(Integrian::GameObject* pParent)
 	Integrian::EventQueue::GetInstance().AddListener(this);
 }
 
-void PyramidComponent::Render(const Integrian::Point2f&) const
+void PyramidComponent::Render() const
 {
 	using namespace Integrian;
 

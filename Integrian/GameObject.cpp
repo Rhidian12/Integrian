@@ -60,5 +60,5 @@ void Integrian::GameObject::LateUpdate(const float elapsedSeconds)
 void Integrian::GameObject::Render() const
 {
 	for (Component* pComponent : m_pComponents)
-		pComponent->Render(transform.GetPosition());
+		pComponent->Render();
 }

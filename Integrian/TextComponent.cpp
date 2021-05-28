@@ -3,6 +3,7 @@
 #include "Printer.h" // printer
 #include "Texture.h" // texture
 #include "PrinterManager.h" // printermanager
+#include "GameObject.h" // GameObject
 
 Integrian::TextComponent::TextComponent(GameObject* pParent)
 	: TextComponent{ pParent, "" }
@@ -26,9 +27,9 @@ Integrian::TextComponent::TextComponent(GameObject* pParent, const std::string& 
 {
 }
 
-void Integrian::TextComponent::Render(const Point2f& pos) const
+void Integrian::TextComponent::Render() const
 {
-	m_pPrinter->Render(pos, m_TextToBeRendered);
+	m_pPrinter->Render(m_pParent->transform.GetPosition(), m_TextToBeRendered);
 }
 
 void Integrian::TextComponent::SetTextToRender(const std::string& string)

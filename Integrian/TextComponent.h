@@ -18,7 +18,7 @@ namespace Integrian
 		TextComponent(GameObject* pParent, const std::string& textToRender, const int size, const RGBColour& colour);
 		virtual ~TextComponent() = default;
 
-		virtual void Render(const Point2f& pos) const override;
+		virtual void Render() const override;
 
 		void SetTextToRender(const std::string& string);
 		const std::string& GetTextToRender() const;

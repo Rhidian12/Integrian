@@ -19,7 +19,7 @@ public:
 
 	virtual void Update(const float) override;
 
-	virtual void Render(const Integrian::Point2f&) const override;
+	virtual void Render() const override;
 
 	virtual bool OnEvent(const Integrian::Event& event) override;
 

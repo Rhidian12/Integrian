@@ -16,7 +16,7 @@ public:
 	PyramidComponent(Integrian::GameObject* pParent);
 	virtual ~PyramidComponent() = default;
 
-	virtual void Render(const Integrian::Point2f&) const override;
+	virtual void Render() const override;
 
 	virtual void Update(const float elapsedSeconds) override;
 

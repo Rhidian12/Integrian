@@ -17,13 +17,16 @@ namespace Integrian
 
 		virtual void Initialize() override;
 
-		virtual void Render(const Point2f& pos) const override;
+		virtual void Render() const override;
 		
 		void SetTexture(Texture* pTexture);
+		void SetSourceRect(const Rectf& sourceRect);
+		const Rectf& GetSourceRect() const noexcept;
 		Texture* GetTexture() const;
 		
 	private:
 		Texture* m_pTexture;
+		Rectf m_SourceRect;
 	};
 }
 

@@ -32,9 +32,9 @@ void QbertSpriteComponent::Update(const float)
 {
 }
 
-void QbertSpriteComponent::Render(const Integrian::Point2f& pos) const
+void QbertSpriteComponent::Render() const
 {
-	m_pTexture->Draw(Integrian::Point2f{ pos.x - m_pTexture->GetWidth() * 0.25f, pos.y }, m_SourceRect);
+	m_pTexture->Draw(Integrian::Point2f{ m_pParent->transform.GetPosition().x - m_pTexture->GetWidth() * 0.25f, m_pParent->transform.GetPosition().y }, m_SourceRect);
 }
 
 bool QbertSpriteComponent::OnEvent(const Integrian::Event& event)

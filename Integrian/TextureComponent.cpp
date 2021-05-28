@@ -11,12 +11,24 @@ Integrian::TextureComponent::TextureComponent(GameObject* pParent)
 Integrian::TextureComponent::TextureComponent(GameObject* pParent, Texture* pTexture)
 	: Component{ pParent }
 	, m_pTexture{ pTexture }
+	, m_SourceRect{}
 {
 }
 
 void Integrian::TextureComponent::SetTexture(Texture* pTexture)
 {
 	m_pTexture = pTexture;
+	m_SourceRect = Rectf{ 0.f, 0.f, m_pTexture->GetWidth(), m_pTexture->GetHeight() };
+}
+
+void Integrian::TextureComponent::SetSourceRect(const Rectf& sourceRect)
+{
+	m_SourceRect = sourceRect;
+}
+
+const Integrian::Rectf& Integrian::TextureComponent::GetSourceRect() const noexcept
+{
+	return m_SourceRect;
 }
 
 Integrian::Texture* Integrian::TextureComponent::GetTexture() const
@@ -26,10 +38,10 @@ Integrian::Texture* Integrian::TextureComponent::GetTexture() const
 
 void Integrian::TextureComponent::Initialize()
 {
-	m_pParent->transform.SetSourceRect(Rectf{ 0.f, 0.f, m_pTexture->GetWidth(), m_pTexture->GetHeight() });
+	m_SourceRect = Rectf{ 0.f, 0.f, m_pTexture->GetWidth(), m_pTexture->GetHeight() };
 }
 
-void Integrian::TextureComponent::Render(const Point2f& pos) const
+void Integrian::TextureComponent::Render() const
 {
-	m_pTexture->Draw(pos);
+	m_pTexture->Draw(m_pParent->transform.GetDestRect(), m_SourceRect);
 }
