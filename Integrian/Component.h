@@ -8,7 +8,7 @@
 namespace Integrian
 {
 	class GameObject;
-	class Component abstract
+	class Component
 	{
 	public:
 		Component(GameObject* pParent);
@@ -23,8 +23,10 @@ namespace Integrian
 		
 		virtual void Render(const Point2f&) const {}
 
-		GameObject* m_pParent{};
+		GameObject* GetParent() const;
+
 	protected:
+		GameObject* m_pParent{};
 
 	private:
 	};
