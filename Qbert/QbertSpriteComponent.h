@@ -1,8 +1,6 @@
 #pragma once
 #include <Component.h>
 #include <string>
-#include <ListenerInterface.h>
-#include <Event.h>
 
 namespace Integrian
 {
@@ -10,7 +8,7 @@ namespace Integrian
 	class Texture;
 }
 
-class QbertSpriteComponent final : public Integrian::Component, public Integrian::IListener
+class QbertSpriteComponent final : public Integrian::Component
 {
 public:
 	QbertSpriteComponent(Integrian::GameObject* pGameobject);
@@ -21,7 +19,11 @@ public:
 
 	virtual void Render() const override;
 
-	virtual bool OnEvent(const Integrian::Event& event) override;
+	Integrian::Texture* GetTexture() const noexcept;
+	const Integrian::Rectf& GetSourceRect() const noexcept;
+
+	void SetSourceRect(const Integrian::Rectf& sourceRect);
+	void SetTexture(Integrian::Texture* pTexture);
 
 private:
 	Integrian::Texture* m_pTexture;

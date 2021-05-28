@@ -9,7 +9,6 @@ QbertSpriteComponent::QbertSpriteComponent(Integrian::GameObject* pGameobject)
 	, m_pTexture{}
 	, m_SourceRect{}
 {
-	Integrian::EventQueue::GetInstance().AddListener(this);
 }
 
 void QbertSpriteComponent::Initialize()
@@ -18,6 +17,7 @@ void QbertSpriteComponent::Initialize()
 	Integrian::TextureManager::GetInstance().AddTexture("QbertLeftTopAnimation", "Resources/Images/Qbert/QbertLeftTopAnimation.png");
 	Integrian::TextureManager::GetInstance().AddTexture("QbertRightBottomAnimation", "Resources/Images/Qbert/QbertRightBottomAnimation.png");
 	Integrian::TextureManager::GetInstance().AddTexture("QbertRightTopAnimation", "Resources/Images/Qbert/QbertRightTopAnimation.png");
+
 	m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation");
 
 	const Integrian::Rectf sourceRect{
@@ -37,48 +37,22 @@ void QbertSpriteComponent::Render() const
 	m_pTexture->Draw(Integrian::Point2f{ m_pParent->transform.GetPosition().x - m_pTexture->GetWidth() * 0.25f, m_pParent->transform.GetPosition().y }, m_SourceRect);
 }
 
-bool QbertSpriteComponent::OnEvent(const Integrian::Event& event)
+Integrian::Texture* QbertSpriteComponent::GetTexture() const noexcept
 {
-	const std::string& eventName{ event.GetEvent() };
+	return m_pTexture;
+}
 
-	if (eventName == "QbertMoveLeftBottom")
-	{
-		m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation");
-		m_SourceRect[Integrian::VertexLocation::LeftBottom].x += m_pTexture->GetWidth() * 0.5f;
+const Integrian::Rectf& QbertSpriteComponent::GetSourceRect() const noexcept
+{
+	return m_SourceRect;
+}
 
-		return true;
-	}
+void QbertSpriteComponent::SetSourceRect(const Integrian::Rectf& sourceRect)
+{
+	m_SourceRect = sourceRect;
+}
 
-	if (eventName == "QbertMoveRightBottom")
-	{
-		m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertRightBottomAnimation");
-		m_SourceRect[Integrian::VertexLocation::LeftBottom].x += m_pTexture->GetWidth() * 0.5f;
-
-		return true;
-	}
-
-	if (eventName == "QbertMoveRightTop")
-	{
-		m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertRightTopAnimation");
-		m_SourceRect[Integrian::VertexLocation::LeftBottom].x += m_pTexture->GetWidth() * 0.5f;
-
-		return true;
-	}
-
-	if (eventName == "QbertMoveLeftTop")
-	{
-		m_pTexture = Integrian::TextureManager::GetInstance().GetTexture("QbertLeftTopAnimation");
-		m_SourceRect[Integrian::VertexLocation::LeftBottom].x += m_pTexture->GetWidth() * 0.5f;
-
-		return true;
-	}
-
-	if (eventName == "QbertMovementEnded")
-	{
-		m_SourceRect[Integrian::VertexLocation::LeftBottom].x = 0.f;
-
-		return true;
-	}
-
-	return false;
+void QbertSpriteComponent::SetTexture(Integrian::Texture* pTexture)
+{
+	m_pTexture = pTexture;
 }

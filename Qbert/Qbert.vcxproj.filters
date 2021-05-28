@@ -54,11 +54,11 @@
     <ClCompile Include="QbertMovementComponent.cpp">
       <Filter>Source Files\Components\QbertMovementComponent</Filter>
     </ClCompile>
-    <ClCompile Include="QbertSpriteComponent.cpp">
-      <Filter>Source Files\Components\QbertSpriteComponent</Filter>
-    </ClCompile>
     <ClCompile Include="TeleportationPadComponent.cpp">
       <Filter>Source Files\Components\TeleportationPadComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="QbertSpriteComponent.cpp">
+      <Filter>Source Files\Components\QbertSpriteComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,11 +77,11 @@
     <ClInclude Include="QbertMovementComponent.h">
       <Filter>Source Files\Components\QbertMovementComponent</Filter>
     </ClInclude>
-    <ClInclude Include="QbertSpriteComponent.h">
-      <Filter>Source Files\Components\QbertSpriteComponent</Filter>
-    </ClInclude>
     <ClInclude Include="TeleportationPadComponent.h">
       <Filter>Source Files\Components\TeleportationPadComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertSpriteComponent.h">
+      <Filter>Source Files\Components\QbertSpriteComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@ namespace Integrian
 	class GameObject;
 }
 
+class QbertSpriteComponent;
 class PyramidComponent;
 class QbertMovementComponent final : public Integrian::Component
 {
@@ -19,6 +20,7 @@ public:
 
 private:
 	PyramidComponent* m_pPyramidComponent;
+	QbertSpriteComponent* m_pSpriteComponent;
 	Integrian::Vector2f m_VectorTowardsOtherTile;
 	Integrian::Vector2f m_Velocity;
 	Integrian::Point2f m_EndPosition;

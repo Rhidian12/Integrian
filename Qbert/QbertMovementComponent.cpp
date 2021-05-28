@@ -6,10 +6,14 @@
 #include "PyramidComponent.h"
 #include "TileComponent.h"
 #include <EventQueue.h>
+#include <TextureManager.h>
+#include "QbertSpriteComponent.h"
+#include <Texture.h>
 
 QbertMovementComponent::QbertMovementComponent(Integrian::GameObject* pParent, const uint8_t index)
 	: Component{ pParent }
 	, m_pPyramidComponent{}
+	, m_pSpriteComponent{}
 	, m_VectorTowardsOtherTile{}
 	, m_Velocity{}
 	, m_EndPosition{}
@@ -49,28 +53,40 @@ void QbertMovementComponent::PostInitialize()
 			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)];
 			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
 
-			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveLeftBottom" });
+			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
+			sourceRect[VertexLocation::LeftBottom].x += m_pSpriteComponent->GetTexture()->GetWidth() * 0.5f;
+			m_pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation"));
+			m_pSpriteComponent->SetSourceRect(sourceRect);
 		}
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::D)) // Right Bottom Movement
 		{
 			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)];
 			vectorTowardsOtherTile = Vector2f{ m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
-
-			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveRightBottom" });
+			
+			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
+			sourceRect[VertexLocation::LeftBottom].x += m_pSpriteComponent->GetTexture()->GetWidth() * 0.5f;
+			m_pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertRightBottomAnimation"));
+			m_pSpriteComponent->SetSourceRect(sourceRect);
 		}
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::Q)) // Left Top Movement
 		{
 			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)];
 			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, m_VectorTowardsOtherTile.y };
 
-			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveLeftTop" });
+			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
+			sourceRect[VertexLocation::LeftBottom].x += m_pSpriteComponent->GetTexture()->GetWidth() * 0.5f;
+			m_pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertLeftTopAnimation"));
+			m_pSpriteComponent->SetSourceRect(sourceRect);
 		}
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::E)) // Right Top Movement
 		{
 			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)];
 			vectorTowardsOtherTile = m_VectorTowardsOtherTile;
 
-			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveRightTop" });
+			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
+			sourceRect[VertexLocation::LeftBottom].x += m_pSpriteComponent->GetTexture()->GetWidth() * 0.5f;
+			m_pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertRightTopAnimation"));
+			m_pSpriteComponent->SetSourceRect(sourceRect);
 		}
 
 		if (pEndTile) // is there a connection to the tile
@@ -92,6 +108,8 @@ void QbertMovementComponent::PostInitialize()
 	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::E }, movement, State::OnPress);
 	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::D }, movement, State::OnPress);
 	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::DPAD_Left }, movement, State::OnPress, m_Index);
+
+	m_pSpriteComponent = m_pParent->GetComponentByType<QbertSpriteComponent>();
 }
 
 void QbertMovementComponent::Update(const float)
@@ -101,7 +119,12 @@ void QbertMovementComponent::Update(const float)
 	if (AreEqual(m_pParent->transform.GetPosition().x, m_EndPosition.x, 1.f) && AreEqual(m_pParent->transform.GetPosition().y, m_EndPosition.y, 1.f))
 	{
 		if (m_Velocity != Vector2f{})
+		{
+			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
+			sourceRect[VertexLocation::LeftBottom].x = 0.f;
+			m_pSpriteComponent->SetSourceRect(sourceRect);
 			EventQueue::GetInstance().QueueEvent(Event{ "QbertMovementEnded", m_pPyramidComponent->GetTile(m_EndPosition) });
+		}
 
 		m_Velocity = Vector2f{};
 		m_pParent->transform.SetPosition(m_EndPosition);

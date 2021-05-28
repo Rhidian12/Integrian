@@ -147,8 +147,14 @@ void TileFactoryComponent::CreateTeleportationPads(const int level) const
 		GameObject* pTpPad{ new GameObject{} };
 		pTpPad->transform.SetPosition(Point2f{ parentTransform.x + i * xDifference, parentTransform.y });
 		pTpPad->AddComponent(new TeleportationPadComponent{ pTpPad });
-		pTpPad->AddComponent(new TextureComponent{ pTpPad, TextureManager::GetInstance().GetTexture("Level" + std::to_string(level) + "TPPad")});
+		TextureComponent* pTextureComponent{ new TextureComponent{ pTpPad, TextureManager::GetInstance().GetTexture("Level" + std::to_string(level) + "TPPad")} };
+		pTpPad->AddComponent(pTextureComponent);
 		pActiveApp->AddGameObject("TeleportationPad" + std::to_string(counter++) , pTpPad);
+		
+		Rectf sourceRect{ pTextureComponent->GetSourceRect() };
+		sourceRect[VertexLocation::RightBottom].x -= 3.f * (TextureManager::GetInstance().GetTexture("Level" + std::to_string(level) + "TPPad")->GetWidth() * 0.25f);
+		sourceRect.width = TextureManager::GetInstance().GetTexture("Level" + std::to_string(level) + "TPPad")->GetWidth() * 0.25f;
+		pTextureComponent->SetSourceRect(sourceRect);
 	}
 }
 
