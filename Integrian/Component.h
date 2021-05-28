@@ -23,8 +23,8 @@ namespace Integrian
 		
 		virtual void Render(const Point2f&) const {}
 
-	protected:
 		GameObject* m_pParent{};
+	protected:
 
 	private:
 	};
