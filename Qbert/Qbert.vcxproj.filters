@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Components\QbertSpriteComponent">
       <UniqueIdentifier>{2a1ff629-b3b2-4605-b36b-09198a27d93a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\TeleportationPadComponent">
+      <UniqueIdentifier>{8b9a2a36-12cf-411e-b668-b00139b6ca3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -54,6 +57,9 @@
     <ClCompile Include="QbertSpriteComponent.cpp">
       <Filter>Source Files\Components\QbertSpriteComponent</Filter>
     </ClCompile>
+    <ClCompile Include="TeleportationPadComponent.cpp">
+      <Filter>Source Files\Components\TeleportationPadComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
@@ -73,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="QbertSpriteComponent.h">
       <Filter>Source Files\Components\QbertSpriteComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="TeleportationPadComponent.h">
+      <Filter>Source Files\Components\TeleportationPadComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
