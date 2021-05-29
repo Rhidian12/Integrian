@@ -69,6 +69,7 @@ namespace Integrian
 
 		// https://stackoverflow.com/questions/4437862/whats-the-advantage-of-multimap-over-map-of-vectors
 		using StateTransitionPair = std::pair<FSMTransition*, FSMState*>;
+		using StatePair = std::pair<FSMState*, std::vector<StateTransitionPair>>;
 
 		std::unordered_map<FSMState*, std::vector<StateTransitionPair>> m_pStates;
 		FSMState* m_pCurrentState;

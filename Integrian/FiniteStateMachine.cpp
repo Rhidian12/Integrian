@@ -38,6 +38,18 @@ Integrian::FiniteStateMachineComponent::FiniteStateMachineComponent(GameObject* 
 Integrian::FiniteStateMachineComponent::~FiniteStateMachineComponent()
 {
 	SafeDelete(m_pBlackboard);
+
+	for (StatePair pair : m_pStates)
+	{
+		for (StateTransitionPair transitionPair : pair.second)
+		{
+			SafeDelete(transitionPair.first);
+			SafeDelete(transitionPair.second);
+		}
+
+		pair.second.clear();
+		SafeDelete(pair.first);
+	}
 }
 
 void Integrian::FiniteStateMachineComponent::AddTransition(FSMState* pFromState, FSMState* pToState, FSMTransition* pTransition)
