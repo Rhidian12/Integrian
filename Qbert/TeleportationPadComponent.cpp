@@ -22,5 +22,4 @@ void TeleportationPadComponent::Update(const float )
 
 		m_EndPosition.y += 20.f;
 	}
-
 }
