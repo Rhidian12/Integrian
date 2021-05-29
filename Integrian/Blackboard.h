@@ -34,7 +34,7 @@ namespace Integrian
 		}
 
 	private:
-		std::tuple<Args...> m_Data;
+		Type m_Data;
 	};
 
 	class Blackboard final
@@ -62,7 +62,7 @@ namespace Integrian
 			const UMapCIt cIt{ m_pData.find(id) };
 
 			if (cIt != m_pData.cend())
-				m_pData[id] = data;
+				static_cast<BlackboardData<Type>*>(m_pData[id].get())->SetData(data);
 #ifdef _DEBUG
 			else
 				Logger::LogWarning("Blackboard::ChangeData() did not change data with ID: " + id + " because it was not present!\n");
@@ -70,7 +70,7 @@ namespace Integrian
 		}
 
 		template<typename Type>
-		inline const Type& GetData(const std::string& id) const noexcept
+		inline const Type GetData(const std::string& id) const noexcept
 		{
 			const UMapCIt cIt{ m_pData.find(id) };
 
@@ -80,6 +80,7 @@ namespace Integrian
 			else
 				Logger::LogWarning("Blackboard::GetData() did not find data with ID: " + id + "\n");
 #endif // _DEBUG
+			return Type{};
 		}
 
 	private:

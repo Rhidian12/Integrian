@@ -1,9 +1,11 @@
 #include "IntegrianPCH.h"
 #include "FiniteStateMachine.h"
 
-Integrian::FSMState::FSMState(FSMStateChangeCallback fsmCallback, FSMStateUpdateCallback fsmUpdateCallback)
-	: m_FSMStateChangeCallback{ fsmCallback }
-	, m_FSMStateUpdateCallback{ fsmUpdateCallback }
+Integrian::FSMState::FSMState(FSMStateChangeCallback fsmStateChangeCallback, FSMStateUpdateCallback fsmStateFixedUpdateCallback, FSMStateUpdateCallback fsmStateUpdateCallback, FSMStateUpdateCallback fsmStateLateUpdateCallback)
+	: m_FSMStateChangeCallback{ fsmStateChangeCallback }
+	, m_FSMStateFixedUpdateCallback{ fsmStateFixedUpdateCallback }
+	, m_FSMStateUpdateCallback{ fsmStateUpdateCallback }
+	, m_FSMStateLateUpdateCallback{ fsmStateLateUpdateCallback }
 {
 }
 
@@ -12,9 +14,19 @@ void Integrian::FSMState::OnStateChange(Blackboard* pBlackboard, const FSMStateT
 	m_FSMStateChangeCallback(pBlackboard, fsmStateTransition);
 }
 
+void Integrian::FSMState::FixedUpdate(Blackboard* pBlackboard, const float elapsedSeconds)
+{
+	m_FSMStateFixedUpdateCallback(pBlackboard, elapsedSeconds);
+}
+
 void Integrian::FSMState::Update(Blackboard* pBlackboard, const float elapsedSeconds)
 {
 	m_FSMStateUpdateCallback(pBlackboard, elapsedSeconds);
+}
+
+void Integrian::FSMState::LateUpdate(Blackboard* pBlackboard, const float elapsedSeconds)
+{
+	m_FSMStateLateUpdateCallback(pBlackboard, elapsedSeconds);
 }
 
 Integrian::FSMTransition::FSMTransition(FSMTransitionCallback callback)
@@ -71,7 +83,9 @@ void Integrian::FiniteStateMachineComponent::Update(const float elapsedSeconds)
 		}
 	}
 
+	m_pCurrentState->FixedUpdate(m_pBlackboard, elapsedSeconds);
 	m_pCurrentState->Update(m_pBlackboard, elapsedSeconds);
+	m_pCurrentState->LateUpdate(m_pBlackboard, elapsedSeconds);
 }
 
 Integrian::Blackboard* Integrian::FiniteStateMachineComponent::GetBlackboard() const noexcept
