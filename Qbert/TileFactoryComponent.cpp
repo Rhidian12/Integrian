@@ -143,8 +143,6 @@ void TileFactoryComponent::CreateTeleportationPads(const int level) const
 	float xDifference{ center.x - xCoordinate - tpPadWidth * 1.5f };
 	const float tileHeight{ (*pTiles)[0]->GetComponentByType<TextureComponent>()->GetTexture()->GetHeight() };
 
-
-
 	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
 
 	int counter{};
