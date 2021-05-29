@@ -27,7 +27,7 @@ Integrian::App::App(const std::string& name)
 		m_IsLibraryInitialised = true;
 	}
 
-	App_Selector::GetInstance().AddApplication(this);
+	//App_Selector::GetInstance().AddApplication(this);
 }
 
 void Integrian::App::RemoveCommand(const std::string& commandName)

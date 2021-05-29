@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iomanip>
 #include "TeleportationPadComponent.h"
+#include <AnimationComponent.h>
 
 TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -127,7 +128,6 @@ void TileFactoryComponent::CreateTeleportationPads(const int level) const
 {
 	using namespace Integrian;
 
-	const Point2f& parentTransform{ m_pParent->transform.GetPosition() };
 	const std::vector<GameObject*>* pTiles{ &m_pParent->GetComponentByType<PyramidComponent>()->GetTiles() };
 
 	float xCoordinate{ std::numeric_limits<float>::max() };
@@ -136,8 +136,14 @@ void TileFactoryComponent::CreateTeleportationPads(const int level) const
 		if (pTile->transform.GetPosition().x < xCoordinate)
 			xCoordinate = pTile->transform.GetPosition().x;
 
-	float xDifference{ parentTransform.x - xCoordinate };
-	xDifference += (*pTiles)[0]->GetComponentByType<TextureComponent>()->GetTexture()->GetWidth();
+	Texture* pTpPadTexture{ TextureManager::GetInstance().GetTexture("Level" + std::to_string(level) + "TPPad") };
+	const float tpPadWidth{ pTpPadTexture->GetWidth() * 0.25f };
+	const Point2f& center{ (*pTiles)[0]->GetComponentByType<TileComponent>()->GetCenter() };
+
+	float xDifference{ center.x - xCoordinate - tpPadWidth * 1.5f };
+	const float tileHeight{ (*pTiles)[0]->GetComponentByType<TextureComponent>()->GetTexture()->GetHeight() };
+
+
 
 	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
 
@@ -145,16 +151,10 @@ void TileFactoryComponent::CreateTeleportationPads(const int level) const
 	for (int i{ -1 }; i < 2; i += 2)
 	{
 		GameObject* pTpPad{ new GameObject{} };
-		pTpPad->transform.SetPosition(Point2f{ parentTransform.x + i * xDifference, parentTransform.y });
+		pTpPad->transform.SetPosition(Point2f{ center.x + i * xDifference - tpPadWidth * 0.5f, center.y - (tileHeight * 0.5f) * 5.f });
 		pTpPad->AddComponent(new TeleportationPadComponent{ pTpPad });
-		TextureComponent* pTextureComponent{ new TextureComponent{ pTpPad, TextureManager::GetInstance().GetTexture("Level" + std::to_string(level) + "TPPad")} };
-		pTpPad->AddComponent(pTextureComponent);
-		pActiveApp->AddGameObject("TeleportationPad" + std::to_string(counter++) , pTpPad);
-		
-		Rectf sourceRect{ pTextureComponent->GetSourceRect() };
-		sourceRect[VertexLocation::RightBottom].x -= 3.f * (TextureManager::GetInstance().GetTexture("Level" + std::to_string(level) + "TPPad")->GetWidth() * 0.25f);
-		sourceRect.width = TextureManager::GetInstance().GetTexture("Level" + std::to_string(level) + "TPPad")->GetWidth() * 0.25f;
-		pTextureComponent->SetSourceRect(sourceRect);
+		pTpPad->AddComponent(new AnimationComponent{ pTpPad, 4, 8, pTpPadTexture });
+		pActiveApp->AddGameObject("TeleportationPad" + std::to_string(counter++), pTpPad);
 	}
 }
 

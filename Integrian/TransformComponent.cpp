@@ -53,8 +53,11 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 
 void Integrian::TransformComponent::SetPosition(const Point2f& position) noexcept
 {
-	//m_Translation = position - m_DestRect[VertexLocation::LeftBottom];
+	const Vector2f translation = position - m_DestRect[VertexLocation::LeftBottom];
 	m_DestRect[VertexLocation::LeftBottom] = position;
+	m_DestRect[VertexLocation::RightBottom] = m_DestRect[VertexLocation::RightBottom] + translation;
+	m_DestRect[VertexLocation::RightTop] = m_DestRect[VertexLocation::RightTop] + translation;
+	m_DestRect[VertexLocation::RightBottom] = m_DestRect[VertexLocation::RightBottom] + translation;
 
 	//m_TransformChanged = TransformChanged::Translation;
 }

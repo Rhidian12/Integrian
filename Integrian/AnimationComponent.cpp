@@ -47,7 +47,7 @@ void Integrian::AnimationComponent::Initialize()
 			m_FrameWidth = m_pTexture->GetWidth() / m_NrOfFrames;
 
 		if (m_FrameHeight == 0.f)
-			m_FrameHeight = m_pTexture->GetHeight() / m_NrOfFrames;
+			m_FrameHeight = m_pTexture->GetHeight();
 	}
 }
 
@@ -57,7 +57,7 @@ void Integrian::AnimationComponent::Update(const float elapsedSeconds)
 
 	if (m_CurrentTime > 1.f / m_FramesPerSec)
 	{
-		++m_CurrentFrame% m_NrOfFrames;
+		++m_CurrentFrame %= m_NrOfFrames;
 
 		m_CurrentTime = 0.f;
 	}
