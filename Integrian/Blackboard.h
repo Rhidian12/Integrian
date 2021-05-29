@@ -4,7 +4,6 @@
 #define INTEGRIAN_BLACKBOARD_H
 
 #include "IntegrianPCH.h"
-#include <tuple> // std::tuple
 #include <unordered_map> // std::unordered_map
 #include <memory> // std::shared_ptr
 
@@ -16,20 +15,20 @@ namespace Integrian
 		virtual ~IBlackboardData() = default;
 	};
 
-	template<typename ... Args>
+	template<typename Type>
 	class BlackboardData final : public IBlackboardData
 	{
 	public:
-		BlackboardData(const Args... args)
-			: m_Data{ std::make_tuple(args) }
+		BlackboardData(const Type data)
+			: m_Data{ data }
 		{}
 
-		inline void SetData(const Args ... args)
+		inline void SetData(const Type data)
 		{
-			m_Data = std::make_tuple(args);
+			m_Data = data;
 		}
 
-		inline const std::tuple<Args...>& GetData() const
+		inline const Type& GetData() const
 		{
 			return m_Data;
 		}
@@ -44,26 +43,39 @@ namespace Integrian
 	public:
 		Blackboard() = default;
 
-		template<typename ... Args>
-		inline void AddData(const std::string& id, const Args... args) noexcept
+		template<typename Type>
+		inline void AddData(const std::string& id, const Type data) noexcept
 		{
 			const UMapCIt cIt{ m_pData.find(id) };
 
 			if (cIt == m_pData.cend())
-				m_pData.insert(std::make_pair(id, new BlackboardData<Args...>{ args }));
+				m_pData.insert(std::make_pair(id, new BlackboardData<Type>{ data }));
 #ifdef _DEBUG
 			else
 				Logger::LogWarning("Blackboard::AddData() did not add data with ID: " + id + " because it was already present!\n");
 #endif // _DEBUG
 		}
 
-		template<typename ... Args>
-		inline const std::tuple<Args...>& GetData(const std::string& id) const noexcept
+		template<typename Type>
+		inline void ChangeData(const std::string& id, const Type data) noexcept
 		{
 			const UMapCIt cIt{ m_pData.find(id) };
 
 			if (cIt != m_pData.cend())
-				return static_cast<BlackboardData<Args...>*>(cIt->second.get())->GetData();
+				m_pData[id] = data;
+#ifdef _DEBUG
+			else
+				Logger::LogWarning("Blackboard::ChangeData() did not change data with ID: " + id + " because it was not present!\n");
+#endif // _DEBUG
+		}
+
+		template<typename Type>
+		inline const Type& GetData(const std::string& id) const noexcept
+		{
+			const UMapCIt cIt{ m_pData.find(id) };
+
+			if (cIt != m_pData.cend())
+				return static_cast<BlackboardData<Type>*>(cIt->second.get())->GetData();
 #ifdef _DEBUG
 			else
 				Logger::LogWarning("Blackboard::GetData() did not find data with ID: " + id + "\n");
