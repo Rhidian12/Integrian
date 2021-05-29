@@ -7,12 +7,14 @@ Integrian::FSMState::FSMState(FSMStateChangeCallback fsmCallback, FSMStateUpdate
 {
 }
 
-void Integrian::FSMState::OnStateChange(Blackboard* pBlackboard)
+void Integrian::FSMState::OnStateChange(Blackboard* pBlackboard, const FSMStateTransition fsmStateTransition)
 {
+	m_FSMStateChangeCallback(pBlackboard, fsmStateTransition);
 }
 
 void Integrian::FSMState::Update(Blackboard* pBlackboard, const float elapsedSeconds)
 {
+	m_FSMStateUpdateCallback(pBlackboard, elapsedSeconds);
 }
 
 Integrian::FSMTransition::FSMTransition(FSMTransitionCallback callback)
@@ -23,4 +25,58 @@ Integrian::FSMTransition::FSMTransition(FSMTransitionCallback callback)
 bool Integrian::FSMTransition::ToTransition(Blackboard* pBlackboard)
 {
 	return m_Callback(pBlackboard);
+}
+
+Integrian::FiniteStateMachineComponent::FiniteStateMachineComponent(GameObject* pParent, FSMState* pStartState, Blackboard* pBlackboard)
+	: Component{ pParent }
+	, m_pBlackboard{ pBlackboard }
+	, m_pCurrentState{ pStartState }
+	, m_pStates{}
+{
+}
+
+Integrian::FiniteStateMachineComponent::~FiniteStateMachineComponent()
+{
+	SafeDelete(m_pBlackboard);
+}
+
+void Integrian::FiniteStateMachineComponent::AddTransition(FSMState* pFromState, FSMState* pToState, FSMTransition* pTransition)
+{
+	m_pStates[pFromState].push_back(std::make_pair(pTransition, pToState));
+}
+
+void Integrian::FiniteStateMachineComponent::Update(const float elapsedSeconds)
+{
+	if (m_pCurrentState)
+	{
+		for (const StateTransitionPair& pair : m_pStates[m_pCurrentState])
+		{
+			if (pair.first->ToTransition(m_pBlackboard))
+			{
+				ChangeState(pair.second);
+				break;
+			}
+		}
+	}
+
+	m_pCurrentState->Update(m_pBlackboard, elapsedSeconds);
+}
+
+Integrian::Blackboard* Integrian::FiniteStateMachineComponent::GetBlackboard() const noexcept
+{
+	return m_pBlackboard;
+}
+
+Integrian::FSMState* Integrian::FiniteStateMachineComponent::GetCurrentState() const noexcept
+{
+	return m_pCurrentState;
+}
+
+void Integrian::FiniteStateMachineComponent::ChangeState(FSMState* pFSMState)
+{
+	m_pCurrentState->OnStateChange(m_pBlackboard, FSMStateTransition::OnExit);
+
+	m_pCurrentState = pFSMState;
+
+	m_pCurrentState->OnStateChange(m_pBlackboard, FSMStateTransition::OnEnter);
 }

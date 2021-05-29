@@ -40,7 +40,7 @@ namespace Integrian
 
 	class Blackboard final
 	{
-		using UMapCIt = std::unordered_map<std::string, IBlackboardData*>::const_iterator;
+		using UMapCIt = std::unordered_map<std::string, std::shared_ptr<IBlackboardData>>::const_iterator;
 	public:
 		Blackboard() = default;
 
