@@ -72,8 +72,12 @@ void TileFactoryComponent::CreateTiles(const int level)
 		}
 	}
 
-	CreateTeleportationPads(level);
-	FillConnections();
+	std::cout << levelFormat << std::endl;
+	json test = *levelFormat.find("TeleportLocations");
+	std::cout << test << std::endl;
+
+	CreateTeleportationPads(level, test);
+	FillConnections(test);
 }
 
 Integrian::GameObject* TileFactoryComponent::CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture)
@@ -89,10 +93,11 @@ Integrian::GameObject* TileFactoryComponent::CreateTile(const Integrian::Point2f
 	return pTile;
 }
 
-void TileFactoryComponent::FillConnections() const
+void TileFactoryComponent::FillConnections(nlohmann::json teleporterLocations) const
 {
 	using namespace Integrian;
 
+	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
 	const std::vector<GameObject*>* pTiles{ &m_pParent->GetComponentByType<PyramidComponent>()->GetTiles() };
 
 	uint64_t counter{};
@@ -107,6 +112,17 @@ void TileFactoryComponent::FillConnections() const
 
 			(*pTiles)[leftBottomIndex]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter]->GetComponentByType<TileComponent>(), Direction::RightTop);
 			(*pTiles)[rightBottomIndex]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter]->GetComponentByType<TileComponent>(), Direction::LeftTop);
+
+			for (const nlohmann::json& element : teleporterLocations)
+			{
+				if (*element.find("isLeft") && y == *element.find("row"))
+					if (x == 0)
+						(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection(pActiveApp->GetGameObject("TeleportationPad0")->GetComponentByType<TeleportationPadComponent>(), Direction::LeftTop);
+
+				if (!(*element.find("isLeft")) && y == *element.find("row"))
+					if (x == y)
+						(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection(pActiveApp->GetGameObject("TeleportationPad1")->GetComponentByType<TeleportationPadComponent>(), Direction::RightTop);
+			}
 
 			++counter;
 		}
@@ -124,7 +140,7 @@ void TileFactoryComponent::FillConnections() const
 	// right side: 0 | 2 | 5 | 9 | 14 | 20 | 27
 }
 
-void TileFactoryComponent::CreateTeleportationPads(const int level) const
+void TileFactoryComponent::CreateTeleportationPads(const int level, nlohmann::json teleporterLocations) const
 {
 	using namespace Integrian;
 
@@ -149,7 +165,7 @@ void TileFactoryComponent::CreateTeleportationPads(const int level) const
 	for (int i{ -1 }; i < 2; i += 2)
 	{
 		GameObject* pTpPad{ new GameObject{} };
-		pTpPad->transform.SetPosition(Point2f{ center.x + i * xDifference - tpPadWidth * 0.5f, center.y - (tileHeight * 0.5f) * 5.f });
+		pTpPad->transform.SetPosition(Point2f{ center.x + i * xDifference - tpPadWidth * 0.5f, center.y - (tileHeight * 0.5f) * ((*teleporterLocations[counter].find("row")) + 1) });
 		pTpPad->AddComponent(new TeleportationPadComponent{ pTpPad });
 		pTpPad->AddComponent(new AnimationComponent{ pTpPad, 4, 8, pTpPadTexture });
 		pActiveApp->AddGameObject("TeleportationPad" + std::to_string(counter++), pTpPad);
@@ -167,6 +183,15 @@ nlohmann::json TileFactoryComponent::ReadFile(const int level)
 		input >> json;
 
 	input.close();
+
+	//for (auto uwu : (*json.find("TeleportationLocations")))
+	//{
+	//	std::cout << uwu.front() << std::endl;
+	//}
+
+	std::cout << *json.find("TeleportLocations") << std::endl;
+
+	//std::cout << *(*json.find("TeleportationLocations")).find("Left") << std::endl;
 
 	return json;
 }

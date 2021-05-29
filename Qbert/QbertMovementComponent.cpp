@@ -9,6 +9,7 @@
 #include <TextureManager.h>
 #include "QbertSpriteComponent.h"
 #include <Texture.h>
+#include "TeleportationPadComponent.h"
 
 QbertMovementComponent::QbertMovementComponent(Integrian::GameObject* pParent, const uint8_t index)
 	: Component{ pParent }
@@ -43,6 +44,7 @@ void QbertMovementComponent::PostInitialize()
 
 		TileComponent* pQbertTile{ m_pPyramidComponent->GetTile(qbertPosition) };
 		TileComponent* pEndTile{};
+		TeleportationPadComponent* pTP{};
 
 		InputManager& inputManager{ InputManager::GetInstance() };
 
@@ -51,9 +53,8 @@ void QbertMovementComponent::PostInitialize()
 		if (inputManager.IsKeyboardKeyPressed(KeyboardInput::A)) // Left Bottom Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)].connection))
-			{
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)].connection);
-			}
+
 			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
 
 			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
@@ -64,9 +65,8 @@ void QbertMovementComponent::PostInitialize()
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::D)) // Right Bottom Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)].connection))
-			{
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)].connection);
-			}
+
 			vectorTowardsOtherTile = Vector2f{ m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
 
 			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
@@ -77,9 +77,10 @@ void QbertMovementComponent::PostInitialize()
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::Q)) // Left Top Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection))
-			{
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection);
-			}
+			else
+				pTP = std::get<1>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection);
+
 			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, m_VectorTowardsOtherTile.y };
 
 			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
@@ -90,9 +91,10 @@ void QbertMovementComponent::PostInitialize()
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::E)) // Right Top Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection))
-			{
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection);
-			}
+			else
+				pTP = std::get<1>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection);
+
 			vectorTowardsOtherTile = m_VectorTowardsOtherTile;
 
 			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
@@ -103,6 +105,11 @@ void QbertMovementComponent::PostInitialize()
 
 		if (pEndTile) // is there a connection to the tile
 			m_EndPosition = pEndTile->GetCenter();
+		else if (pTP) // is there a connection to a teleporter
+		{
+			m_EndPosition = pTP->GetParent()->transform.GetPosition();
+			EventQueue::GetInstance().QueueEvent(Event{ "QvertMoveOnTeleporter" });
+		}
 		else // there is no connection == jumping off the map
 		{
 			m_EndPosition = qbertPosition + vectorTowardsOtherTile;
