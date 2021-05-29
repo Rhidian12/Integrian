@@ -1,6 +1,7 @@
 #pragma once
 #include <Component.h>
 #include <array>
+#include <variant>
 
 namespace Integrian
 {
@@ -15,6 +16,29 @@ enum class Direction : uint8_t
 	RightTop = 3
 };
 
+class TeleportationPadComponent;
+class TileComponent;
+
+struct Connection final
+{
+	Connection()
+		: connection{}
+	{}
+	Connection(TileComponent* pTileComponent)
+		: connection{pTileComponent}
+	{}
+	Connection(TeleportationPadComponent* pTeleportationPadComponent)
+		: connection{pTeleportationPadComponent}
+	{}
+
+	std::variant<TileComponent*, TeleportationPadComponent*> connection;
+	//union
+	//{
+	//	TileComponent* pTileComponent;
+	//	TeleportationPadComponent* pTeleportationPadComponent;
+	//};
+};
+
 class TileComponent final : public Integrian::Component
 {
 public:
@@ -22,11 +46,12 @@ public:
 
 	Integrian::Point2f GetCenter() const noexcept;
 	void AddConnection(TileComponent* pTile, const Direction direction);
+	void AddConnection(TeleportationPadComponent* pTile, const Direction direction);
 
-	[[nodiscard]] const std::array<TileComponent*, 4>& GetConnections() const noexcept;
+	[[nodiscard]] const std::array<Connection, 4>& GetConnections() const noexcept;
 
 private:
 	Integrian::Point2f m_Center;
-	std::array<TileComponent*, 4> m_pConnections; // there are only ever 4 possible connections
+	std::array<Connection, 4> m_pConnections; // there are only ever 4 possible connections
 	uint8_t m_ActiveConnections;
 };

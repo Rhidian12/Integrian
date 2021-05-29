@@ -50,7 +50,10 @@ void QbertMovementComponent::PostInitialize()
 
 		if (inputManager.IsKeyboardKeyPressed(KeyboardInput::A)) // Left Bottom Movement
 		{
-			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)];
+			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)].connection))
+			{
+				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)].connection);
+			}
 			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
 
 			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
@@ -60,9 +63,12 @@ void QbertMovementComponent::PostInitialize()
 		}
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::D)) // Right Bottom Movement
 		{
-			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)];
+			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)].connection))
+			{
+				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)].connection);
+			}
 			vectorTowardsOtherTile = Vector2f{ m_VectorTowardsOtherTile.x, -m_VectorTowardsOtherTile.y };
-			
+
 			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
 			sourceRect[VertexLocation::LeftBottom].x += m_pSpriteComponent->GetTexture()->GetWidth() * 0.5f;
 			m_pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertRightBottomAnimation"));
@@ -70,7 +76,10 @@ void QbertMovementComponent::PostInitialize()
 		}
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::Q)) // Left Top Movement
 		{
-			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)];
+			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection))
+			{
+				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection);
+			}
 			vectorTowardsOtherTile = Vector2f{ -m_VectorTowardsOtherTile.x, m_VectorTowardsOtherTile.y };
 
 			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };
@@ -80,7 +89,10 @@ void QbertMovementComponent::PostInitialize()
 		}
 		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::E)) // Right Top Movement
 		{
-			pEndTile = pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)];
+			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection))
+			{
+				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection);
+			}
 			vectorTowardsOtherTile = m_VectorTowardsOtherTile;
 
 			Rectf sourceRect{ m_pSpriteComponent->GetSourceRect() };

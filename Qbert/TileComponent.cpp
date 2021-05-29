@@ -27,7 +27,16 @@ void TileComponent::AddConnection(TileComponent* pTile, const Direction directio
 		m_ActiveConnections++;
 }
 
-const std::array<TileComponent*, 4>& TileComponent::GetConnections() const noexcept
+void TileComponent::AddConnection(TeleportationPadComponent* pTpPad, const Direction direction)
+{
+	assert(m_ActiveConnections < 4);
+	m_pConnections[static_cast<std::underlying_type_t<Direction>>(direction)] = pTpPad;
+
+	if (pTpPad)
+		m_ActiveConnections++;
+}
+
+const std::array<Connection, 4>& TileComponent::GetConnections() const noexcept
 {
 	return m_pConnections;
 }
