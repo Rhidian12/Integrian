@@ -8,6 +8,7 @@ namespace Integrian
 
 class QbertSpriteComponent;
 class PyramidComponent;
+
 class QbertMovementComponent final : public Integrian::Component
 {
 public:

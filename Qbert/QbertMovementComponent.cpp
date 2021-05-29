@@ -108,7 +108,6 @@ void QbertMovementComponent::PostInitialize()
 		else if (pTP) // is there a connection to a teleporter
 		{
 			m_EndPosition = pTP->GetParent()->transform.GetPosition();
-			EventQueue::GetInstance().QueueEvent(Event{ "QvertMoveOnTeleporter" });
 		}
 		else // there is no connection == jumping off the map
 		{

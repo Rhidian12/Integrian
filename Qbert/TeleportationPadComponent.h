@@ -16,4 +16,6 @@ public:
 private:
 	Integrian::GameObject* m_pQbert;
 	Integrian::Point2f m_EndPosition;
+	bool m_IsActivated;
+	float m_Speed;
 };
