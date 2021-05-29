@@ -179,6 +179,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="App_Selector.cpp" />
     <ClCompile Include="GameObjectInformation.cpp" />
@@ -222,6 +223,7 @@
     <ClCompile Include="Utility Functions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
     <ClInclude Include="DivisionByZeroNotPossibleException.h" />

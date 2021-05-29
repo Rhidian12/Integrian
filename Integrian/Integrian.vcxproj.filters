@@ -135,6 +135,9 @@
     <Filter Include="Engine\Components\TransformComponent\Shape">
       <UniqueIdentifier>{5f690708-5b08-443a-aa68-d887b603039e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Components\AnimationComponent">
+      <UniqueIdentifier>{32b2cc1c-f5eb-4bc2-9405-8f48661c9b55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -259,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="Shape.cpp">
       <Filter>Engine\Components\TransformComponent\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>Engine\Components\AnimationComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,6 +471,9 @@
     </ClInclude>
     <ClInclude Include="Libraries\JSON\json.hpp">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationComponent.h">
+      <Filter>Engine\Components\AnimationComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
