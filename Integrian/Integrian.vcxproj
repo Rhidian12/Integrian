@@ -182,6 +182,7 @@
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="App_Selector.cpp" />
+    <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="GameObjectInformation.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
     <ClCompile Include="SDLAudioSystem.cpp" />
@@ -226,7 +227,9 @@
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
+    <ClInclude Include="Blackboard.h" />
     <ClInclude Include="DivisionByZeroNotPossibleException.h" />
+    <ClInclude Include="FiniteStateMachine.h" />
     <ClInclude Include="GameObjectInformation.h" />
     <ClInclude Include="Libraries\JSON\json.hpp" />
     <ClInclude Include="LoggedAudioSystem.h" />

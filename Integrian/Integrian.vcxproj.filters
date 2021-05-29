@@ -138,6 +138,12 @@
     <Filter Include="Engine\Components\AnimationComponent">
       <UniqueIdentifier>{32b2cc1c-f5eb-4bc2-9405-8f48661c9b55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Finite State Machine">
+      <UniqueIdentifier>{a54b1f11-841b-47aa-a23f-b59f0de6c187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Blackboard">
+      <UniqueIdentifier>{4fb2dff6-52a6-47fe-8225-9760d1f08934}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -265,6 +271,9 @@
     </ClCompile>
     <ClCompile Include="AnimationComponent.cpp">
       <Filter>Engine\Components\AnimationComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="FiniteStateMachine.cpp">
+      <Filter>Engine\Finite State Machine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -474,6 +483,12 @@
     </ClInclude>
     <ClInclude Include="AnimationComponent.h">
       <Filter>Engine\Components\AnimationComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="FiniteStateMachine.h">
+      <Filter>Engine\Finite State Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="Blackboard.h">
+      <Filter>Engine\Blackboard</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
