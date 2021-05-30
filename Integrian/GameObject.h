@@ -44,7 +44,7 @@ namespace Integrian
 				if (typeid(*pComponent) == typeid(Type))
 					return static_cast<Type*>(pComponent);
 
-			Logger::LogWarning("GetComponentByType returned a nullptr\n");
+			Logger::LogError("GetComponentByType returned a nullptr\n");
 			return nullptr;
 		}
 
