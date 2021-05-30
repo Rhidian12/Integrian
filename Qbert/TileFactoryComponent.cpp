@@ -72,12 +72,10 @@ void TileFactoryComponent::CreateTiles(const int level)
 		}
 	}
 
-	std::cout << levelFormat << std::endl;
-	json test = *levelFormat.find("TeleportLocations");
-	std::cout << test << std::endl;
+	json array = *levelFormat.find("TeleportLocations");
 
-	CreateTeleportationPads(level, test);
-	FillConnections(test);
+	CreateTeleportationPads(level, array);
+	FillConnections(array);
 }
 
 Integrian::GameObject* TileFactoryComponent::CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture)
@@ -183,15 +181,6 @@ nlohmann::json TileFactoryComponent::ReadFile(const int level)
 		input >> json;
 
 	input.close();
-
-	//for (auto uwu : (*json.find("TeleportationLocations")))
-	//{
-	//	std::cout << uwu.front() << std::endl;
-	//}
-
-	std::cout << *json.find("TeleportLocations") << std::endl;
-
-	//std::cout << *(*json.find("TeleportationLocations")).find("Left") << std::endl;
 
 	return json;
 }

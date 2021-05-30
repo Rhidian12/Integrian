@@ -60,7 +60,6 @@ Integrian::FiniteStateMachineComponent::~FiniteStateMachineComponent()
 		}
 
 		pair.second.clear();
-		SafeDelete(pair.first);
 	}
 }
 

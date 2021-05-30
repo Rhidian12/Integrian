@@ -12,10 +12,14 @@ public:
 	TeleportationPadComponent(Integrian::GameObject* pParent);
 
 	virtual void Update(const float elapsedSeconds) override;
+	void Activate();
+	bool IsCompletelyDone() const;
 
 private:
 	Integrian::GameObject* m_pQbert;
 	Integrian::Point2f m_EndPosition;
 	bool m_IsActivated;
 	float m_Speed;
+	bool m_IsQbertDroppedOff;
+	bool m_CompletelyDone;
 };

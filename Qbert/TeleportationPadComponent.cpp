@@ -7,11 +7,13 @@ TeleportationPadComponent::TeleportationPadComponent(Integrian::GameObject* pPar
 	: Component{ pParent }
 	, m_pQbert{}
 	, m_IsActivated{}
-	, m_Speed{ 10.f }
+	, m_Speed{ 65.f }
+	, m_IsQbertDroppedOff{}
+	, m_CompletelyDone{}
 {
 }
 
-void TeleportationPadComponent::Update(const float)
+void TeleportationPadComponent::Update(const float dt)
 {
 	using namespace Integrian;
 
@@ -25,15 +27,44 @@ void TeleportationPadComponent::Update(const float)
 		m_EndPosition.y += 20.f;
 	}
 
-	if (m_IsActivated)
+	if (m_IsActivated && !m_IsQbertDroppedOff)
 	{
-		Vector2f velocity{ m_EndPosition - m_pParent->transform.GetPosition() };
+		const Point2f parentPosition{ m_pParent->transform.GetPosition() };
+		const Point2f qbertPosition{ m_pQbert->transform.GetPosition() };
+		Vector2f velocity{ m_EndPosition - parentPosition };
 		Normalize(velocity);
-		m_pParent->transform.Translate(velocity * m_Speed);
+		m_pParent->transform.SetPosition(parentPosition + velocity * m_Speed * dt);
+		m_pQbert->transform.SetPosition(qbertPosition + velocity * m_Speed * dt);
 
 		if (AreEqual(m_pParent->transform.GetPosition().x, m_EndPosition.x, 1.f) && AreEqual(m_pParent->transform.GetPosition().y, m_EndPosition.y, 1.f))
 		{
-
+			//m_IsActivated = false;
+			m_EndPosition.y -= 20.f;
+			m_IsQbertDroppedOff = true;
 		}
 	}
+
+	if (m_IsActivated && m_IsQbertDroppedOff && !m_CompletelyDone)
+	{
+		const Point2f qbertPosition{ m_pQbert->transform.GetPosition() };
+		Vector2f velocity{ m_EndPosition - m_pQbert->transform.GetPosition() };
+		Normalize(velocity);
+		m_pQbert->transform.SetPosition(qbertPosition + velocity * m_Speed * dt);
+
+		if (AreEqual(m_pQbert->transform.GetPosition().x, m_EndPosition.x, 1.f) && AreEqual(m_pQbert->transform.GetPosition().y, m_EndPosition.y, 1.f))
+		{
+			m_pQbert->transform.SetPosition(m_EndPosition);
+			m_CompletelyDone = true;
+		}
+	}
+}
+
+void TeleportationPadComponent::Activate()
+{
+	m_IsActivated = true;
+}
+
+bool TeleportationPadComponent::IsCompletelyDone() const
+{
+	return m_CompletelyDone;
 }

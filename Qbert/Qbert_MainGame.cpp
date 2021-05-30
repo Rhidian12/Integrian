@@ -38,15 +38,18 @@ void Qbert_MainGame::Start()
 	Blackboard* pNewBlackboard{ new Blackboard{} };
 	pNewBlackboard->AddData("VectorTowardsOtherTile", pPyramidComponent->GetTiles()[1]->GetComponentByType<TileComponent>()->GetCenter() -
 		pPyramidComponent->GetTiles()[0]->GetComponentByType<TileComponent>()->GetCenter());
-
-	bool canMoveAgain{ true };
-	float qbertSpeed{ 65.f };
-	pNewBlackboard->AddData("CanMoveAgain", canMoveAgain);
-	pNewBlackboard->AddData("QbertSpeed", qbertSpeed);
+	pNewBlackboard->AddData("CanMoveAgain", true);
+	pNewBlackboard->AddData("QbertSpeed", 65.f);
 	pNewBlackboard->AddData("QbertVelocity", Vector2f{});
 	pNewBlackboard->AddData("QbertSpriteComponent", pQbert->GetComponentByType<QbertSpriteComponent>());
 	pNewBlackboard->AddData("Qbert", pQbert);
 	pNewBlackboard->AddData("QbertEndPosition", Point2f{});
+	pNewBlackboard->AddData("IsOnTeleporter", false);
+	pNewBlackboard->AddData("MovingTowardsTeleporter", false);
+	pNewBlackboard->AddData("LeftTeleporter", GetGameObject("TeleportationPad0")->GetComponentByType<TeleportationPadComponent>());
+	pNewBlackboard->AddData("RightTeleporter", GetGameObject("TeleportationPad1")->GetComponentByType<TeleportationPadComponent>());
+	pNewBlackboard->AddData("IsLeftTeleporterActive", false);
+	pNewBlackboard->AddData("IsRightTeleporterActive", false);
 
 	FSMState* pStandingState{ new FSMState{
 		[](Blackboard*, const FSMStateTransition) {},
@@ -59,7 +62,7 @@ void Qbert_MainGame::Start()
 		},
 		[pPyramidComponent](Blackboard* pBlackboard, const float)
 		{
-			if (!pBlackboard->GetData<bool>("CanMoveAgain"))
+			if (!pBlackboard->GetData<bool>("CanMoveAgain") || pBlackboard->GetData<bool>("IsOnTeleporter"))
 				return;
 
 			const Point2f qbertPosition{ pBlackboard->GetData<GameObject*>("Qbert")->transform.GetPosition() };
@@ -135,6 +138,7 @@ void Qbert_MainGame::Start()
 			else if (pTP) // is there a connection to a teleporter
 			{
 				endPosition = pTP->GetParent()->transform.GetPosition();
+				pBlackboard->ChangeData("MovingTowardsTeleporter", true);
 			}
 			else // there is no connection == jumping off the map
 			{
@@ -159,22 +163,92 @@ void Qbert_MainGame::Start()
 
 			if (AreEqual(pParent->transform.GetPosition().x, endPosition.x, 1.f) && AreEqual(pParent->transform.GetPosition().y, endPosition.y, 1.f))
 			{
+				pParent->transform.SetPosition(endPosition);
 				if (velocity != Vector2f{})
 				{
 					Rectf sourceRect{ pSpriteComponent->GetSourceRect() };
 					sourceRect[VertexLocation::LeftBottom].x = 0.f;
 					pSpriteComponent->SetSourceRect(sourceRect);
-					EventQueue::GetInstance().QueueEvent(Event{ "QbertMovementEnded", pPyramidComponent->GetTile(endPosition) });
+
+					if (pBlackboard->GetData<bool>("MovingTowardsTeleporter"))
+					{
+						pBlackboard->ChangeData("IsOnTeleporter", true);
+						pBlackboard->ChangeData("MovingTowardsTeleporter", false);
+					}
+					else
+						EventQueue::GetInstance().QueueEvent(Event{ "QbertMovementEnded", pPyramidComponent->GetTile(endPosition) });
+
 				}
 
 				pBlackboard->ChangeData("QbertVelocity", Vector2f{});
-				pParent->transform.SetPosition(endPosition);
 
 				pBlackboard->ChangeData("CanMoveAgain", true);
 			}
 		} } };
 
+	FSMTransition* pToTeleporterTransition{ new FSMTransition{
+	[](Blackboard* pBlackboard)->bool
+		{
+			return pBlackboard->GetData<bool>("IsOnTeleporter");
+		}} };
+	FSMTransition* pToStandingTransition{ new FSMTransition{
+	[](Blackboard* pBlackboard)->bool
+	{
+		return !pBlackboard->GetData<bool>("IsOnTeleporter");
+	}} };
+
+	FSMState* pTpState{ new FSMState{
+	[](Blackboard* pBlackboard, const FSMStateTransition stateTransition)
+	{
+		if (stateTransition == FSMStateTransition::OnEnter)
+		{
+			// left teleporter is active
+			if (pBlackboard->GetData<TeleportationPadComponent*>("LeftTeleporter")->GetParent()->transform.GetPosition() == pBlackboard->GetData<GameObject*>("Qbert")->transform.GetPosition())
+			{
+				pBlackboard->ChangeData("IsLeftTeleporterActive", true);
+				pBlackboard->GetData<TeleportationPadComponent*>("LeftTeleporter")->Activate();
+			}
+			else // right teleporter is active
+			{
+				pBlackboard->ChangeData("IsRightTeleporterActive", true);
+				pBlackboard->GetData<TeleportationPadComponent*>("RightTeleporter")->Activate();
+			}
+		}
+		else
+		{
+			if (pBlackboard->GetData<bool>("IsLeftTeleporterActive"))
+			{
+
+			}
+			else if (pBlackboard->GetData<bool>("IsRightTeleporterActive"))
+			{
+
+			}
+		}
+	},
+	[](Blackboard*, const float) {},
+	[](Blackboard* pBlackboard, const float)
+	{
+		if (pBlackboard->GetData<bool>("IsLeftTeleporterActive"))
+		{
+			if (pBlackboard->GetData<TeleportationPadComponent*>("LeftTeleporter")->IsCompletelyDone())
+			{
+				pBlackboard->ChangeData("IsOnTeleporter", false);
+			}
+		}
+		else if (pBlackboard->GetData<bool>("IsRightTeleporterActive"))
+		{
+			if (pBlackboard->GetData<TeleportationPadComponent*>("RightTeleporter")->IsCompletelyDone())
+			{
+				pBlackboard->ChangeData("IsOnTeleporter", false);
+			}
+		}
+	}
+	} };
+
 	FiniteStateMachineComponent* pFSM{ new FiniteStateMachineComponent{pQbert, pStandingState, pNewBlackboard} };
+	pFSM->AddTransition(pStandingState, pTpState, pToTeleporterTransition);
+	pFSM->AddTransition(pTpState, pStandingState, pToStandingTransition);
 
 	pQbert->AddComponent(pFSM);
 	pQbert->transform.SetPosition(pPyramidComponent->GetTopTileCenter());
