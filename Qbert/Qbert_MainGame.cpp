@@ -198,7 +198,7 @@ void Qbert_MainGame::Start()
 	}} };
 
 	FSMState* pTpState{ new FSMState{
-	[](Blackboard* pBlackboard, const FSMStateTransition stateTransition)
+	[this](Blackboard* pBlackboard, const FSMStateTransition stateTransition)
 	{
 		if (stateTransition == FSMStateTransition::OnEnter)
 		{
@@ -218,11 +218,13 @@ void Qbert_MainGame::Start()
 		{
 			if (pBlackboard->GetData<bool>("IsLeftTeleporterActive"))
 			{
-
+				RemoveGameObject("TeleportationPad0");
+				pBlackboard->ChangeData("IsLeftTeleporterActive", false);
 			}
 			else if (pBlackboard->GetData<bool>("IsRightTeleporterActive"))
 			{
-
+				RemoveGameObject("TeleportationPad1");
+				pBlackboard->ChangeData("IsRightTeleporterActive", false);
 			}
 		}
 	},
