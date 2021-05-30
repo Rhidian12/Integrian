@@ -31,6 +31,12 @@ namespace Integrian
 
 		void Render() const;
 
+		void SetIsActive(bool isActive) noexcept;
+		void MarkForDeletion(bool markedForDeletion = true) noexcept;
+
+		[[nodiscard]] bool GetIsActive() const noexcept;
+		[[nodiscard]] bool GetIsMarkedForDeletion() const noexcept;
+
 		template<typename Type, typename = std::enable_if_t<std::is_base_of_v<Component, Type>>> // sfinae
 		inline [[nodiscard]] Type* GetComponentByType() const
 		{
@@ -46,6 +52,8 @@ namespace Integrian
 
 	private:
 		std::vector<Component*> m_pComponents;
+		bool m_IsActive{ true };
+		bool m_MarkedForDeletion{};
 	};
 }
 #endif // INTEGRIAN_GAMEOBJECT_H

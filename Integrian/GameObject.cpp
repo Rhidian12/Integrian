@@ -35,6 +35,9 @@ void Integrian::GameObject::AddComponent(Component* pComponent)
 
 void Integrian::GameObject::Update(const float elapsedSeconds)
 {
+	if (!m_IsActive || m_MarkedForDeletion)
+		return;
+
 	transform.Update(elapsedSeconds);
 
 	for (Component* pComponent : m_pComponents)
@@ -43,6 +46,9 @@ void Integrian::GameObject::Update(const float elapsedSeconds)
 
 void Integrian::GameObject::FixedUpdate(const float elapsedSeconds)
 {
+	if (!m_IsActive || m_MarkedForDeletion)
+		return;
+
 	transform.FixedUpdate(elapsedSeconds);
 
 	for (Component* pComponent : m_pComponents)
@@ -51,6 +57,9 @@ void Integrian::GameObject::FixedUpdate(const float elapsedSeconds)
 
 void Integrian::GameObject::LateUpdate(const float elapsedSeconds)
 {
+	if (!m_IsActive || m_MarkedForDeletion)
+		return;
+
 	transform.LateUpdate(elapsedSeconds);
 
 	for (Component* pComponent : m_pComponents)
@@ -59,6 +68,29 @@ void Integrian::GameObject::LateUpdate(const float elapsedSeconds)
 
 void Integrian::GameObject::Render() const
 {
+	if (!m_IsActive || m_MarkedForDeletion)
+		return;
+
 	for (Component* pComponent : m_pComponents)
 		pComponent->Render();
+}
+
+void Integrian::GameObject::SetIsActive(bool isActive) noexcept
+{
+	m_IsActive = isActive;
+}
+
+void Integrian::GameObject::MarkForDeletion(bool markedForDeletion) noexcept
+{
+	m_MarkedForDeletion = markedForDeletion;
+}
+
+bool Integrian::GameObject::GetIsActive() const noexcept
+{
+	return m_IsActive;
+}
+
+bool Integrian::GameObject::GetIsMarkedForDeletion() const noexcept
+{
+	return m_MarkedForDeletion;
 }
