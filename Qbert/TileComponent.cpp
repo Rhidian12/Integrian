@@ -36,6 +36,11 @@ void TileComponent::AddConnection(TeleportationPadComponent* pTpPad, const Direc
 		m_ActiveConnections++;
 }
 
+void TileComponent::SetConnection(const Direction direction, const Connection& connection)
+{
+	m_pConnections[static_cast<std::underlying_type_t<Direction>>(direction)] = connection;
+}
+
 const std::array<Connection, 4>& TileComponent::GetConnections() const noexcept
 {
 	return m_pConnections;

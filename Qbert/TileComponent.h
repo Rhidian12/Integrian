@@ -48,6 +48,7 @@ public:
 	void AddConnection(TileComponent* pTile, const Direction direction);
 	void AddConnection(TeleportationPadComponent* pTile, const Direction direction);
 
+	void SetConnection(const Direction direction, const Connection& connection);
 	[[nodiscard]] const std::array<Connection, 4>& GetConnections() const noexcept;
 
 private:
