@@ -2,6 +2,7 @@
 	"Level": 1,
 	"Size": 7,
 	"Enemies": null,
+	"Red Balls": 2,
 	"TeleportLocations":
 	[
 		{

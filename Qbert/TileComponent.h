@@ -32,11 +32,6 @@ struct Connection final
 	{}
 
 	std::variant<TileComponent*, TeleportationPadComponent*> connection;
-	//union
-	//{
-	//	TileComponent* pTileComponent;
-	//	TeleportationPadComponent* pTeleportationPadComponent;
-	//};
 };
 
 class TileComponent final : public Integrian::Component

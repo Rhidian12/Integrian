@@ -50,6 +50,7 @@ void Qbert_MainGame::Start()
 	pNewBlackboard->AddData("RightTeleporter", GetGameObject("TeleportationPad1")->GetComponentByType<TeleportationPadComponent>());
 	pNewBlackboard->AddData("IsLeftTeleporterActive", false);
 	pNewBlackboard->AddData("IsRightTeleporterActive", false);
+	pNewBlackboard->AddData("PyramidSize", pTileFactoryComponent->GetSize());
 
 	FSMState* pStandingState{ new FSMState{
 		[](Blackboard*, const FSMStateTransition) {},
@@ -198,7 +199,7 @@ void Qbert_MainGame::Start()
 	}} };
 
 	FSMState* pTpState{ new FSMState{
-	[this](Blackboard* pBlackboard, const FSMStateTransition stateTransition)
+	[this, pPyramidComponent](Blackboard* pBlackboard, const FSMStateTransition stateTransition)
 	{
 		if (stateTransition == FSMStateTransition::OnEnter)
 		{
@@ -220,11 +221,41 @@ void Qbert_MainGame::Start()
 			{
 				RemoveGameObject("TeleportationPad0");
 				pBlackboard->ChangeData("IsLeftTeleporterActive", false);
+
+				// remove connection
+				const std::vector<GameObject*>* pTiles{ &pPyramidComponent->GetTiles() };
+
+				unsigned int increment{ 1 };
+				for (unsigned int i{}; i < pTiles->size(); i += increment++)
+				{
+					TileComponent* pCurrentTile{ (*pTiles)[i]->GetComponentByType<TileComponent>() };
+					// check if the tile in question has a connection to the teleporter
+					if (std::holds_alternative<TeleportationPadComponent*>(pCurrentTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection))
+					{
+						pCurrentTile->SetConnection(Direction::LeftTop, Connection{});
+						break;
+					}
+				}
 			}
 			else if (pBlackboard->GetData<bool>("IsRightTeleporterActive"))
 			{
 				RemoveGameObject("TeleportationPad1");
 				pBlackboard->ChangeData("IsRightTeleporterActive", false);
+
+				// remove connection
+				const std::vector<GameObject*>* pTiles{ &pPyramidComponent->GetTiles() };
+
+				unsigned int increment{ 2 };
+				for (unsigned int i{}; i < pTiles->size(); i += increment++)
+				{
+					TileComponent* pCurrentTile{ (*pTiles)[i]->GetComponentByType<TileComponent>() };
+					// check if the tile in question has a connection to the teleporter
+					if (std::holds_alternative<TeleportationPadComponent*>(pCurrentTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection))
+					{
+						pCurrentTile->SetConnection(Direction::RightTop, Connection{});
+						break;
+					}
+				}
 			}
 		}
 	},

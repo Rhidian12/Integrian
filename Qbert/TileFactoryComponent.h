@@ -15,6 +15,8 @@ public:
 
 	void CreateTiles(const int level);
 
+	const unsigned int GetSize() const noexcept;
+
 private:
 	Integrian::GameObject* CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture);
 	void FillConnections(nlohmann::json teleporterLocations) const;
