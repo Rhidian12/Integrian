@@ -294,8 +294,22 @@ void Integrian::App::SetWindowSize(const uint32_t windowWidth, const uint32_t wi
 	m_WindowHeight = windowHeight;
 }
 
-bool Integrian::App::OnEvent(const Event&)
+bool Integrian::App::OnEvent(const Event& event)
 {
+	const std::string& eventName{ event.GetEvent() };
+
+	if (eventName == "GC" || eventName == "Garbage Collection" || eventName == "Garbage_Collection")
+	{
+		for (auto it{ m_pGameObjects.begin() }; it != m_pGameObjects.end(); ++it)
+		{
+			if (it->second->GetIsMarkedForDeletion())
+			{
+				it = m_pGameObjects.erase(it);
+			}
+		}
+
+		return true;
+	}
 
 	return false;
 }
@@ -322,7 +336,7 @@ Integrian::GameObject* Integrian::App::GetGameObject(const std::string& name) co
 			return pGameObject.second;
 
 #ifdef _DEBUG
-		Logger::LogError("GameObject with name: " + name + " was not found and returned a nullptr!\n");
+	Logger::LogError("GameObject with name: " + name + " was not found and returned a nullptr!\n");
 #endif // _DEBUG
 
 	return nullptr;
@@ -340,6 +354,23 @@ void Integrian::App::AddGameObject(const std::string& name, GameObject* pGameObj
 	pGameObject->PostInitialize();
 }
 
+void Integrian::App::RemoveGameObject(const std::string& name) noexcept
+{
+	for (const std::pair<GameObjectInformation, GameObject*>& pGameObject : m_pGameObjects)
+	{
+		if (pGameObject.first.m_Identifier == name)
+		{
+			pGameObject.second->SetIsActive(false);
+			pGameObject.second->MarkForDeletion();
+			return;
+		}
+	}
+
+#ifdef _DEBUG
+	Logger::LogError("App::RemoveGameObject() > name: " + name + " was not found!\n");
+#endif // _DEBUG
+}
+
 void Integrian::App::ClearBackground() const
 {
 	glClearColor(192.f / 255.f, 192.f / 255.f, 192.f / 255.f, 1.0f);
@@ -352,12 +383,13 @@ void Integrian::App::OnAppEnter()
 	{
 		for (uint8_t i{}; i < 4; ++i)
 			InputManager::GetInstance().SetControllerCommands(m_CC[i], i);
-
-		InputManager::GetInstance().SetKeyboardCommands(m_KC);
-
-		InputManager::GetInstance().SetMouseCommands(m_MC);
 	}
 
+	if (!m_KC.empty())
+		InputManager::GetInstance().SetKeyboardCommands(m_KC);
+
+	if (!m_MC.empty())
+		InputManager::GetInstance().SetMouseCommands(m_MC);
 }
 
 void Integrian::App::OnAppExit()

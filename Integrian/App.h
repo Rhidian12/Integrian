@@ -50,6 +50,7 @@ namespace Integrian
 		[[nodiscard]] const std::map<GameObjectInformation, GameObject*, GameObjectInformationComparer>& GetGameObjects() const;
 
 		void AddGameObject(const std::string& name, GameObject* pGameObject);
+		void RemoveGameObject(const std::string& name) noexcept;
 
 		void SetWindowSize(const uint32_t windowWidth, const uint32_t windowHeight);
 
