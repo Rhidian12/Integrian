@@ -172,6 +172,10 @@ bool Integrian::App::InitializeLibraries()
 void Integrian::App::FinishInitializationOfApp()
 {
 	Start();
+
+	for (const std::pair<GameObjectInformation, GameObject*>& pGameObject : m_pGameObjects)
+		pGameObject.second->PostInitialize();
+
 	if (!InitializeCamera())
 		throw InitialisationFailedException{};
 
@@ -349,9 +353,8 @@ const std::map<Integrian::GameObjectInformation, Integrian::GameObject*, Integri
 
 void Integrian::App::AddGameObject(const std::string& name, GameObject* pGameObject)
 {
-	pGameObject->Initialize();
 	m_pGameObjects.insert(std::make_pair(GameObjectInformation{ name, m_GameObjectID++ }, pGameObject));
-	pGameObject->PostInitialize();
+	pGameObject->Initialize();
 }
 
 void Integrian::App::RemoveGameObject(const std::string& name) noexcept
