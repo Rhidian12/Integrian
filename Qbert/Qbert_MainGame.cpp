@@ -53,7 +53,7 @@ void Qbert_MainGame::Start()
 	pNewBlackboard->AddData("IsRightTeleporterActive", false);
 	pNewBlackboard->AddData("PyramidSize", pTileFactoryComponent->GetSize());
 
-	FSMState* pStandingState{ new FSMState{
+	std::shared_ptr<FSMState> pStandingState{ new FSMState{
 		[](Blackboard*, const FSMStateTransition) {},
 		[](Blackboard* pBlackboard, const float elapsedSeconds)
 		{
@@ -186,18 +186,18 @@ void Qbert_MainGame::Start()
 			}
 		} } };
 
-	FSMTransition* pToTeleporterTransition{ new FSMTransition{
+	std::shared_ptr<FSMTransition> pToTeleporterTransition{ new FSMTransition{
 	[](Blackboard* pBlackboard)->bool
 		{
 			return pBlackboard->GetData<bool>("IsOnTeleporter");
 		}} };
-	FSMTransition* pToStandingTransition{ new FSMTransition{
+	std::shared_ptr<FSMTransition> pToStandingTransition{ new FSMTransition{
 	[](Blackboard* pBlackboard)->bool
 	{
 		return !pBlackboard->GetData<bool>("IsOnTeleporter");
 	}} };
 
-	FSMState* pTpState{ new FSMState{
+	std::shared_ptr<FSMState> pTpState{ new FSMState{
 	[this, pPyramidComponent](Blackboard* pBlackboard, const FSMStateTransition stateTransition)
 	{
 		if (stateTransition == FSMStateTransition::OnEnter)

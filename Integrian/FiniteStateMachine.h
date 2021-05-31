@@ -7,6 +7,7 @@
 #include "Blackboard.h" // Blackboard
 #include <unordered_map> // std::unordered_map
 #include <vector> // std::vector
+#include <memory> // std::shared_ptr
 
 namespace Integrian
 {
@@ -59,10 +60,10 @@ namespace Integrian
 	class FiniteStateMachineComponent final : public Component
 	{
 	public:
-		FiniteStateMachineComponent(GameObject* pParent, FSMState* pStartState, Blackboard* pBlackboard);
+		FiniteStateMachineComponent(GameObject* pParent, std::shared_ptr<FSMState> pStartState, Blackboard* pBlackboard);
 		~FiniteStateMachineComponent();
 
-		void AddTransition(FSMState* pFromState, FSMState* pToState, FSMTransition* pTransition);
+		void AddTransition(std::shared_ptr<FSMState> pFromState, std::shared_ptr<FSMState> pToState, std::shared_ptr<FSMTransition> pTransition);
 
 		virtual void Update(const float elapsedSeconds) override;
 
@@ -70,16 +71,16 @@ namespace Integrian
 		FSMState* GetCurrentState() const noexcept;
 
 	private:
-		void ChangeState(FSMState* pFSMState);
+		void ChangeState(const std::shared_ptr<FSMState>& pFSMState);
 
 		Blackboard* m_pBlackboard;
 
 		// https://stackoverflow.com/questions/4437862/whats-the-advantage-of-multimap-over-map-of-vectors
-		using StateTransitionPair = std::pair<FSMTransition*, FSMState*>;
-		using StatePair = std::pair<FSMState*, std::vector<StateTransitionPair>>;
+		using StateTransitionPair = std::pair<std::shared_ptr<FSMTransition>, std::shared_ptr<FSMState>>;
+		using StatePair = std::pair<std::shared_ptr<FSMState>, std::vector<StateTransitionPair>>;
 
-		std::unordered_map<FSMState*, std::vector<StateTransitionPair>> m_pStates;
-		FSMState* m_pCurrentState;
+		std::unordered_map<std::shared_ptr<FSMState>, std::vector<StateTransitionPair>> m_pStates;
+		std::shared_ptr<FSMState> m_pCurrentState;
 	};
 }
 

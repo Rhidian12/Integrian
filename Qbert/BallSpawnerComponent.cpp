@@ -99,7 +99,7 @@ Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Inte
 	pFSMBlackboard->AddData("BallWaitTimer", 0.5f);
 	pFSMBlackboard->AddData("CurrentBallWaitTimer", 0.f);
 
-	FSMState* pDropDownState{ new FSMState
+	std::shared_ptr<FSMState> pDropDownState{ new FSMState
 		{
 			[](Blackboard*, const FSMStateTransition) {},
 			// Fixed Update
@@ -124,12 +124,12 @@ Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Inte
 		}
 	} };
 
-	FSMTransition* pToMoveStateTransition{ new FSMTransition{[](Blackboard* pBlackboard)->bool
+	std::shared_ptr<FSMTransition> pToMoveStateTransition{ new FSMTransition{[](Blackboard* pBlackboard)->bool
 		{
 			return pBlackboard->GetData<bool>("ReachedFirstEndPosition");
 		}} };
 
-	FSMState* pMoveState{ new FSMState{
+	std::shared_ptr<FSMState> pMoveState{ new FSMState{
 	[pParent, pPyramidComponent, vectorTowardsOtherTile](Blackboard* pBlackboard, const FSMStateTransition transition)
 	{
 		if (transition == FSMStateTransition::OnExit)

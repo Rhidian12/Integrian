@@ -39,7 +39,7 @@ bool Integrian::FSMTransition::ToTransition(Blackboard* pBlackboard)
 	return m_Callback(pBlackboard);
 }
 
-Integrian::FiniteStateMachineComponent::FiniteStateMachineComponent(GameObject* pParent, FSMState* pStartState, Blackboard* pBlackboard)
+Integrian::FiniteStateMachineComponent::FiniteStateMachineComponent(GameObject* pParent, std::shared_ptr<FSMState> pStartState, Blackboard* pBlackboard)
 	: Component{ pParent }
 	, m_pBlackboard{ pBlackboard }
 	, m_pCurrentState{ pStartState }
@@ -51,19 +51,22 @@ Integrian::FiniteStateMachineComponent::~FiniteStateMachineComponent()
 {
 	SafeDelete(m_pBlackboard);
 
-	for (StatePair pair : m_pStates)
-	{
-		for (StateTransitionPair transitionPair : pair.second)
-		{
-			SafeDelete(transitionPair.first);
-			SafeDelete(transitionPair.second);
-		}
+	//for (StatePair pair : m_pStates)
+	//{
+	//	for (StateTransitionPair transitionPair : pair.second)
+	//	{
+	//		SafeDelete(transitionPair.first);
+	//		SafeDelete(transitionPair.second);
+	//	}
 
-		pair.second.clear();
-	}
+	//	pair.second.clear();
+	//}
+
+	//for (StatePair pair : m_pStates)
+	//	SafeDelete(pair.first);
 }
 
-void Integrian::FiniteStateMachineComponent::AddTransition(FSMState* pFromState, FSMState* pToState, FSMTransition* pTransition)
+void Integrian::FiniteStateMachineComponent::AddTransition(std::shared_ptr<FSMState> pFromState, std::shared_ptr<FSMState> pToState, std::shared_ptr<FSMTransition> pTransition)
 {
 	m_pStates[pFromState].push_back(std::make_pair(pTransition, pToState));
 }
@@ -94,10 +97,10 @@ Integrian::Blackboard* Integrian::FiniteStateMachineComponent::GetBlackboard() c
 
 Integrian::FSMState* Integrian::FiniteStateMachineComponent::GetCurrentState() const noexcept
 {
-	return m_pCurrentState;
+	return m_pCurrentState.get();
 }
 
-void Integrian::FiniteStateMachineComponent::ChangeState(FSMState* pFSMState)
+void Integrian::FiniteStateMachineComponent::ChangeState(const std::shared_ptr<FSMState>& pFSMState)
 {
 	m_pCurrentState->OnStateChange(m_pBlackboard, FSMStateTransition::OnExit);
 
