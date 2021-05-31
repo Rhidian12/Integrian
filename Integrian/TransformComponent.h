@@ -21,9 +21,6 @@ namespace Integrian
 		void SetScale(const Point2f& scale)				noexcept;
 		void SetRotation(const float angle)				noexcept;
 		void SetShape(const TypeOfShape typeOfShape)	noexcept;
-		void SetDestRectWidth(const float width)		noexcept;
-		void SetDestRectHeight(const float height)		noexcept;
-		void SetDestRectDimensions(const float width, const float height)	noexcept;
 
 		[[nodiscard]] const Point2f& GetPosition()	const noexcept;
 		[[nodiscard]] const Point2f& GetScale()		const noexcept;

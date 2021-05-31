@@ -25,8 +25,6 @@ namespace Integrian
 	{
 		explicit Rectf()
 			: vertices{}
-			, width{}
-			, height{}
 		{
 		}
 		explicit Rectf(const float left, const float bottom, const float width, const float height)
@@ -35,8 +33,6 @@ namespace Integrian
 		}
 		explicit Rectf(const Point2f& leftBottom, const float width, const float height)
 			: vertices{}
-			, width{ width }
-			, height{ height }
 		{
 			vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::LeftBottom)] = leftBottom;
 			vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::LeftTop)] = { leftBottom.x, leftBottom.y + height };
@@ -60,12 +56,6 @@ namespace Integrian
 				if ((*this)[static_cast<VertexLocation>(i)] != other[static_cast<VertexLocation>(i)])
 					return false;
 
-			if (fabs(static_cast<double>(width) - other.width) > epsilon)
-				return false;
-
-			if (fabs(static_cast<double>(height) - other.height) > epsilon)
-				return false;
-
 			return true;
 		}
 		bool operator!=(const Rectf& other) const noexcept
@@ -75,15 +65,23 @@ namespace Integrian
 		void operator=(const Rectf& other) noexcept
 		{
 			vertices = other.vertices;
-			width = other.width;
-			height = other.height;
 		}
 
 #pragma endregion
 
+#pragma region Member Functions
+		float GetWidth() const noexcept
+		{
+			return Distance(vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::LeftBottom)], vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::RightBottom)]);
+		}
+		
+		float GetHeight() const noexcept
+		{
+			return Distance(vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::LeftBottom)], vertices[static_cast<std::underlying_type_t<VertexLocation>>(VertexLocation::LeftTop)]);
+		}
+#pragma endregion
+
 		std::array<Point2f, 4> vertices;
-		float width;
-		float height;
 	};
 	struct Circlef final
 	{
