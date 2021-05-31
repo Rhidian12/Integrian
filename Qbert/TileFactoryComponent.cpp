@@ -12,6 +12,7 @@
 #include <iomanip>
 #include "TeleportationPadComponent.h"
 #include <AnimationComponent.h>
+#include "BallSpawnerComponent.h"
 
 TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -72,10 +73,12 @@ void TileFactoryComponent::CreateTiles(const int level)
 		}
 	}
 
-	json array = *levelFormat.find("TeleportLocations");
+	json tpLocations = *levelFormat.find("TeleportLocations");
+	unsigned int amountOfRedBalls = *levelFormat.find("Red Balls");
 
-	CreateTeleportationPads(level, array);
-	FillConnections(array);
+	CreateTeleportationPads(level, tpLocations);
+	FillConnections(tpLocations);
+	CreateRedBallSpawner(amountOfRedBalls);
 }
 
 const unsigned int TileFactoryComponent::GetSize() const noexcept
@@ -173,6 +176,17 @@ void TileFactoryComponent::CreateTeleportationPads(const int level, nlohmann::js
 		pTpPad->AddComponent(new AnimationComponent{ pTpPad, 4, 8, pTpPadTexture });
 		pActiveApp->AddGameObject("TeleportationPad" + std::to_string(counter++), pTpPad);
 	}
+}
+
+void TileFactoryComponent::CreateRedBallSpawner(const unsigned int amountOfRedBalls) const
+{
+	using namespace Integrian;
+
+	GameObject* const pSpawner{ new GameObject{} };
+	pSpawner->AddComponent(new BallSpawnerComponent{ pSpawner, amountOfRedBalls });
+
+	App* const pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
+	pActiveApp->AddGameObject("BallSpawner", pSpawner);
 }
 
 nlohmann::json TileFactoryComponent::ReadFile(const int level)

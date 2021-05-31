@@ -178,11 +178,9 @@ void Qbert_MainGame::Start()
 					}
 					else
 						EventQueue::GetInstance().QueueEvent(Event{ "QbertMovementEnded", pPyramidComponent->GetTile(endPosition) });
-
 				}
 
 				pBlackboard->ChangeData("QbertVelocity", Vector2f{});
-
 				pBlackboard->ChangeData("CanMoveAgain", true);
 			}
 		} } };
