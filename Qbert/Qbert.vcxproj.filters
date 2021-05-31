@@ -37,6 +37,9 @@
     <Filter Include="Source Files\Components\BallSpawnerComponent">
       <UniqueIdentifier>{e7169bd4-8eaf-4d54-b39a-6d2ab6212cf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\BallMovementComponent">
+      <UniqueIdentifier>{0fdfac9a-134f-43d9-955f-53bf84d9d221}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -66,6 +69,9 @@
     <ClCompile Include="BallSpawnerComponent.cpp">
       <Filter>Source Files\Components\BallSpawnerComponent</Filter>
     </ClCompile>
+    <ClCompile Include="BallMovementComponent.cpp">
+      <Filter>Source Files\Components\BallMovementComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
@@ -91,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="BallSpawnerComponent.h">
       <Filter>Source Files\Components\BallSpawnerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="BallMovementComponent.h">
+      <Filter>Source Files\Components\BallMovementComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

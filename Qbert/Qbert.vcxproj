@@ -180,6 +180,7 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BallMovementComponent.cpp" />
     <ClCompile Include="BallSpawnerComponent.cpp" />
     <ClCompile Include="PyramidComponent.cpp" />
     <ClCompile Include="Qbert.cpp" />
@@ -191,6 +192,7 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
     <ClCompile Include="TileFactoryComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BallMovementComponent.h" />
     <ClInclude Include="BallSpawnerComponent.h" />
     <ClInclude Include="PyramidComponent.h" />
     <ClInclude Include="QbertMovementComponent.h" />
