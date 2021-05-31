@@ -111,7 +111,7 @@ void BallMovementComponent::Update(const float dt)
 
 	// Change sprite
 	Rectf sourceRect{ m_pSprite->GetSourceRect() };
-	sourceRect[VertexLocation::LeftBottom].x = sourceRect.GetWidth() * 0.5f;
+	sourceRect[VertexLocation::LeftBottom].x = sourceRect.width * 0.5f;
 	m_pSprite->SetSourceRect(sourceRect);
 }
 

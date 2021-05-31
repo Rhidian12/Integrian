@@ -25,8 +25,8 @@ Integrian::Point2f Integrian::OrthographicCamera::Transform(const Integrian::Rec
 Integrian::Point2f Integrian::OrthographicCamera::Track(const Integrian::Rectf& target)
 {
 	// == Get The Center Coordinates Of The Target ==
-	float x = target[VertexLocation::LeftBottom].x + (target.GetWidth() / 2);
-	float y = target[VertexLocation::LeftBottom].y + (target.GetHeight() / 2);
+	float x = target[VertexLocation::LeftBottom].x + (target.width / 2);
+	float y = target[VertexLocation::LeftBottom].y + (target.height / 2);
 
 	// == Return The Center Of The Target - Center Of The Screen ==
 	return Point2f{ x - m_WindowWidth / 2,y - m_WindowHeight / 2 };
@@ -36,21 +36,18 @@ void Integrian::OrthographicCamera::Clamp(Integrian::Point2f& bottomLeftPos) con
 	// == Check If The LevelBoundaries Are Initialised ==
 	assert(m_LevelBoundaries != Integrian::Rectf{});
 
-	const float levelBoundaryWidth{ m_LevelBoundaries.GetWidth() };
-	const float levelBoundaryHeight{ m_LevelBoundaries.GetHeight() };
-
 	// == Check Level Boundaries ==
 	if (bottomLeftPos.x <= m_LevelBoundaries[VertexLocation::LeftBottom].x)
 		bottomLeftPos.x = m_LevelBoundaries[VertexLocation::LeftBottom].x;
 
-	if (bottomLeftPos.x + m_WindowWidth >= m_LevelBoundaries[VertexLocation::LeftBottom].x + levelBoundaryWidth)
-		bottomLeftPos.x = m_LevelBoundaries[VertexLocation::LeftBottom].x + levelBoundaryWidth - m_WindowWidth;
+	if (bottomLeftPos.x + m_WindowWidth >= m_LevelBoundaries[VertexLocation::LeftBottom].x + m_LevelBoundaries.width)
+		bottomLeftPos.x = m_LevelBoundaries[VertexLocation::LeftBottom].x + m_LevelBoundaries.width - m_WindowWidth;
 
 	if (bottomLeftPos.y <= m_LevelBoundaries[VertexLocation::LeftBottom].y)
 		bottomLeftPos.y = m_LevelBoundaries[VertexLocation::LeftBottom].y;
 
-	if (bottomLeftPos.y + m_WindowHeight >= m_LevelBoundaries[VertexLocation::LeftBottom].y + levelBoundaryHeight)
-		bottomLeftPos.y = m_LevelBoundaries[VertexLocation::LeftBottom].y + levelBoundaryHeight - m_WindowHeight;
+	if (bottomLeftPos.y + m_WindowHeight >= m_LevelBoundaries[VertexLocation::LeftBottom].y + m_LevelBoundaries.height)
+		bottomLeftPos.y = m_LevelBoundaries[VertexLocation::LeftBottom].y + m_LevelBoundaries.height - m_WindowHeight;
 }
 void Integrian::OrthographicCamera::SetLevelBoundaries(const Integrian::Rectf& levelBoundaries)
 {

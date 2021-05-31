@@ -195,27 +195,24 @@ void Integrian::Texture::CreateFromSurface(SDL_Surface* pSurface)
 void Integrian::Texture::Draw(const Point2f& dstBottomLeft, const Rectf& srcRect) const
 {
 	const float epsilon{ 0.001f };
-
-	const float srcRectWidth{ srcRect.GetWidth() };
-	const float srcRectHeight{ srcRect.GetHeight() };
-
 	if (!m_CreationOk)
 	{
-		if (!(srcRectWidth > epsilon && srcRectHeight > epsilon)) // No srcRect specified
+		if (!(srcRect.width > epsilon && srcRect.height > epsilon)) // No srcRect specified
 		{
 			DrawFilledRect(Rectf{ dstBottomLeft.x, dstBottomLeft.y, m_Width, m_Height });
 		}
 		else
 		{
-			DrawFilledRect(Rectf{ dstBottomLeft.x, dstBottomLeft.y, srcRectWidth, srcRectHeight });
+			DrawFilledRect(Rectf{ dstBottomLeft.x, dstBottomLeft.y, srcRect.width, srcRect.height });
 		}
 	}
 	else
 	{
-		Rectf dstRect{ dstBottomLeft.x, dstBottomLeft.y, srcRectWidth, srcRectHeight };
-		if (!(srcRectWidth > epsilon && srcRectHeight > epsilon)) // No srcRect specified
+		Rectf dstRect{ dstBottomLeft.x, dstBottomLeft.y, srcRect.width, srcRect.height };
+		if (!(srcRect.width > epsilon && srcRect.height > epsilon)) // No srcRect specified
 		{
-			dstRect = Rectf{dstBottomLeft, m_Width, m_Height};
+			dstRect.width = m_Width;
+			dstRect.height = m_Height;
 		}
 		Draw(dstRect, srcRect);
 	}
@@ -230,9 +227,6 @@ void Integrian::Texture::Draw(const Rectf& dstRect, const Rectf& srcRect) const
 		return;
 	}
 
-	const float srcRectWidth{ srcRect.GetWidth() };
-	const float srcRectHeight{ srcRect.GetHeight() };
-
 	// Determine texture coordinates using srcRect and default destination width and height
 	float textLeft{};
 	float textRight{};
@@ -241,7 +235,7 @@ void Integrian::Texture::Draw(const Rectf& dstRect, const Rectf& srcRect) const
 
 	float defaultDestWidth{};
 	float defaultDestHeight{};
-	if (!(srcRectWidth > epsilon && srcRectHeight > epsilon)) // No srcRect specified
+	if (!(srcRect.width > epsilon && srcRect.height > epsilon)) // No srcRect specified
 	{
 		// Use complete texture
 		textLeft = 0.0f;
@@ -256,31 +250,28 @@ void Integrian::Texture::Draw(const Rectf& dstRect, const Rectf& srcRect) const
 	{
 		// Convert to the range [0.0, 1.0]
 		textLeft = srcRect[VertexLocation::LeftBottom].x / m_Width;
-		textRight = (srcRect[VertexLocation::LeftBottom].x + srcRectWidth) / m_Width;
-		textTop = (srcRect[VertexLocation::LeftBottom].y - srcRectHeight) / m_Height;
+		textRight = (srcRect[VertexLocation::LeftBottom].x + srcRect.width) / m_Width;
+		textTop = (srcRect[VertexLocation::LeftBottom].y - srcRect.height) / m_Height;
 		textBottom = srcRect[VertexLocation::LeftBottom].y / m_Height;
 
-		defaultDestHeight = srcRect.GetHeight();
-		defaultDestWidth = srcRect.GetWidth();
+		defaultDestHeight = srcRect.height;
+		defaultDestWidth = srcRect.width;
 	}
 
 	// Determine vertex coordinates
-	const float destRectWidth{ dstRect.GetWidth() };
-	const float destRectHeight{ dstRect.GetHeight() };
-
 	const float vertexLeft{ dstRect[VertexLocation::LeftBottom].x };
 	const float vertexBottom{ dstRect[VertexLocation::LeftBottom].y };
 	float vertexRight{};
 	float vertexTop{};
-	if (!(destRectWidth > 0.001f && destRectHeight > 0.001f)) // If no size specified use default size
+	if (!(dstRect.width > 0.001f && dstRect.height > 0.001f)) // If no size specified use default size
 	{
 		vertexRight = vertexLeft + defaultDestWidth;
 		vertexTop = vertexBottom + defaultDestHeight;
 	}
 	else
 	{
-		vertexRight = vertexLeft + destRectWidth;
-		vertexTop = vertexBottom + destRectHeight;
+		vertexRight = vertexLeft + dstRect.width;
+		vertexTop = vertexBottom + dstRect.height;
 
 	}
 
@@ -331,9 +322,9 @@ void Integrian::Texture::DrawFilledRect(const Rectf& rect) const
 	glBegin(GL_POLYGON);
 	{
 		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y);
-		glVertex2f(rect[VertexLocation::LeftBottom].x + rect.GetWidth(), rect[VertexLocation::LeftBottom].y);
-		glVertex2f(rect[VertexLocation::LeftBottom].x + rect.GetWidth(), rect[VertexLocation::LeftBottom].y + rect.GetHeight());
-		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y + rect.GetHeight());
+		glVertex2f(rect[VertexLocation::LeftBottom].x + rect.width, rect[VertexLocation::LeftBottom].y);
+		glVertex2f(rect[VertexLocation::LeftBottom].x + rect.width, rect[VertexLocation::LeftBottom].y + rect.height);
+		glVertex2f(rect[VertexLocation::LeftBottom].x, rect[VertexLocation::LeftBottom].y + rect.height);
 	}
 	glEnd();
 }

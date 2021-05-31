@@ -267,7 +267,7 @@ Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Inte
 
 		// Change sprite
 		Rectf sourceRect{ pTextureComponent->GetSourceRect() };
-		sourceRect[VertexLocation::LeftBottom].x = sourceRect.GetWidth() * 0.5f;
+		sourceRect[VertexLocation::LeftBottom].x = sourceRect.width * 0.5f;
 		pTextureComponent->SetSourceRect(sourceRect);
 	}
 	} };

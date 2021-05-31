@@ -88,6 +88,22 @@ void Integrian::TransformComponent::SetShape(const TypeOfShape typeOfShape) noex
 	m_Shape.SetShape(typeOfShape);
 }
 
+void Integrian::TransformComponent::SetDestRectWidth(const float width) noexcept
+{
+	m_DestRect.width = width;
+}
+
+void Integrian::TransformComponent::SetDestRectHeight(const float height) noexcept
+{
+	m_DestRect.height = height;
+}
+
+void Integrian::TransformComponent::SetDestRectDimensions(const float width, const float height) noexcept
+{
+	m_DestRect.width = width;
+	m_DestRect.height = height;
+}
+
 const Integrian::Point2f& Integrian::TransformComponent::GetPosition() const noexcept
 {
 	return m_DestRect[VertexLocation::LeftBottom];

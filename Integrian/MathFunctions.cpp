@@ -39,11 +39,11 @@ bool Integrian::AreEqual(const double a, const double b, const double epsilon) n
 bool Integrian::IsOverlapping(const Rectf& r1, const Rectf& r2) noexcept
 {
 	// If one rectangle is on left side of the other
-	if ((r1[VertexLocation::LeftBottom].x + r1.GetWidth()) < r2[VertexLocation::LeftBottom].x || (r2[VertexLocation::LeftBottom].x + r2.GetWidth()) < r1[VertexLocation::LeftBottom].x)
+	if ((r1[VertexLocation::LeftBottom].x + r1.width) < r2[VertexLocation::LeftBottom].x || (r2[VertexLocation::LeftBottom].x + r2.width) < r1[VertexLocation::LeftBottom].x)
 		return false;
 
 	// If one rectangle is under the other
-	if (r1[VertexLocation::LeftBottom].y > (r2[VertexLocation::LeftBottom].y + r2.GetHeight()) || r2[VertexLocation::LeftBottom].y > (r1[VertexLocation::LeftBottom].y + r1.GetHeight()))
+	if (r1[VertexLocation::LeftBottom].y > (r2[VertexLocation::LeftBottom].y + r2.height) || r2[VertexLocation::LeftBottom].y > (r1[VertexLocation::LeftBottom].y + r1.height))
 		return false;
 
 	return true;
@@ -134,9 +134,8 @@ bool Integrian::Raycast(const Point2f* vertices, const size_t nrVertices, const 
 	// r1: minimal AABB rect enclosing the ray
 	r1[VertexLocation::LeftBottom].x		= std::min(rayP1.x, rayP2.x);
 	r1[VertexLocation::LeftBottom].y		= std::min(rayP1.y, rayP2.y);
-
-	r1 = Rectf{ std::min(rayP1.x, rayP2.x), std::min(rayP1.y, rayP2.y),
-		std::max(rayP1.x, rayP2.x) - r1[VertexLocation::LeftBottom].x, std::max(rayP1.y, rayP2.y) - r1[VertexLocation::LeftBottom].y };
+	r1.width								= std::max(rayP1.x, rayP2.x) - r1[VertexLocation::LeftBottom].x;
+	r1.height								= std::max(rayP1.y, rayP2.y) - r1[VertexLocation::LeftBottom].y;
 
 	// Line-line intersections.
 	for (size_t idx{ 0 }; idx <= nrVertices; ++idx)
@@ -147,11 +146,10 @@ bool Integrian::Raycast(const Point2f* vertices, const size_t nrVertices, const 
 		Point2f q2 = vertices[(idx + 1) % nrVertices];
 
 		// r2: minimal AABB rect enclosing the 2 vertices
-		r2[VertexLocation::LeftBottom].x = std::min(q1.x, q2.x);
-		r2[VertexLocation::LeftBottom].y = std::min(q1.y, q2.y);
-
-		r2 = Rectf{ std::min(rayP1.x, rayP2.x), std::min(rayP1.y, rayP2.y),
-			std::max(q1.x, q2.x) - r2[VertexLocation::LeftBottom].x, std::max(q1.y, q2.y) - r2[VertexLocation::LeftBottom].y };
+		r2[VertexLocation::LeftBottom].x		= std::min(q1.x, q2.x);
+		r2[VertexLocation::LeftBottom].y		= std::min(q1.y, q2.y);
+		r2.width								= std::max(q1.x, q2.x) - r2[VertexLocation::LeftBottom].x;
+		r2.height								= std::max(q1.y, q2.y) - r2[VertexLocation::LeftBottom].y;
 
 		if (IsOverlapping(r1, r2))
 		{
