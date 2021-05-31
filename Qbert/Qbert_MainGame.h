@@ -20,5 +20,4 @@ public:
 	[[nodiscard]] virtual Integrian::Rectf GetTarget() const override { return Integrian::Rectf{}; }
 
 private:
-
 };

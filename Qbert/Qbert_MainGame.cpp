@@ -11,6 +11,7 @@
 #include "TileComponent.h"
 #include <InputManager.h>
 #include "TeleportationPadComponent.h"
+#include <algorithm>
 
 Qbert_MainGame::Qbert_MainGame()
 	: Integrian::App{ "Qbert_MainGame" }

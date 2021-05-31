@@ -46,7 +46,7 @@ namespace Integrian
 	{
 	public:
 		typedef std::function<bool(Blackboard* pBlackboard)> FSMTransitionCallback;
-		
+
 		FSMTransition(FSMTransitionCallback callback);
 		~FSMTransition() = default;
 
@@ -63,7 +63,7 @@ namespace Integrian
 		~FiniteStateMachineComponent();
 
 		void AddTransition(FSMState* pFromState, FSMState* pToState, FSMTransition* pTransition);
-		
+
 		virtual void Update(const float elapsedSeconds) override;
 
 		Blackboard* GetBlackboard() const noexcept;
