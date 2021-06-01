@@ -13,10 +13,15 @@
 #include "TeleportationPadComponent.h"
 #include <AnimationComponent.h>
 #include "BallSpawnerComponent.h"
+#include <FiniteStateMachine.h>
+#include <Blackboard.h>
+#include <memory>
+#include "TileFSM.h"
 
 TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
 	, m_Size{}
+	, m_Level{}
 {
 }
 
@@ -28,6 +33,8 @@ void TileFactoryComponent::CreateTiles(const int level)
 	json levelFormat{ ReadFile(level) };
 
 	m_Size = *levelFormat.find("Size");
+	m_Level = level;
+
 	const std::string inactiveTextureName{ *levelFormat.find("TileTexture") };
 	const size_t locationOfI{ inactiveTextureName.find_first_of('I') };
 	std::string activeTextureName{ inactiveTextureName.substr(0, locationOfI) };
@@ -38,8 +45,8 @@ void TileFactoryComponent::CreateTiles(const int level)
 
 	textureManager.AddTexture("QbertLevel" + std::to_string(level) + "InactiveTileTexture",
 		"Resources/Images/Tiles/" + inactiveTextureName);
-	textureManager.AddTexture("QbertLevel" + std::to_string(level) + "ActiveTileTexture",
-		"Resources/Images/Tiles/" + activeTextureName);
+	//textureManager.AddTexture("QbertLevel" + std::to_string(level) + "ActiveTileTexture",
+	//	"Resources/Images/Tiles/" + activeTextureName);
 	textureManager.AddTexture("Level" + std::to_string(level) + "TPPad",
 		"Resources/Images/TP Pads/" + std::string{ *levelFormat.find("TeleportationPadTexture") });
 
@@ -76,9 +83,12 @@ void TileFactoryComponent::CreateTiles(const int level)
 	json tpLocations = *levelFormat.find("TeleportLocations");
 	unsigned int amountOfRedBalls = *levelFormat.find("Red Balls");
 
+	json tileFSM = *levelFormat.find("TileFSM");
+
 	CreateTeleportationPads(level, tpLocations);
 	FillConnections(tpLocations);
 	CreateRedBallSpawner(amountOfRedBalls);
+	CreateTileFSM(tileFSM);
 }
 
 const unsigned int TileFactoryComponent::GetSize() const noexcept
@@ -188,6 +198,48 @@ void TileFactoryComponent::CreateRedBallSpawner(const unsigned int amountOfRedBa
 	App* const pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
 	pActiveApp->AddGameObject("BallSpawner", pSpawner);
 }
+
+#pragma warning ( push )
+#pragma warning ( disable : 4702 )
+void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
+{
+	using namespace Integrian;
+
+	std::vector<std::shared_ptr<FSMState>> states;
+
+	GameObject* pTileFSM{ new GameObject{} };
+	TextureManager& textureManager{ TextureManager::GetInstance() };
+	App* const pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
+
+	Texture* pInactiveTileTexture{ textureManager.GetTexture("QbertLevel" + std::to_string(m_Level) + "InactiveTileTexture") };
+
+	for (const nlohmann::json& element : *tileFSM[0].find("TileTextures"))
+	{
+		const auto it{ element.find("ActiveTexture") };
+		textureManager.AddTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture", "Resources/Images/Tiles/" + std::string{ *it });
+		break;
+	}
+
+	Texture* pActiveTileTexture{ textureManager.GetTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture") };
+
+	for (const nlohmann::json& element : tileFSM)
+	{
+		switch (static_cast<TileChange>(*element.find("TileChange")))
+		{
+		case TileChange::Permanent: // Just switches colour permanently
+		{
+			TileFSM* pTileFSMComponent{ new TileFSM{pTileFSM} };
+			pTileFSM->AddComponent(pTileFSMComponent);
+			pTileFSM->AddComponent(pTileFSMComponent->CreatePermanentFSM(pInactiveTileTexture, pActiveTileTexture));
+			pActiveApp->AddGameObject("TileFSM", pTileFSM);
+		}
+		break;
+		//case 1:
+		//	break;
+		}
+	}
+}
+#pragma warning ( pop )
 
 nlohmann::json TileFactoryComponent::ReadFile(const int level)
 {

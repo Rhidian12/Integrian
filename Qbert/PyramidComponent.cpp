@@ -84,25 +84,25 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 		return true;
 	}
 
-	if (event.GetEvent() == "QbertMovementEnded")
-	{
-		TileComponent* pEndTile{ std::get<0>(event.GetData<TileComponent*>()) };
- 		TextureComponent* pCurrentTexture{ pEndTile->GetParent()->GetComponentByType<TextureComponent>() };
-
-		const std::string& currentTextureName{ TextureManager::GetInstance().GetTextureName(pCurrentTexture->GetTexture()) };
-
-		if (currentTextureName.find('A') == std::string::npos) // if it's not already the active texture
-		{
-			const size_t locationOfI{ currentTextureName.find_first_of('I') };
-			std::string activeTextureName{ currentTextureName.substr(0, locationOfI) };
-			activeTextureName += currentTextureName.substr(locationOfI + 2, currentTextureName.size() - locationOfI - 2); // +- 2 because we need to get rid of "In"
-			activeTextureName[activeTextureName.find_first_of('a')] = 'A';
-
-			pEndTile->GetParent()->GetComponentByType<TextureComponent>()->SetTexture(Integrian::TextureManager::GetInstance().GetTexture(activeTextureName));
-		}
-
-		return true;
-	}
+	//if (event.GetEvent() == "QbertMovementEnded")
+	//{
+	//	TileComponent* pEndTile{ std::get<0>(event.GetData<TileComponent*>()) };
+ 	//	TextureComponent* pCurrentTexture{ pEndTile->GetParent()->GetComponentByType<TextureComponent>() };
+	//
+	//	const std::string& currentTextureName{ TextureManager::GetInstance().GetTextureName(pCurrentTexture->GetTexture()) };
+	//
+	//	if (currentTextureName.find('A') == std::string::npos) // if it's not already the active texture
+	//	{
+	//		const size_t locationOfI{ currentTextureName.find_first_of('I') };
+	//		std::string activeTextureName{ currentTextureName.substr(0, locationOfI) };
+	//		activeTextureName += currentTextureName.substr(locationOfI + 2, currentTextureName.size() - locationOfI - 2); // +- 2 because we need to get rid of "In"
+	//		activeTextureName[activeTextureName.find_first_of('a')] = 'A';
+	//
+	//		pEndTile->GetParent()->GetComponentByType<TextureComponent>()->SetTexture(Integrian::TextureManager::GetInstance().GetTexture(activeTextureName));
+	//	}
+	//
+	//	return true;
+	//}
 
 	return false;
 }
