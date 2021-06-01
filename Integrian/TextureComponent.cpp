@@ -42,6 +42,9 @@ Integrian::Texture* Integrian::TextureComponent::GetTexture() const
 
 void Integrian::TextureComponent::Initialize()
 {
+	if (m_SourceRect != Rectf{})
+		return;
+
 	m_TextureWidth = m_pTexture->GetWidth();
 	m_TextureHeight = m_pTexture->GetHeight();
 	m_SourceRect = Rectf{ 0.f, 0.f,m_TextureWidth, m_TextureHeight };
