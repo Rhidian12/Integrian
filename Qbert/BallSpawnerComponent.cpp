@@ -36,7 +36,7 @@ void BallSpawnerComponent::PostInitialize()
 		GameObject* pBall{ new GameObject{} };
 
 		const Point2f tilePos{ pPyramid->GetTiles()[i + 1]->GetComponentByType<TileComponent>()->GetCenter() };
-		pBall->transform.SetPosition(Point2f{ tilePos.x, tilePos.y + 20.f });
+		pBall->transform.SetPosition(Point2f{ tilePos.x, tilePos.y + 50.f });
 
 		pBall->AddComponent(new BallMovementComponent{ pBall });
 		TextureComponent* pSprite{ new TextureComponent{ pBall, textureManager.GetTexture("Red Ball") } };
@@ -74,6 +74,11 @@ void BallSpawnerComponent::Update(const float dt)
 	}
 }
 
+void BallSpawnerComponent::Render() const
+{
+
+}
+
 Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Integrian::GameObject* pParent, PyramidComponent* pPyramidComponent, const Integrian::Point2f& position, Integrian::TextureComponent* pTextureComponent) const noexcept
 {
 	using namespace Integrian;
@@ -96,8 +101,9 @@ Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Inte
 	pFSMBlackboard->AddData("ReachedFirstEndPosition", false);
 	pFSMBlackboard->AddData("BallVelocity", Vector2f{});
 	pFSMBlackboard->AddData("EndPoint", Point2f{});
-	pFSMBlackboard->AddData("BallWaitTimer", 0.5f);
+	pFSMBlackboard->AddData("BallWaitTimer", 0.25f);
 	pFSMBlackboard->AddData("CurrentBallWaitTimer", 0.f);
+	pFSMBlackboard->AddData("ShouldReset", false);
 
 	std::shared_ptr<FSMState> pDropDownState{ new FSMState
 		{
@@ -126,7 +132,23 @@ Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Inte
 
 	std::shared_ptr<FSMTransition> pToMoveStateTransition{ new FSMTransition{[](Blackboard* pBlackboard)->bool
 		{
-			return pBlackboard->GetData<bool>("ReachedFirstEndPosition");
+			if (pBlackboard->GetData<bool>("ReachedFirstEndPosition"))
+			{
+				pBlackboard->ChangeData("ReachedFirstEndPosition", false);
+				return true;
+			}
+			else
+				return false;
+		}} };
+	std::shared_ptr<FSMTransition> pToDropDownStateTransition{ new FSMTransition{[](Blackboard* pBlackboard)->bool
+		{
+			if (pBlackboard->GetData<bool>("ShouldReset"))
+			{
+				pBlackboard->ChangeData<bool>("ShouldReset", false);
+				return true;
+			}
+			else
+				return false;
 		}} };
 
 	std::shared_ptr<FSMState> pMoveState{ new FSMState{
@@ -221,6 +243,8 @@ Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Inte
 		{
 			pParent->SetIsActive(false);
 			pParent->transform.SetPosition(position);
+			pBlackboard->ChangeData("ShouldReset", true);
+			return;
 		}
 
 		const std::variant leftBottomDirection{ pBallTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)].connection };
@@ -262,18 +286,20 @@ Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Inte
 		{
 			// cannot move in general, so we're at the bottom of the pyramid and are going to die
 			// do jump off the pyramid, we'll jump left cus I hate right
-			pBlackboard->ChangeData("BallVelocity", GetNormalized(vectorTowardsOtherTile));
+			pBlackboard->ChangeData("BallVelocity", GetNormalized(Vector2f{ -vectorTowardsOtherTile.x, vectorTowardsOtherTile.y }));
+			pBlackboard->ChangeData("EndPoint", endPosition + Vector2f{ -vectorTowardsOtherTile.x, vectorTowardsOtherTile.y });
 		}
 
 		// Change sprite
 		Rectf sourceRect{ pTextureComponent->GetSourceRect() };
-		sourceRect[VertexLocation::LeftBottom].x = sourceRect.width * 0.5f;
+		sourceRect[VertexLocation::LeftBottom].x = sourceRect.width;
 		pTextureComponent->SetSourceRect(sourceRect);
 	}
 	} };
 
 	FiniteStateMachineComponent* pFSM{ new FiniteStateMachineComponent{pParent, pDropDownState, pFSMBlackboard} };
 	pFSM->AddTransition(pDropDownState, pMoveState, pToMoveStateTransition);
+	pFSM->AddTransition(pMoveState, pDropDownState, pToDropDownStateTransition);
 
 	return pFSM;
 }

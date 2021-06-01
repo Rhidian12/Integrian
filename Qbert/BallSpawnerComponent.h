@@ -17,6 +17,8 @@ public:
 	
 	virtual void PostInitialize() override;
 	virtual void Update(const float dt) override;
+	
+	virtual void Render() const override;
 
 private:
 	Integrian::FiniteStateMachineComponent* CreateBallFSM(Integrian::GameObject* pParent, PyramidComponent* pPyramidComponent, const Integrian::Point2f& position, Integrian::TextureComponent* pTextureComponent) const noexcept;
