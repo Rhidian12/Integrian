@@ -75,6 +75,16 @@ void Integrian::GameObject::Render() const
 		pComponent->Render();
 }
 
+void Integrian::GameObject::SetTag(const std::string& tag) noexcept
+{
+	m_Tag = tag;
+}
+
+const std::string& Integrian::GameObject::GetTag() const noexcept
+{
+	return m_Tag;
+}
+
 void Integrian::GameObject::SetIsActive(bool isActive) noexcept
 {
 	m_IsActive = isActive;

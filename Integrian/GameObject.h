@@ -31,6 +31,9 @@ namespace Integrian
 
 		void Render() const;
 
+		void SetTag(const std::string& tag) noexcept;
+		const std::string& GetTag() const noexcept;
+
 		void SetIsActive(bool isActive) noexcept;
 		void MarkForDeletion(bool markedForDeletion = true) noexcept;
 
@@ -54,6 +57,7 @@ namespace Integrian
 		std::vector<Component*> m_pComponents;
 		bool m_IsActive{ true };
 		bool m_MarkedForDeletion{};
+		std::string m_Tag{};
 	};
 }
 #endif // INTEGRIAN_GAMEOBJECT_H
