@@ -213,7 +213,7 @@ void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
 
 	Texture* pInactiveTileTexture{ textureManager.GetTexture("QbertLevel" + std::to_string(m_Level) + "InactiveTileTexture") };
 
-	for (const nlohmann::json& element : *tileFSM[0].find("TileTextures"))
+	for (const nlohmann::json& element : *tileFSM.find("TileTextures"))
 	{
 		const auto it{ element.find("ActiveTexture") };
 		textureManager.AddTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture", "Resources/Images/Tiles/" + std::string{ *it });
@@ -222,21 +222,18 @@ void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
 
 	Texture* pActiveTileTexture{ textureManager.GetTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture") };
 
-	for (const nlohmann::json& element : tileFSM)
+	switch (static_cast<TileChange>(*tileFSM.find("TileChange")))
 	{
-		switch (static_cast<TileChange>(*element.find("TileChange")))
-		{
-		case TileChange::Permanent: // Just switches colour permanently
-		{
-			TileFSM* pTileFSMComponent{ new TileFSM{pTileFSM} };
-			pTileFSM->AddComponent(pTileFSMComponent);
-			pTileFSM->AddComponent(pTileFSMComponent->CreatePermanentFSM(pInactiveTileTexture, pActiveTileTexture));
-			pActiveApp->AddGameObject("TileFSM", pTileFSM);
-		}
-		break;
-		//case 1:
-		//	break;
-		}
+	case TileChange::Permanent: // Just switches colour permanently
+	{
+		TileFSM* pTileFSMComponent{ new TileFSM{pTileFSM} };
+		pTileFSM->AddComponent(pTileFSMComponent);
+		pTileFSM->AddComponent(pTileFSMComponent->CreatePermanentFSM(pInactiveTileTexture, pActiveTileTexture));
+		pActiveApp->AddGameObject("TileFSM", pTileFSM);
+	}
+	break;
+	//case 1:
+	//	break;
 	}
 }
 #pragma warning ( pop )
