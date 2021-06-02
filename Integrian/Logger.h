@@ -22,7 +22,10 @@ namespace Integrian
 		static void LogError(const std::string& message);
 		static void LogSevereError(const std::string& message);
 
+		static void SetDebugOnly(const bool debugOnly);
+
 	private:
+		inline static bool m_DebugOnly{};
 	};
 }
 

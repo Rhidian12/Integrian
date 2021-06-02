@@ -31,32 +31,45 @@
 
 void Integrian::Logger::LogNoWarning(const std::string& message)
 {
+#ifdef _DEBUG
 	const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 2);
 	std::cout << message;
 	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+#endif // _DEBUG
 }
 
 void Integrian::Logger::LogWarning(const std::string& message)
 {
+#ifdef _DEBUG
 	const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 6);
 	std::cout << message;
 	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+#endif // _DEBUG
 }
 
 void Integrian::Logger::LogError(const std::string& message)
 {
+#ifdef _DEBUG
 	const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 12);
 	std::cout << message;
 	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+#endif // _DEBUG
 }
 
 void Integrian::Logger::LogSevereError(const std::string& message)
 {
+#ifdef _DEBUG
 	const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 4);
 	std::cout << message;
 	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+#endif // _DEBUG
+}
+
+void Integrian::Logger::SetDebugOnly(const bool debugOnly)
+{
+	m_DebugOnly = debugOnly;
 }
