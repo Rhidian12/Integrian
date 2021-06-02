@@ -104,3 +104,8 @@ bool Integrian::GameObject::GetIsMarkedForDeletion() const noexcept
 {
 	return m_MarkedForDeletion;
 }
+
+const std::vector<Integrian::Component*>& Integrian::GameObject::GetComponents() const noexcept
+{
+	return m_pComponents;
+}

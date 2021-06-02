@@ -32,13 +32,15 @@ namespace Integrian
 		void Render() const;
 
 		void SetTag(const std::string& tag) noexcept;
-		const std::string& GetTag() const noexcept;
+		[[nodiscard]] const std::string& GetTag() const noexcept;
 
 		void SetIsActive(bool isActive) noexcept;
 		void MarkForDeletion(bool markedForDeletion = true) noexcept;
 
 		[[nodiscard]] bool GetIsActive() const noexcept;
 		[[nodiscard]] bool GetIsMarkedForDeletion() const noexcept;
+
+		[[nodiscard]] const std::vector<Component*>& GetComponents() const noexcept;
 
 		template<typename Type, typename = std::enable_if_t<std::is_base_of_v<Component, Type>>> // sfinae
 		inline [[nodiscard]] Type* GetComponentByType() const
