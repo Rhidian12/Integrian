@@ -17,6 +17,7 @@
 #include <Blackboard.h>
 #include <memory>
 #include "TileFSM.h"
+#include "CoilyFSM.h"
 
 TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -83,12 +84,11 @@ void TileFactoryComponent::CreateTiles(const int level)
 	json tpLocations = *levelFormat.find("TeleportLocations");
 	unsigned int amountOfRedBalls = *levelFormat.find("Red Balls");
 
-	json tileFSM = *levelFormat.find("TileFSM");
-
 	CreateTeleportationPads(level, tpLocations);
 	FillConnections(tpLocations);
 	CreateRedBallSpawner(amountOfRedBalls);
-	CreateTileFSM(tileFSM);
+	CreateTileFSM(*levelFormat.find("TileFSM"));
+	CreateEnemies(*levelFormat.find("Enemies"));
 }
 
 const unsigned int TileFactoryComponent::GetSize() const noexcept
@@ -231,6 +231,36 @@ void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
 	break;
 	//case 1:
 	//	break;
+	}
+}
+
+void TileFactoryComponent::CreateEnemies(nlohmann::json enemies) const
+{
+	using namespace Integrian;
+
+	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
+
+	TextureManager& textureManager{ TextureManager::GetInstance() };
+	textureManager.AddTexture("CoilyBall", "Resources/Images/Coily/Coily_Ball.png");
+
+	int counter{};
+	for (const nlohmann::json& element : enemies)
+	{
+		GameObject* pEnemy{ new GameObject{} };
+		pEnemy->SetTag("Purple");
+
+		const std::string enemyName{ *element.find("Enemy") };
+
+		if (enemyName == "Coily")
+		{
+			TextureComponent* pTexture{ new TextureComponent{ pEnemy, textureManager.GetTexture("CoilyBall") } };
+			pTexture->SetSourceRect(Rectf{ 0.f, 0.f, pTexture->GetTexture()->GetWidth() / 2.f, pTexture->GetTexture()->GetHeight() });
+			pEnemy->AddComponent(pTexture);
+			pEnemy->AddComponent(new CoilyFSM{ pEnemy });
+		}
+
+
+		pActiveApp->AddGameObject("Enemy" + std::to_string(counter++), pEnemy);
 	}
 }
 

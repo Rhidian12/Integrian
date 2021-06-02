@@ -23,6 +23,7 @@ private:
 	void CreateTeleportationPads(const int level, nlohmann::json teleporterLocations) const;
 	void CreateRedBallSpawner(const unsigned int amountOfRedBalls) const;
 	void CreateTileFSM(nlohmann::json tileFSM) const;
+	void CreateEnemies(nlohmann::json enemies) const;
 	nlohmann::json ReadFile(const int level); // I can't return by reference because it crashes for reasons
 
 	unsigned int m_Size;

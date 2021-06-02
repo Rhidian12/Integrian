@@ -49,6 +49,9 @@
     <Filter Include="Source Files\Components\QbertCollisionComponent">
       <UniqueIdentifier>{d6cef98b-0b7a-42ca-96d5-756071326d46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\StateMachines\CoilyFSM">
+      <UniqueIdentifier>{54c439e0-552b-4ea8-b12f-1973d261fcac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -87,6 +90,9 @@
     <ClCompile Include="QbertCollisionComponent.cpp">
       <Filter>Source Files\Components\QbertCollisionComponent</Filter>
     </ClCompile>
+    <ClCompile Include="CoilyFSM.cpp">
+      <Filter>Source Files\StateMachines\CoilyFSM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
@@ -121,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="QbertCollisionComponent.h">
       <Filter>Source Files\Components\QbertCollisionComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyFSM.h">
+      <Filter>Source Files\StateMachines\CoilyFSM</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
