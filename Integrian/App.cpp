@@ -354,7 +354,6 @@ const std::map<Integrian::GameObjectInformation, Integrian::GameObject*, Integri
 void Integrian::App::AddGameObject(const std::string& name, GameObject* pGameObject)
 {
 	m_pGameObjects.insert(std::make_pair(GameObjectInformation{ name, m_GameObjectID++ }, pGameObject));
-	pGameObject->SetTag(name);
 	pGameObject->Initialize();
 }
 

@@ -44,6 +44,8 @@ void BallSpawnerComponent::PostInitialize()
 		pBall->AddComponent(pSprite);
 		pBall->AddComponent(CreateBallFSM(pBall, pPyramid, pBall->transform.GetPosition(), pSprite));
 
+		pBall->SetTag("Red");
+
 		pActiveApp->AddGameObject("Red Ball_" + std::to_string(i), pBall);
 
 		pBall->SetIsActive(false);

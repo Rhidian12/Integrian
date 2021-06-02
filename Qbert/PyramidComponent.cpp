@@ -84,6 +84,15 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 		return true;
 	}
 
+	if (event.GetEvent() == "QbertDeath")
+	{
+		SDL_Event e{};
+		e.quit.type = SDL_QUIT;
+		SDL_PushEvent(&e);
+
+		return true;
+	}
+
 	//if (event.GetEvent() == "QbertMovementEnded")
 	//{
 	//	TileComponent* pEndTile{ std::get<0>(event.GetData<TileComponent*>()) };

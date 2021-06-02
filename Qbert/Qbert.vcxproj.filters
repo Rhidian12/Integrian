@@ -46,6 +46,9 @@
     <Filter Include="Source Files\StateMachines\TileFSM">
       <UniqueIdentifier>{3d7dbe82-4bc7-4d34-8d16-29b34a524cbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\QbertCollisionComponent">
+      <UniqueIdentifier>{d6cef98b-0b7a-42ca-96d5-756071326d46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -81,6 +84,9 @@
     <ClCompile Include="TileFSM.cpp">
       <Filter>Source Files\StateMachines\TileFSM</Filter>
     </ClCompile>
+    <ClCompile Include="QbertCollisionComponent.cpp">
+      <Filter>Source Files\Components\QbertCollisionComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
@@ -112,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="TileFSM.h">
       <Filter>Source Files\StateMachines\TileFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertCollisionComponent.h">
+      <Filter>Source Files\Components\QbertCollisionComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

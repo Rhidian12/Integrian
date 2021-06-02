@@ -12,6 +12,7 @@
 #include <InputManager.h>
 #include "TeleportationPadComponent.h"
 #include <algorithm>
+#include "QbertCollisionComponent.h"
 
 Qbert_MainGame::Qbert_MainGame()
 	: Integrian::App{ "Qbert_MainGame" }
@@ -283,6 +284,7 @@ void Qbert_MainGame::Start()
 	pFSM->AddTransition(pTpState, pStandingState, pToStandingTransition);
 
 	pQbert->AddComponent(pFSM);
+	pQbert->AddComponent(new QbertCollisionComponent{ pQbert });
 	pQbert->transform.SetPosition(pPyramidComponent->GetTopTileCenter());
 
 	AddGameObject("PyramidRoot", pPyramidRoot);
