@@ -199,8 +199,6 @@ void TileFactoryComponent::CreateRedBallSpawner(const unsigned int amountOfRedBa
 	pActiveApp->AddGameObject("BallSpawner", pSpawner);
 }
 
-#pragma warning ( push )
-#pragma warning ( disable : 4702 )
 void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
 {
 	using namespace Integrian;
@@ -217,7 +215,6 @@ void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
 	{
 		const auto it{ element.find("ActiveTexture") };
 		textureManager.AddTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture", "Resources/Images/Tiles/" + std::string{ *it });
-		break;
 	}
 
 	Texture* pActiveTileTexture{ textureManager.GetTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture") };
@@ -236,7 +233,6 @@ void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
 	//	break;
 	}
 }
-#pragma warning ( pop )
 
 nlohmann::json TileFactoryComponent::ReadFile(const int level)
 {
