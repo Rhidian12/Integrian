@@ -16,9 +16,6 @@ void Integrian::TransformComponent::FixedUpdate(const float)
 {
 	using UnderlyingType = std::underlying_type_t<TransformChanged>;
 
-	if (m_Scale.x != 1.f)
-		std::cout << "uwu";
-
 	if (static_cast<UnderlyingType>(m_TransformChanged))
 	{
 		// set translation matrix
