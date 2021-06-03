@@ -144,6 +144,21 @@
     <Filter Include="Engine\Blackboard">
       <UniqueIdentifier>{4fb2dff6-52a6-47fe-8225-9760d1f08934}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graph">
+      <UniqueIdentifier>{22d49b1f-020d-4f36-a6b3-345f59db0761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graph\Node">
+      <UniqueIdentifier>{2664352a-ae63-48ac-9196-6590d3017619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graph\Enums">
+      <UniqueIdentifier>{61581e45-e19f-418d-8747-70f1c14b116c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graph\Connection">
+      <UniqueIdentifier>{ec807b2d-c6b3-48da-bdb4-99d198bb0b96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graph\Graph">
+      <UniqueIdentifier>{fe9c1c11-0c90-43ac-9832-ccca1feba322}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -274,6 +289,12 @@
     </ClCompile>
     <ClCompile Include="FiniteStateMachine.cpp">
       <Filter>Engine\Finite State Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Engine\Graph\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="Connection.cpp">
+      <Filter>Engine\Graph\Connection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -489,6 +510,21 @@
     </ClInclude>
     <ClInclude Include="Blackboard.h">
       <Filter>Engine\Blackboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Engine\Graph\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphEnums.h">
+      <Filter>Engine\Graph\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Connection.h">
+      <Filter>Engine\Graph\Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="IGraph.h">
+      <Filter>Engine\Graph\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph2D.h">
+      <Filter>Engine\Graph\Graph</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

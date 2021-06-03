@@ -7,10 +7,13 @@
 #include "PyramidComponent.h"
 #include <GameObject.h>
 #include "TileComponent.h"
+#include <Graph2D.h>
 
 CoilyFSM::CoilyFSM(Integrian::GameObject* pParent)
 	: Component{ pParent }
+	, m_pBlackboard{ new Integrian::Blackboard{} }
 {
+	m_pBlackboard->AddData("ShouldContinue", true);
 }
 
 void CoilyFSM::PostInitialize()
@@ -19,22 +22,23 @@ void CoilyFSM::PostInitialize()
 
 	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
 
+	m_pQbert = pActiveApp->GetGameObject("Qbert");
+
 	PyramidComponent* pPyramid{ pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>() };
+
 	const Point2f& tilePosition{ pPyramid->GetTiles()[1]->GetComponentByType<TileComponent>()->GetCenter() };
 	m_pParent->transform.SetPosition(Point2f{ tilePosition.x, tilePosition.y + 50.f });
 
-	Blackboard* pBlackboard{ new Blackboard{} };
-
-	pBlackboard->AddData("CoilySpeed", 50.f);
-	pBlackboard->AddData("CoilyVelocity", Vector2f{});
-	pBlackboard->AddData("Pyramid", pPyramid);
-	pBlackboard->AddData("CoilyBallSprite", m_pParent->GetComponentByType<TextureComponent>());
-	pBlackboard->AddData("EndPosition", Point2f{});
-	pBlackboard->AddData("CoilyBallWaitTimer", 0.5f);
-	pBlackboard->AddData("CoilyBallCurrentWaitTimer", 0.f);
+	m_pBlackboard->AddData("CoilySpeed", 50.f);
+	m_pBlackboard->AddData("CoilyVelocity", Vector2f{});
+	m_pBlackboard->AddData("Pyramid", pPyramid);
+	m_pBlackboard->AddData("CoilyBallSprite", m_pParent->GetComponentByType<TextureComponent>());
+	m_pBlackboard->AddData("EndPosition", Point2f{});
+	m_pBlackboard->AddData("CoilyBallWaitTimer", 0.5f);
+	m_pBlackboard->AddData("CoilyBallCurrentWaitTimer", 0.f);
 	//pBlackboard->AddData("BeginPosition",)
 
-	const std::vector<GameObject*>* const pTiles{ &pBlackboard->GetData<PyramidComponent*>("Pyramid")->GetTiles() };
+	const std::vector<GameObject*>* const pTiles{ &m_pBlackboard->GetData<PyramidComponent*>("Pyramid")->GetTiles() };
 
 	const Vector2f vectorTowardsOtherTile = { // vector towards right bottom
 	(*pTiles)[0]->GetComponentByType<TileComponent>()->GetCenter(),
@@ -45,14 +49,15 @@ void CoilyFSM::PostInitialize()
 			return pA->GetComponentByType<TileComponent>()->GetCenter().x == m_pParent->transform.GetPosition().x;
 		}) };
 
-	pBlackboard->AddData("FirstEndPosition", (*cIt)->GetComponentByType<TileComponent>()->GetCenter());
-	pBlackboard->AddData("ReachedFirstEndPosition", false);
-	pBlackboard->AddData("BallVelocity", Vector2f{});
-	pBlackboard->AddData("EndPoint", Point2f{});
-	pBlackboard->AddData("BallWaitTimer", 0.25f);
-	pBlackboard->AddData("CurrentBallWaitTimer", 0.f);
-	pBlackboard->AddData("ShouldReset", false);
-	pBlackboard->AddData("ReachedEndOfPyramid", false);
+	m_pBlackboard->AddData("FirstEndPosition", (*cIt)->GetComponentByType<TileComponent>()->GetCenter());
+	m_pBlackboard->AddData("ReachedFirstEndPosition", false);
+	m_pBlackboard->AddData("BallVelocity", Vector2f{});
+	m_pBlackboard->AddData("EndPoint", Point2f{});
+	m_pBlackboard->AddData("BallWaitTimer", 0.25f);
+	m_pBlackboard->AddData("CurrentBallWaitTimer", 0.f);
+	m_pBlackboard->AddData("ShouldReset", false);
+	m_pBlackboard->AddData("ReachedEndOfPyramid", false);
+	m_pBlackboard->AddData("CanMoveAgain", true);
 
 	std::shared_ptr<FSMState> pDropDownState{ new FSMState
 		{
@@ -239,11 +244,78 @@ void CoilyFSM::PostInitialize()
 		}
 		} };
 
-	FiniteStateMachineComponent* pFSM{ new FiniteStateMachineComponent{m_pParent, pDropDownState, pBlackboard} };
+	std::shared_ptr<FSMTransition> pToCoilyState{ new FSMTransition{
+	[](Blackboard* pBlackboard)->bool
+	{
+		return pBlackboard->GetData<bool>("ReachedEndOfPyramid");
+	}
+	} };
+
+	std::shared_ptr<FSMState> pCoilyState{ new FSMState{
+	[](Blackboard*, const FSMStateTransition) {},
+	// fixed update
+	[](Blackboard*, const float)
+	{
+	},
+	[this](Blackboard* pBlackboard, const float)
+	{
+		if (!pBlackboard->GetData<bool>("CanMoveAgain"))
+			return;
+
+		PyramidComponent* pPyramid{ pBlackboard->GetData<PyramidComponent*>("Pyramid") };
+		// do a Depth First Search to find where tf Q*bert is
+
+		const Point2f coilyPosition{ m_pParent->transform.GetPosition() };
+		TileComponent* const pCoilyTile{ pPyramid->GetTile(coilyPosition) };
+
+		const Point2f qbertPosition{ m_pQbert->transform.GetPosition() };
+		TileComponent* const pQbertTile{ pPyramid->GetTile(qbertPosition) };
+
+		std::vector<GameObject*> checkedTiles{};
+		DFS(checkedTiles, pCoilyTile, pQbertTile); // does this work? I pray to God it does
+
+
+	}
+	} };
+
+	FiniteStateMachineComponent* pFSM{ new FiniteStateMachineComponent{m_pParent, pDropDownState, m_pBlackboard} };
 	pFSM->AddTransition(pDropDownState, pMoveDownPyramidState, pToMoveStateTransition);
 	pFSM->AddTransition(pMoveDownPyramidState, pDropDownState, pToDropDownStateTransition);
+	pFSM->AddTransition(pMoveDownPyramidState, pCoilyState, pToCoilyState);
 
 	m_pParent->AddComponent(pFSM);
 
 	//return pFSM;
+}
+
+void CoilyFSM::DFS(std::vector<Integrian::GameObject*>& pCheckedTiles, TileComponent* pTileToCheck, TileComponent* pWantedTile)
+{
+	using namespace Integrian;
+
+	pCheckedTiles.push_back(pTileToCheck->GetParent()); // store the previous checked tile
+
+	for (const Connection& connection : pTileToCheck->GetConnections()) // check every connection
+	{
+		if (!m_pBlackboard->GetData<bool>("ShouldContinue"))
+			return;
+
+		if (std::holds_alternative<TileComponent*>(connection.connection)) // if the connection has a tilecomponent
+		{
+			if (!std::get<0>(connection.connection))
+				continue;
+
+			if (std::get<0>(connection.connection) == pWantedTile) // if the connection in question is the Qbert tile, we dont need to search further
+			{
+				m_pBlackboard->ChangeData("ShouldContinue", false);
+				return;
+			}
+
+			std::vector<GameObject*>::const_iterator cIt{ std::find(pCheckedTiles.cbegin(), pCheckedTiles.cend(), std::get<0>(connection.connection)->GetParent()) };
+
+			if (cIt == pCheckedTiles.cend())
+			{
+				DFS(pCheckedTiles, std::get<0>(connection.connection), pWantedTile);
+			}
+		}
+	}
 }

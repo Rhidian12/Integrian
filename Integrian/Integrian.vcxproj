@@ -182,9 +182,11 @@
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="App_Selector.cpp" />
+    <ClCompile Include="Connection.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="GameObjectInformation.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="SDLAudioSystem.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -228,9 +230,13 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="App_Selector.h" />
     <ClInclude Include="Blackboard.h" />
+    <ClInclude Include="Connection.h" />
     <ClInclude Include="DivisionByZeroNotPossibleException.h" />
     <ClInclude Include="FiniteStateMachine.h" />
     <ClInclude Include="GameObjectInformation.h" />
+    <ClInclude Include="Graph2D.h" />
+    <ClInclude Include="GraphEnums.h" />
+    <ClInclude Include="IGraph.h" />
     <ClInclude Include="Libraries\JSON\json.hpp" />
     <ClInclude Include="LoggedAudioSystem.h" />
     <ClInclude Include="MagnitudeZeroException.h" />
@@ -238,6 +244,7 @@
     <ClInclude Include="Matrix2x2.h" />
     <ClInclude Include="Matrix3x3.h" />
     <ClInclude Include="MatrixDivisionNotPossibleException.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Point3f.h" />
     <ClInclude Include="SDLAudioSystem.h" />
     <ClInclude Include="AudioSystem.h" />

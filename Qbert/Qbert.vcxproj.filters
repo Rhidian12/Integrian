@@ -52,6 +52,9 @@
     <Filter Include="Source Files\StateMachines\CoilyFSM">
       <UniqueIdentifier>{54c439e0-552b-4ea8-b12f-1973d261fcac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\QbertGraphComponent">
+      <UniqueIdentifier>{e326d46b-43da-4389-b328-ba376379f4e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -93,6 +96,9 @@
     <ClCompile Include="CoilyFSM.cpp">
       <Filter>Source Files\StateMachines\CoilyFSM</Filter>
     </ClCompile>
+    <ClCompile Include="QbertGraphComponent.cpp">
+      <Filter>Source Files\Components\QbertGraphComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Qbert_MainGame.h">
@@ -130,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="CoilyFSM.h">
       <Filter>Source Files\StateMachines\CoilyFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertGraphComponent.h">
+      <Filter>Source Files\Components\QbertGraphComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
