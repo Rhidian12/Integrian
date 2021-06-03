@@ -58,12 +58,12 @@
     <Filter Include="Source Files\StateMachines\QbertFSM">
       <UniqueIdentifier>{3b3ead35-9d6f-42d6-b7b0-f57f03b0757f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Apps">
+      <UniqueIdentifier>{8e9b308a-60fa-47ce-8554-79c29fc731a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Qbert_MainGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PyramidComponent.cpp">
@@ -105,11 +105,11 @@
     <ClCompile Include="QbertFSM.cpp">
       <Filter>Source Files\StateMachines\QbertFSM</Filter>
     </ClCompile>
+    <ClCompile Include="Qbert_MainGame.cpp">
+      <Filter>Source Files\Apps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Qbert_MainGame.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="PyramidComponent.h">
       <Filter>Source Files\Components\PyramidComponent</Filter>
     </ClInclude>
@@ -148,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="QbertFSM.h">
       <Filter>Source Files\StateMachines\QbertFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Qbert_MainGame.h">
+      <Filter>Source Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
