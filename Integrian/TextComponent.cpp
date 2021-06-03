@@ -27,6 +27,20 @@ Integrian::TextComponent::TextComponent(GameObject* pParent, const std::string& 
 {
 }
 
+Integrian::TextComponent::TextComponent(GameObject* pParent, const std::string& textToRender, const std::string& fontPath, const int size, const RGBColour& colour)
+	: Component{ pParent }
+	, m_TextToBeRendered{ textToRender }
+	, m_pPrinter{ PrinterManager::GetInstance().AddPrinter(fontPath, size, colour) }
+{
+}
+
+Integrian::TextComponent::TextComponent(GameObject* pParent, const std::string& textToRender, Texture* pFont)
+	: Component{ pParent }
+	, m_TextToBeRendered{ textToRender }
+	, m_pPrinter{ PrinterManager::GetInstance().AddPrinter(pFont) }
+{
+}
+
 void Integrian::TextComponent::Render() const
 {
 	m_pPrinter->Render(m_pParent->transform.GetPosition(), m_TextToBeRendered);

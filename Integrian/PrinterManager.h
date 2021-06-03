@@ -8,12 +8,15 @@
 namespace Integrian
 {
 	class Printer;
+	class Texture;
 	class PrinterManager final : public Singleton<PrinterManager>
 	{
 	public:
 		virtual ~PrinterManager();
 
 		Printer* AddPrinter(const int size, const RGBColour& colour);
+		Printer* AddPrinter(const std::string& fontPath, const int size, const RGBColour& colour);
+		Printer* AddPrinter(Texture* pFont);
 
 	private:
 		PrinterManager() = default;

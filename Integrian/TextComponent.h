@@ -16,6 +16,8 @@ namespace Integrian
 		TextComponent(GameObject* pParent, const int size, const RGBColour& colour);
 		TextComponent(GameObject* pParent, const std::string& textToBeRendered);
 		TextComponent(GameObject* pParent, const std::string& textToRender, const int size, const RGBColour& colour);
+		TextComponent(GameObject* pParent, const std::string& textToRender, const std::string& fontPath, const int size, const RGBColour& colour);
+		TextComponent(GameObject* pParent, const std::string& textToRender, Texture* pFont);
 		virtual ~TextComponent() = default;
 
 		virtual void Render() const override;
