@@ -19,7 +19,7 @@ namespace Integrian
 		PrinterManager() = default;
 		friend class Singleton<PrinterManager>;
 
-		const std::string m_FilePath{ "Fonts/RobotoMono-Regular.ttf" };
+		const std::string m_FilePath{ "../Integrian/Data/Fonts/RobotoMono-Regular.ttf" };
 		std::vector<Printer*> m_pPrinters;
 	};
 }

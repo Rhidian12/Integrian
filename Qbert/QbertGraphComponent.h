@@ -14,6 +14,8 @@ public:
 
 	virtual void PostInitialize() override;
 
+	Integrian::Graph2D<Integrian::GraphNode2D, Integrian::GraphConnection2D>* GetGraph() const noexcept;
+
 private:
 	Integrian::Graph2D<Integrian::GraphNode2D, Integrian::GraphConnection2D>* m_pGraph;
 };

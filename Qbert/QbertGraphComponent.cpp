@@ -39,3 +39,8 @@ void QbertGraphComponent::PostInitialize()
 		}
 	}
 }
+
+Integrian::Graph2D<Integrian::GraphNode2D, Integrian::GraphConnection2D>* QbertGraphComponent::GetGraph() const noexcept
+{
+	return m_pGraph;
+}

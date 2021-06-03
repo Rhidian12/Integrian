@@ -1,6 +1,7 @@
 #pragma once
 #include <Component.h>
 #include <vector>
+#include <queue>
 
 namespace Integrian
 {
@@ -9,6 +10,7 @@ namespace Integrian
 	class Blackboard;
 }
 
+class QbertGraphComponent;
 class TileComponent;
 class CoilyFSM final : public Integrian::Component
 {
@@ -18,8 +20,9 @@ public:
 	virtual void PostInitialize() override;
 
 private:
-	void DFS(std::vector<Integrian::GameObject*>& pCheckedTiles, TileComponent* pTileToCheck, TileComponent* pWantedTile);
+	void BFS(std::vector<int>& path, int startNode, int wantedNote);
 
 	Integrian::Blackboard* m_pBlackboard;
 	Integrian::GameObject* m_pQbert;
+	QbertGraphComponent* m_pGraph;
 };

@@ -8,11 +8,15 @@
 #include <GameObject.h>
 #include "TileComponent.h"
 #include <Graph2D.h>
+#include "QbertGraphComponent.h"
+#include <queue>
+#include <set>
 
 CoilyFSM::CoilyFSM(Integrian::GameObject* pParent)
 	: Component{ pParent }
 	, m_pBlackboard{ new Integrian::Blackboard{} }
 	, m_pQbert{}
+	, m_pGraph{}
 {
 	m_pBlackboard->AddData("ShouldContinue", true);
 }
@@ -24,6 +28,7 @@ void CoilyFSM::PostInitialize()
 	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
 
 	m_pQbert = pActiveApp->GetGameObject("Qbert");
+	m_pGraph = pActiveApp->GetGameObject("QbertGraph")->GetComponentByType<QbertGraphComponent>();
 
 	PyramidComponent* pPyramid{ pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>() };
 
@@ -258,13 +263,14 @@ void CoilyFSM::PostInitialize()
 	[](Blackboard*, const float)
 	{
 	},
+	// Update
 	[this](Blackboard* pBlackboard, const float)
 	{
 		if (!pBlackboard->GetData<bool>("CanMoveAgain"))
 			return;
 
 		PyramidComponent* pPyramid{ pBlackboard->GetData<PyramidComponent*>("Pyramid") };
-		// do a Depth First Search to find where tf Q*bert is
+		// do a Breadth First Search to find where tf Q*bert is
 
 		const Point2f coilyPosition{ m_pParent->transform.GetPosition() };
 		TileComponent* const pCoilyTile{ pPyramid->GetTile(coilyPosition) };
@@ -272,8 +278,8 @@ void CoilyFSM::PostInitialize()
 		const Point2f qbertPosition{ m_pQbert->transform.GetPosition() };
 		TileComponent* const pQbertTile{ pPyramid->GetTile(qbertPosition) };
 
-		std::vector<GameObject*> checkedTiles{};
-		DFS(checkedTiles, pCoilyTile, pQbertTile); // does this work? I pray to God it does
+		std::vector<int> path{};
+		BFS(path, pCoilyTile->GetIndex(), pQbertTile->GetIndex());
 
 
 	}
@@ -285,38 +291,44 @@ void CoilyFSM::PostInitialize()
 	pFSM->AddTransition(pMoveDownPyramidState, pCoilyState, pToCoilyState);
 
 	m_pParent->AddComponent(pFSM);
-
-	//return pFSM;
 }
 
-void CoilyFSM::DFS(std::vector<Integrian::GameObject*>& pCheckedTiles, TileComponent* pTileToCheck, TileComponent* pWantedTile)
+void CoilyFSM::BFS(std::vector<int>& path, int startNode, int wantedNode)
 {
 	using namespace Integrian;
 
-	pCheckedTiles.push_back(pTileToCheck->GetParent()); // store the previous checked tile
+	std::queue<int> openList;
+	std::map<int, int> closedList;
 
-	for (const Connection& connection : pTileToCheck->GetConnections()) // check every connection
+	openList.push(startNode);
+
+	while (!openList.empty())
 	{
-		if (!m_pBlackboard->GetData<bool>("ShouldContinue"))
-			return;
+		int currentNode{ openList.front() };
+		openList.pop();
 
-		if (std::holds_alternative<TileComponent*>(connection.connection)) // if the connection has a tilecomponent
+		if (currentNode == wantedNode)
+			break;
+
+		for (GraphConnection2D* const  pConnection : m_pGraph->GetGraph()->GetNodeConnections(currentNode))
 		{
-			if (!std::get<0>(connection.connection))
-				continue;
-
-			if (std::get<0>(connection.connection) == pWantedTile) // if the connection in question is the Qbert tile, we dont need to search further
+			int nextNode{ m_pGraph->GetGraph()->GetNode(pConnection->GetTo())->GetIndex() };
+			if (closedList.find(nextNode) == closedList.end())
 			{
-				m_pBlackboard->ChangeData("ShouldContinue", false);
-				return;
-			}
-
-			std::vector<GameObject*>::const_iterator cIt{ std::find(pCheckedTiles.cbegin(), pCheckedTiles.cend(), std::get<0>(connection.connection)->GetParent()) };
-
-			if (cIt == pCheckedTiles.cend())
-			{
-				DFS(pCheckedTiles, std::get<0>(connection.connection), pWantedTile);
+				openList.push(nextNode);
+				closedList[nextNode] = currentNode;
 			}
 		}
 	}
+
+	int currentNode{ wantedNode };
+
+	while (currentNode != startNode)
+	{
+		path.push_back(currentNode);
+		currentNode = closedList[currentNode];
+	}
+
+	path.push_back(startNode);
+	std::reverse(path.begin(), path.end());
 }

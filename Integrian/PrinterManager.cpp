@@ -14,7 +14,7 @@ Integrian::PrinterManager::~PrinterManager()
 Integrian::Printer* Integrian::PrinterManager::AddPrinter(const int size, const RGBColour& colour)
 {
 	const std::string name{ m_FilePath + std::to_string(size) + colour.ToString() };
-	const std::unordered_map<std::string, Texture*>::const_iterator hasPrinterBeenMade =  TextureManager::GetInstance().GetTextures().find(name);
+	const std::unordered_map<std::string, Texture*>::const_iterator hasPrinterBeenMade = TextureManager::GetInstance().GetTextures().find(name);
 	if (hasPrinterBeenMade == TextureManager::GetInstance().GetTextures().cend())
 	{
 		TextureManager::GetInstance().AddTexture(name, m_FilePath, PossibleCharacters::possibleChars, size, colour);
