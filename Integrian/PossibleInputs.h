@@ -204,7 +204,11 @@ namespace Integrian
 		Capslock			= SDL_SCANCODE_CAPSLOCK,
 		Printscreen			= SDL_SCANCODE_PRINTSCREEN,
 		Scrolllock			= SDL_SCANCODE_SCROLLLOCK,
-		Keypad_Enter		= SDL_SCANCODE_KP_ENTER
+		Keypad_Enter		= SDL_SCANCODE_KP_ENTER,
+		ArrowUp				= SDL_SCANCODE_UP,
+		ArrowDown			= SDL_SCANCODE_DOWN,
+		ArrowRight			= SDL_SCANCODE_RIGHT,
+		ArrowLeft			= SDL_SCANCODE_LEFT,
 	};
 
 	enum class ControllerInput : Uint8
