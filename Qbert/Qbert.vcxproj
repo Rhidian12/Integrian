@@ -182,6 +182,8 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
   <ItemGroup>
     <ClCompile Include="BallMovementComponent.cpp" />
     <ClCompile Include="BallSpawnerComponent.cpp" />
+    <ClCompile Include="ButtonComponent.cpp" />
+    <ClCompile Include="ButtonHandlerComponent.cpp" />
     <ClCompile Include="CoilyFSM.cpp" />
     <ClCompile Include="PyramidComponent.cpp" />
     <ClCompile Include="Qbert.cpp" />
@@ -191,6 +193,7 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
     <ClCompile Include="QbertMovementComponent.cpp" />
     <ClCompile Include="QbertSpriteComponent.cpp" />
     <ClCompile Include="Qbert_MainGame.cpp" />
+    <ClCompile Include="Qbert_StartMenu.cpp" />
     <ClCompile Include="TeleportationPadComponent.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileFactoryComponent.cpp" />
@@ -199,6 +202,8 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
   <ItemGroup>
     <ClInclude Include="BallMovementComponent.h" />
     <ClInclude Include="BallSpawnerComponent.h" />
+    <ClInclude Include="ButtonComponent.h" />
+    <ClInclude Include="ButtonHandlerComponent.h" />
     <ClInclude Include="CoilyFSM.h" />
     <ClInclude Include="PyramidComponent.h" />
     <ClInclude Include="QbertCollisionComponent.h" />
@@ -207,6 +212,7 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
     <ClInclude Include="QbertMovementComponent.h" />
     <ClInclude Include="QbertSpriteComponent.h" />
     <ClInclude Include="Qbert_MainGame.h" />
+    <ClInclude Include="Qbert_StartMenu.h" />
     <ClInclude Include="TeleportationPadComponent.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileFactoryComponent.h" />

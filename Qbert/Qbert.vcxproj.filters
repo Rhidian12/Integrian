@@ -61,6 +61,18 @@
     <Filter Include="Source Files\Apps">
       <UniqueIdentifier>{8e9b308a-60fa-47ce-8554-79c29fc731a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Apps\MainGame">
+      <UniqueIdentifier>{2d7372b5-1e25-45e0-9044-52f17699ab5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Apps\StartMenu">
+      <UniqueIdentifier>{95c794d0-89d2-4469-bb07-5f40e9bae44e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\ButtonComponent">
+      <UniqueIdentifier>{c02b92fc-7c35-4dca-93bf-32464dc57c93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\ButtonHandlerComponent">
+      <UniqueIdentifier>{b26fc6eb-f8bb-4be9-9d1a-f6b7ce4af76f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -106,7 +118,16 @@
       <Filter>Source Files\StateMachines\QbertFSM</Filter>
     </ClCompile>
     <ClCompile Include="Qbert_MainGame.cpp">
-      <Filter>Source Files\Apps</Filter>
+      <Filter>Source Files\Apps\MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Qbert_StartMenu.cpp">
+      <Filter>Source Files\Apps\StartMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonComponent.cpp">
+      <Filter>Source Files\Components\ButtonComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonHandlerComponent.cpp">
+      <Filter>Source Files\Components\ButtonHandlerComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +171,16 @@
       <Filter>Source Files\StateMachines\QbertFSM</Filter>
     </ClInclude>
     <ClInclude Include="Qbert_MainGame.h">
-      <Filter>Source Files\Apps</Filter>
+      <Filter>Source Files\Apps\MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Qbert_StartMenu.h">
+      <Filter>Source Files\Apps\StartMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonComponent.h">
+      <Filter>Source Files\Components\ButtonComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonHandlerComponent.h">
+      <Filter>Source Files\Components\ButtonHandlerComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
