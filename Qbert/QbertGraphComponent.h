@@ -11,6 +11,7 @@ class QbertGraphComponent final : public Integrian::Component
 {
 public:
 	QbertGraphComponent(Integrian::GameObject* pParent);
+	~QbertGraphComponent();
 
 	virtual void PostInitialize() override;
 

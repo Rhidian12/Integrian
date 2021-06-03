@@ -244,6 +244,10 @@ void TileFactoryComponent::CreateEnemies(nlohmann::json enemies) const
 
 	TextureManager& textureManager{ TextureManager::GetInstance() };
 	textureManager.AddTexture("CoilyBall", "Resources/Images/Coily/Coily_Ball.png");
+	textureManager.AddTexture("CoilyLeftBottomAnimation", "Resources/Images/Coily/CoilyLeftBottomAnimation.png");
+	textureManager.AddTexture("CoilyRightBottomAnimation", "Resources/Images/Coily/CoilyRightBottomAnimation.png");
+	textureManager.AddTexture("CoilyLeftTopAnimation", "Resources/Images/Coily/CoilyLeftTopAnimation.png");
+	textureManager.AddTexture("CoilyRightTopAnimation", "Resources/Images/Coily/CoilyRightTopAnimation.png");
 
 	int counter{};
 	for (const nlohmann::json& element : enemies)
@@ -260,7 +264,6 @@ void TileFactoryComponent::CreateEnemies(nlohmann::json enemies) const
 			pEnemy->AddComponent(pTexture);
 			pEnemy->AddComponent(new CoilyFSM{ pEnemy });
 		}
-
 
 		pActiveApp->AddGameObject("Enemy" + std::to_string(counter++), pEnemy);
 	}

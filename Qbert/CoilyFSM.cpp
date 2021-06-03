@@ -11,6 +11,9 @@
 #include "QbertGraphComponent.h"
 #include <queue>
 #include <set>
+#include <TextureComponent.h>
+#include <Texture.h>
+#include <TextureManager.h>
 
 CoilyFSM::CoilyFSM(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -258,30 +261,69 @@ void CoilyFSM::PostInitialize()
 	} };
 
 	std::shared_ptr<FSMState> pCoilyState{ new FSMState{
-	[](Blackboard*, const FSMStateTransition) {},
+	[this](Blackboard*, const FSMStateTransition) {},
 	// fixed update
-	[](Blackboard*, const float)
+	[this](Blackboard* pBlackboard, const float dt)
 	{
+		const Integrian::Point2f initialPosition{ m_pParent->transform.GetPosition() };
+
+		const Integrian::Vector2f speed{ pBlackboard->GetData<Vector2f>("CoilyVelocity") * dt * pBlackboard->GetData<float>("CoilySpeed") };
+
+		m_pParent->transform.SetPosition(initialPosition + speed);
 	},
-	// Update
-	[this](Blackboard* pBlackboard, const float)
-	{
-		if (!pBlackboard->GetData<bool>("CanMoveAgain"))
-			return;
+		// Update
+		[this](Blackboard* pBlackboard, const float)
+		{
+			const Point2f endPosition{ pBlackboard->GetData<Point2f>("EndPosition") };
+			if (AreEqual(m_pParent->transform.GetPosition().x, endPosition.x, 1.f) && AreEqual(m_pParent->transform.GetPosition().y, endPosition.y, 1.f))
+			{
+				m_pParent->transform.SetPosition(endPosition);
+				TextureComponent* pTextureComponent{ m_pParent->GetComponentByType<TextureComponent>() };
 
-		PyramidComponent* pPyramid{ pBlackboard->GetData<PyramidComponent*>("Pyramid") };
-		// do a Breadth First Search to find where tf Q*bert is
+				pTextureComponent->SetSourceRect(Rectf{ 0.f, 0.f,
+					pTextureComponent->GetTexture()->GetWidth() / 2.f, pTextureComponent->GetTexture()->GetHeight() });
+				
+				pBlackboard->ChangeData("CanMoveAgain", true);
+			}
 
-		const Point2f coilyPosition{ m_pParent->transform.GetPosition() };
-		TileComponent* const pCoilyTile{ pPyramid->GetTile(coilyPosition) };
+			if (!pBlackboard->GetData<bool>("CanMoveAgain"))
+				return;
 
-		const Point2f qbertPosition{ m_pQbert->transform.GetPosition() };
-		TileComponent* const pQbertTile{ pPyramid->GetTile(qbertPosition) };
+			PyramidComponent* pPyramid{ pBlackboard->GetData<PyramidComponent*>("Pyramid") };
+			// do a Breadth First Search to find where tf Q*bert is
 
-		std::vector<int> path{};
-		BFS(path, pCoilyTile->GetIndex(), pQbertTile->GetIndex());
-	}
-	} };
+			const Point2f coilyPosition{ m_pParent->transform.GetPosition() };
+			TileComponent* const pCoilyTile{ pPyramid->GetTile(coilyPosition) };
+
+			const Point2f qbertPosition{ m_pQbert->transform.GetPosition() };
+			TileComponent* const pQbertTile{ pPyramid->GetTile(qbertPosition) };
+
+			std::vector<int> path{};
+			BFS(path, pCoilyTile->GetIndex(), pQbertTile->GetIndex());
+
+			const Point2f nextPosition{ m_pGraph->GetGraph()->GetNode(path[1])->GetPosition() };
+			const Vector2f coilyVelocity{ GetNormalized(nextPosition - pCoilyTile->GetParent()->transform.GetPosition()) };
+			pBlackboard->ChangeData("EndPoint", endPosition);
+			pBlackboard->ChangeData("CanMoveAgain", false);
+			pBlackboard->ChangeData("CoilyVelocity", coilyVelocity);
+
+			// Change sprite
+			TextureManager& textureManager{ TextureManager::GetInstance() };
+			TextureComponent* pTextureComponent{ m_pParent->GetComponentByType<TextureComponent>() };
+
+			if (coilyVelocity.x > 0.f && coilyVelocity.y > 0.f) // right top
+				pTextureComponent->SetTexture(textureManager.GetTexture("CoilyRightTopAnimation"));
+			else if (coilyVelocity.x > 0.f && coilyVelocity.y < 0.f) // right bottom
+				pTextureComponent->SetTexture(textureManager.GetTexture("CoilyRightBottomAnimation"));
+			else if (coilyVelocity.x < 0.f && coilyVelocity.y > 0.f) // left top
+				pTextureComponent->SetTexture(textureManager.GetTexture("CoilyLeftTopAnimation"));
+			else if (coilyVelocity.x < 0.f && coilyVelocity.y < 0.f) // left bottom
+				pTextureComponent->SetTexture(textureManager.GetTexture("CoilyLeftBottomAnimation"));
+
+			pTextureComponent->SetSourceRect(Rectf{ pTextureComponent->GetTexture()->GetWidth() / 2.f, 0.f,
+	pTextureComponent->GetTexture()->GetWidth() / 2.f, pTextureComponent->GetTexture()->GetHeight() });
+		}
+		} };
 
 	FiniteStateMachineComponent* pFSM{ new FiniteStateMachineComponent{m_pParent, pDropDownState, m_pBlackboard} };
 	pFSM->AddTransition(pDropDownState, pMoveDownPyramidState, pToMoveStateTransition);
@@ -308,7 +350,7 @@ void CoilyFSM::BFS(std::vector<int>& path, int startNode, int wantedNode)
 		if (currentNode == wantedNode)
 			break;
 
-		for (GraphConnection2D* const  pConnection : m_pGraph->GetGraph()->GetNodeConnections(currentNode))
+		for (GraphConnection2D* const pConnection : m_pGraph->GetGraph()->GetNodeConnections(currentNode))
 		{
 			int nextNode{ m_pGraph->GetGraph()->GetNode(pConnection->GetTo())->GetIndex() };
 			if (closedList.find(nextNode) == closedList.end())

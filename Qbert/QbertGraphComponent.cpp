@@ -10,6 +10,11 @@ QbertGraphComponent::QbertGraphComponent(Integrian::GameObject* pParent)
 {
 }
 
+QbertGraphComponent::~QbertGraphComponent()
+{
+	Integrian::SafeDelete(m_pGraph);
+}
+
 void QbertGraphComponent::PostInitialize()
 {
 	using namespace Integrian;
