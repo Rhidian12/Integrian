@@ -3,6 +3,7 @@
 #include <App.h>
 #include <App_Selector.h>
 #include "TileFactoryComponent.h"
+#include "TileComponent.h"
 
 QbertGraphComponent::QbertGraphComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -29,7 +30,7 @@ void QbertGraphComponent::PostInitialize()
 
 	for (size_t i{}; i < pTiles->size(); ++i)
 	{
-		m_pGraph->AddNode(new GraphNode2D{ int(i), (*pTiles)[i]->transform.GetPosition() });
+		m_pGraph->AddNode(new GraphNode2D{ int(i), (*pTiles)[i]->GetComponentByType<TileComponent>()->GetCenter() });
 	}
 
 	uint64_t counter{};

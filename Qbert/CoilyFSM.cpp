@@ -67,6 +67,8 @@ void CoilyFSM::PostInitialize()
 	m_pBlackboard->AddData("ShouldReset", false);
 	m_pBlackboard->AddData("ReachedEndOfPyramid", false);
 	m_pBlackboard->AddData("CanMoveAgain", true);
+	m_pBlackboard->AddData("CoilyWaitTimer", 0.3f);
+	m_pBlackboard->AddData("CurrentCoilyWaitTimer", 0.f);
 
 	std::shared_ptr<FSMState> pDropDownState{ new FSMState
 		{
@@ -272,18 +274,25 @@ void CoilyFSM::PostInitialize()
 		m_pParent->transform.SetPosition(initialPosition + speed);
 	},
 		// Update
-		[this](Blackboard* pBlackboard, const float)
+		[this](Blackboard* pBlackboard, const float dt)
 		{
-			const Point2f endPosition{ pBlackboard->GetData<Point2f>("EndPosition") };
+			const Point2f endPosition{ pBlackboard->GetData<Point2f>("EndPoint") };
 			if (AreEqual(m_pParent->transform.GetPosition().x, endPosition.x, 1.f) && AreEqual(m_pParent->transform.GetPosition().y, endPosition.y, 1.f))
 			{
 				m_pParent->transform.SetPosition(endPosition);
 				TextureComponent* pTextureComponent{ m_pParent->GetComponentByType<TextureComponent>() };
 
+				pBlackboard->ChangeData("CoilyVelocity", Vector2f{});
+
 				pTextureComponent->SetSourceRect(Rectf{ 0.f, 0.f,
 					pTextureComponent->GetTexture()->GetWidth() / 2.f, pTextureComponent->GetTexture()->GetHeight() });
-				
-				pBlackboard->ChangeData("CanMoveAgain", true);
+
+				pBlackboard->ChangeData("CurrentCoilyWaitTimer", pBlackboard->GetData<float>("CurrentCoilyWaitTimer") + dt);
+				if (pBlackboard->GetData<float>("CurrentCoilyWaitTimer") >= pBlackboard->GetData<float>("CoilyWaitTimer"))
+				{
+					pBlackboard->ChangeData("CurrentCoilyWaitTimer", 0.f);
+					pBlackboard->ChangeData("CanMoveAgain", true);
+				}
 			}
 
 			if (!pBlackboard->GetData<bool>("CanMoveAgain"))
@@ -298,12 +307,15 @@ void CoilyFSM::PostInitialize()
 			const Point2f qbertPosition{ m_pQbert->transform.GetPosition() };
 			TileComponent* const pQbertTile{ pPyramid->GetTile(qbertPosition) };
 
+			if (!pQbertTile)
+				return;
+
 			std::vector<int> path{};
 			BFS(path, pCoilyTile->GetIndex(), pQbertTile->GetIndex());
 
 			const Point2f nextPosition{ m_pGraph->GetGraph()->GetNode(path[1])->GetPosition() };
-			const Vector2f coilyVelocity{ GetNormalized(nextPosition - pCoilyTile->GetParent()->transform.GetPosition()) };
-			pBlackboard->ChangeData("EndPoint", endPosition);
+			const Vector2f coilyVelocity{ GetNormalized(nextPosition - pCoilyTile->GetCenter()) };
+			pBlackboard->ChangeData("EndPoint", nextPosition);
 			pBlackboard->ChangeData("CanMoveAgain", false);
 			pBlackboard->ChangeData("CoilyVelocity", coilyVelocity);
 
@@ -321,7 +333,7 @@ void CoilyFSM::PostInitialize()
 				pTextureComponent->SetTexture(textureManager.GetTexture("CoilyLeftBottomAnimation"));
 
 			pTextureComponent->SetSourceRect(Rectf{ pTextureComponent->GetTexture()->GetWidth() / 2.f, 0.f,
-	pTextureComponent->GetTexture()->GetWidth() / 2.f, pTextureComponent->GetTexture()->GetHeight() });
+				pTextureComponent->GetTexture()->GetWidth() / 2.f, pTextureComponent->GetTexture()->GetHeight() });
 		}
 		} };
 

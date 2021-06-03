@@ -14,7 +14,7 @@
 BallSpawnerComponent::BallSpawnerComponent(Integrian::GameObject* pParent, const unsigned int maxAllowedPerScreen)
 	: Component{ pParent }
 	, m_MaxAllowedBallsPerScreen{ maxAllowedPerScreen }
-	, m_SpawnTimer{ 2.5f }
+	, m_SpawnTimer{ 5.f }
 	, m_CurrentTime{}
 	, m_pBalls{}
 {
