@@ -17,7 +17,5 @@ public:
 	virtual void Update(const float) override;
 
 private:
-	Integrian::GameObject* m_pQbert;
-
 	std::vector<Integrian::GameObject*> m_pEnemies;
 };

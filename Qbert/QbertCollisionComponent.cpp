@@ -6,7 +6,6 @@
 
 QbertCollisionComponent::QbertCollisionComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
-	, m_pQbert{}
 	, m_pEnemies{}
 {
 }
@@ -24,15 +23,13 @@ void QbertCollisionComponent::PostInitialize()
 			m_pEnemies.push_back(pair.second);
 		}
 	}
-
-	m_pQbert = pActiveApp->GetGameObject("Qbert");
 }
 
 void QbertCollisionComponent::Update(const float)
 {
 	using namespace Integrian;
 
-	const Rectf& qbertRect{ m_pQbert->transform.GetDestRect() };
+	const Rectf& qbertRect{ m_pParent->transform.GetDestRect() };
 
 	for (GameObject* pGameObject : m_pEnemies)
 	{
