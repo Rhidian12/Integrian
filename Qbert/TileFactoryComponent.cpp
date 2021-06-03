@@ -18,6 +18,7 @@
 #include <memory>
 #include "TileFSM.h"
 #include "CoilyFSM.h"
+#include "QbertGraphComponent.h"
 
 TileFactoryComponent::TileFactoryComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -89,6 +90,7 @@ void TileFactoryComponent::CreateTiles(const int level)
 	CreateRedBallSpawner(amountOfRedBalls);
 	CreateTileFSM(*levelFormat.find("TileFSM"));
 	CreateEnemies(*levelFormat.find("Enemies"));
+	CreateGraph();
 }
 
 const unsigned int TileFactoryComponent::GetSize() const noexcept
@@ -262,6 +264,17 @@ void TileFactoryComponent::CreateEnemies(nlohmann::json enemies) const
 
 		pActiveApp->AddGameObject("Enemy" + std::to_string(counter++), pEnemy);
 	}
+}
+
+void TileFactoryComponent::CreateGraph() const
+{
+	using namespace Integrian;
+
+	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
+
+	GameObject* pGraph{ new GameObject{} };
+	pGraph->AddComponent(new QbertGraphComponent{ pGraph });
+	pActiveApp->AddGameObject("QbertGraph", pGraph);
 }
 
 nlohmann::json TileFactoryComponent::ReadFile(const int level)

@@ -12,6 +12,7 @@
 CoilyFSM::CoilyFSM(Integrian::GameObject* pParent)
 	: Component{ pParent }
 	, m_pBlackboard{ new Integrian::Blackboard{} }
+	, m_pQbert{}
 {
 	m_pBlackboard->AddData("ShouldContinue", true);
 }
