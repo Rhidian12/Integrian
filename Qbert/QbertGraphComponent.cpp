@@ -22,7 +22,7 @@ void QbertGraphComponent::PostInitialize()
 
 	for (size_t i{}; i < pPyramid->GetTiles().size(); ++i)
 	{
-		m_pGraph->AddNode(new GraphNode2D{ i });
+		m_pGraph->AddNode(new GraphNode2D{ int(i) });
 	}
 
 	uint64_t counter{};
@@ -33,8 +33,8 @@ void QbertGraphComponent::PostInitialize()
 			const uint64_t leftBottomIndex{ counter + (y - x) + x + 1 };
 			const uint64_t rightBottomIndex{ counter + (y - x) + x + 2 };
 
-			m_pGraph->AddConnection(new GraphConnection2D{ counter, leftBottomIndex });
-			m_pGraph->AddConnection(new GraphConnection2D{ counter, rightBottomIndex });
+			m_pGraph->AddConnection(new GraphConnection2D{ int(counter), int(leftBottomIndex) });
+			m_pGraph->AddConnection(new GraphConnection2D{ int(counter), int(rightBottomIndex) });
 			++counter;
 		}
 	}

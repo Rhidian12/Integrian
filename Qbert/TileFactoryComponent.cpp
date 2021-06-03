@@ -63,7 +63,7 @@ void TileFactoryComponent::CreateTiles(const int level)
 	const float textureWidthDivTwo{ textureWidth * 0.5f };
 	const float heightOffset{ 24.f }; // texture height offset since the devs of Qbert are evil
 
-	uint64_t counter{};
+	uint32_t counter{};
 	for (unsigned int y{}; y < m_Size; ++y)
 	{
 		for (unsigned int x{}; x <= y; ++x)
@@ -75,7 +75,7 @@ void TileFactoryComponent::CreateTiles(const int level)
 			else
 				temp = Point2f{ parentTransform.x - y * textureWidthDivTwo + (x * textureWidth), parentTransform.y - (y * heightOffset) };
 
-			GameObject* pTile{ CreateTile(temp, pInactiveTileTexture) };
+			GameObject* pTile{ CreateTile(temp, pInactiveTileTexture, counter) };
 
 			pActiveApp->AddGameObject("Tile" + std::to_string(counter++), pTile);
 			pPyramid->AddTile(pTile);
@@ -98,7 +98,7 @@ const unsigned int TileFactoryComponent::GetSize() const noexcept
 	return m_Size;
 }
 
-Integrian::GameObject* TileFactoryComponent::CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture)
+Integrian::GameObject* TileFactoryComponent::CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture, const unsigned int index)
 {
 	using namespace Integrian;
 
@@ -106,7 +106,7 @@ Integrian::GameObject* TileFactoryComponent::CreateTile(const Integrian::Point2f
 
 	pTile->transform.SetPosition(location);
 	pTile->AddComponent(new TextureComponent{ pTile, pInactiveTileTexture });
-	pTile->AddComponent(new TileComponent{ pTile });
+	pTile->AddComponent(new TileComponent{ pTile, index });
 
 	return pTile;
 }

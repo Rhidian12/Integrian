@@ -19,3 +19,8 @@ bool Integrian::GraphConnection::operator!=(const GraphConnection& rhs) const
 {
 	return !(*this == rhs);
 }
+
+Integrian::GraphConnection2D::GraphConnection2D(int from, int to, float cost)
+	: GraphConnection{ from, to, cost }
+{
+}

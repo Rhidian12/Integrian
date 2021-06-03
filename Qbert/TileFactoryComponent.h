@@ -18,7 +18,7 @@ public:
 	const unsigned int GetSize() const noexcept;
 
 private:
-	Integrian::GameObject* CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture);
+	Integrian::GameObject* CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture, const unsigned int index);
 	void FillConnections(nlohmann::json teleporterLocations) const;
 	void CreateTeleportationPads(const int level, nlohmann::json teleporterLocations) const;
 	void CreateRedBallSpawner(const unsigned int amountOfRedBalls) const;

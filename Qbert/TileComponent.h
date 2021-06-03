@@ -37,7 +37,7 @@ struct Connection final
 class TileComponent final : public Integrian::Component
 {
 public:
-	TileComponent(Integrian::GameObject* pParent);
+	TileComponent(Integrian::GameObject* pParent, const unsigned int index);
 
 	Integrian::Point2f GetCenter() const noexcept;
 	void AddConnection(TileComponent* pTile, const Direction direction);
@@ -46,8 +46,11 @@ public:
 	void SetConnection(const Direction direction, const Connection& connection);
 	[[nodiscard]] const std::array<Connection, 4>& GetConnections() const noexcept;
 
+	[[nodiscard]] const unsigned int GetIndex() const noexcept;
+
 private:
 	Integrian::Point2f m_Center;
 	std::array<Connection, 4> m_pConnections; // there are only ever 4 possible connections
 	uint8_t m_ActiveConnections;
+	unsigned int m_Index;
 };

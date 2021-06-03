@@ -2,11 +2,12 @@
 #include <GameObject.h>
 #include <assert.h>
 
-TileComponent::TileComponent(Integrian::GameObject* pParent)
+TileComponent::TileComponent(Integrian::GameObject* pParent, const unsigned int index)
 	: Component{ pParent }
 	, m_Center{}
 	, m_ActiveConnections{}
 	, m_pConnections{}
+	, m_Index{ index }
 {
 	m_Center = pParent->transform.GetPosition();
 	m_Center.y += 24.f; // height offset
@@ -23,7 +24,7 @@ void TileComponent::AddConnection(TileComponent* pTile, const Direction directio
 	assert(m_ActiveConnections < 4);
 	m_pConnections[static_cast<std::underlying_type_t<Direction>>(direction)] = pTile;
 
-	if(pTile)
+	if (pTile)
 		m_ActiveConnections++;
 }
 
@@ -44,4 +45,9 @@ void TileComponent::SetConnection(const Direction direction, const Connection& c
 const std::array<Connection, 4>& TileComponent::GetConnections() const noexcept
 {
 	return m_pConnections;
+}
+
+const unsigned int TileComponent::GetIndex() const noexcept
+{
+	return m_Index;
 }
