@@ -30,6 +30,14 @@ void Qbert_StartMenu::Start()
 	pStartButton->AddComponent(pStartText);
 	pStartButton->transform.SetPosition(Point2f{ center.x - pStartText->GetWidth() / (pStartText->GetTextToRender().size() + 3), center.y + 100.f });
 	AddGameObject("StartButton", pStartButton);
+
+	GameObject* pQuitButton{ new GameObject{} };
+	pQuitButton->SetTag("Button");
+	TextComponent* pEndText{ new TextComponent{ pQuitButton, "Exit", 30, RGBColour{255.f, 255.f, 0.f} } };
+	pQuitButton->AddComponent(new ButtonComponent{ pQuitButton, "ExitGame" });
+	pQuitButton->AddComponent(pEndText);
+	pQuitButton->transform.SetPosition(Point2f{ center.x - pStartText->GetWidth() / (pStartText->GetTextToRender().size() + 3), center.y });
+	AddGameObject("QuitButton", pQuitButton);
 	
 	GameObject* pButtonHandler{ new GameObject{} };
 	pButtonHandler->AddComponent(new TextureComponent{ pButtonHandler, textureManager.GetTexture("PlayerSelection") });

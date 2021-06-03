@@ -29,7 +29,8 @@ void ButtonHandlerComponent::PostInitialize()
 	m_pParent->transform.SetPosition(Point2f{ m_pButtons[0]->GetParent()->transform.GetPosition().x - m_pTextureComponent->GetTexture()->GetWidth(),
 		m_pButtons[0]->GetParent()->transform.GetPosition().y - m_pTextureComponent->GetTexture()->GetHeight() / 4.f});
 
-	InputManager::GetInstance().AddCommand(GameInput{ KeyboardInput::S }, [this]()
+	InputManager& inputManager{ InputManager::GetInstance() };
+	inputManager.AddCommand(GameInput{ KeyboardInput::ArrowDown }, [this]()
 		{
 			for (size_t i{}; i < m_pButtons.size(); ++i)
 			{
@@ -45,6 +46,27 @@ void ButtonHandlerComponent::PostInitialize()
 						m_pButtons[i]->SetIsSelected(false); // set current button to non-selected
 						m_pButtons[i + 1]->SetIsSelected(true); // set next button to selected
 					}
+					break;
+				}
+			}
+		}, State::OnPress);
+	inputManager.AddCommand(GameInput{ KeyboardInput::ArrowUp }, [this]()
+		{
+			for (size_t i{}; i < m_pButtons.size(); ++i)
+			{
+				if (m_pButtons[i]->GetIsSelected()) // select the next one down
+				{
+					if (int(i) - 1 < 0) // back to the top
+					{
+						m_pButtons[i]->SetIsSelected(false); // set current button to non-selected
+						m_pButtons[m_pButtons.size() - 1]->SetIsSelected(true); // set top button to selected
+					}
+					else
+					{
+						m_pButtons[i]->SetIsSelected(false); // set current button to non-selected
+						m_pButtons[i - 1]->SetIsSelected(true); // set next button to selected
+					}
+					break;
 				}
 			}
 		}, State::OnPress);
@@ -59,7 +81,8 @@ void ButtonHandlerComponent::Update(const float)
 		if (pButton->GetIsSelected())
 		{
 			m_pParent->transform.SetPosition(Point2f{ pButton->GetParent()->transform.GetPosition().x - m_pTextureComponent->GetTexture()->GetWidth(),
-				pButton->GetParent()->transform.GetPosition().y - m_pTextureComponent->GetTexture()->GetHeight() / 4.f });			break;
+				pButton->GetParent()->transform.GetPosition().y - m_pTextureComponent->GetTexture()->GetHeight() / 4.f });
+			break;
 		}
 	}
 }
@@ -73,6 +96,14 @@ bool ButtonHandlerComponent::OnEvent(const Integrian::Event& event)
 	if (eventName == "StartGame")
 	{
 		App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame");
+		return true;
+	}
+
+	if (eventName == "ExitGame")
+	{
+		SDL_Event e{};
+		e.quit.type = SDL_QUIT;
+		SDL_PushEvent(&e);
 		return true;
 	}
 
