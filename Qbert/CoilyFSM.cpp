@@ -280,8 +280,6 @@ void CoilyFSM::PostInitialize()
 
 		std::vector<int> path{};
 		BFS(path, pCoilyTile->GetIndex(), pQbertTile->GetIndex());
-
-
 	}
 	} };
 

@@ -20,9 +20,11 @@ void QbertGraphComponent::PostInitialize()
 
 	PyramidComponent* pPyramid{ pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>() };
 
-	for (size_t i{}; i < pPyramid->GetTiles().size(); ++i)
+	const std::vector<GameObject*>* const pTiles{ &pPyramid->GetTiles() };
+
+	for (size_t i{}; i < pTiles->size(); ++i)
 	{
-		m_pGraph->AddNode(new GraphNode2D{ int(i) });
+		m_pGraph->AddNode(new GraphNode2D{ int(i), (*pTiles)[i]->transform.GetPosition() });
 	}
 
 	uint64_t counter{};
