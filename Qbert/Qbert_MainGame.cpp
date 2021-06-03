@@ -25,6 +25,8 @@ void Qbert_MainGame::Start()
 {
 	using namespace Integrian;
 
+	SetClearColour(RGBColour{ 49.f, 34.f, 119.f });
+
 	GameObject* pPyramidRoot{ new GameObject{} };
 	pPyramidRoot->transform.SetPosition(Point2f{ m_WindowWidth / 2.f, (m_WindowHeight / 2.f) });
 

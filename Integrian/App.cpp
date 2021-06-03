@@ -17,6 +17,7 @@ Integrian::App::App(const std::string& name)
 	: m_AppName{ name }
 	, m_GameObjectID{}
 	, m_TimeSinceLastUpdate{}
+	, m_ClearColour{ 192.f, 192.f, 192.f }
 {
 	if (!Initialize())
 		throw InitialisationFailedException{};
@@ -351,6 +352,11 @@ const std::map<Integrian::GameObjectInformation, Integrian::GameObject*, Integri
 	return m_pGameObjects;
 }
 
+const Integrian::RGBColour& Integrian::App::GetClearColour() const noexcept
+{
+	return m_ClearColour;
+}
+
 void Integrian::App::AddGameObject(const std::string& name, GameObject* pGameObject)
 {
 	m_pGameObjects.insert(std::make_pair(GameObjectInformation{ name, m_GameObjectID++ }, pGameObject));
@@ -374,9 +380,14 @@ void Integrian::App::RemoveGameObject(const std::string& name) noexcept
 #endif // _DEBUG
 }
 
+void Integrian::App::SetClearColour(const RGBColour& colour) noexcept
+{
+	m_ClearColour = colour;
+}
+
 void Integrian::App::ClearBackground() const
 {
-	glClearColor(192.f / 255.f, 192.f / 255.f, 192.f / 255.f, 1.0f);
+	glClearColor(m_ClearColour.r / 255.f, m_ClearColour.g / 255.f, m_ClearColour.b / 255.f, m_ClearColour.a);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 

@@ -48,9 +48,13 @@ namespace Integrian
 		[[nodiscard]] std::string GetAppName() const;
 		[[nodiscard]] GameObject* GetGameObject(const std::string& name) const;
 		[[nodiscard]] const std::map<GameObjectInformation, GameObject*, GameObjectInformationComparer>& GetGameObjects() const;
+		[[nodiscard]] const RGBColour& GetClearColour() const noexcept;
 
 		void AddGameObject(const std::string& name, GameObject* pGameObject);
 		void RemoveGameObject(const std::string& name) noexcept;
+
+		void SetClearColour(const RGBColour& colour) noexcept;
+
 
 		void SetWindowSize(const uint32_t windowWidth, const uint32_t windowHeight);
 
@@ -95,6 +99,7 @@ namespace Integrian
 		inline static bool m_IsLibraryDestroyed{ false };
 		unsigned int m_GameObjectID;
 		float m_TimeSinceLastUpdate;
+		RGBColour m_ClearColour;
 
 		std::array<std::unordered_map<ControllerInput, std::vector<CommandAndButton>>, 4> m_CC;
 		std::unordered_map<KeyboardInput, std::vector<CommandAndButton>> m_KC;
