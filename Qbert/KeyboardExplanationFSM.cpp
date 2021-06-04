@@ -8,6 +8,7 @@
 
 KeyboardExplanationFSM::KeyboardExplanationFSM(Integrian::GameObject* pParent)
 	: Component{ pParent }
+	, m_pBlackboard{ new Integrian::Blackboard{} }
 {
 }
 
@@ -22,15 +23,24 @@ void KeyboardExplanationFSM::PostInitialize()
 			m_pTextComponents.insert(std::make_pair(pair.first.m_Identifier, pair.second));
 }
 
+void KeyboardExplanationFSM::Update(const float)
+{
+	using namespace Integrian;
+
+	if (m_pBlackboard->GetData<bool>("LeftTopKeybindSet"))
+	{
+		App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame");
+	}
+}
+
 Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFSM() noexcept
 {
 	using namespace Integrian;
 
-	Blackboard* pBlackboard{ new Blackboard{} };
-	pBlackboard->AddData("RightTopKeybindSet", false);
-	pBlackboard->AddData("RightBottomKeybindSet", false);
-	pBlackboard->AddData("LeftTopKeybindSet", false);
-	pBlackboard->AddData("LeftBottomKeybindSet", false);
+	m_pBlackboard->AddData("RightTopKeybindSet", false);
+	m_pBlackboard->AddData("RightBottomKeybindSet", false);
+	m_pBlackboard->AddData("LeftTopKeybindSet", false);
+	m_pBlackboard->AddData("LeftBottomKeybindSet", false);
 
 	std::shared_ptr<FSMState> rightTopState{ new FSMState{
 	[this](Blackboard*, FSMStateTransition transition)
@@ -128,7 +138,7 @@ Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFS
 	}
 } };
 
-	FiniteStateMachineComponent* pFSM{ new FiniteStateMachineComponent{m_pParent, rightTopState, pBlackboard} };
+	FiniteStateMachineComponent* pFSM{ new FiniteStateMachineComponent{m_pParent, rightTopState, m_pBlackboard} };
 	pFSM->AddTransition(rightTopState, rightBottomState, toRightBottom);
 	pFSM->AddTransition(rightBottomState, leftBottomState, toLeftBottom);
 	pFSM->AddTransition(leftBottomState, leftTopState, toLeftTop);
