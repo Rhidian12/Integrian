@@ -16,6 +16,7 @@
 #include "QbertFSM.h"
 #include <TextComponent.h>
 #include "ScoreListenerComponent.h"
+#include "LifeCounterComponent.h"
 
 Qbert_MainGame::Qbert_MainGame()
 	: Integrian::App{ "Qbert_MainGame" }
@@ -25,6 +26,8 @@ Qbert_MainGame::Qbert_MainGame()
 void Qbert_MainGame::Start()
 {
 	using namespace Integrian;
+
+	TextureManager::GetInstance().AddTexture("QbertHealth", "Resources/Images/UI/QbertHealth.png");
 
 	SetClearColour(RGBColour{ 49.f, 34.f, 119.f });
 
@@ -62,6 +65,14 @@ void Qbert_MainGame::Start()
 		TextureManager::GetInstance().GetTexture("QbertLevel" + std::to_string(pTileFactoryComponent->GetLevel()) + "ActiveTileTexture") });
 	pChangeToTile->transform.SetPosition(Point2f{ 50.f, 300.f });
 	AddGameObject("ChangeToTile", pChangeToTile);
+
+	GameObject* pLifeCounter{ new GameObject{} };
+	pLifeCounter->AddComponent(new LifeCounterComponent{ pLifeCounter });
+	TextureComponent* pQbertLifeTexture{ new TextureComponent{ pLifeCounter, TextureManager::GetInstance().GetTexture("QbertHealth") } };
+	pQbertLifeTexture->SetSourceRect(Rectf{0.f, 0.f, pQbertLifeTexture->GetTexture()->GetWidth(), pQbertLifeTexture->GetTexture()->GetHeight() / 3.f });
+	pLifeCounter->AddComponent(pQbertLifeTexture);
+	pLifeCounter->transform.SetPosition(Point2f{ 50.f, 250.f });
+	AddGameObject("LifeCounter", pLifeCounter);
 
 	//pPyramidRoot->transform.SetScale(2.f, 2.f);
 	//pQbert->transform.SetScale(2.f, 2.f);

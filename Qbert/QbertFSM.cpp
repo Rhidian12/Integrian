@@ -118,7 +118,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 		else // there is no connection == jumping off the map
 		{
 			endPosition = qbertPosition + vectorTowardsOtherTile;
-			EventQueue::GetInstance().QueueEvent(Event{ "QbertMoveOffTheMap" });
+			EventQueue::GetInstance().QueueEvent(Event{ "QbertDeath" });
 		}
 
 		pBlackboard->ChangeData("CanMoveAgain", false); // make sure we cant move while we're still moving
@@ -155,6 +155,14 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 			}
 
 			pBlackboard->ChangeData("QbertVelocity", Vector2f{});
+
+			//pBlackboard->ChangeData("CurrentQbertWaitTimer", pBlackboard->GetData<float>("CurrentQbertWaitTimer") + dt);
+			//if (pBlackboard->GetData<bool>("CurrentQbertWaitTimer") >= pBlackboard->GetData<bool>("QbertWaitTimer"))
+			//{
+			//	pBlackboard->ChangeData("CurrentQbertWaitTimer", 0.f);
+			//}
+
+			std::cout << "CAN MOVE AGAIN" << std::endl;
 			pBlackboard->ChangeData("CanMoveAgain", true);
 		}
 	} } };
@@ -251,9 +259,44 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 	}
 	} };
 
+	std::shared_ptr<FSMState> pResetState{ new FSMState{
+	[](Blackboard* pBlackboard, FSMStateTransition)
+		{
+			pBlackboard->ChangeData("CurrentQbertWaitTimer", 0.f);
+		},
+	[](Blackboard*, const float) {},
+	[](Blackboard* pBlackboard, const float dt)
+		{
+			pBlackboard->ChangeData("CurrentQbertWaitTimer", pBlackboard->GetData<float>("CurrentQbertWaitTimer") + dt);
+			if (pBlackboard->GetData<float>("CurrentQbertWaitTimer") >= pBlackboard->GetData<float>("QbertWaitTimer"))
+			{
+				pBlackboard->ChangeData("CurrentQbertWaitTimer", 0.f);
+				pBlackboard->ChangeData("CanMoveAgain", true);
+				pBlackboard->ChangeData("ShouldReset", false);
+			}
+		}
+	} };
+
+	std::shared_ptr<FSMTransition> pToResetState{ new FSMTransition{
+	[](Blackboard* pBlackboard)->bool
+		{
+			return pBlackboard->GetData<bool>("ShouldReset");
+		}
+	} };
+
+	std::shared_ptr<FSMTransition> pToStandingState{ new FSMTransition{
+	[](Blackboard* pBlackboard)->bool
+		{
+			return pBlackboard->GetData<bool>("CanMoveAgain");
+		}
+	} };
+
+
 	m_pFSM = new FiniteStateMachineComponent{ m_pParent, pStandingState, pNewBlackboard };
 	m_pFSM->AddTransition(pStandingState, pTpState, pToTeleporterTransition);
 	m_pFSM->AddTransition(pTpState, pStandingState, pToStandingTransition);
+	m_pFSM->AddTransition(pStandingState, pResetState, pToResetState);
+	m_pFSM->AddTransition(pResetState, pStandingState, pToStandingState);
 
 	m_pParent->AddComponent(m_pFSM);
 }
@@ -282,6 +325,9 @@ void QbertFSM::PostInitialize()
 	pBlackboard->AddData("IsLeftTeleporterActive", false);
 	pBlackboard->AddData("IsRightTeleporterActive", false);
 	pBlackboard->AddData("PyramidSize", pPyramid->GetParent()->GetComponentByType<TileFactoryComponent>()->GetSize());
+	pBlackboard->AddData("QbertWaitTimer", 0.5f);
+	pBlackboard->AddData("CurrentQbertWaitTimer", 0.f);
+	pBlackboard->AddData("ShouldReset", false);
 }
 
 void QbertFSM::Reset()
@@ -293,7 +339,9 @@ void QbertFSM::Reset()
 
 	Blackboard* pBlackboard{ m_pFSM->GetBlackboard() };
 	pBlackboard->ChangeData("QbertVelocity", Vector2f{});
-	pBlackboard->ChangeData("CanMoveAgain", true);
+	pBlackboard->ChangeData("ShouldReset", true);
+	pBlackboard->ChangeData("CanMoveAgain", false);
+	//pBlackboard->ChangeData("EndPosition", pPyramid->GetTopTileCenter());
 
 	m_pParent->transform.SetPosition(pPyramid->GetTopTileCenter());
 }

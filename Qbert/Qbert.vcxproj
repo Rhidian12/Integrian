@@ -188,6 +188,7 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
     <ClCompile Include="ControlsScreen.cpp" />
     <ClCompile Include="KeyboardExplanationFSM.cpp" />
     <ClCompile Include="KeyboardExplanationScreen.cpp" />
+    <ClCompile Include="LifeCounterComponent.cpp" />
     <ClCompile Include="PyramidComponent.cpp" />
     <ClCompile Include="Qbert.cpp" />
     <ClCompile Include="QbertCollisionComponent.cpp" />
@@ -212,6 +213,7 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
     <ClInclude Include="ControlsScreen.h" />
     <ClInclude Include="KeyboardExplanationFSM.h" />
     <ClInclude Include="KeyboardExplanationScreen.h" />
+    <ClInclude Include="LifeCounterComponent.h" />
     <ClInclude Include="PyramidComponent.h" />
     <ClInclude Include="QbertCollisionComponent.h" />
     <ClInclude Include="QbertFSM.h" />

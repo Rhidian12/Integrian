@@ -28,7 +28,7 @@ namespace Integrian
 			m_Data = data;
 		}
 
-		inline const Type& GetData() const
+		inline const Type GetData() const noexcept
 		{
 			return m_Data;
 		}
@@ -60,7 +60,6 @@ namespace Integrian
 		inline void ChangeData(const std::string& id, const Type data) noexcept
 		{
 			const UMapCIt cIt{ m_pData.find(id) };
-
 			if (cIt != m_pData.cend())
 				static_cast<BlackboardData<Type>*>(m_pData[id].get())->SetData(data);
 #ifdef _DEBUG
@@ -70,12 +69,12 @@ namespace Integrian
 		}
 
 		template<typename Type>
-		inline const Type GetData(const std::string& id) const noexcept
+		inline const Type GetData(const std::string& id) noexcept
 		{
 			const UMapCIt cIt{ m_pData.find(id) };
 
 			if (cIt != m_pData.cend())
-				return static_cast<BlackboardData<Type>*>(cIt->second.get())->GetData();
+				return static_cast<BlackboardData<Type>*>(m_pData[id].get())->GetData();
 #ifdef _DEBUG
 			else
 				Logger::LogWarning("Blackboard::GetData() did not find data with ID: " + id + "\n");
