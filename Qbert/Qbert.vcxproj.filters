@@ -73,6 +73,15 @@
     <Filter Include="Source Files\Components\ButtonHandlerComponent">
       <UniqueIdentifier>{b26fc6eb-f8bb-4be9-9d1a-f6b7ce4af76f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Apps\ControlsScreen">
+      <UniqueIdentifier>{2cb5726c-cdf3-42ef-8b56-575e761850cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Apps\KeyboardExplanationScreen">
+      <UniqueIdentifier>{54a9df45-6136-476d-be24-da10873ce392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateMachines\KeyboardExplanationFSM">
+      <UniqueIdentifier>{9f6ba20c-d38a-4484-87cd-f6d89b4c9403}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -129,6 +138,15 @@
     <ClCompile Include="ButtonHandlerComponent.cpp">
       <Filter>Source Files\Components\ButtonHandlerComponent</Filter>
     </ClCompile>
+    <ClCompile Include="ControlsScreen.cpp">
+      <Filter>Source Files\Apps\ControlsScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardExplanationScreen.cpp">
+      <Filter>Source Files\Apps\KeyboardExplanationScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardExplanationFSM.cpp">
+      <Filter>Source Files\StateMachines\KeyboardExplanationFSM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidComponent.h">
@@ -181,6 +199,15 @@
     </ClInclude>
     <ClInclude Include="ButtonHandlerComponent.h">
       <Filter>Source Files\Components\ButtonHandlerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlsScreen.h">
+      <Filter>Source Files\Apps\ControlsScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardExplanationScreen.h">
+      <Filter>Source Files\Apps\KeyboardExplanationScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardExplanationFSM.h">
+      <Filter>Source Files\StateMachines\KeyboardExplanationFSM</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

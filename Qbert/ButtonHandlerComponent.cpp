@@ -99,6 +99,18 @@ bool ButtonHandlerComponent::OnEvent(const Integrian::Event& event)
 		return true;
 	}
 
+	if (eventName == "KeyboardExplanationScreen")
+	{
+		App_Selector::GetInstance().SetActiveApplication("KeyboardExplanationScreen");
+		return true;
+	}
+
+	if (eventName == "ControllerExplanationScreen")
+	{
+		App_Selector::GetInstance().SetActiveApplication("ControlsScreen");
+		return true;
+	}
+
 	if (eventName == "ExitGame")
 	{
 		SDL_Event e{};

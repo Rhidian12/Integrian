@@ -35,7 +35,7 @@ void Qbert_StartMenu::Start()
 	GameObject* pStartButton{ new GameObject{} };
 	pStartButton->SetTag("Button");
 	TextComponent* pStartText{ new TextComponent{ pStartButton, "Start Game", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
-	pStartButton->AddComponent(new ButtonComponent{ pStartButton, "StartGame" });
+	pStartButton->AddComponent(new ButtonComponent{ pStartButton, "ControlsScreen" });
 	pStartButton->AddComponent(pStartText);
 	pStartButton->transform.SetPosition(Point2f{ center.x - pStartText->GetWidth() / (pStartText->GetTextToRender().size() + 3), center.y + 50.f });
 	AddGameObject("StartButton", pStartButton);
@@ -45,7 +45,7 @@ void Qbert_StartMenu::Start()
 	TextComponent* pEndText{ new TextComponent{ pQuitButton, "Exit", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
 	pQuitButton->AddComponent(new ButtonComponent{ pQuitButton, "ExitGame" });
 	pQuitButton->AddComponent(pEndText);
-	pQuitButton->transform.SetPosition(Point2f{ center.x - pStartText->GetWidth() / (pStartText->GetTextToRender().size() + 3), center.y });
+	pQuitButton->transform.SetPosition(Point2f{ center.x - pStartText->GetWidth() / (pStartText->GetTextToRender().size() + 3), center.y - 50.f});
 	AddGameObject("QuitButton", pQuitButton);
 	
 	GameObject* pButtonHandler{ new GameObject{} };
