@@ -43,7 +43,7 @@ void KeyboardExplanationScreen::Start()
 
 	GameObject* pLeftTopText{ new GameObject{} };
 	pLeftTopText->SetTag("Text");
-	TextComponent* pLeftTopTextComponent{ new TextComponent{ pLeftTopText, "assign a button for left bottom movement", "Resources/Fonts/QbertFont.ttf", 15, RGBColour{255.f, 255.f, 0.f} } };
+	TextComponent* pLeftTopTextComponent{ new TextComponent{ pLeftTopText, "assign a button for left top movement", "Resources/Fonts/QbertFont.ttf", 15, RGBColour{255.f, 255.f, 0.f} } };
 	pLeftTopText->AddComponent(pLeftTopTextComponent);
 	pLeftTopText->transform.SetPosition(Point2f{ center.x - 300.f, center.y });
 	pLeftTopText->SetIsActive(false);
