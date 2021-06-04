@@ -34,6 +34,7 @@ Integrian::FiniteStateMachineComponent* TileFSM::CreatePermanentFSM(Integrian::T
 			{
 				pTextureComponent->SetTexture(pBlackboard->GetData<Texture*>("ActiveTexture"));
 				pBlackboard->ChangeData("TileChanged", nullptr);
+				EventQueue::GetInstance().QueueEvent(Event{ "TileChanged", 25 });
 			}
 		}
 	}

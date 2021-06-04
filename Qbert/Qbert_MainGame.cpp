@@ -15,6 +15,7 @@
 #include "QbertCollisionComponent.h"
 #include "QbertFSM.h"
 #include <TextComponent.h>
+#include "ScoreListenerComponent.h"
 
 Qbert_MainGame::Qbert_MainGame()
 	: Integrian::App{ "Qbert_MainGame" }
@@ -36,7 +37,6 @@ void Qbert_MainGame::Start()
 	TileFactoryComponent* pTileFactoryComponent{ new TileFactoryComponent{pPyramidRoot} };
 	pTileFactoryComponent->CreateTiles(1);
 	pPyramidRoot->AddComponent(pTileFactoryComponent);
-
 	AddGameObject("PyramidRoot", pPyramidRoot);
 
 	GameObject* pQbert{ new GameObject{} };
@@ -44,8 +44,13 @@ void Qbert_MainGame::Start()
 	pQbert->AddComponent(new QbertSpriteComponent{ pQbert });
 	pQbert->AddComponent(new QbertCollisionComponent{ pQbert });
 	pQbert->transform.SetPosition(pPyramidComponent->GetTopTileCenter());
-
 	AddGameObject("Qbert", pQbert);
+
+	GameObject* pScoreCounter{ new GameObject{} };
+	pScoreCounter->AddComponent(new TextComponent{ pScoreCounter, "score: ", "Resources/Fonts/QbertFont.ttf", 15, RGBColour{255.f, 255.f, 0.f} });
+	pScoreCounter->AddComponent(new ScoreListenerComponent{ pScoreCounter });
+	pScoreCounter->transform.SetPosition(Point2f{ 50.f, 400.f });
+	AddGameObject("ScoreCounter", pScoreCounter);
 
 	//pPyramidRoot->transform.SetScale(2.f, 2.f);
 	//pQbert->transform.SetScale(2.f, 2.f);

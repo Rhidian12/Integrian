@@ -82,6 +82,9 @@
     <Filter Include="Source Files\StateMachines\KeyboardExplanationFSM">
       <UniqueIdentifier>{9f6ba20c-d38a-4484-87cd-f6d89b4c9403}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\ScoreListenerComponent">
+      <UniqueIdentifier>{7c603829-0d90-4545-bb73-c88efa9c40fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -147,6 +150,9 @@
     <ClCompile Include="KeyboardExplanationFSM.cpp">
       <Filter>Source Files\StateMachines\KeyboardExplanationFSM</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreListenerComponent.cpp">
+      <Filter>Source Files\Components\ScoreListenerComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidComponent.h">
@@ -208,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="KeyboardExplanationFSM.h">
       <Filter>Source Files\StateMachines\KeyboardExplanationFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreListenerComponent.h">
+      <Filter>Source Files\Components\ScoreListenerComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
