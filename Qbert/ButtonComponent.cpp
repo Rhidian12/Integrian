@@ -19,7 +19,7 @@ void ButtonComponent::PostInitialize()
 				return;
 
 			EventQueue::GetInstance().QueueEvent(Event{ m_Event });
-		}, State::OnPress);
+		}, State::OnRelease);
 
 	InputManager::GetInstance().AddCommand(GameInput{ ControllerInput::ButtonA }, [this]()
 		{
@@ -27,7 +27,7 @@ void ButtonComponent::PostInitialize()
 				return;
 
 			EventQueue::GetInstance().QueueEvent(Event{ m_Event });
-		}, State::OnPress);
+		}, State::OnRelease);
 }
 
 void ButtonComponent::SetIsSelected(bool isSelected)

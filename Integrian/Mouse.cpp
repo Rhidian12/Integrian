@@ -79,3 +79,10 @@ void Integrian::Mouse::RemoveCommand(const std::function<void()>& pCommand)
 			if (commandAndButton.pCommand.target_type().hash_code() == pCommand.target_type().hash_code())
 				m_MouseCommands.erase(commandPair.first);
 }
+
+void Integrian::Mouse::ResetInputs()
+{
+	for (std::pair<const MouseButton, std::vector<CommandAndButton>>& commandPair : m_MouseCommands)
+		for (CommandAndButton& commandAndButton : commandPair.second)
+			commandAndButton.previousKeystate = State::NotPressed;
+}

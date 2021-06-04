@@ -30,6 +30,8 @@ namespace Integrian
 		void AddCommand(const KeyboardInput keyboardInput, const State keyState, const std::function<void()>& pCommand);
 		void ExecuteCommands();
 
+		void ResetInputs();
+
 		[[nodiscard]] bool IsPressed(const KeyboardInput gameInput) const;
 		bool WasPressed(const State previousState) const;
 		State GetKeystate(const KeyboardInput keyboardInput, const State previousState) const;

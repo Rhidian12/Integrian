@@ -4,6 +4,7 @@
 #include "Qbert_MainGame.h"
 #include "Qbert_StartMenu.h"
 #include "ControlsScreen.h"
+#include "KeyboardExplanationScreen.h"
 
 int main(int, char**)
 {
@@ -12,6 +13,7 @@ int main(int, char**)
 	Integrian::App_Selector& appSelector{ Integrian::App_Selector::GetInstance() };
 	appSelector.AddApplication(new Qbert_MainGame{});
 	appSelector.AddApplication(new Qbert_StartMenu{});
+	appSelector.AddApplication(new KeyboardExplanationScreen{});
 	appSelector.AddApplication(new ControlsScreen{});
 
 	appSelector.SetActiveApplication("StartMenu");

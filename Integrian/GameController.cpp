@@ -142,3 +142,10 @@ void Integrian::GameController::RemoveCommand(const std::function<void()>& pComm
 			if (commandAndButton.pCommand.target_type().hash_code() == pCommand.target_type().hash_code())
 				m_pCommands.erase(commandPair.first);
 }
+
+void Integrian::GameController::ResetInputs()
+{
+	for (std::pair<const ControllerInput, std::vector<CommandAndButton>>& commandPair : m_pCommands)
+		for (CommandAndButton& commandAndButton : commandPair.second)
+			commandAndButton.previousKeystate = State::NotPressed;
+}

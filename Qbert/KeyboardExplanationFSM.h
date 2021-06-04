@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include <Component.h>
 #include <string>
+#include <PossibleInputs.h>
+#include <vector>
 
 namespace Integrian
 {
@@ -24,5 +26,6 @@ public:
 private:
 	std::unordered_map<std::string, Integrian::GameObject*> m_pTextComponents;
 	Integrian::Blackboard* m_pBlackboard;
+	std::vector<Integrian::KeyboardInput> m_SelectedKeyboardInputs;
 };
 

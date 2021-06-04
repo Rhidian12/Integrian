@@ -33,6 +33,8 @@ namespace Integrian
 		
 		void RemoveCommand(const std::function<void()>& pCommand);
 
+		void ResetInputs();
+
 		std::unordered_map<MouseButton, std::vector<CommandAndButton>> m_MouseCommands{};
 
 		using CommandPair = std::pair<MouseButton, std::vector<CommandAndButton>>;

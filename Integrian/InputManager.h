@@ -77,6 +77,8 @@ namespace Integrian
 		/* Returns the map containing all inputs (with corresponding commands) linked to controller buttons */
 		[[nodiscard]] const std::unordered_map<ControllerInput, std::vector<CommandAndButton>>& GetControllerCommands(const uint8_t index) const;
 
+		void ResetInputs();
+
 	private:
 		friend class App;
 		friend class Singleton<InputManager>;

@@ -9,6 +9,7 @@
 KeyboardExplanationFSM::KeyboardExplanationFSM(Integrian::GameObject* pParent)
 	: Component{ pParent }
 	, m_pBlackboard{ new Integrian::Blackboard{} }
+	, m_SelectedKeyboardInputs{}
 {
 }
 
@@ -45,8 +46,11 @@ Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFS
 	std::shared_ptr<FSMState> rightTopState{ new FSMState{
 	[this](Blackboard*, FSMStateTransition transition)
 		{
-			if(transition == FSMStateTransition::OnExit)
+			if (transition == FSMStateTransition::OnExit)
+			{
+				SDL_PumpEvents();
 				m_pTextComponents.find("RightTopText")->second->SetIsActive(false);
+			}
 		},
 	[](Blackboard*, const float) {},
 	[this](Blackboard* pBlackboard, const float)
@@ -56,6 +60,7 @@ Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFS
 			{
 				EventQueue::GetInstance().QueueEvent(Event{"RightTopKeybind", pressedKey});
 				pBlackboard->ChangeData("RightTopKeybindSet", true);
+				m_SelectedKeyboardInputs.push_back(pressedKey);
 			}
 		}
 	} };
@@ -69,10 +74,16 @@ Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFS
 	std::shared_ptr<FSMState> rightBottomState{ new FSMState{
 	[this](Blackboard*, FSMStateTransition transition)
 		{
-			if(transition == FSMStateTransition::OnEnter)
+			if (transition == FSMStateTransition::OnEnter)
+			{
+				InputManager::GetInstance().ResetInputs();
 				m_pTextComponents.find("RightBottomText")->second->SetIsActive(true);
+			}
 			else
+			{
+				SDL_PumpEvents();
 				m_pTextComponents.find("RightBottomText")->second->SetIsActive(false);
+			}
 		},
 	[](Blackboard*, const float) {},
 	[this](Blackboard* pBlackboard, const float)
@@ -80,8 +91,14 @@ Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFS
 		const KeyboardInput pressedKey{ InputManager::GetInstance().GetWhichKeyIsPressed() };
 		if (pressedKey != KeyboardInput::INVALID)
 		{
-			EventQueue::GetInstance().QueueEvent(Event{"RightBottomKeybind", pressedKey});
-			pBlackboard->ChangeData("RightBottomKeybindSet", true);
+			const std::vector<KeyboardInput>::const_iterator cIt{ std::find(m_SelectedKeyboardInputs.cbegin(), m_SelectedKeyboardInputs.cend(), pressedKey) };
+
+			if (cIt == m_SelectedKeyboardInputs.cend())
+			{
+				EventQueue::GetInstance().QueueEvent(Event{"RightBottomKeybind", pressedKey});
+				pBlackboard->ChangeData("RightBottomKeybindSet", true);
+				m_SelectedKeyboardInputs.push_back(pressedKey);
+			}
 		}
 	}
 } };
@@ -95,10 +112,16 @@ Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFS
 	std::shared_ptr<FSMState> leftBottomState{ new FSMState{
 	[this](Blackboard*, FSMStateTransition transition)
 		{
-			if(transition == FSMStateTransition::OnEnter)
+			if (transition == FSMStateTransition::OnEnter)
+			{
+				InputManager::GetInstance().ResetInputs();
 				m_pTextComponents.find("LeftBottomText")->second->SetIsActive(true);
+			}
 			else
+			{
+				SDL_PumpEvents();
 				m_pTextComponents.find("LeftBottomText")->second->SetIsActive(false);
+			}
 		},
 	[](Blackboard*, const float) {},
 	[this](Blackboard* pBlackboard, const float)
@@ -106,8 +129,14 @@ Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFS
 		const KeyboardInput pressedKey{ InputManager::GetInstance().GetWhichKeyIsPressed() };
 		if (pressedKey != KeyboardInput::INVALID)
 		{
-			EventQueue::GetInstance().QueueEvent(Event{"LeftBottomKeybind", pressedKey});
-			pBlackboard->ChangeData("LeftBottomKeybindSet", true);
+			const std::vector<KeyboardInput>::const_iterator cIt{ std::find(m_SelectedKeyboardInputs.cbegin(), m_SelectedKeyboardInputs.cend(), pressedKey) };
+
+			if (cIt == m_SelectedKeyboardInputs.cend())
+			{
+				EventQueue::GetInstance().QueueEvent(Event{"LeftBottomKeybind", pressedKey});
+				pBlackboard->ChangeData("LeftBottomKeybindSet", true);
+				m_SelectedKeyboardInputs.push_back(pressedKey);
+			}
 		}
 	}
 } };
@@ -122,9 +151,15 @@ Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFS
 	[this](Blackboard*, FSMStateTransition transition)
 		{
 			if (transition == FSMStateTransition::OnEnter)
+			{
+				InputManager::GetInstance().ResetInputs();
 				m_pTextComponents.find("LeftTopText")->second->SetIsActive(true);
+			}
 			else
+			{
+				SDL_PumpEvents();
 				m_pTextComponents.find("LeftTopText")->second->SetIsActive(false);
+			}
 		},
 	[](Blackboard*, const float) {},
 	[this](Blackboard* pBlackboard, const float)
@@ -132,8 +167,14 @@ Integrian::FiniteStateMachineComponent* KeyboardExplanationFSM::CreateKeyboardFS
 		const KeyboardInput pressedKey{ InputManager::GetInstance().GetWhichKeyIsPressed() };
 		if (pressedKey != KeyboardInput::INVALID)
 		{
-			EventQueue::GetInstance().QueueEvent(Event{"LeftTopKeybind", pressedKey});
-			pBlackboard->ChangeData("LeftTopKeybindSet", true);
+			const std::vector<KeyboardInput>::const_iterator cIt{ std::find(m_SelectedKeyboardInputs.cbegin(), m_SelectedKeyboardInputs.cend(), pressedKey) };
+
+			if (cIt == m_SelectedKeyboardInputs.cend())
+			{
+				EventQueue::GetInstance().QueueEvent(Event{"LeftTopKeybind", pressedKey});
+				pBlackboard->ChangeData("LeftTopKeybindSet", true);
+				m_SelectedKeyboardInputs.push_back(pressedKey);
+			}
 		}
 	}
 } };

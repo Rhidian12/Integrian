@@ -167,3 +167,11 @@ const std::unordered_map<Integrian::ControllerInput, std::vector<Integrian::Comm
 {
 	return m_Controllers[index].GetCommands();
 }
+
+void Integrian::InputManager::ResetInputs()
+{
+	m_Keyboard.ResetInputs();
+	m_Mouse.ResetInputs();
+	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
+		m_Controllers[i].ResetInputs();
+}

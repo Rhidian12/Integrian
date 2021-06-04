@@ -42,8 +42,18 @@ void Integrian::Keyboard::ExecuteCommands()
 	}
 }
 
+void Integrian::Keyboard::ResetInputs()
+{
+	for (std::pair<const KeyboardInput, std::vector<CommandAndButton>>& commandPair : m_KeyboardCommands)
+		for (CommandAndButton& commandAndButton : commandPair.second)
+			commandAndButton.previousKeystate = State::NotPressed;
+}
+
 bool Integrian::Keyboard::IsPressed(const KeyboardInput gameInput) const
 {
+	if (gameInput == KeyboardInput::INVALID)
+		return false;
+
 	return SDL_GetKeyboardState(nullptr)[static_cast<SDL_Scancode>(gameInput)];
 }
 

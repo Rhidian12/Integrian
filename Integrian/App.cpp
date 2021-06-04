@@ -420,4 +420,12 @@ void Integrian::App::OnAppExit()
 	m_MC = std::remove_reference_t<MC>(InputManager::GetInstance().GetMouseCommands());
 
 	InputManager::GetInstance().RemoveAllCommands();
+	InputManager::GetInstance().ResetInputs();
+
+	// TODO: Make this just a second delay instead of forcing this a million times
+	for (int i{}; i < 1'000'000; ++i)
+	{
+		SDL_FlushEvents(SDL_QUIT, SDL_LASTEVENT);
+		SDL_PumpEvents();
+	}
 }

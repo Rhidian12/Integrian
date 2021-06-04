@@ -41,6 +41,8 @@ namespace Integrian
 
 		void RemoveCommand(const std::function<void()>& pCommand);
 
+		void ResetInputs();
+
 		std::unordered_map<ControllerInput, std::vector<CommandAndButton>> m_pCommands{};
 
 		SDL_GameController* m_pSDLGameController{};
