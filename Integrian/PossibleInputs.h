@@ -126,9 +126,9 @@ namespace Integrian
 		RMBandMMB	= SDL_BUTTON(SDL_BUTTON_RIGHT)	| SDL_BUTTON(SDL_BUTTON_MIDDLE), // 0x0006
 	};
 
-	enum class KeyboardInput : Uint8
+	enum class KeyboardInput : uint32_t
 	{
-		INVALID				= std::numeric_limits<Uint8>::max(), // internal usage
+		INVALID				= std::numeric_limits<uint32_t>::max(), // internal usage
 		A					= SDL_SCANCODE_A,
 		B					= SDL_SCANCODE_B,
 		C					= SDL_SCANCODE_C,

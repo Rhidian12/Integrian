@@ -123,6 +123,11 @@ bool Integrian::InputManager::IsKeyboardKeyPressed(const KeyboardInput gameInput
 	return m_Keyboard.IsPressed(gameInput);
 }
 
+const Integrian::KeyboardInput Integrian::InputManager::GetWhichKeyIsPressed() const noexcept
+{
+	return m_Keyboard.GetWhichKeyIsPressed();
+}
+
 bool Integrian::InputManager::IsMouseButtonPressed(const MouseButton gameInput) const
 {
 	return m_Mouse.IsPressed(gameInput);

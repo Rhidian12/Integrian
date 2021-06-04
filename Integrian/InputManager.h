@@ -48,6 +48,8 @@ namespace Integrian
 		/* Returns whether a keyboard key is pressed now */
 		[[nodiscard]] bool IsKeyboardKeyPressed(const KeyboardInput gameInput) const;
 
+		[[nodiscard]] const KeyboardInput GetWhichKeyIsPressed() const noexcept;
+
 		/* Returns whether a mouse button is pressed now */
 		[[nodiscard]] bool IsMouseButtonPressed(const MouseButton gameInput) const;
 

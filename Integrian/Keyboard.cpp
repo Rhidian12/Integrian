@@ -74,6 +74,18 @@ const std::unordered_map<Integrian::KeyboardInput, std::vector<Integrian::Comman
 	return m_KeyboardCommands;
 }
 
+Integrian::KeyboardInput Integrian::Keyboard::GetWhichKeyIsPressed() const noexcept
+{
+	const Uint8* pKeyboardState{ SDL_GetKeyboardState(nullptr) };
+
+	for (int i{ static_cast<int>(SDL_SCANCODE_A) }; i <= SDL_SCANCODE_AUDIOFASTFORWARD; ++i) // SDL_NUM_SCANCODES is incorrect?
+		if (pKeyboardState[static_cast<SDL_Scancode>(i)])
+			if (AllPossibleKeyboardEnumCheck::isValue(static_cast<KI>(i)))
+				return static_cast<KI>(i);
+
+	return KI::INVALID;
+}
+
 void Integrian::Keyboard::RemoveCommand(const std::function<void()>& pCommand)
 {
 	for (const CommandPair& commandPair : m_KeyboardCommands)
