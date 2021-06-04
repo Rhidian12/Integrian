@@ -1,6 +1,7 @@
 #pragma once
 #include <Component.h> // Integrian::Component
 #include <vector> // std::vector
+#include <ListenerInterface.h>
 
 namespace Integrian
 {
@@ -10,7 +11,7 @@ namespace Integrian
 }
 
 class PyramidComponent;
-class BallSpawnerComponent final : public Integrian::Component
+class BallSpawnerComponent final : public Integrian::Component, public Integrian::IListener
 {
 public:
 	BallSpawnerComponent(Integrian::GameObject* pParent, const unsigned int maxAllowedPerScreen);
@@ -20,7 +21,10 @@ public:
 	
 	virtual void Render() const override;
 
+	virtual bool OnEvent(const Integrian::Event& event) override;
+
 private:
+	void Reset();
 	Integrian::FiniteStateMachineComponent* CreateBallFSM(Integrian::GameObject* pParent, PyramidComponent* pPyramidComponent, const Integrian::Point2f& position, Integrian::TextureComponent* pTextureComponent) const noexcept;
 
 	unsigned int m_MaxAllowedBallsPerScreen;
@@ -28,5 +32,6 @@ private:
 	float m_CurrentTime;
 
 	std::vector<Integrian::GameObject*> m_pBalls;
+	std::vector<Integrian::Point2f> m_StartPositions;
 };
 

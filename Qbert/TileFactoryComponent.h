@@ -16,6 +16,7 @@ public:
 	void CreateTiles(const int level);
 
 	const unsigned int GetSize() const noexcept;
+	const int GetLevel() const noexcept;
 
 private:
 	Integrian::GameObject* CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture, const unsigned int index);

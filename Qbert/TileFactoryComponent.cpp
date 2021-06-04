@@ -98,6 +98,11 @@ const unsigned int TileFactoryComponent::GetSize() const noexcept
 	return m_Size;
 }
 
+const int TileFactoryComponent::GetLevel() const noexcept
+{
+	return m_Level;
+}
+
 Integrian::GameObject* TileFactoryComponent::CreateTile(const Integrian::Point2f& location, Integrian::Texture* pInactiveTileTexture, const unsigned int index)
 {
 	using namespace Integrian;

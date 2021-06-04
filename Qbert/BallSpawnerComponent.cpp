@@ -10,6 +10,7 @@
 #include <Blackboard.h>
 #include "PyramidComponent.h"
 #include "TileComponent.h"
+#include <EventQueue.h>
 
 BallSpawnerComponent::BallSpawnerComponent(Integrian::GameObject* pParent, const unsigned int maxAllowedPerScreen)
 	: Component{ pParent }
@@ -17,7 +18,9 @@ BallSpawnerComponent::BallSpawnerComponent(Integrian::GameObject* pParent, const
 	, m_SpawnTimer{ 5.f }
 	, m_CurrentTime{}
 	, m_pBalls{}
+	, m_StartPositions{}
 {
+	Integrian::EventQueue::GetInstance().AddListener(this);
 }
 
 void BallSpawnerComponent::PostInitialize()
@@ -37,6 +40,7 @@ void BallSpawnerComponent::PostInitialize()
 
 		const Point2f tilePos{ pPyramid->GetTiles()[i + 1]->GetComponentByType<TileComponent>()->GetCenter() };
 		pBall->transform.SetPosition(Point2f{ tilePos.x, tilePos.y + 50.f });
+		m_StartPositions.push_back(Point2f{ tilePos.x, tilePos.y + 50.f });
 
 		pBall->AddComponent(new BallMovementComponent{ pBall });
 		TextureComponent* pSprite{ new TextureComponent{ pBall, textureManager.GetTexture("Red Ball") } };
@@ -79,6 +83,31 @@ void BallSpawnerComponent::Update(const float dt)
 void BallSpawnerComponent::Render() const
 {
 
+}
+
+bool BallSpawnerComponent::OnEvent(const Integrian::Event& event)
+{
+	if (event.GetEvent() == "QbertDeath")
+	{
+		Reset();
+		return true;
+	}
+	return false;
+}
+
+void BallSpawnerComponent::Reset()
+{
+	using namespace Integrian;
+
+	m_CurrentTime = 0.f; // Reset timer
+
+	for (size_t i{}; i < m_pBalls.size(); ++i)
+	{
+		Blackboard* pBlackboard{ m_pBalls[i]->GetComponentByType<FiniteStateMachineComponent>()->GetBlackboard() };
+		m_pBalls[i]->SetIsActive(false);
+		m_pBalls[i]->transform.SetPosition(m_StartPositions[i]);
+		pBlackboard->ChangeData("ShouldReset", true);
+	}
 }
 
 Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Integrian::GameObject* pParent, PyramidComponent* pPyramidComponent, const Integrian::Point2f& position, Integrian::TextureComponent* pTextureComponent) const noexcept
@@ -241,7 +270,7 @@ Integrian::FiniteStateMachineComponent* BallSpawnerComponent::CreateBallFSM(Inte
 		const Point2f ballPosition{ pParent->transform.GetPosition() };
 		TileComponent* const pBallTile{ pPyramidComponent->GetTile(ballPosition) };
 
-		if (!pBallTile) // if we're not on a tile, it means we're from the pyramid and should be deleted
+		if (!pBallTile) // if we're not on a tile, it means we're from the pyramid and should reset
 		{
 			pParent->SetIsActive(false);
 			pParent->transform.SetPosition(position);

@@ -77,18 +77,16 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 
 	if (event.GetEvent() == "QbertMoveOffTheMap")
 	{
-		SDL_Event e{};
-		e.quit.type = SDL_QUIT;
-		SDL_PushEvent(&e);
+		EventQueue::GetInstance().QueueEvent(Event{ "QbertDeath" });
 
 		return true;
 	}
 
 	if (event.GetEvent() == "QbertDeath")
 	{
-		SDL_Event e{};
-		e.quit.type = SDL_QUIT;
-		SDL_PushEvent(&e);
+		//SDL_Event e{};
+		//e.quit.type = SDL_QUIT;
+		//SDL_PushEvent(&e);
 
 		return true;
 	}

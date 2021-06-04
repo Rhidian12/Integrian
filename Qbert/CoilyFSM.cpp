@@ -14,6 +14,7 @@
 #include <TextureComponent.h>
 #include <Texture.h>
 #include <TextureManager.h>
+#include <EventQueue.h>
 
 CoilyFSM::CoilyFSM(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -21,7 +22,7 @@ CoilyFSM::CoilyFSM(Integrian::GameObject* pParent)
 	, m_pQbert{}
 	, m_pGraph{}
 {
-	m_pBlackboard->AddData("ShouldContinue", true);
+	Integrian::EventQueue::GetInstance().AddListener(this);
 }
 
 void CoilyFSM::PostInitialize()
@@ -341,8 +342,40 @@ void CoilyFSM::PostInitialize()
 	pFSM->AddTransition(pDropDownState, pMoveDownPyramidState, pToMoveStateTransition);
 	pFSM->AddTransition(pMoveDownPyramidState, pDropDownState, pToDropDownStateTransition);
 	pFSM->AddTransition(pMoveDownPyramidState, pCoilyState, pToCoilyState);
+	pFSM->AddTransition(pCoilyState, pDropDownState, pToDropDownStateTransition);
 
 	m_pParent->AddComponent(pFSM);
+}
+
+void CoilyFSM::Reset()
+{
+	using namespace Integrian;
+
+	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
+
+	PyramidComponent* pPyramid{ pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>() };
+
+	const Point2f& tilePosition{ pPyramid->GetTiles()[1]->GetComponentByType<TileComponent>()->GetCenter() };
+	m_pBlackboard->ChangeData("ShouldReset", true);
+	m_pBlackboard->ChangeData("ReachedFirstEndPosition", false);
+	m_pBlackboard->ChangeData("BallVelocity", Vector2f{});
+	m_pBlackboard->ChangeData("CoilyVelocity", Vector2f{});
+	m_pBlackboard->ChangeData("ReachedEndOfPyramid", false);
+	TextureComponent* pTextureComponent{ m_pParent->GetComponentByType<TextureComponent>() };
+	pTextureComponent->SetTexture(TextureManager::GetInstance().GetTexture("CoilyBall"));
+	pTextureComponent->SetSourceRect(Rectf{ 0.f, 0.f, pTextureComponent->GetTexture()->GetWidth() / 2.f, pTextureComponent->GetTexture()->GetHeight() });
+	m_pParent->transform.SetPosition(Point2f{ tilePosition.x, tilePosition.y + 50.f });
+}
+
+bool CoilyFSM::OnEvent(const Integrian::Event& event)
+{
+	if (event.GetEvent() == "QbertDeath")
+	{
+		Reset();
+		return true;
+	}
+
+	return false;
 }
 
 void CoilyFSM::BFS(std::vector<int>& path, int startNode, int wantedNode)

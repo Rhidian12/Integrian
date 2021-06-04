@@ -284,6 +284,20 @@ void QbertFSM::PostInitialize()
 	pBlackboard->AddData("PyramidSize", pPyramid->GetParent()->GetComponentByType<TileFactoryComponent>()->GetSize());
 }
 
+void QbertFSM::Reset()
+{
+	using namespace Integrian;
+
+	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
+	PyramidComponent* pPyramid{ pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>() };
+
+	Blackboard* pBlackboard{ m_pFSM->GetBlackboard() };
+	pBlackboard->ChangeData("QbertVelocity", Vector2f{});
+	pBlackboard->ChangeData("CanMoveAgain", true);
+
+	m_pParent->transform.SetPosition(pPyramid->GetTopTileCenter());
+}
+
 bool QbertFSM::OnEvent(const Integrian::Event& event)
 {
 	const std::string eventName{ event.GetEvent() };
@@ -309,6 +323,12 @@ bool QbertFSM::OnEvent(const Integrian::Event& event)
 	if (eventName == "LeftTopKeybind")
 	{
 		m_Keybinds[KeybindMovementDirection::LeftTop] = std::get<0>(event.GetData<Integrian::KeyboardInput>());
+		return true;
+	}
+
+	if (eventName == "QbertDeath")
+	{
+		Reset();
 		return true;
 	}
 

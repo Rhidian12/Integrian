@@ -52,6 +52,17 @@ void Qbert_MainGame::Start()
 	pScoreCounter->transform.SetPosition(Point2f{ 50.f, 400.f });
 	AddGameObject("ScoreCounter", pScoreCounter);
 
+	GameObject* pChangeToText{ new GameObject{} };
+	pChangeToText->AddComponent(new TextComponent{ pChangeToText, "change to:", "Resources/Fonts/QbertFont.ttf", 15, RGBColour{255.f, 255.f, 0.f} });
+	pChangeToText->transform.SetPosition(Point2f{ 50.f, 350.f });
+	AddGameObject("ChangeToText", pChangeToText);
+
+	GameObject* pChangeToTile{ new GameObject{} };
+	pChangeToTile->AddComponent(new TextureComponent{ pChangeToTile,
+		TextureManager::GetInstance().GetTexture("QbertLevel" + std::to_string(pTileFactoryComponent->GetLevel()) + "ActiveTileTexture") });
+	pChangeToTile->transform.SetPosition(Point2f{ 50.f, 300.f });
+	AddGameObject("ChangeToTile", pChangeToTile);
+
 	//pPyramidRoot->transform.SetScale(2.f, 2.f);
 	//pQbert->transform.SetScale(2.f, 2.f);
 }

@@ -2,6 +2,7 @@
 #include <Component.h>
 #include <vector>
 #include <queue>
+#include <ListenerInterface.h>
 
 namespace Integrian
 {
@@ -12,12 +13,16 @@ namespace Integrian
 
 class QbertGraphComponent;
 class TileComponent;
-class CoilyFSM final : public Integrian::Component
+class CoilyFSM final : public Integrian::Component, public Integrian::IListener
 {
 public:
 	CoilyFSM(Integrian::GameObject* pParent);
 
 	virtual void PostInitialize() override;
+
+	void Reset();
+
+	virtual bool OnEvent(const Integrian::Event& event) override;
 
 private:
 	void BFS(std::vector<int>& path, int startNode, int wantedNote);

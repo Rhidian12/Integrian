@@ -42,6 +42,8 @@ public:
 
 	virtual void PostInitialize() override;
 
+	void Reset();
+
 	virtual bool OnEvent(const Integrian::Event& event) override;
 
 private:
