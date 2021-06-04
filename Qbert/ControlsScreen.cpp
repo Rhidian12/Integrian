@@ -22,14 +22,14 @@ void ControlsScreen::Start()
 	const Point2f center{ m_WindowWidth / 2.f, m_WindowHeight / 2.f };
 
 	GameObject* pControlsText{ new GameObject{} };
-	TextComponent* pControlsTextComponent{ new TextComponent{ pControlsText, "Keyboard or Controller?", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
+	TextComponent* pControlsTextComponent{ new TextComponent{ pControlsText, "keyboard or controller?", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
 	pControlsText->AddComponent(pControlsTextComponent);
 	pControlsText->transform.SetPosition(Point2f{ center.x - 280.f, center.y + 100.f });
 	AddGameObject("ControlsText", pControlsText);
 
 	GameObject* pKeyboardButton{ new GameObject{} };
 	pKeyboardButton->SetTag("Button");
-	TextComponent* pKeyboardText{ new TextComponent{ pKeyboardButton, "Keyboard", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
+	TextComponent* pKeyboardText{ new TextComponent{ pKeyboardButton, "keyboard", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
 	pKeyboardButton->AddComponent(new ButtonComponent{ pKeyboardButton, "KeyboardExplanationScreen" });
 	pKeyboardButton->AddComponent(pKeyboardText);
 	pKeyboardButton->transform.SetPosition(Point2f{ center.x - pKeyboardText->GetWidth() / (pKeyboardText->GetTextToRender().size() + 3), center.y + 50.f });
@@ -37,7 +37,7 @@ void ControlsScreen::Start()
 
 	GameObject* pControllerButton{ new GameObject{} };
 	pControllerButton->SetTag("Button");
-	TextComponent* pControllerText{ new TextComponent{ pControllerButton, "Controller", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
+	TextComponent* pControllerText{ new TextComponent{ pControllerButton, "controller", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
 	pControllerButton->AddComponent(new ButtonComponent{ pControllerButton, "ControllerExplanationScreen" });
 	pControllerButton->AddComponent(pControllerText);
 	pControllerButton->transform.SetPosition(Point2f{ center.x - 160.f, center.y });

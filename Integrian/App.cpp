@@ -423,6 +423,8 @@ void Integrian::App::OnAppExit()
 	InputManager::GetInstance().ResetInputs();
 
 	// TODO: Make this just a second delay instead of forcing this a million times
+	// If I haven't fixed this: I know it sucks, and I know how to do it better, truly
+	// I just don't have a lot of time atm
 	for (int i{}; i < 1'000'000; ++i)
 	{
 		SDL_FlushEvents(SDL_QUIT, SDL_LASTEVENT);
