@@ -391,22 +391,7 @@ void Integrian::App::ClearBackground() const
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Integrian::App::OnAppEnter()
-{
-	if (!m_CC.empty())
-	{
-		for (uint8_t i{}; i < 4; ++i)
-			InputManager::GetInstance().SetControllerCommands(m_CC[i], i);
-	}
-
-	if (!m_KC.empty())
-		InputManager::GetInstance().SetKeyboardCommands(m_KC);
-
-	if (!m_MC.empty())
-		InputManager::GetInstance().SetMouseCommands(m_MC);
-}
-
-void Integrian::App::OnAppExit()
+void Integrian::App::AppExit()
 {
 	using CC = std::unordered_map<ControllerInput, std::vector<CommandAndButton>>;
 	using KC = std::unordered_map<KeyboardInput, std::vector<CommandAndButton>>;
@@ -430,4 +415,23 @@ void Integrian::App::OnAppExit()
 		SDL_FlushEvents(SDL_QUIT, SDL_LASTEVENT);
 		SDL_PumpEvents();
 	}
+
+	OnAppExit();
+}
+
+void Integrian::App::AppEnter()
+{
+	if (!m_CC.empty())
+	{
+		for (uint8_t i{}; i < 4; ++i)
+			InputManager::GetInstance().SetControllerCommands(m_CC[i], i);
+	}
+
+	if (!m_KC.empty())
+		InputManager::GetInstance().SetKeyboardCommands(m_KC);
+
+	if (!m_MC.empty())
+		InputManager::GetInstance().SetMouseCommands(m_MC);
+
+	OnAppEnter();
 }

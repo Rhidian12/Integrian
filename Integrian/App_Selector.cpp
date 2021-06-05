@@ -35,10 +35,10 @@ void Integrian::App_Selector::SetActiveApplication(const std::string& name)
 	if (cIt != m_pApplications.cend())
 	{
 		if(m_pActiveApplication)
-			m_pActiveApplication->OnAppExit(); // first call the old app (if there is an old app) its OnAppExit()
+			m_pActiveApplication->AppExit(); // first call the old app (if there is an old app) its OnAppExit()
 
 		m_pActiveApplication = cIt->second; // Set new application
-		m_pActiveApplication->OnAppEnter(); // Call new application its OnAppEnter()
+		m_pActiveApplication->AppEnter(); // Call new application its OnAppEnter()
 	}
 	else
 		Logger::LogSevereError("Application with name: " + name + " was not found!\n");

@@ -36,8 +36,8 @@ namespace Integrian
 		virtual void FixedUpdate(const float) {}
 		virtual void LateUpdate(const float) {}
 
-		virtual void OnAppEnter();
-		virtual void OnAppExit();
+		virtual void OnAppEnter() {}
+		virtual void OnAppExit() {}
 
 		virtual void Render() const {}
 
@@ -90,6 +90,9 @@ namespace Integrian
 		bool InitializeLibraries();
 		void FinishInitializationOfApp();
 		void ClearBackground() const;
+
+		void AppExit();
+		void AppEnter();
 
 		void ShutDown();
 
