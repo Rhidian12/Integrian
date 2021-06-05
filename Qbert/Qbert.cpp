@@ -5,6 +5,7 @@
 #include "Qbert_StartMenu.h"
 #include "ControlsScreen.h"
 #include "KeyboardExplanationScreen.h"
+#include "EndScreen.h"
 
 int main(int, char**)
 {
@@ -15,6 +16,7 @@ int main(int, char**)
 	appSelector.AddApplication(new Qbert_StartMenu{});
 	appSelector.AddApplication(new KeyboardExplanationScreen{});
 	appSelector.AddApplication(new ControlsScreen{});
+	appSelector.AddApplication(new EndScreen{});
 
 	appSelector.SetActiveApplication("StartMenu");
 

@@ -22,12 +22,12 @@ bool ScoreListenerComponent::OnEvent(const Integrian::Event& event)
 	if (event.GetEvent() == "TileChanged")
 	{
 		std::string renderedText{ m_pTextComponent->GetTextToRender() };
-		
+
 		renderedText.erase(std::remove_if(renderedText.begin(), renderedText.end(), [](const char c)
 			{
 				return std::isdigit(c);
 			}), renderedText.end());
-		
+
 		m_Score += std::get<0>(event.GetData<int>());
 
 		renderedText += std::to_string(m_Score);
@@ -38,4 +38,9 @@ bool ScoreListenerComponent::OnEvent(const Integrian::Event& event)
 	}
 
 	return false;
+}
+
+const int ScoreListenerComponent::GetScore() const noexcept
+{
+	return m_Score;
 }

@@ -21,6 +21,9 @@ void LifeCounterComponent::PostInitialize()
 
 void LifeCounterComponent::Update(const float)
 {
+	if (m_Lives == 0)
+		m_pParent->SetIsActive(false);
+	else
 	m_pTextureComponent->SetSourceRect(Integrian::Rectf{ 0.f, 0.f,
 		m_pTextureComponent->GetTexture()->GetWidth(), (m_pTextureComponent->GetTexture()->GetHeight() / 3.f) * m_Lives });
 }
@@ -33,7 +36,7 @@ bool LifeCounterComponent::OnEvent(const Integrian::Event& event)
 
 		if (m_Lives < 0)
 		{
-			Integrian::App_Selector::GetInstance().SetActiveApplication("EndScreen");
+			Integrian::EventQueue::GetInstance().QueueEvent(Integrian::Event{ "GameOver" });
 		}
 
 		return true;

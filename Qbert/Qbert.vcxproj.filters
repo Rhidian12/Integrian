@@ -88,6 +88,9 @@
     <Filter Include="Source Files\Components\LifeCounterComponent">
       <UniqueIdentifier>{f42e2293-7cc6-4ef7-955b-9a4fd4762679}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Apps\EndScreen">
+      <UniqueIdentifier>{07e69e27-0768-46b0-a53f-842ebf70bc0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -159,6 +162,9 @@
     <ClCompile Include="LifeCounterComponent.cpp">
       <Filter>Source Files\Components\LifeCounterComponent</Filter>
     </ClCompile>
+    <ClCompile Include="EndScreen.cpp">
+      <Filter>Source Files\Apps\EndScreen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidComponent.h">
@@ -184,9 +190,6 @@
     </ClInclude>
     <ClInclude Include="BallMovementComponent.h">
       <Filter>Source Files\Components\BallMovementComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="TileFSM.h">
-      <Filter>Source Files\StateMachines\TileFSM</Filter>
     </ClInclude>
     <ClInclude Include="QbertCollisionComponent.h">
       <Filter>Source Files\Components\QbertCollisionComponent</Filter>
@@ -226,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="LifeCounterComponent.h">
       <Filter>Source Files\Components\LifeCounterComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="EndScreen.h">
+      <Filter>Source Files\Apps\EndScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="TileFSM.h">
+      <Filter>Source Files\StateMachines\TileFSM</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
