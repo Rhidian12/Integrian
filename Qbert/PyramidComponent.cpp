@@ -97,6 +97,30 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 		return true;
 	}
 
+	if (event.GetEvent() == "ResetGame")
+	{
+		TextureManager& textureManager{ TextureManager::GetInstance() };
+		for (GameObject* pTile : m_pTiles)
+		{
+			TextureComponent* pCurrentTexture{ pTile->GetComponentByType<TextureComponent>() };
+
+			const std::string& currentTextureName{ textureManager.GetTextureName(pCurrentTexture->GetTexture()) };
+
+			if (currentTextureName.find('A') != std::string::npos)
+			{
+				const size_t locationOfA{ currentTextureName.find_first_of('A') };
+				std::string activeTextureName{ currentTextureName.substr(0, locationOfA) };
+				activeTextureName += "Ina";
+				activeTextureName += currentTextureName.substr(locationOfA + 1, currentTextureName.size() - locationOfA - 1); // we need to get rid of 'A'
+				//activeTextureName[activeTextureName.find_first_of('a')] = 'A';
+
+				pCurrentTexture->SetTexture(textureManager.GetTexture(activeTextureName));
+			}
+		}
+
+		return true;
+	}
+
 	//if (event.GetEvent() == "QbertMovementEnded")
 	//{
 	//	TileComponent* pEndTile{ std::get<0>(event.GetData<TileComponent*>()) };

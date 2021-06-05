@@ -7,7 +7,6 @@
 ScoreListenerComponent::ScoreListenerComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
 	, m_pTextComponent{}
-	, m_Score{}
 {
 	Integrian::EventQueue::GetInstance().AddListener(this);
 }
@@ -39,7 +38,7 @@ bool ScoreListenerComponent::OnEvent(const Integrian::Event& event)
 		return true;
 	}
 
-	if (eventName == "ResetGame")
+	if (eventName == "ResetScore")
 	{
 		std::string renderedText{ m_pTextComponent->GetTextToRender() };
 
@@ -60,7 +59,7 @@ bool ScoreListenerComponent::OnEvent(const Integrian::Event& event)
 	return false;
 }
 
-const int ScoreListenerComponent::GetScore() const noexcept
+const int ScoreListenerComponent::GetScore() 
 {
 	return m_Score;
 }

@@ -17,9 +17,9 @@ public:
 
 	virtual bool OnEvent(const Integrian::Event& event) override;
 
-	const int GetScore() const noexcept;
+	static const int GetScore();
 
 private:
 	Integrian::TextComponent* m_pTextComponent;
-	int m_Score;
+	inline static int m_Score{};
 };
