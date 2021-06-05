@@ -15,6 +15,9 @@ Integrian::App_Selector::~App_Selector()
 {
 	for (std::pair<std::string, App*> pApp : m_pApplications)
 		SafeDelete(pApp.second);
+
+	for (App* pApp : m_pApplicationsToDelete)
+		SafeDelete(pApp);
 }
 
 void Integrian::App_Selector::AddApplication(App* pApplication)
