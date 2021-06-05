@@ -10,6 +10,7 @@
 #include <App_Selector.h>
 
 #include "Qbert_MainGame.h"
+#include "ScoreListenerComponent.h"
 
 PyramidComponent::PyramidComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -103,7 +104,7 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 	if (event.GetEvent() == "GameOver")
 	{
 		EventQueue::GetInstance().QueueEvent(Integrian::Event{ "ResetGame" });
-		EventQueue::GetInstance().QueueDelayedEvent(Integrian::Event{"SwitchToEndScreen"}, 1);
+		EventQueue::GetInstance().QueueDelayedEvent(Integrian::Event{ "SwitchToEndScreen" }, 1);
 
 		return true;
 	}
@@ -140,11 +141,30 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 
 	if (event.GetEvent() == "LevelComplete")
 	{
-		int level = Qbert_MainGame::GetLevel();
+		int level = Qbert_MainGame::GetLevel() + 1;
 
-		App_Selector::GetInstance().AddApplication(new Qbert_MainGame{ ++level });
-		App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame" + std::to_string(level));
-		App_Selector::GetInstance().RemoveApplication("Qbert_MainGame" + std::to_string(level - 1));
+		App_Selector& app_Selector{ App_Selector::GetInstance() };
+		App* pActiveApp{ app_Selector.GetActiveApplication() };
+
+		for (const std::pair<GameObjectInformation, GameObject*> pair : pActiveApp->GetGameObjects())
+		{
+			if (pair.second->GetTag() == "TPPad" && pair.second->GetIsActive())
+			{
+				int score = ScoreListenerComponent::GetScore();
+				ScoreListenerComponent::SetScore(score + 50);
+			}
+		}
+
+		if (level > 2)
+		{
+			App_Selector::GetInstance().SetActiveApplication("EndScreen");
+		}
+		else
+		{
+			App_Selector::GetInstance().AddApplication(new Qbert_MainGame{ level });
+			App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame" + std::to_string(level));
+			App_Selector::GetInstance().RemoveApplication("Qbert_MainGame" + std::to_string(level - 1));
+		}
 
 		return true;
 	}
@@ -152,7 +172,7 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 	//if (event.GetEvent() == "QbertMovementEnded")
 	//{
 	//	TileComponent* pEndTile{ std::get<0>(event.GetData<TileComponent*>()) };
- 	//	TextureComponent* pCurrentTexture{ pEndTile->GetParent()->GetComponentByType<TextureComponent>() };
+	//	TextureComponent* pCurrentTexture{ pEndTile->GetParent()->GetComponentByType<TextureComponent>() };
 	//
 	//	const std::string& currentTextureName{ TextureManager::GetInstance().GetTextureName(pCurrentTexture->GetTexture()) };
 	//

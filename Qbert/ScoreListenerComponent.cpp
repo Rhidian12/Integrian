@@ -63,3 +63,8 @@ const int ScoreListenerComponent::GetScore()
 {
 	return m_Score;
 }
+
+void ScoreListenerComponent::SetScore(const int score)
+{
+	m_Score = score;
+}

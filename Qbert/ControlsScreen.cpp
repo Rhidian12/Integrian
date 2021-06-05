@@ -2,6 +2,7 @@
 
 #include "ButtonComponent.h"
 #include "ButtonHandlerComponent.h"
+#include "Qbert_MainGame.h"
 
 #include <TextComponent.h>
 #include <TextureComponent.h>
@@ -30,7 +31,7 @@ void ControlsScreen::Start()
 	GameObject* pKeyboardButton{ new GameObject{} };
 	pKeyboardButton->SetTag("Button");
 	TextComponent* pKeyboardText{ new TextComponent{ pKeyboardButton, "keyboard", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
-	pKeyboardButton->AddComponent(new ButtonComponent{ pKeyboardButton, "KeyboardExplanationScreen" });
+	pKeyboardButton->AddComponent(new ButtonComponent{ pKeyboardButton, "Qbert_MainGame" + std::to_string(Qbert_MainGame::GetLevel()) });
 	pKeyboardButton->AddComponent(pKeyboardText);
 	pKeyboardButton->transform.SetPosition(Point2f{ center.x - pKeyboardText->GetWidth() / (pKeyboardText->GetTextToRender().size() + 3), center.y + 50.f });
 	AddGameObject("KeyboardButton", pKeyboardButton);
@@ -38,7 +39,7 @@ void ControlsScreen::Start()
 	GameObject* pControllerButton{ new GameObject{} };
 	pControllerButton->SetTag("Button");
 	TextComponent* pControllerText{ new TextComponent{ pControllerButton, "controller", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
-	pControllerButton->AddComponent(new ButtonComponent{ pControllerButton, "ControllerExplanationScreen" });
+	pControllerButton->AddComponent(new ButtonComponent{ pControllerButton, "Qbert_MainGame" + std::to_string(Qbert_MainGame::GetLevel()) });
 	pControllerButton->AddComponent(pControllerText);
 	pControllerButton->transform.SetPosition(Point2f{ center.x - 160.f, center.y });
 	AddGameObject("ControllerButton", pControllerButton);

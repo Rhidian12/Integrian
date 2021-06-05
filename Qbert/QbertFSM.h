@@ -48,6 +48,5 @@ public:
 
 private:	
 	Integrian::FiniteStateMachineComponent* m_pFSM;
-	std::array<KeybindMovement, 4> m_Keybinds;
 };
 

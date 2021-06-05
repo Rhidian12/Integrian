@@ -23,13 +23,11 @@
 	{
 		"TileChange": 0,
 		"TileTextures":
-		[
-			{
-				"InactiveTexture": "QbertLevelOneInactiveTile.png",
-				"IntermediateTexture": null,
-				"ActiveTexture": "QbertLevelOneActiveTile.png"
-			}
-		]
+		{
+			"InactiveTexture": "QbertLevelOneInactiveTile.png",
+			"IntermediateTexture": null,
+			"ActiveTexture": "QbertLevelOneActiveTile.png"
+		}
 	},
 	"TileTexture": "QbertLevelOneInactiveTile.png",
 	"TeleportationPadTexture": "LevelOneTPPads.png"

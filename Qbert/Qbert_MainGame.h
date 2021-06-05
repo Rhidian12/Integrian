@@ -20,6 +20,7 @@ public:
 	[[nodiscard]] virtual Integrian::Rectf GetTarget() const override { return Integrian::Rectf{}; }
 
 	static const int GetLevel();
+	static void SetLevel(const int level);
 
 private:
 	inline static int m_Level{};

@@ -16,7 +16,6 @@
 QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 	: Component{ pParent }
 	, m_pFSM{}
-	, m_Keybinds{}
 {
 	using namespace Integrian;
 
@@ -51,7 +50,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 		Vector2f vectorTowardsOtherTile{ pBlackboard->GetData<Vector2f>("VectorTowardsOtherTile") };
 		QbertSpriteComponent* pSpriteComponent{ pBlackboard->GetData<QbertSpriteComponent*>("QbertSpriteComponent") };
 
-		if (inputManager.IsKeyboardKeyPressed(m_Keybinds[KeybindMovementDirection::LeftBottom])) // Left Bottom Movement
+		if (inputManager.IsKeyboardKeyPressed(KeyboardInput::A)) // Left Bottom Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)].connection))
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)].connection);
@@ -63,7 +62,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 			pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation"));
 			pSpriteComponent->SetSourceRect(sourceRect);
 		}
-		else if (inputManager.IsKeyboardKeyPressed(m_Keybinds[KeybindMovementDirection::RightBottom])) // Right Bottom Movement
+		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::D)) // Right Bottom Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)].connection))
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)].connection);
@@ -75,7 +74,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 			pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertRightBottomAnimation"));
 			pSpriteComponent->SetSourceRect(sourceRect);
 		}
-		else if (inputManager.IsKeyboardKeyPressed(m_Keybinds[KeybindMovementDirection::LeftTop])) // Left Top Movement
+		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::Q)) // Left Top Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection))
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection);
@@ -89,7 +88,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 			pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertLeftTopAnimation"));
 			pSpriteComponent->SetSourceRect(sourceRect);
 		}
-		else if (inputManager.IsKeyboardKeyPressed(m_Keybinds[KeybindMovementDirection::RightTop])) // Right Top Movement
+		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::E)) // Right Top Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection))
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection);
@@ -347,30 +346,6 @@ void QbertFSM::Reset()
 bool QbertFSM::OnEvent(const Integrian::Event& event)
 {
 	const std::string eventName{ event.GetEvent() };
-
-	if (eventName == "RightTopKeybind")
-	{
-		m_Keybinds[KeybindMovementDirection::RightTop] = std::get<0>(event.GetData<Integrian::KeyboardInput>());
-		return true;
-	}
-
-	if (eventName == "RightBottomKeybind")
-	{
-		m_Keybinds[KeybindMovementDirection::RightBottom] = std::get<0>(event.GetData<Integrian::KeyboardInput>());
-		return true;
-	}
-
-	if (eventName == "LeftBottomKeybind")
-	{
-		m_Keybinds[KeybindMovementDirection::LeftBottom] = std::get<0>(event.GetData<Integrian::KeyboardInput>());
-		return true;
-	}
-
-	if (eventName == "LeftTopKeybind")
-	{
-		m_Keybinds[KeybindMovementDirection::LeftTop] = std::get<0>(event.GetData<Integrian::KeyboardInput>());
-		return true;
-	}
 
 	if (eventName == "QbertDeath")
 	{

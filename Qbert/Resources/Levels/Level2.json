@@ -21,15 +21,13 @@
 	],
 	"TileFSM":
 	{
-		"TileChange": 0,
+		"TileChange": 1,
 		"TileTextures":
-		[
-			{
-				"InactiveTexture": "QbertLevelTwoInactiveTile.png",
-				"IntermediateTexture": null,
-				"ActiveTexture": "QbertLevelTwoActiveTile.png"
-			}
-		]
+		{
+			"InactiveTexture": "QbertLevelTwoInactiveTile.png",
+			"IntermediateTexture": "QbertLevelTwoIntermediateTile.png",
+			"ActiveTexture": "QbertLevelTwoActiveTile.png"
+		}
 	},
 	"TileTexture": "QbertLevelTwoInactiveTile.png",
 	"TeleportationPadTexture": "LevelOneTPPads.png"

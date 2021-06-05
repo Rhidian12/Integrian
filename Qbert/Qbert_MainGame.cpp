@@ -112,3 +112,8 @@ const int Qbert_MainGame::GetLevel()
 {
 	return m_Level;
 }
+
+void Qbert_MainGame::SetLevel(const int level)
+{
+	m_Level = level;
+}

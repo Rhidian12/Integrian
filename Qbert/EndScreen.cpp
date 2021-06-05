@@ -37,7 +37,7 @@ void EndScreen::Start()
 	GameObject* pStartButton{ new GameObject{} };
 	pStartButton->SetTag("Button");
 	TextComponent* pStartText{ new TextComponent{ pStartButton, "restart game", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
-	pStartButton->AddComponent(new ButtonComponent{ pStartButton, "ControlsScreen" });
+	pStartButton->AddComponent(new ButtonComponent{ pStartButton, "StartMenu" });
 	pStartButton->AddComponent(pStartText);
 	pStartButton->transform.SetPosition(Point2f{ center.x - 50.f, center.y + 50.f });
 	AddGameObject("StartButton", pStartButton);

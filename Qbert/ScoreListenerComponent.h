@@ -18,6 +18,7 @@ public:
 	virtual bool OnEvent(const Integrian::Event& event) override;
 
 	static const int GetScore();
+	static void SetScore(const int score);
 
 private:
 	Integrian::TextComponent* m_pTextComponent;

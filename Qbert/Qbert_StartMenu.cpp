@@ -9,6 +9,7 @@
 
 #include "ButtonComponent.h"
 #include "ButtonHandlerComponent.h"
+#include "Qbert_MainGame.h"
 
 Qbert_StartMenu::Qbert_StartMenu()
 	: App{ "StartMenu" }
@@ -35,7 +36,7 @@ void Qbert_StartMenu::Start()
 	GameObject* pStartButton{ new GameObject{} };
 	pStartButton->SetTag("Button");
 	TextComponent* pStartText{ new TextComponent{ pStartButton, "start game", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
-	pStartButton->AddComponent(new ButtonComponent{ pStartButton, "ControlsScreen" });
+	pStartButton->AddComponent(new ButtonComponent{ pStartButton, "StartGame" });
 	pStartButton->AddComponent(pStartText);
 	pStartButton->transform.SetPosition(Point2f{ center.x - pStartText->GetWidth() / (pStartText->GetTextToRender().size() + 3), center.y + 50.f });
 	AddGameObject("StartButton", pStartButton);
@@ -52,4 +53,9 @@ void Qbert_StartMenu::Start()
 	pButtonHandler->AddComponent(new TextureComponent{ pButtonHandler, textureManager.GetTexture("PlayerSelection") });
 	pButtonHandler->AddComponent(new ButtonHandlerComponent{ pButtonHandler });
 	AddGameObject("ButtonHandler", pButtonHandler);
+}
+
+void Qbert_StartMenu::OnAppEnter()
+{
+	Qbert_MainGame::SetLevel(1);
 }

@@ -213,20 +213,27 @@ void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
 	std::vector<std::shared_ptr<FSMState>> states;
 
 	GameObject* pTileFSM{ new GameObject{} };
+	pTileFSM->SetTag("TPPad");
 	TextureManager& textureManager{ TextureManager::GetInstance() };
 	App* const pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
 
 	Texture* pInactiveTileTexture{ textureManager.GetTexture("QbertLevel" + std::to_string(m_Level) + "InactiveTileTexture") };
 
-	for (const nlohmann::json& element : *tileFSM.find("TileTextures"))
+	auto tileTexture{ tileFSM.find("TileTextures") };
+	auto activeTileTexture = (*tileTexture).find("ActiveTexture");
+	textureManager.AddTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture", "Resources/Images/Tiles/" + std::string{ *activeTileTexture });
+
+	const TileChange tileChange{ static_cast<TileChange>(*tileFSM.find("TileChange")) };
+	if (tileChange != TileChange::Permanent)
 	{
-		const auto it{ element.find("ActiveTexture") };
-		textureManager.AddTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture", "Resources/Images/Tiles/" + std::string{ *it });
+		auto intermediateTileTexture = (*tileTexture).find("IntermediateTexture");
+		textureManager.AddTexture("QbertLevel" + std::to_string(m_Level) + "IntermediateTexture", "Resources/Images/Tiles/" + std::string{ *intermediateTileTexture });
 	}
 
+	Texture* pIntermediateTexture{ textureManager.GetTexture("QbertLevel" + std::to_string(m_Level) + "IntermediateTexture") };
 	Texture* pActiveTileTexture{ textureManager.GetTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture") };
 
-	switch (static_cast<TileChange>(*tileFSM.find("TileChange")))
+	switch (tileChange)
 	{
 	case TileChange::Permanent: // Just switches colour permanently
 	{
@@ -236,8 +243,14 @@ void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
 		pActiveApp->AddGameObject("TileFSM", pTileFSM);
 	}
 	break;
-	//case 1:
-	//	break;
+	case TileChange::Intermediate:
+	{
+		TileFSM* pTileFSMComponent{ new TileFSM{pTileFSM} };
+		pTileFSM->AddComponent(pTileFSMComponent);
+		pTileFSM->AddComponent(pTileFSMComponent->CreateIntermediateFSM(pInactiveTileTexture, pIntermediateTexture, pActiveTileTexture));
+		pActiveApp->AddGameObject("TileFSM", pTileFSM);
+	}
+	break;
 	}
 }
 

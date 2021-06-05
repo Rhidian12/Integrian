@@ -25,6 +25,7 @@ public:
 	TileFSM(Integrian::GameObject* pParent);
 
 	Integrian::FiniteStateMachineComponent* CreatePermanentFSM(Integrian::Texture* pInactiveTexture, Integrian::Texture* pActiveTexture);
+	Integrian::FiniteStateMachineComponent* CreateIntermediateFSM(Integrian::Texture* pInactiveTexture, Integrian::Texture* pIntermediateTexture, Integrian::Texture* pActiveTexture);
 
 	virtual bool OnEvent(const Integrian::Event& event) override;
 

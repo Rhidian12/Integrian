@@ -6,6 +6,7 @@
 #include <TextureComponent.h>
 #include <Texture.h>
 #include "ButtonComponent.h"
+#include "Qbert_MainGame.h"
 
 ButtonHandlerComponent::ButtonHandlerComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -95,7 +96,12 @@ bool ButtonHandlerComponent::OnEvent(const Integrian::Event& event)
 
 	if (eventName == "StartGame")
 	{
-		App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame");
+		App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame" + std::to_string(Qbert_MainGame::GetLevel()));
+		if (App_Selector::GetInstance().GetActiveApplication()->GetAppName() != "Qbert_MainGame" + std::to_string(Qbert_MainGame::GetLevel()))
+		{
+			App_Selector::GetInstance().AddApplication(new Qbert_MainGame{ Qbert_MainGame::GetLevel() });
+			App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame" + std::to_string(Qbert_MainGame::GetLevel()));
+		}
 		return true;
 	}
 
@@ -114,6 +120,12 @@ bool ButtonHandlerComponent::OnEvent(const Integrian::Event& event)
 	if (eventName == "ControlsScreen")
 	{
 		App_Selector::GetInstance().SetActiveApplication("ControlsScreen");
+		return true;
+	}
+
+	if (eventName == "StartMenu")
+	{
+		App_Selector::GetInstance().SetActiveApplication("StartMenu");
 		return true;
 	}
 
