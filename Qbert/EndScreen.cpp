@@ -6,6 +6,7 @@
 #include <TextureManager.h>
 #include <Texture.h>
 #include <TextComponent.h>
+#include <EventQueue.h>
 
 #include "ButtonComponent.h"
 #include "ButtonHandlerComponent.h"
@@ -27,7 +28,7 @@ void EndScreen::Start()
 	SetClearColour(RGBColour{ 49.f, 34.f, 119.f });
 
 	GameObject* pScore{ new GameObject{} };
-	TextComponent* pScoreText{ new TextComponent{ pScore, "score: ", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
+	TextComponent* pScoreText{ new TextComponent{ pScore, "score: " + std::to_string(ScoreListenerComponent::GetScore()), "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
 	pScore->AddComponent(pScoreText);
 	pScore->AddComponent(new ScoreListenerComponent{ pScore });
 	pScore->transform.SetPosition(Point2f{ center.x - 50.f, center.y + 100.f });
@@ -53,4 +54,9 @@ void EndScreen::Start()
 	pButtonHandler->AddComponent(new TextureComponent{ pButtonHandler, textureManager.GetTexture("PlayerSelection") });
 	pButtonHandler->AddComponent(new ButtonHandlerComponent{ pButtonHandler });
 	AddGameObject("ButtonHandler", pButtonHandler);
+}
+
+void EndScreen::OnAppExit()
+{
+	Integrian::EventQueue::GetInstance().QueueDelayedEvent(Integrian::Event{ "ResetScore" }, 1);
 }
