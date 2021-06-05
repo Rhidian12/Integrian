@@ -2,6 +2,8 @@
 #include "EventQueue.h" // header
 #include <algorithm> // std::remove_if
 #include "Logger.h" // Logger
+#include "Component.h" // Component
+#include "GameObject.h" // GameObject
 
 Integrian::EventQueue::EventQueue()
 	: m_NumberOfEventsProcessedPerFrame{ 5 }
@@ -44,8 +46,21 @@ void Integrian::EventQueue::Update()
 		{
 			bool wasEventProcessed{};
 			for (IListener* pListener : m_pListeners)
+			{
+				if (GameObject* pGO = dynamic_cast<GameObject*>(pListener))
+				{
+					if (!pGO->GetIsActive())
+						continue;
+				}
+				else if (Component* pC = dynamic_cast<Component*>(pListener))
+				{
+					if (!pC->GetParent()->GetIsActive())
+						continue;
+				}
+
 				if (pListener->OnEvent(m_Events.front()))
 					wasEventProcessed = true;
+			}
 
 			if (wasEventProcessed)
 				m_Events.pop_front();
