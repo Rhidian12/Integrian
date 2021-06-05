@@ -71,17 +71,10 @@ void Integrian::EventQueue::Update()
 	}
 
 	// remove delayed events which are done
-	for (auto it{ m_DelayedEvents.begin() }; it != m_DelayedEvents.end();)
-	{
-		if (it->first == it->second.second)
+	Erase_If(m_DelayedEvents, [](const std::pair<const int, std::pair<Event, int>>& pair)->bool
 		{
-			it = m_DelayedEvents.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
+			return pair.first == pair.second.second;
+		});
 }
 
 void Integrian::EventQueue::AddListener(IListener* pListener)

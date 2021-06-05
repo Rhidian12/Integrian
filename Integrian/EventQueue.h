@@ -36,7 +36,7 @@ namespace Integrian
 
 		std::vector<IListener*> m_pListeners{};
 		std::deque<Event> m_Events{};
-		std::unordered_map<int, std::pair<Event, int>> m_DelayedEvents{};
+		std::unordered_multimap<int, std::pair<Event, int>> m_DelayedEvents{};
 
 		int m_NumberOfEventsProcessedPerFrame;
 	};
