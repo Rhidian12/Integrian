@@ -9,6 +9,8 @@
 #include <EventQueue.h>
 #include <App_Selector.h>
 
+#include "Qbert_MainGame.h"
+
 PyramidComponent::PyramidComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
 	, m_pTiles{}
@@ -36,6 +38,21 @@ void PyramidComponent::Render() const
 
 void PyramidComponent::Update(const float /*elapsedSeconds*/)
 {
+	using namespace Integrian;
+
+	TextureManager& textureManager{ TextureManager::GetInstance() };
+
+	for (GameObject* pTile : m_pTiles)
+	{
+		TextureComponent* pCurrentTexture{ pTile->GetComponentByType<TextureComponent>() };
+
+		const std::string& currentTextureName{ textureManager.GetTextureName(pCurrentTexture->GetTexture()) };
+
+		if (currentTextureName.find('A') == std::string::npos)
+			return;
+	}
+
+	EventQueue::GetInstance().QueueEvent(Event{ "LevelComplete" });
 }
 
 void PyramidComponent::AddTile(Integrian::GameObject* pTile)
@@ -117,6 +134,17 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 				pCurrentTexture->SetTexture(textureManager.GetTexture(activeTextureName));
 			}
 		}
+
+		return true;
+	}
+
+	if (event.GetEvent() == "LevelComplete")
+	{
+		int level = Qbert_MainGame::GetLevel();
+
+		App_Selector::GetInstance().AddApplication(new Qbert_MainGame{ ++level });
+		App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame" + std::to_string(level));
+		App_Selector::GetInstance().RemoveApplication("Qbert_MainGame" + std::to_string(level - 1));
 
 		return true;
 	}

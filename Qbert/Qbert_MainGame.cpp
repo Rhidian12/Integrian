@@ -18,9 +18,10 @@
 #include "ScoreListenerComponent.h"
 #include "LifeCounterComponent.h"
 
-Qbert_MainGame::Qbert_MainGame()
-	: Integrian::App{ "Qbert_MainGame" }
+Qbert_MainGame::Qbert_MainGame(const int level)
+	: Integrian::App{ "Qbert_MainGame" + std::to_string(level) }
 {
+	m_Level = level;
 }
 
 void Qbert_MainGame::Start()
@@ -28,6 +29,10 @@ void Qbert_MainGame::Start()
 	using namespace Integrian;
 
 	TextureManager::GetInstance().AddTexture("QbertHealth", "Resources/Images/UI/QbertHealth.png");
+	Integrian::TextureManager::GetInstance().AddTexture("QbertLeftBottomAnimation", "Resources/Images/Qbert/QbertLeftBottomAnimation.png");
+	Integrian::TextureManager::GetInstance().AddTexture("QbertLeftTopAnimation", "Resources/Images/Qbert/QbertLeftTopAnimation.png");
+	Integrian::TextureManager::GetInstance().AddTexture("QbertRightBottomAnimation", "Resources/Images/Qbert/QbertRightBottomAnimation.png");
+	Integrian::TextureManager::GetInstance().AddTexture("QbertRightTopAnimation", "Resources/Images/Qbert/QbertRightTopAnimation.png");
 
 	SetClearColour(RGBColour{ 49.f, 34.f, 119.f });
 
@@ -38,7 +43,7 @@ void Qbert_MainGame::Start()
 	pPyramidRoot->AddComponent(pPyramidComponent);
 
 	TileFactoryComponent* pTileFactoryComponent{ new TileFactoryComponent{pPyramidRoot} };
-	pTileFactoryComponent->CreateTiles(1);
+	pTileFactoryComponent->CreateTiles(m_Level);
 	pPyramidRoot->AddComponent(pTileFactoryComponent);
 	AddGameObject("PyramidRoot", pPyramidRoot);
 
@@ -62,14 +67,14 @@ void Qbert_MainGame::Start()
 
 	GameObject* pChangeToTile{ new GameObject{} };
 	pChangeToTile->AddComponent(new TextureComponent{ pChangeToTile,
-		TextureManager::GetInstance().GetTexture("QbertLevel" + std::to_string(pTileFactoryComponent->GetLevel()) + "ActiveTileTexture") });
+		TextureManager::GetInstance().GetTexture("QbertLevel" + std::to_string(m_Level) + "ActiveTileTexture") });
 	pChangeToTile->transform.SetPosition(Point2f{ 50.f, 300.f });
 	AddGameObject("ChangeToTile", pChangeToTile);
 
 	GameObject* pLifeCounter{ new GameObject{} };
 	pLifeCounter->AddComponent(new LifeCounterComponent{ pLifeCounter });
 	TextureComponent* pQbertLifeTexture{ new TextureComponent{ pLifeCounter, TextureManager::GetInstance().GetTexture("QbertHealth") } };
-	pQbertLifeTexture->SetSourceRect(Rectf{0.f, 0.f, pQbertLifeTexture->GetTexture()->GetWidth(), pQbertLifeTexture->GetTexture()->GetHeight() / 3.f });
+	pQbertLifeTexture->SetSourceRect(Rectf{ 0.f, 0.f, pQbertLifeTexture->GetTexture()->GetWidth(), pQbertLifeTexture->GetTexture()->GetHeight() / 3.f });
 	pLifeCounter->AddComponent(pQbertLifeTexture);
 	pLifeCounter->transform.SetPosition(Point2f{ 50.f, 250.f });
 	AddGameObject("LifeCounter", pLifeCounter);
@@ -101,4 +106,9 @@ void Qbert_MainGame::Render() const
 
 void Qbert_MainGame::LateUpdate(const float)
 {
+}
+
+const int Qbert_MainGame::GetLevel()
+{
+	return m_Level;
 }

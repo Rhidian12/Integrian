@@ -1,0 +1,36 @@
+{
+	"Level": 2,
+	"Size": 7,
+	"Enemies":
+	[
+		{
+			"Enemy": "Coily"
+		}
+	],
+	"Red Balls": 2,
+	"TeleportLocations":
+	[
+		{
+			"isLeft": false,
+			"row": 6
+		},
+		{
+			"isLeft": true,
+			"row": 6
+		}
+	],
+	"TileFSM":
+	{
+		"TileChange": 0,
+		"TileTextures":
+		[
+			{
+				"InactiveTexture": "QbertLevelTwoInactiveTile.png",
+				"IntermediateTexture": null,
+				"ActiveTexture": "QbertLevelTwoActiveTile.png"
+			}
+		]
+	},
+	"TileTexture": "QbertLevelTwoInactiveTile.png",
+	"TeleportationPadTexture": "LevelOneTPPads.png"
+}

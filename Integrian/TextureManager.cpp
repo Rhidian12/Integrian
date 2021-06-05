@@ -15,13 +15,17 @@ Integrian::TextureManager::~TextureManager()
 
 void Integrian::TextureManager::AddTexture(const std::string& name, const std::string& path)
 {
-	if (!m_pTextures.insert(std::make_pair(name, new Texture{ path })).second)
+	if (m_pTextures.find(name) == m_pTextures.end())
+		m_pTextures.insert(std::make_pair(name, new Texture{ path })).second;
+	else
 		Logger::LogWarning(name + " was not inserted!\n");
 }
 
 void Integrian::TextureManager::AddTexture(const std::string& name, const std::string& path, const std::string& textToRender, const int size, const RGBColour& colour)
 {
-	if(!m_pTextures.insert(std::make_pair(name, new Texture{ textToRender,path,size,colour})).second)
+	if (m_pTextures.find(name) == m_pTextures.end())
+		m_pTextures.insert(std::make_pair(name, new Texture{ textToRender,path,size,colour })).second;
+	else
 		Logger::LogWarning(name + " was not inserted!\n");
 }
 

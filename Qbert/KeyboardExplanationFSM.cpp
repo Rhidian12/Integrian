@@ -4,6 +4,7 @@
 #include <FiniteStateMachine.h>
 #include <App.h>
 #include <App_Selector.h>
+#include "Qbert_MainGame.h"
 #include <InputManager.h>
 
 KeyboardExplanationFSM::KeyboardExplanationFSM(Integrian::GameObject* pParent)
@@ -30,7 +31,7 @@ void KeyboardExplanationFSM::Update(const float)
 
 	if (m_pBlackboard->GetData<bool>("LeftTopKeybindSet"))
 	{
-		App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame");
+		App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame" + std::to_string(Qbert_MainGame::GetLevel()));
 	}
 }
 
