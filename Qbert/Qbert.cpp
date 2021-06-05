@@ -13,7 +13,7 @@ int main(int, char**)
 
 	Integrian::App_Selector& appSelector{ Integrian::App_Selector::GetInstance() };
 	appSelector.AddApplication(new Qbert_StartMenu{});
-	appSelector.AddApplication(new Qbert_MainGame{});
+	appSelector.AddApplication(new Qbert_MainGame{ 1 });
 	appSelector.AddApplication(new KeyboardExplanationScreen{});
 	appSelector.AddApplication(new ControlsScreen{});
 	appSelector.AddApplication(new EndScreen{});

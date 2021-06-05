@@ -5,6 +5,7 @@
 
 #include <unordered_map> // std::unordered_map
 #include "Singleton.h" // Singleton
+#include <vector>
 #include "ListenerInterface.h" // IListener
 
 namespace Integrian
@@ -19,6 +20,8 @@ namespace Integrian
 		void SetActiveApplication(const std::string& name);
 		void RunActiveApplication();
 
+		void RemoveApplication(const std::string& name);
+
 		bool OnEvent(const Event& event) override;
 
 		[[nodiscard]] App* GetActiveApplication() const;
@@ -28,6 +31,7 @@ namespace Integrian
 		friend class Singleton<App_Selector>;
 
 		std::unordered_map<std::string, App*> m_pApplications{};
+		std::vector<App*> m_pApplicationsToDelete{};
 		App* m_pActiveApplication{};
 	};
 }

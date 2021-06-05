@@ -28,9 +28,9 @@ void Integrian::App_Selector::AddApplication(App* pApplication)
 
 void Integrian::App_Selector::SetActiveApplication(const std::string& name)
 {
-	if (m_pActiveApplication && name == m_pActiveApplication->GetAppName())
+	if (m_pActiveApplication && (name == m_pActiveApplication->GetAppName()))
 		return;
-#ifdef _DEBUG
+
 	std::unordered_map<std::string, App*>::const_iterator cIt{ m_pApplications.find(name) };
 	if (cIt != m_pApplications.cend())
 	{
@@ -42,16 +42,29 @@ void Integrian::App_Selector::SetActiveApplication(const std::string& name)
 	}
 	else
 		Logger::LogSevereError("Application with name: " + name + " was not found!\n");
-
-#else
-	m_pActiveApplication = m_pApplications.find(name)->second;
-#endif // _DEBUG
 }
 
 void Integrian::App_Selector::RunActiveApplication()
 {
 	while(g_IsLooping.load())
 		m_pActiveApplication->Run();
+}
+
+void Integrian::App_Selector::RemoveApplication(const std::string& name)
+{
+	assert(m_pActiveApplication->GetAppName() != name);
+
+	std::unordered_map<std::string, App*>::const_iterator cIt{ m_pApplications.find(name) };
+	if (cIt != m_pApplications.cend())
+	{
+		m_pApplicationsToDelete.push_back(m_pApplications[name]);
+		Erase_If(m_pApplications, [name](const std::pair<std::string, App*>& pair)->bool
+			{
+				return pair.first == name;
+			});
+	}
+	else
+		Logger::LogSevereError("App_Selector::RemoveApplication() > Application with name: " + name + " was not found!\n");
 }
 
 bool Integrian::App_Selector::OnEvent(const Event& event)
