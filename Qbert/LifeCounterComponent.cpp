@@ -29,8 +29,7 @@ bool LifeCounterComponent::OnEvent(const Integrian::Event& event)
 {
 	if (event.GetEvent() == "QbertDeath")
 	{
-		std::cout <<"?????" << std::endl;
-		m_Lives = m_Lives - 1;
+		--m_Lives;
 
 		if (m_Lives < 0)
 		{

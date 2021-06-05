@@ -162,7 +162,6 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 			//	pBlackboard->ChangeData("CurrentQbertWaitTimer", 0.f);
 			//}
 
-			std::cout << "CAN MOVE AGAIN" << std::endl;
 			pBlackboard->ChangeData("CanMoveAgain", true);
 		}
 	} } };
