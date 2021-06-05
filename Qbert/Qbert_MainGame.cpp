@@ -78,6 +78,10 @@ void Qbert_MainGame::Start()
 	//pQbert->transform.SetScale(2.f, 2.f);
 }
 
+void Qbert_MainGame::OnAppExit()
+{
+}
+
 void Qbert_MainGame::Render() const
 {
 	using namespace Integrian;

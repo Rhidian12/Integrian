@@ -21,6 +21,7 @@ namespace Integrian
 		virtual bool OnEvent(const Event& event) override;
 
 		void QueueEvent(Event&& event);
+		void QueueDelayedEvent(Event&& event, const int nrOfFramesToDelay);
 		void Update();
 
 		void AddListener(IListener* pListener);
@@ -35,6 +36,7 @@ namespace Integrian
 
 		std::vector<IListener*> m_pListeners{};
 		std::deque<Event> m_Events{};
+		std::unordered_map<int, std::pair<Event, int>> m_DelayedEvents{};
 
 		int m_NumberOfEventsProcessedPerFrame;
 	};

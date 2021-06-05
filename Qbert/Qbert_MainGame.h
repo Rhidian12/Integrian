@@ -10,7 +10,7 @@ public:
 	virtual void Start() override;
 
 	virtual void OnAppEnter() override {}
-	virtual void OnAppExit() override {}
+	virtual void OnAppExit() override;
 
 	virtual void Render() const override;
 

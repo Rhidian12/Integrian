@@ -19,7 +19,9 @@ void ScoreListenerComponent::PostInitialize()
 
 bool ScoreListenerComponent::OnEvent(const Integrian::Event& event)
 {
-	if (event.GetEvent() == "TileChanged")
+	const std::string& eventName{ event.GetEvent() };
+
+	if (eventName == "TileChanged")
 	{
 		std::string renderedText{ m_pTextComponent->GetTextToRender() };
 
@@ -29,6 +31,24 @@ bool ScoreListenerComponent::OnEvent(const Integrian::Event& event)
 			}), renderedText.end());
 
 		m_Score += std::get<0>(event.GetData<int>());
+
+		renderedText += std::to_string(m_Score);
+
+		m_pTextComponent->SetTextToRender(renderedText);
+
+		return true;
+	}
+
+	if (eventName == "ResetGame")
+	{
+		std::string renderedText{ m_pTextComponent->GetTextToRender() };
+
+		renderedText.erase(std::remove_if(renderedText.begin(), renderedText.end(), [](const char c)
+			{
+				return std::isdigit(c);
+			}), renderedText.end());
+
+		m_Score = 0;
 
 		renderedText += std::to_string(m_Score);
 

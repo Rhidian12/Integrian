@@ -69,6 +69,12 @@ namespace Integrian
 		}
 	}
 
+	template<typename Container, typename Predicate>
+	constexpr typename Container::iterator Erase_If(Container& items, const Predicate& predicate)
+	{
+
+	}
+
 	constexpr bool AlwaysFalse();
 }
 

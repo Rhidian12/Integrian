@@ -7,6 +7,7 @@
 #include "TileComponent.h"
 #include <Utility Functions.h>
 #include <EventQueue.h>
+#include <App_Selector.h>
 
 PyramidComponent::PyramidComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -82,12 +83,17 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 		return true;
 	}
 
-	if (event.GetEvent() == "QbertDeath")
+	if (event.GetEvent() == "GameOver")
 	{
-		//SDL_Event e{};
-		//e.quit.type = SDL_QUIT;
-		//SDL_PushEvent(&e);
+		EventQueue::GetInstance().QueueEvent(Integrian::Event{ "ResetGame" });
+		EventQueue::GetInstance().QueueDelayedEvent(Integrian::Event{"SwitchToEndScreen"}, 1);
 
+		return true;
+	}
+
+	if (event.GetEvent() == "SwitchToEndScreen")
+	{
+		App_Selector::GetInstance().SetActiveApplication("EndScreen");
 		return true;
 	}
 

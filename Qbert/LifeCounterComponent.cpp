@@ -30,7 +30,9 @@ void LifeCounterComponent::Update(const float)
 
 bool LifeCounterComponent::OnEvent(const Integrian::Event& event)
 {
-	if (event.GetEvent() == "QbertDeath")
+	const std::string& eventName{ event.GetEvent() };
+
+	if (eventName == "QbertDeath")
 	{
 		--m_Lives;
 
@@ -41,5 +43,12 @@ bool LifeCounterComponent::OnEvent(const Integrian::Event& event)
 
 		return true;
 	}
+
+	if (eventName == "ResetGame")
+	{
+		m_Lives = 3;
+		return true;
+	}
+
 	return false;
 }

@@ -10,7 +10,13 @@ TeleportationPadComponent::TeleportationPadComponent(Integrian::GameObject* pPar
 	, m_Speed{ 65.f }
 	, m_IsQbertDroppedOff{}
 	, m_CompletelyDone{}
+	, m_StartPosition{}
 {
+}
+
+void TeleportationPadComponent::PostInitialize()
+{
+	m_StartPosition = m_pParent->transform.GetPosition();
 }
 
 void TeleportationPadComponent::Update(const float dt)
@@ -67,4 +73,35 @@ void TeleportationPadComponent::Activate()
 bool TeleportationPadComponent::IsCompletelyDone() const
 {
 	return m_CompletelyDone;
+}
+
+bool TeleportationPadComponent::OnEvent(const Integrian::Event& event)
+{
+	if (event.GetEvent() == "ResetGame")
+	{
+		ResetGame();
+		return true;
+	}
+	return false;
+}
+
+void TeleportationPadComponent::ResetGame()
+{
+	using namespace Integrian;
+	if (!m_pParent->GetIsActive())
+	{
+
+		m_IsActivated = false;
+		m_CompletelyDone = false;
+		m_IsQbertDroppedOff = false;
+
+		App* pActiveApp{ Integrian::App_Selector::GetInstance().GetActiveApplication() };
+
+		m_EndPosition = pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>()->GetTopTileCenter();
+		m_EndPosition.y += 20.f;
+
+		m_pParent->transform.SetPosition(m_StartPosition);
+
+		m_pParent->SetIsActive(true);
+	}
 }

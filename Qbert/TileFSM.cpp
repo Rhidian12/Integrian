@@ -45,7 +45,9 @@ Integrian::FiniteStateMachineComponent* TileFSM::CreatePermanentFSM(Integrian::T
 
 bool TileFSM::OnEvent(const Integrian::Event& event)
 {
-	if (event.GetEvent() == "QbertMovementEnded")
+	const std::string& eventName{ event.GetEvent() };
+
+	if (eventName == "QbertMovementEnded")
 	{
 		m_pBlackboard->ChangeData("TileChanged", std::get<0>(event.GetData<TileComponent*>())->GetParent());
 		return true;

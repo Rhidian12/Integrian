@@ -12,6 +12,7 @@ Integrian::EventQueue::EventQueue()
 Integrian::EventQueue::~EventQueue()
 {
 	m_Events.clear();
+	m_DelayedEvents.clear();
 	m_pListeners.clear();
 }
 
@@ -27,31 +28,59 @@ void Integrian::EventQueue::QueueEvent(Event&& event)
 	m_Events.push_back(std::forward<Event>(event)); // we need to std::forward this so that it actually moves this instead of copying like a little fucking bitch
 }
 
+void Integrian::EventQueue::QueueDelayedEvent(Event&& event, const int nrOfFramesToDelay)
+{
+	assert(nrOfFramesToDelay != 0);
+	m_DelayedEvents.insert(std::make_pair(nrOfFramesToDelay, std::make_pair(std::forward<Event>(event), 0)));
+}
+
 void Integrian::EventQueue::Update()
 {
 	//TIME();
 
-	if (m_Events.empty())
-		return;
-
-	for (int i{}; i < m_NumberOfEventsProcessedPerFrame; ++i)
+	if (!m_Events.empty())
 	{
-		bool wasEventProcessed{};
-		for (IListener* pListener : m_pListeners)
-			if (pListener->OnEvent(m_Events.front()))
-				wasEventProcessed = true;
-
-		if (wasEventProcessed)
-			m_Events.pop_front();
-		else // Requeue event by pushing it to the back
+		for (int i{}; i < m_NumberOfEventsProcessedPerFrame; ++i)
 		{
-			Event tempEvent{ std::remove_reference_t<Event>(m_Events.front()) }; // make sure it copies the Event, and it doesn't reference it
-			m_Events.push_back(tempEvent);
-			m_Events.pop_front();
-		}
+			bool wasEventProcessed{};
+			for (IListener* pListener : m_pListeners)
+				if (pListener->OnEvent(m_Events.front()))
+					wasEventProcessed = true;
 
-		if (m_Events.empty())
-			break;
+			if (wasEventProcessed)
+				m_Events.pop_front();
+			else // Requeue event by pushing it to the back
+			{
+				Event tempEvent{ std::remove_reference_t<Event>(m_Events.front()) }; // make sure it copies the Event, and it doesn't reference it
+				m_Events.push_back(tempEvent);
+				m_Events.pop_front();
+			}
+
+			if (m_Events.empty())
+				break;
+		}
+	}
+
+	// Update delayed events
+	for (std::pair<const int, std::pair<Event, int>>& pair : m_DelayedEvents)
+	{
+		if (pair.first == ++pair.second.second)
+		{
+			m_Events.push_back(std::remove_reference_t<Event>(pair.second.first)); // make sure we copy the event
+		}
+	}
+
+	// remove delayed events which are done
+	for (auto it{ m_DelayedEvents.begin() }; it != m_DelayedEvents.end();)
+	{
+		if (it->first == it->second.second)
+		{
+			it = m_DelayedEvents.erase(it);
+		}
+		else
+		{
+			++it;
+		}
 	}
 }
 

@@ -12,8 +12,8 @@ int main(int, char**)
 	Integrian::Logger::SetDebugOnly(true);
 
 	Integrian::App_Selector& appSelector{ Integrian::App_Selector::GetInstance() };
-	appSelector.AddApplication(new Qbert_MainGame{});
 	appSelector.AddApplication(new Qbert_StartMenu{});
+	appSelector.AddApplication(new Qbert_MainGame{});
 	appSelector.AddApplication(new KeyboardExplanationScreen{});
 	appSelector.AddApplication(new ControlsScreen{});
 	appSelector.AddApplication(new EndScreen{});

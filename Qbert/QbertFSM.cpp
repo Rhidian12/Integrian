@@ -110,7 +110,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 
 		if (pEndTile) // is there a connection to the tile
 			endPosition = pEndTile->GetCenter();
-		else if (pTP) // is there a connection to a teleporter
+		else if (pTP && pTP->GetParent()->GetIsActive()) // is there a connection to a teleporter
 		{
 			endPosition = pTP->GetParent()->transform.GetPosition();
 			pBlackboard->ChangeData("MovingTowardsTeleporter", true);
@@ -198,43 +198,43 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 		{
 			if (pBlackboard->GetData<bool>("IsLeftTeleporterActive"))
 			{
-				pActiveApp->RemoveGameObject("TeleportationPad0");
+				pActiveApp->GetGameObject("TeleportationPad0")->SetIsActive(false);
 				pBlackboard->ChangeData("IsLeftTeleporterActive", false);
 
 				// remove connection
-				const std::vector<GameObject*>* pTiles{ &pPyramid->GetTiles() };
-
-				unsigned int increment{ 1 };
-				for (unsigned int i{}; i < pTiles->size(); i += increment++)
-				{
-					TileComponent* pCurrentTile{ (*pTiles)[i]->GetComponentByType<TileComponent>() };
-					// check if the tile in question has a connection to the teleporter
-					if (std::holds_alternative<TeleportationPadComponent*>(pCurrentTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection))
-					{
-						pCurrentTile->SetConnection(Direction::LeftTop, Connection{});
-						break;
-					}
-				}
+				//const std::vector<GameObject*>* pTiles{ &pPyramid->GetTiles() };
+				//
+				//unsigned int increment{ 1 };
+				//for (unsigned int i{}; i < pTiles->size(); i += increment++)
+				//{
+				//	TileComponent* pCurrentTile{ (*pTiles)[i]->GetComponentByType<TileComponent>() };
+				//	// check if the tile in question has a connection to the teleporter
+				//	if (std::holds_alternative<TeleportationPadComponent*>(pCurrentTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection))
+				//	{
+				//		pCurrentTile->SetConnection(Direction::LeftTop, Connection{});
+				//		break;
+				//	}
+				//}
 			}
 			else if (pBlackboard->GetData<bool>("IsRightTeleporterActive"))
 			{
-				pActiveApp->RemoveGameObject("TeleportationPad1");
+				pActiveApp->GetGameObject("TeleportationPad1")->SetIsActive(false);
 				pBlackboard->ChangeData("IsRightTeleporterActive", false);
 
 				// remove connection
-				const std::vector<GameObject*>* pTiles{ &pPyramid->GetTiles() };
-
-				unsigned int increment{ 2 };
-				for (unsigned int i{}; i < pTiles->size(); i += increment++)
-				{
-					TileComponent* pCurrentTile{ (*pTiles)[i]->GetComponentByType<TileComponent>() };
-					// check if the tile in question has a connection to the teleporter
-					if (std::holds_alternative<TeleportationPadComponent*>(pCurrentTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection))
-					{
-						pCurrentTile->SetConnection(Direction::RightTop, Connection{});
-						break;
-					}
-				}
+				//const std::vector<GameObject*>* pTiles{ &pPyramid->GetTiles() };
+				//
+				//unsigned int increment{ 2 };
+				//for (unsigned int i{}; i < pTiles->size(); i += increment++)
+				//{
+				//	TileComponent* pCurrentTile{ (*pTiles)[i]->GetComponentByType<TileComponent>() };
+				//	// check if the tile in question has a connection to the teleporter
+				//	if (std::holds_alternative<TeleportationPadComponent*>(pCurrentTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection))
+				//	{
+				//		pCurrentTile->SetConnection(Direction::RightTop, Connection{});
+				//		break;
+				//	}
+				//}
 			}
 		}
 	},
@@ -340,7 +340,6 @@ void QbertFSM::Reset()
 	pBlackboard->ChangeData("QbertVelocity", Vector2f{});
 	pBlackboard->ChangeData("ShouldReset", true);
 	pBlackboard->ChangeData("CanMoveAgain", false);
-	//pBlackboard->ChangeData("EndPosition", pPyramid->GetTopTileCenter());
 
 	m_pParent->transform.SetPosition(pPyramid->GetTopTileCenter());
 }
@@ -374,6 +373,12 @@ bool QbertFSM::OnEvent(const Integrian::Event& event)
 	}
 
 	if (eventName == "QbertDeath")
+	{
+		Reset();
+		return true;
+	}
+
+	if (eventName == "ResetGame")
 	{
 		Reset();
 		return true;

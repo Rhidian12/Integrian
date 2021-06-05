@@ -46,7 +46,7 @@ public:
 
 	virtual bool OnEvent(const Integrian::Event& event) override;
 
-private:
+private:	
 	Integrian::FiniteStateMachineComponent* m_pFSM;
 	std::array<KeybindMovement, 4> m_Keybinds;
 };

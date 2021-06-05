@@ -369,7 +369,15 @@ void CoilyFSM::Reset()
 
 bool CoilyFSM::OnEvent(const Integrian::Event& event)
 {
-	if (event.GetEvent() == "QbertDeath")
+	const std::string& eventName{ event.GetEvent() };
+
+	if (eventName == "QbertDeath")
+	{
+		Reset();
+		return true;
+	}
+
+	if (eventName == "ResetGame")
 	{
 		Reset();
 		return true;

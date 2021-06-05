@@ -87,11 +87,20 @@ void BallSpawnerComponent::Render() const
 
 bool BallSpawnerComponent::OnEvent(const Integrian::Event& event)
 {
-	if (event.GetEvent() == "QbertDeath")
+	const std::string& eventName{ event.GetEvent() };
+
+	if (eventName == "QbertDeath")
 	{
 		Reset();
 		return true;
 	}
+
+	if (eventName == "ResetGame")
+	{
+		Reset();
+		return true;
+	}
+
 	return false;
 }
 
