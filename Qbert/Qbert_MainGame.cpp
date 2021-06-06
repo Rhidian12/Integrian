@@ -104,14 +104,14 @@ void Qbert_MainGame::Render() const
 {
 	using namespace Integrian;
 
-	for (GameObject* pTile : GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>()->GetTiles())
-	{
-		GameObject* pTest{ new GameObject{} };
-		pTest->transform.SetPosition(pTile->GetComponentByType<TileComponent>()->GetCenter());
-		pTest->AddComponent(new TextComponent{ pTest, std::to_string(pTile->GetComponentByType<TileComponent>()->GetIndex()), 10, RGBColour{255.f, 0.f, 0.f} });
-		pTest->Render();
-		SafeDelete(pTest);
-	}
+	//for (GameObject* pTile : GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>()->GetTiles())
+	//{
+	//	GameObject* pTest{ new GameObject{} };
+	//	pTest->transform.SetPosition(pTile->GetComponentByType<TileComponent>()->GetCenter());
+	//	pTest->AddComponent(new TextComponent{ pTest, std::to_string(pTile->GetComponentByType<TileComponent>()->GetIndex()), 10, RGBColour{255.f, 0.f, 0.f} });
+	//	pTest->Render();
+	//	SafeDelete(pTest);
+	//}
 
 	//DrawFilledCircle(Circlef{ Point2f{336.f - 112.f, 174.f}, 3.f }, RGBColour{ 255.f, 0.f, 0.f });
 	//DrawFilledCircle(Circlef{ Point2f{336.f + 112.f, 174.f}, 3.f }, RGBColour{ 255.f, 0.f, 0.f });

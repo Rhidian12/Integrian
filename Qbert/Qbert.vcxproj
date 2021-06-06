@@ -126,6 +126,13 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
       <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2-2.0.14\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\VLD\lib\$(PlatformTarget)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;Glu32.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;Integrian.lib;VLD.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Libraries\SDL2-2.0.14\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
+xcopy "$(SolutionDir)Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
+xcopy "$(SolutionDir)Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
+xcopy "$(SolutionDir)Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D 
+rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)" /y /D </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
