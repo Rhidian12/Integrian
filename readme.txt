@@ -1,7 +1,7 @@
 https://github.com/Rhidian12/Integrian
 
 NOTE:
-FOR SOME REASON, BATCH BUILDING DOES NOT COMPILE Release x64 and Release x32
+FOR SOME REASON, BATCH BUILDING DOES NOT COMPILE Release x64 and Release x86
 CLEAN AND BUILD THESE SEPERATELY FOR SUCCESSFULL COMPILATION
 
 There are many good design choices (in my humble opinion), but there are many bad design choices as well:
