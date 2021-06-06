@@ -41,6 +41,14 @@ void Qbert_StartMenu::Start()
 	pStartButton->transform.SetPosition(Point2f{ center.x - pStartText->GetWidth() / (pStartText->GetTextToRender().size() + 3), center.y + 50.f });
 	AddGameObject("StartButton", pStartButton);
 
+	GameObject* pCoOpButton{ new GameObject{} };
+	pCoOpButton->SetTag("Button");
+	TextComponent* pCoopText{ new TextComponent{ pCoOpButton, "co-op", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };
+	pCoOpButton->AddComponent(new ButtonComponent{ pCoOpButton, "Co-Op" });
+	pCoOpButton->AddComponent(pCoopText);
+	pCoOpButton->transform.SetPosition(Point2f{ center.x - pCoopText->GetWidth() / (pCoopText->GetTextToRender().size() + 8), center.y });
+	AddGameObject("Co-OpButton", pCoOpButton);
+
 	GameObject* pQuitButton{ new GameObject{} };
 	pQuitButton->SetTag("Button");
 	TextComponent* pEndText{ new TextComponent{ pQuitButton, "exit", "Resources/Fonts/QbertFont.ttf", 30, RGBColour{255.f, 255.f, 0.f} } };

@@ -27,7 +27,7 @@ void TeleportationPadComponent::Update(const float dt)
 	{
 		App* pActiveApp{ Integrian::App_Selector::GetInstance().GetActiveApplication() };
 
-		m_pQbert = pActiveApp->GetGameObject("Qbert");
+		m_pQbert = pActiveApp->GetGameObject("QbertOne");
 		m_EndPosition = pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>()->GetTopTileCenter();
 
 		m_EndPosition.y += 20.f;

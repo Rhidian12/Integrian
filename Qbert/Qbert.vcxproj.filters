@@ -91,6 +91,9 @@
     <Filter Include="Source Files\Apps\EndScreen">
       <UniqueIdentifier>{07e69e27-0768-46b0-a53f-842ebf70bc0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Apps\Co-opMainGame">
+      <UniqueIdentifier>{968ee1b3-3e06-451d-9511-1147088f0871}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Qbert.cpp">
@@ -165,6 +168,9 @@
     <ClCompile Include="EndScreen.cpp">
       <Filter>Source Files\Apps\EndScreen</Filter>
     </ClCompile>
+    <ClCompile Include="CoOpMainGame.cpp">
+      <Filter>Source Files\Apps\Co-opMainGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidComponent.h">
@@ -235,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="TileFSM.h">
       <Filter>Source Files\StateMachines\TileFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="CoOpMainGame.h">
+      <Filter>Source Files\Apps\Co-opMainGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

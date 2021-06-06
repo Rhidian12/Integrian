@@ -31,7 +31,7 @@ void CoilyFSM::PostInitialize()
 
 	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
 
-	m_pQbert = pActiveApp->GetGameObject("Qbert");
+	m_pQbert = pActiveApp->GetGameObject("QbertOne");
 	m_pGraph = pActiveApp->GetGameObject("QbertGraph")->GetComponentByType<QbertGraphComponent>();
 
 	PyramidComponent* pPyramid{ pActiveApp->GetGameObject("PyramidRoot")->GetComponentByType<PyramidComponent>() };

@@ -7,6 +7,7 @@
 #include <Texture.h>
 #include "ButtonComponent.h"
 #include "Qbert_MainGame.h"
+#include "CoOpMainGame.h"
 
 ButtonHandlerComponent::ButtonHandlerComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -126,6 +127,17 @@ bool ButtonHandlerComponent::OnEvent(const Integrian::Event& event)
 	if (eventName == "StartMenu")
 	{
 		App_Selector::GetInstance().SetActiveApplication("StartMenu");
+		return true;
+	}
+
+	if (eventName == "Co-Op")
+	{
+		App_Selector::GetInstance().SetActiveApplication("CoOpMainGame" + std::to_string(Qbert_MainGame::GetLevel()));
+		if (App_Selector::GetInstance().GetActiveApplication()->GetAppName() != "CoOpMainGame" + std::to_string(Qbert_MainGame::GetLevel()))
+		{
+			App_Selector::GetInstance().AddApplication(new CoOpMainGame{});
+			App_Selector::GetInstance().SetActiveApplication("CoOpMainGame" + std::to_string(Qbert_MainGame::GetLevel()));
+		}
 		return true;
 	}
 

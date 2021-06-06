@@ -3,6 +3,7 @@
 #include <PossibleInputs.h>
 #include <ListenerInterface.h>
 #include <array>
+#include <GameInput.h>
 
 namespace Integrian
 {
@@ -18,27 +19,10 @@ enum KeybindMovementDirection
 	LeftTop = 3
 };
 
-struct KeybindMovement final
-{
-	using Type = std::underlying_type_t<Integrian::KeyboardInput>;
-
-	
-	KeybindMovement(const Integrian::KeyboardInput input = Integrian::KeyboardInput::INVALID)
-		: value{ static_cast<Type>(input) }
-	{}
-
-	constexpr operator Integrian::KeyboardInput() const noexcept
-	{
-		return static_cast<Integrian::KeyboardInput>(value);
-	}
-
-	Type value;
-};
-
 class QbertFSM final : public Integrian::Component, public Integrian::IListener
 {
 public:
-	QbertFSM(Integrian::GameObject* pParent);
+	QbertFSM(Integrian::GameObject* pParent, std::array<Integrian::GameInput, 4>&& keybinds);
 
 	virtual void PostInitialize() override;
 
@@ -46,7 +30,8 @@ public:
 
 	virtual bool OnEvent(const Integrian::Event& event) override;
 
-private:	
+private:
 	Integrian::FiniteStateMachineComponent* m_pFSM;
+	std::array<Integrian::GameInput, 4> m_Keybinds;
 };
 

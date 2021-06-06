@@ -251,6 +251,13 @@ void TileFactoryComponent::CreateTileFSM(nlohmann::json tileFSM) const
 		pTileFSM->AddComponent(pTileFSMComponent->CreateIntermediateFSM(pInactiveTileTexture, pIntermediateTexture, pActiveTileTexture));
 		pActiveApp->AddGameObject("TileFSM", pTileFSM);
 	}
+	case TileChange::Revert:
+	{
+		TileFSM* pTileFSMComponent{ new TileFSM{pTileFSM} };
+		pTileFSM->AddComponent(pTileFSMComponent);
+		pTileFSM->AddComponent(pTileFSMComponent->CreateRevertFSM(pInactiveTileTexture, pActiveTileTexture));
+		pActiveApp->AddGameObject("TileFSM", pTileFSM);
+	}
 	break;
 	}
 }

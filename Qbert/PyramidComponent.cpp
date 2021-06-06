@@ -11,6 +11,7 @@
 
 #include "Qbert_MainGame.h"
 #include "ScoreListenerComponent.h"
+#include "CoOpMainGame.h"
 
 PyramidComponent::PyramidComponent(Integrian::GameObject* pParent)
 	: Component{ pParent }
@@ -155,15 +156,25 @@ bool PyramidComponent::OnEvent(const Integrian::Event& event)
 			}
 		}
 
-		if (level > 2)
+		if (level > 3)
 		{
 			App_Selector::GetInstance().SetActiveApplication("EndScreen");
 		}
 		else
 		{
-			App_Selector::GetInstance().AddApplication(new Qbert_MainGame{ level });
-			App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame" + std::to_string(level));
-			App_Selector::GetInstance().RemoveApplication("Qbert_MainGame" + std::to_string(level - 1));
+			if (pActiveApp->GetAppName()[0] == 'C')
+			{
+				Qbert_MainGame::SetLevel(level);
+				App_Selector::GetInstance().AddApplication(new CoOpMainGame{});
+				App_Selector::GetInstance().SetActiveApplication("CoOpMainGame" + std::to_string(level));
+				App_Selector::GetInstance().RemoveApplication("CoOpMainGame" + std::to_string(level - 1));
+			}
+			else
+			{
+				App_Selector::GetInstance().AddApplication(new Qbert_MainGame{ level });
+				App_Selector::GetInstance().SetActiveApplication("Qbert_MainGame" + std::to_string(level));
+				App_Selector::GetInstance().RemoveApplication("Qbert_MainGame" + std::to_string(level - 1));
+			}
 		}
 
 		return true;

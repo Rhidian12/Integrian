@@ -103,6 +103,7 @@ void Integrian::InputManager::HandleInput()
 	m_Keyboard.ExecuteCommands();
 	m_Mouse.ExecuteCommands();
 
+	SDL_GameControllerUpdate();
 	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
 		m_Controllers[i].ExecuteCommands();
 }
@@ -131,6 +132,18 @@ bool Integrian::InputManager::IsMouseButtonPressed(const MouseButton gameInput) 
 bool Integrian::InputManager::IsControllerButtonPressed(const ControllerInput gameInput, const uint8_t playerIndex) const
 {
 	return m_Controllers[playerIndex].IsPressed(gameInput);
+}
+
+bool Integrian::InputManager::IsPressed(const GameInput gameInput, const uint8_t controllerIndex) const noexcept
+{
+	if (gameInput.keyboardInput != KeyboardInput::INVALID)
+		return IsKeyboardKeyPressed(gameInput.keyboardInput);
+	else if (gameInput.mouseButton != MouseButton::INVALID)
+		return IsMouseButtonPressed(gameInput.mouseButton);
+	else if (gameInput.controllerInput != ControllerInput::INVALID)
+		return IsControllerButtonPressed(gameInput.controllerInput, controllerIndex);
+
+	return false;
 }
 
 const Integrian::Point2f& Integrian::InputManager::GetMousePosition() const

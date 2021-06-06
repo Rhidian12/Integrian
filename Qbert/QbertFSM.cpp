@@ -13,9 +13,10 @@
 #include <Texture.h>
 #include <EventQueue.h>
 
-QbertFSM::QbertFSM(Integrian::GameObject* pParent)
+QbertFSM::QbertFSM(Integrian::GameObject* pParent, std::array<Integrian::GameInput, 4>&& keybinds)
 	: Component{ pParent }
 	, m_pFSM{}
+	, m_Keybinds{ std::forward<std::array<Integrian::GameInput, 4>>(keybinds) }
 {
 	using namespace Integrian;
 
@@ -27,19 +28,19 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 
 	std::shared_ptr<FSMState> pStandingState{ new FSMState{
 	[](Blackboard*, const FSMStateTransition) {},
-	[](Blackboard* pBlackboard, const float elapsedSeconds)
+	[this](Blackboard* pBlackboard, const float elapsedSeconds)
 	{
-		const Point2f initPosition{pBlackboard->GetData<GameObject*>("Qbert")->transform.GetPosition()};
+		const Point2f initPosition{m_pParent->transform.GetPosition()};
 		const Integrian::Vector2f speed{ pBlackboard->GetData<Vector2f>("QbertVelocity") * pBlackboard->GetData<float>("QbertSpeed") * elapsedSeconds };
 
-		pBlackboard->GetData<GameObject*>("Qbert")->transform.SetPosition(initPosition + speed);
+		m_pParent->transform.SetPosition(initPosition + speed);
 	},
 	[this, pPyramid](Blackboard* pBlackboard, const float)
 	{
 		if (!pBlackboard->GetData<bool>("CanMoveAgain") || pBlackboard->GetData<bool>("IsOnTeleporter"))
 			return;
 
-		const Point2f qbertPosition{ pBlackboard->GetData<GameObject*>("Qbert")->transform.GetPosition() };
+		const Point2f qbertPosition{ m_pParent->transform.GetPosition() };
 
 		TileComponent* pQbertTile{ pPyramid->GetTile(qbertPosition) };
 		TileComponent* pEndTile{};
@@ -50,7 +51,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 		Vector2f vectorTowardsOtherTile{ pBlackboard->GetData<Vector2f>("VectorTowardsOtherTile") };
 		QbertSpriteComponent* pSpriteComponent{ pBlackboard->GetData<QbertSpriteComponent*>("QbertSpriteComponent") };
 
-		if (inputManager.IsKeyboardKeyPressed(KeyboardInput::A)) // Left Bottom Movement
+		if (inputManager.IsPressed(m_Keybinds[KeybindMovementDirection::LeftBottom])) // Left Bottom Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)].connection))
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftBottom)].connection);
@@ -62,7 +63,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 			pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertLeftBottomAnimation"));
 			pSpriteComponent->SetSourceRect(sourceRect);
 		}
-		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::D)) // Right Bottom Movement
+		else if (inputManager.IsPressed(m_Keybinds[KeybindMovementDirection::RightBottom])) // Right Bottom Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)].connection))
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightBottom)].connection);
@@ -74,7 +75,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 			pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertRightBottomAnimation"));
 			pSpriteComponent->SetSourceRect(sourceRect);
 		}
-		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::Q)) // Left Top Movement
+		else if (inputManager.IsPressed(m_Keybinds[KeybindMovementDirection::LeftTop])) // Left Top Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection))
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::LeftTop)].connection);
@@ -88,7 +89,7 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 			pSpriteComponent->SetTexture(TextureManager::GetInstance().GetTexture("QbertLeftTopAnimation"));
 			pSpriteComponent->SetSourceRect(sourceRect);
 		}
-		else if (inputManager.IsKeyboardKeyPressed(KeyboardInput::E)) // Right Top Movement
+		else if (inputManager.IsPressed(m_Keybinds[KeybindMovementDirection::RightTop])) // Right Top Movement
 		{
 			if (std::holds_alternative<TileComponent*>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection))
 				pEndTile = std::get<0>(pQbertTile->GetConnections()[static_cast<std::underlying_type_t<Direction>>(Direction::RightTop)].connection);
@@ -128,16 +129,15 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 		pBlackboard->ChangeData("QbertVelocity", velocity);
 		pBlackboard->ChangeData("QbertEndPosition", endPosition);
 	},
-	[pPyramid](Blackboard* pBlackboard, const float)
+	[this, pPyramid](Blackboard* pBlackboard, const float)
 	{
-		GameObject* pParent{ pBlackboard->GetData<GameObject*>("Qbert") };
 		Vector2f velocity{ pBlackboard->GetData<Vector2f>("QbertVelocity") };
 		Point2f endPosition{ pBlackboard->GetData<Point2f>("QbertEndPosition") };
 		QbertSpriteComponent* pSpriteComponent{ pBlackboard->GetData<QbertSpriteComponent*>("QbertSpriteComponent") };
 
-		if (AreEqual(pParent->transform.GetPosition().x, endPosition.x, 1.f) && AreEqual(pParent->transform.GetPosition().y, endPosition.y, 1.f))
+		if (AreEqual(m_pParent->transform.GetPosition().x, endPosition.x, 1.f) && AreEqual(m_pParent->transform.GetPosition().y, endPosition.y, 1.f))
 		{
-			pParent->transform.SetPosition(endPosition);
+			m_pParent->transform.SetPosition(endPosition);
 			if (velocity != Vector2f{})
 			{
 				Rectf sourceRect{ pSpriteComponent->GetSourceRect() };
@@ -177,12 +177,12 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent)
 	}} };
 
 	std::shared_ptr<FSMState> pTpState{ new FSMState{
-	[pPyramid, pActiveApp](Blackboard* pBlackboard, const FSMStateTransition stateTransition)
+	[this, pPyramid, pActiveApp](Blackboard* pBlackboard, const FSMStateTransition stateTransition)
 	{
 		if (stateTransition == FSMStateTransition::OnEnter)
 		{
 			// left teleporter is active
-			if (pBlackboard->GetData<TeleportationPadComponent*>("LeftTeleporter")->GetParent()->transform.GetPosition() == pBlackboard->GetData<GameObject*>("Qbert")->transform.GetPosition())
+			if (pBlackboard->GetData<TeleportationPadComponent*>("LeftTeleporter")->GetParent()->transform.GetPosition() == m_pParent->transform.GetPosition())
 			{
 				pBlackboard->ChangeData("IsLeftTeleporterActive", true);
 				pBlackboard->GetData<TeleportationPadComponent*>("LeftTeleporter")->Activate();
@@ -314,7 +314,6 @@ void QbertFSM::PostInitialize()
 	pBlackboard->AddData("QbertSpeed", 65.f);
 	pBlackboard->AddData("QbertVelocity", Vector2f{});
 	pBlackboard->AddData("QbertSpriteComponent", m_pParent->GetComponentByType<QbertSpriteComponent>());
-	pBlackboard->AddData("Qbert", m_pParent);
 	pBlackboard->AddData("QbertEndPosition", Point2f{});
 	pBlackboard->AddData("IsOnTeleporter", false);
 	pBlackboard->AddData("MovingTowardsTeleporter", false);

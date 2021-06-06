@@ -1,5 +1,5 @@
 {
-	"Level": 2,
+	"Level": 3,
 	"Size": 7,
 	"Enemies":
 	[
@@ -21,14 +21,14 @@
 	],
 	"TileFSM":
 	{
-		"TileChange": 1,
+		"TileChange": 2,
 		"TileTextures":
 		{
-			"InactiveTexture": "QbertLevelTwoInactiveTile.png",
-			"IntermediateTexture": "QbertLevelTwoIntermediateTile.png",
-			"ActiveTexture": "QbertLevelTwoActiveTile.png"
+			"InactiveTexture": "QbertLevelThreeInactiveTile.png",
+			"IntermediateTexture": null,
+			"ActiveTexture": "QbertLevelThreeActiveTile.png"
 		}
 	},
-	"TileTexture": "QbertLevelTwoInactiveTile.png",
+	"TileTexture": "QbertLevelThreeInactiveTile.png",
 	"TeleportationPadTexture": "LevelOneTPPads.png"
 }
