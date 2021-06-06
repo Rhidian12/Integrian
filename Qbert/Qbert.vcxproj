@@ -95,7 +95,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2-2.0.14\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\VLD\lib\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2-2.0.14\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\VLD\lib\$(PlatformTarget)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;Glu32.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;Integrian.lib;VLD.lib;Integrian.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -123,7 +123,7 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2-2.0.14\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\VLD\lib\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\SDL2-2.0.14\lib\$(PlatformTarget)\;$(SolutionDir)Libraries\VLD\lib\$(PlatformTarget)\</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;Glu32.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;Integrian.lib;VLD.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -201,6 +201,7 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
     <ClCompile Include="Qbert_MainGame.cpp" />
     <ClCompile Include="Qbert_StartMenu.cpp" />
     <ClCompile Include="ScoreListenerComponent.cpp" />
+    <ClCompile Include="SlickSpawnerComponent.cpp" />
     <ClCompile Include="TeleportationPadComponent.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileFactoryComponent.cpp" />
@@ -227,6 +228,7 @@ rem xcopy "$(SolutionDir)Libraries\Integrian\$(PlatformTarget)\*.DLL" "$(OutDir)
     <ClInclude Include="Qbert_MainGame.h" />
     <ClInclude Include="Qbert_StartMenu.h" />
     <ClInclude Include="ScoreListenerComponent.h" />
+    <ClInclude Include="SlickSpawnerComponent.h" />
     <ClInclude Include="TeleportationPadComponent.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileFactoryComponent.h" />

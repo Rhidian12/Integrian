@@ -26,7 +26,11 @@ Integrian::App::App(const std::string& name)
 	{
 		InitializeLibraries();
 		m_IsLibraryInitialised = true;
+
+		// == Set Window Size For InputManager ==
+		InputManager::GetInstance().SetWindowSize(m_WindowWidth, m_WindowHeight);
 	}
+
 
 	//App_Selector::GetInstance().AddApplication(this);
 }
@@ -73,9 +77,6 @@ bool Integrian::App::Initialize()
 {
 	m_WindowWidth = 640;
 	m_WindowHeight = 480;
-
-	// == Set Window Size For InputManager ==
-	InputManager::GetInstance().SetWindowSize(m_WindowWidth, m_WindowHeight);
 
 	// == Seed rand() ==
 	srand(static_cast<unsigned int>(time(nullptr)));
@@ -165,6 +166,11 @@ bool Integrian::App::InitializeLibraries()
 	const int mixerFlags{ MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG };
 	if ((Mix_Init(mixerFlags) & mixerFlags) != mixerFlags)
 		Logger::LogSevereError(std::string{ "SDL_Mixer failed to initialize!" } + Mix_GetError() + "\n");
+#pragma endregion
+
+#pragma region SDL_Controllers
+	if (SDL_JoystickEventState(SDL_ENABLE) == -1)
+		Logger::LogSevereError(std::string{ "SDL_JoystickEventState() failed! " } + SDL_GetError() + "\n");
 #pragma endregion
 
 	return true;

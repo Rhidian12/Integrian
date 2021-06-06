@@ -17,6 +17,9 @@
 #include <TextComponent.h>
 #include "ScoreListenerComponent.h"
 #include "LifeCounterComponent.h"
+#include <SDLAudioSystem.h>
+#include <AudioLocator.h>
+#include "SlickSpawnerComponent.h"
 
 Qbert_MainGame::Qbert_MainGame(const int level)
 	: Integrian::App{ "Qbert_MainGame" + std::to_string(level) }
@@ -33,6 +36,10 @@ void Qbert_MainGame::Start()
 	Integrian::TextureManager::GetInstance().AddTexture("QbertLeftTopAnimation", "Resources/Images/Qbert/QbertLeftTopAnimation.png");
 	Integrian::TextureManager::GetInstance().AddTexture("QbertRightBottomAnimation", "Resources/Images/Qbert/QbertRightBottomAnimation.png");
 	Integrian::TextureManager::GetInstance().AddTexture("QbertRightTopAnimation", "Resources/Images/Qbert/QbertRightTopAnimation.png");
+
+	SDLAudioSystem* pAudioSystem{ new SDLAudioSystem{} };
+	pAudioSystem->AddSound("Resources/Sounds/Qbert_Jump.mp3");
+	AudioLocator::Provide(pAudioSystem);
 
 	SetClearColour(RGBColour{ 49.f, 34.f, 119.f });
 
@@ -80,6 +87,10 @@ void Qbert_MainGame::Start()
 	pLifeCounter->AddComponent(pQbertLifeTexture);
 	pLifeCounter->transform.SetPosition(Point2f{ 50.f, 250.f });
 	AddGameObject("LifeCounter", pLifeCounter);
+
+	GameObject* pSlickAndSamSpawner{ new GameObject{} };
+	pSlickAndSamSpawner->AddComponent(new SlickSpawnerComponent{ pSlickAndSamSpawner });
+	AddGameObject("SamAndSlickSpawner", pSlickAndSamSpawner);
 
 	//pPyramidRoot->transform.SetScale(2.f, 2.f);
 	//pQbert->transform.SetScale(2.f, 2.f);

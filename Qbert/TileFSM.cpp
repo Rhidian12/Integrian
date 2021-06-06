@@ -18,6 +18,7 @@ Integrian::FiniteStateMachineComponent* TileFSM::CreatePermanentFSM(Integrian::T
 	m_pBlackboard->AddData("TileChanged", nullptr);
 	m_pBlackboard->AddData("InactiveTexture", pInactiveTexture);
 	m_pBlackboard->AddData("ActiveTexture", pActiveTexture);
+	m_pBlackboard->AddData("TileChangedBack", nullptr);
 
 	std::shared_ptr<FSMState> beginState{ new FSMState{
 	[](Blackboard*, const FSMStateTransition) {},
@@ -37,6 +38,17 @@ Integrian::FiniteStateMachineComponent* TileFSM::CreatePermanentFSM(Integrian::T
 				EventQueue::GetInstance().QueueEvent(Event{ "TileChanged", 25 });
 			}
 		}
+
+		GameObject* pTileChangedBack{ pBlackboard->GetData<GameObject*>("TileChangedBack") };
+		if (pTileChangedBack)
+		{
+			TextureComponent* pTextureComponent{ pTileChangedBack->GetComponentByType<TextureComponent>() };
+			if (pTextureComponent->GetTexture() == pBlackboard->GetData<Texture*>("ActiveTexture"))
+			{
+				pTextureComponent->SetTexture(pBlackboard->GetData<Texture*>("InactiveTexture"));
+				pBlackboard->ChangeData("TileChangedBack", nullptr);
+			}
+		}
 	}
 	} };
 
@@ -51,6 +63,7 @@ Integrian::FiniteStateMachineComponent* TileFSM::CreateIntermediateFSM(Integrian
 	m_pBlackboard->AddData("InactiveTexture", pInactiveTexture);
 	m_pBlackboard->AddData("IntermediateTexture", pIntermediateTexture);
 	m_pBlackboard->AddData("ActiveTexture", pActiveTexture);
+	m_pBlackboard->AddData("TileChangedBack", nullptr);
 
 	std::shared_ptr<FSMState> beginState{ new FSMState{
 	[](Blackboard*, const FSMStateTransition) {},
@@ -76,6 +89,22 @@ Integrian::FiniteStateMachineComponent* TileFSM::CreateIntermediateFSM(Integrian
 				EventQueue::GetInstance().QueueEvent(Event{ "TileChanged", 25 });
 			}
 		}
+
+		GameObject* pTileChangedBack{ pBlackboard->GetData<GameObject*>("TileChangedBack") };
+		if (pTileChangedBack)
+		{
+			TextureComponent* pTextureComponent{ pTileChangedBack->GetComponentByType<TextureComponent>() };
+			if (pTextureComponent->GetTexture() == pBlackboard->GetData<Texture*>("ActiveTexture"))
+			{
+				pTextureComponent->SetTexture(pBlackboard->GetData<Texture*>("IntermediateTexture"));
+				pBlackboard->ChangeData("TileChangedBack", nullptr);
+			}
+			else if (pTextureComponent->GetTexture() == pBlackboard->GetData<Texture*>("IntermediateTexture"))
+			{
+				pTextureComponent->SetTexture(pBlackboard->GetData<Texture*>("InactiveTexture"));
+				pBlackboard->ChangeData("TileChangedBack", nullptr);
+			}
+		}
 	}
 	} };
 
@@ -89,6 +118,7 @@ Integrian::FiniteStateMachineComponent* TileFSM::CreateRevertFSM(Integrian::Text
 	m_pBlackboard->AddData("TileChanged", nullptr);
 	m_pBlackboard->AddData("InactiveTexture", pInactiveTexture);
 	m_pBlackboard->AddData("ActiveTexture", pActiveTexture);
+	m_pBlackboard->AddData("TileChangedBack", nullptr);
 
 	std::shared_ptr<FSMState> beginState{ new FSMState{
 	[](Blackboard*, const FSMStateTransition) {},
@@ -114,6 +144,17 @@ Integrian::FiniteStateMachineComponent* TileFSM::CreateRevertFSM(Integrian::Text
 				EventQueue::GetInstance().QueueEvent(Event{ "TileChanged", 25 });
 			}
 		}
+
+		GameObject* pTileChangedBack{ pBlackboard->GetData<GameObject*>("TileChangedBack") };
+		if (pTileChangedBack)
+		{
+			TextureComponent* pTextureComponent{ pTileChangedBack->GetComponentByType<TextureComponent>() };
+			if (pTextureComponent->GetTexture() == pBlackboard->GetData<Texture*>("ActiveTexture"))
+			{
+				pTextureComponent->SetTexture(pBlackboard->GetData<Texture*>("InactiveTexture"));
+				pBlackboard->ChangeData("TileChangedBack", nullptr);
+			}
+		}
 	}
 	} };
 
@@ -128,6 +169,11 @@ bool TileFSM::OnEvent(const Integrian::Event& event)
 	{
 		m_pBlackboard->ChangeData("TileChanged", std::get<0>(event.GetData<TileComponent*>())->GetParent());
 		return true;
+	}
+
+	if (eventName == "ChangeTileBack")
+	{
+		m_pBlackboard->ChangeData("TileChangedBack", std::get<0>(event.GetData<TileComponent*>())->GetParent());
 	}
 
 	return false;

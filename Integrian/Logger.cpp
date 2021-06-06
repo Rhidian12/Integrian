@@ -36,6 +36,8 @@ void Integrian::Logger::LogNoWarning(const std::string& message)
 	SetConsoleTextAttribute(hConsole, 2);
 	std::cout << message;
 	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+#else 
+	(void)message;
 #endif // _DEBUG
 }
 
@@ -46,6 +48,8 @@ void Integrian::Logger::LogWarning(const std::string& message)
 	SetConsoleTextAttribute(hConsole, 6);
 	std::cout << message;
 	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+#else
+	(void)message;
 #endif // _DEBUG
 }
 
@@ -56,6 +60,8 @@ void Integrian::Logger::LogError(const std::string& message)
 	SetConsoleTextAttribute(hConsole, 12);
 	std::cout << message;
 	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+#else
+	(void)message;
 #endif // _DEBUG
 }
 
@@ -66,6 +72,8 @@ void Integrian::Logger::LogSevereError(const std::string& message)
 	SetConsoleTextAttribute(hConsole, 4);
 	std::cout << message;
 	SetConsoleTextAttribute(hConsole, 7); // set text back to white
+#else
+	(void)message;
 #endif // _DEBUG
 }
 

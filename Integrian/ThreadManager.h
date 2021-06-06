@@ -47,9 +47,12 @@ namespace Integrian
 
 		virtual bool OnEvent(const Event& event) override;
 
-		[[nodiscard]] bool AreAllThreadsDone() const;
+		[[nodiscard]] bool AreAllThreadsDone() const noexcept;
+		[[nodiscard]] const std::queue<std::function<void()>>& GetJobs() const noexcept;
 
 	private:
+		void InfiniteLoop(const uint32_t index);
+
 		friend class Singleton<ThreadManager>;
 		ThreadManager();
 
@@ -57,6 +60,8 @@ namespace Integrian
 		std::queue<std::function<void()>> m_Jobs{};
 		std::mutex m_Mutex{};
 		std::condition_variable m_CV{};
+
+		std::vector<bool> m_AreJobsDone{};
 	};
 }
 

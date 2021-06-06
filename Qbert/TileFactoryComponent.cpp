@@ -125,13 +125,13 @@ void TileFactoryComponent::FillConnections(nlohmann::json teleporterLocations) c
 
 	std::cout << teleporterLocations << std::endl;
 
-	uint64_t counter{};
+	uint32_t counter{};
 	for (unsigned int y{}; y < m_Size - 1; ++y)
 	{
 		for (unsigned int x{}; x <= y; ++x)
 		{
-			const uint64_t leftBottomIndex{ counter + (y - x) + x + 1 };
-			const uint64_t rightBottomIndex{ counter + (y - x) + x + 2 };
+			const uint32_t leftBottomIndex{ counter + (y - x) + x + 1 };
+			const uint32_t rightBottomIndex{ counter + (y - x) + x + 2 };
 			(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[leftBottomIndex]->GetComponentByType<TileComponent>(), Direction::LeftBottom);
 			(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[rightBottomIndex]->GetComponentByType<TileComponent>(), Direction::RightBottom);
 

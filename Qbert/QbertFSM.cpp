@@ -13,6 +13,9 @@
 #include <Texture.h>
 #include <EventQueue.h>
 
+#include <AudioLocator.h>
+#include <SDLAudioSystem.h>
+
 QbertFSM::QbertFSM(Integrian::GameObject* pParent, std::array<Integrian::GameInput, 4>&& keybinds)
 	: Component{ pParent }
 	, m_pFSM{}
@@ -105,6 +108,8 @@ QbertFSM::QbertFSM(Integrian::GameObject* pParent, std::array<Integrian::GameInp
 		}
 		else
 			return;
+
+		AudioLocator::GetAudio()->PlaySound(0);
 
 		Point2f endPosition{};
 
