@@ -5,20 +5,14 @@
 #include "GameInput.h" // GameInput
 #include <unordered_map> // std::unordered_map
 #include <vector> // std::vector
-#include "ListenerInterface.h" // IListener
 
 namespace Integrian
 {
 	class Command;
-	class Keyboard final : public IListener
+	class Keyboard final
 	{
 	public:
 		~Keyboard();
-
-		/*
-		Public function to handle events. This is not supposed to be called manually
-		*/
-		virtual bool OnEvent(const Event& event) override;
 
 	private:
 		Keyboard() = default;

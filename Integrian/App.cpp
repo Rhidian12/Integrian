@@ -416,6 +416,9 @@ void Integrian::App::AppExit()
 		SDL_PumpEvents();
 	}
 
+	for (const std::pair<GameObjectInformation, GameObject*>& pair : m_pGameObjects)
+		pair.second->SetIsActive(false);
+
 	OnAppExit();
 }
 
@@ -432,6 +435,9 @@ void Integrian::App::AppEnter()
 
 	if (!m_MC.empty())
 		InputManager::GetInstance().SetMouseCommands(m_MC);
+
+	for (const std::pair<GameObjectInformation, GameObject*>& pair : m_pGameObjects)
+		pair.second->SetIsActive(true);
 
 	OnAppEnter();
 }

@@ -123,6 +123,8 @@ void TileFactoryComponent::FillConnections(nlohmann::json teleporterLocations) c
 	App* pActiveApp{ App_Selector::GetInstance().GetActiveApplication() };
 	const std::vector<GameObject*>* pTiles{ &m_pParent->GetComponentByType<PyramidComponent>()->GetTiles() };
 
+	std::cout << teleporterLocations << std::endl;
+
 	uint64_t counter{};
 	for (unsigned int y{}; y < m_Size - 1; ++y)
 	{
@@ -136,18 +138,17 @@ void TileFactoryComponent::FillConnections(nlohmann::json teleporterLocations) c
 			(*pTiles)[leftBottomIndex]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter]->GetComponentByType<TileComponent>(), Direction::RightTop);
 			(*pTiles)[rightBottomIndex]->GetComponentByType<TileComponent>()->AddConnection((*pTiles)[counter]->GetComponentByType<TileComponent>(), Direction::LeftTop);
 
-			for (const nlohmann::json& element : teleporterLocations)
-			{
-				if (*element.find("isLeft") && y == *element.find("row"))
-					if (x == 0)
-						(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection(pActiveApp->GetGameObject("TeleportationPad0")->GetComponentByType<TeleportationPadComponent>(), Direction::LeftTop);
+			uint32_t secondCounter{};
+			if (*(teleporterLocations[secondCounter].find("isLeft")) && y == *(teleporterLocations[secondCounter].find("row")))
+				if (x == 0)
+					(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection(pActiveApp->GetGameObject("TeleportationPad0")->GetComponentByType<TeleportationPadComponent>(), Direction::LeftTop);
 
-				if (!(*element.find("isLeft")) && y == *element.find("row"))
-					if (x == y)
-						(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection(pActiveApp->GetGameObject("TeleportationPad1")->GetComponentByType<TeleportationPadComponent>(), Direction::RightTop);
-			}
+			if (!(*teleporterLocations[secondCounter].find("isLeft")) && y == *(teleporterLocations[secondCounter].find("row")))
+				if (x == y)
+					(*pTiles)[counter]->GetComponentByType<TileComponent>()->AddConnection(pActiveApp->GetGameObject("TeleportationPad1")->GetComponentByType<TeleportationPadComponent>(), Direction::RightTop);
 
 			++counter;
+			++secondCounter;
 		}
 	}
 

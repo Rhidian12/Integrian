@@ -12,11 +12,11 @@
 	[
 		{
 			"isLeft": false,
-			"row": 6
+			"row": 5
 		},
 		{
 			"isLeft": true,
-			"row": 6
+			"row": 5
 		}
 	],
 	"TileFSM":

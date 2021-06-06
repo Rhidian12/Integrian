@@ -5,20 +5,14 @@
 #include <unordered_map> // std::unordered_map
 #include <vector> // std::vector
 #include "GameInput.h" // GameInput
-#include "ListenerInterface.h" // IListener
 
 namespace Integrian
 {
 	class Command;
-	class GameController final : public IListener
+	class GameController final
 	{
 	public:
 		~GameController();
-
-		/*
-		Public function to handle events. This is not supposed to be called manually
-		*/
-		virtual bool OnEvent(const Event& event) override;
 
 	private:
 		GameController() = default;

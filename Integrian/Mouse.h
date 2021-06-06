@@ -9,12 +9,10 @@
 
 namespace Integrian
 {
-	class Mouse final : public IListener
+	class Mouse final
 	{
 	public:
 		~Mouse();
-
-		virtual bool OnEvent(const Event& event) override;
 
 	private:
 		Mouse() = default;

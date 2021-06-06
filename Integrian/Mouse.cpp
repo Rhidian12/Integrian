@@ -12,13 +12,6 @@ Integrian::Mouse::~Mouse()
 	m_MouseCommands.clear();
 }
 
-bool Integrian::Mouse::OnEvent(const Event& event)
-{
-	const std::string eventName{ event.GetEvent() };
-
-	return false;
-}
-
 void Integrian::Mouse::AddCommand(const MouseButton mouseButton, const State keyState, const std::function<void()>& pCommand)
 {
 	m_MouseCommands[mouseButton].push_back(CommandAndButton{ pCommand,keyState });

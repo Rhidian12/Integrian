@@ -76,13 +76,6 @@ bool Integrian::GameController::IsPressed(const ControllerInput controllerInput)
 		return (SDL_GameControllerGetButton(m_pSDLGameController, static_cast<SDL_GameControllerButton>(controllerInput)) > 0);
 }
 
-bool Integrian::GameController::OnEvent(const Event& event)
-{
-	const std::string eventName{ event.GetEvent() };
-
-	return false;
-}
-
 bool Integrian::GameController::WasPressed(const State previousState) const
 {
 	return (previousState == State::OnPress || previousState == State::OnHeld);

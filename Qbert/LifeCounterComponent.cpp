@@ -21,11 +21,12 @@ void LifeCounterComponent::PostInitialize()
 
 void LifeCounterComponent::Update(const float)
 {
-	if (m_Lives == 0)
-		m_pParent->SetIsActive(false);
-	else
+	float height{ (m_pTextureComponent->GetTexture()->GetHeight() / 3.f) * m_Lives };
+	if (height == 0.f)
+		height = 0.1f;
+
 	m_pTextureComponent->SetSourceRect(Integrian::Rectf{ 0.f, 0.f,
-		m_pTextureComponent->GetTexture()->GetWidth(), (m_pTextureComponent->GetTexture()->GetHeight() / 3.f) * m_Lives });
+		m_pTextureComponent->GetTexture()->GetWidth(), height });
 }
 
 bool LifeCounterComponent::OnEvent(const Integrian::Event& event)

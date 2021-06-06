@@ -11,16 +11,11 @@ Integrian::InputManager::InputManager()
 	, m_Controllers{}
 {
 	for (uint32_t i{}; i < m_AmountOfControllers; ++i)
-	{
 		m_Controllers[i] = std::move(GameController{ uint8_t(i) });
-		EventQueue::GetInstance().AddListener(&m_Controllers[i]);
-	}
 
 	m_Keyboard = std::move(Keyboard{});
-	EventQueue::GetInstance().AddListener(&m_Keyboard);
 
 	m_Mouse = std::move(Mouse{});
-	EventQueue::GetInstance().AddListener(&m_Mouse);
 }
 
 void Integrian::InputManager::RemoveCommandFromInput(const GameInput& input, std::function<void()>& pCommand, const uint8_t controllerIndex)

@@ -14,13 +14,6 @@ Integrian::Keyboard::~Keyboard()
 	m_KeyboardCommands.clear();
 }
 
-bool Integrian::Keyboard::OnEvent(const Event& event)
-{
-	const std::string eventName{ event.GetEvent() };
-
-	return false;
-}
-
 void Integrian::Keyboard::AddCommand(const KeyboardInput keyboardInput, const State keyState, const std::function<void()>& pCommand)
 {
 	m_KeyboardCommands[keyboardInput].push_back(CommandAndButton{ pCommand,keyState });
