@@ -3,16 +3,18 @@
 // Author: Rhidian De Wit
 // December 2020 ---- Last Edited: February 2021
 // ====================================
-#ifndef ENGINE_CAMERA_H
-#define ENGINE_CAMERA_H
+#ifndef ENGINE_ORTOGRAPHICCAMERA_H
+#define ENGINE_ORTOGRAPHICCAMERA_H
+
+#include "Camera.h" // Camera base class
 
 namespace Integrian
 {
-	class OrthographicCamera
+	class OrthographicCamera final : public Camera
 	{
 	public:
 		OrthographicCamera(const uint32_t windowWidth, const uint32_t windowHeight, const Rectf& levelBoundaries = Rectf{});
-		~OrthographicCamera() = default;
+		virtual ~OrthographicCamera() = default;
 
 		Point2f Transform(const Rectf& target);
 
@@ -22,10 +24,8 @@ namespace Integrian
 		Point2f Track(const Rectf& target);
 		void Clamp(Point2f& bottomLeftPos) const;
 
-		uint32_t m_WindowWidth;
-		uint32_t m_WindowHeight;
 		Rectf m_LevelBoundaries;
 	};
 }
 
-#endif // !ENGINE_CAMERA_H
+#endif // !ENGINE_ORTOGRAPHICCAMERA_H

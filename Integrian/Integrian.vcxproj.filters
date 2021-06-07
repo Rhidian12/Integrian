@@ -159,6 +159,12 @@
     <Filter Include="Engine\Graph\Graph">
       <UniqueIdentifier>{fe9c1c11-0c90-43ac-9832-ccca1feba322}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\App\IApp">
+      <UniqueIdentifier>{67d98187-f63a-49a1-a4db-a11aec5a9a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Camera\Camera">
+      <UniqueIdentifier>{153e92cf-d25e-44ba-a3d2-dd40244b59c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -295,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="Connection.cpp">
       <Filter>Engine\Graph\Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="IApp.cpp">
+      <Filter>Engine\App\IApp</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Engine\Camera\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -525,6 +537,12 @@
     </ClInclude>
     <ClInclude Include="Graph2D.h">
       <Filter>Engine\Graph\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="IApp.h">
+      <Filter>Engine\App\IApp</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Engine\Camera\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

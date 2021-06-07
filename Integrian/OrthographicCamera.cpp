@@ -2,8 +2,7 @@
 #include "OrthographicCamera.h" // header
 #include <assert.h> // assert()
 Integrian::OrthographicCamera::OrthographicCamera(const uint32_t windowWidth, const uint32_t windowHeight, const Rectf& levelBoundaries)
-	: m_WindowWidth{ windowWidth }
-	, m_WindowHeight{ windowHeight }
+	: Camera{ windowWidth, windowHeight }
 	, m_LevelBoundaries{ levelBoundaries }
 {
 }
@@ -19,7 +18,7 @@ Integrian::Point2f Integrian::OrthographicCamera::Transform(const Integrian::Rec
 	// == Draw Camera View For Debugging Purposes ==
 	glColor3f(0.f, 0.f, 1.f);
 	Integrian::DrawRectangle(Integrian::Rectf{ camPosition, float(m_WindowWidth), float(m_WindowHeight) });
-	
+
 	return camPosition;
 }
 Integrian::Point2f Integrian::OrthographicCamera::Track(const Integrian::Rectf& target)
