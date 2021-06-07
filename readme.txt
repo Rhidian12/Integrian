@@ -1,5 +1,8 @@
 https://github.com/Rhidian12/Integrian
 
+The menu can be traversed with the arrow keys and selected with ENTER.
+Player one plays with the keys EDAQ and player two with the buttons XABY on the controller.
+
 NOTE:
 FOR SOME REASON, BATCH BUILDING DOES NOT COMPILE Release x64 and Release x86
 CLEAN AND BUILD THESE SEPERATELY FOR SUCCESSFULL COMPILATION
