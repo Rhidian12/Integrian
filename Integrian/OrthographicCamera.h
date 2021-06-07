@@ -16,7 +16,7 @@ namespace Integrian
 		OrthographicCamera(const uint32_t windowWidth, const uint32_t windowHeight, const Rectf& levelBoundaries = Rectf{});
 		virtual ~OrthographicCamera() = default;
 
-		Point2f Transform(const Rectf& target);
+		virtual Point2f Transform(const Rectf& target) override;
 
 		void SetLevelBoundaries(const Rectf& levelBoundaries);
 	

@@ -11,6 +11,8 @@ namespace Integrian
 		Camera(const uint32_t windowWidth, const uint32_t windowHeight);
 		virtual ~Camera() = default;
 
+		virtual Point2f Transform(const Rectf&) = 0;
+
 	protected:
 		uint32_t m_WindowWidth;
 		uint32_t m_WindowHeight;
