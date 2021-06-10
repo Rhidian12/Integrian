@@ -186,7 +186,6 @@
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="GameObjectInformation.cpp" />
-    <ClCompile Include="IApp.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -240,7 +239,6 @@
     <ClInclude Include="GameObjectInformation.h" />
     <ClInclude Include="Graph2D.h" />
     <ClInclude Include="GraphEnums.h" />
-    <ClInclude Include="IApp.h" />
     <ClInclude Include="IGraph.h" />
     <ClInclude Include="Libraries\JSON\json.hpp" />
     <ClInclude Include="LoggedAudioSystem.h" />
