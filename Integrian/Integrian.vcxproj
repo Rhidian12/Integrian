@@ -189,6 +189,7 @@
     <ClCompile Include="IApp.cpp" />
     <ClCompile Include="LoggedAudioSystem.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SDLAudioSystem.cpp" />
     <ClCompile Include="AudioSystem.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="MatrixDivisionNotPossibleException.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Point3f.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="SDLAudioSystem.h" />
     <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="CameraInitialisationFailed.h" />

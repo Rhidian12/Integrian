@@ -37,6 +37,13 @@
 #include "ExceptionHandler.h"
 #include "Logger.h"
 
-#include <Windows.h>
+//#include <Windows.h>
+
+#define INTEGRIAN_EXPORT
+#ifdef INTEGRIAN_EXPORT
+#define INTEGRIAN_API __declspec(dllexport)
+#else
+#define INTEGRIAN_API __declspec(dllimport)
+#endif
 
 #endif //PCH_H
