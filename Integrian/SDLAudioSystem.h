@@ -13,13 +13,13 @@ namespace Integrian
 	class SDLAudioSystem final : public AudioSystem
 	{
 	public:
-		SDLAudioSystem();
-		virtual ~SDLAudioSystem();
+		INTEGRIAN_API SDLAudioSystem();
+		INTEGRIAN_API virtual ~SDLAudioSystem();
 
 		virtual bool OnEvent(const Event& event) override;
 
-		virtual SoundID AddSound(const std::string& filePath) override;
-		virtual MusicID AddMusic(const std::string& filePath) override;
+		virtual SoundID AddSound(const char* pFilePath) override;
+		virtual MusicID AddMusic(const char* pFilePath) override;
 
 		virtual void Update(const float dt) override;
 

@@ -10,13 +10,13 @@ namespace Integrian
 	class LoggedAudioSystem final : public AudioSystem
 	{
 	public:
-		LoggedAudioSystem(AudioSystem* pAudio);
-		~LoggedAudioSystem() = default;
+		INTEGRIAN_API LoggedAudioSystem(AudioSystem* pAudio);
+		INTEGRIAN_API ~LoggedAudioSystem() = default;
 
 		virtual bool OnEvent(const Event& event) override;
 
-		virtual SoundID AddSound(const std::string& filePath) override;
-		virtual MusicID AddMusic(const std::string& filePath) override;
+		virtual SoundID AddSound(const char* pFilePath) override;
+		virtual MusicID AddMusic(const char* pFilePath) override;
 
 		virtual void Update(const float dt) override;
 

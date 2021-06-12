@@ -3,11 +3,12 @@
 #ifndef INTEGRIAN_ILISTENER_H
 #define INTEGRIAN_ILISTENER_H
 
+#include "IntegrianPCH.h"
 #include "Event.h" // Event
 
 namespace Integrian
 {
-	class IListener abstract
+	class INTEGRIAN_API IListener
 	{
 	public:
 		virtual ~IListener() = default;

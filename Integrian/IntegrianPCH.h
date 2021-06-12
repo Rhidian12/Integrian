@@ -39,7 +39,7 @@
 
 //#include <Windows.h>
 
-#define INTEGRIAN_EXPORT
+//#define INTEGRIAN_EXPORT
 #ifdef INTEGRIAN_EXPORT
 #define INTEGRIAN_API __declspec(dllexport)
 #else

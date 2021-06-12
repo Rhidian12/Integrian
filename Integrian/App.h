@@ -21,7 +21,7 @@ namespace Integrian
 {
 	class OrthographicCamera;
 	class Timer;
-	INTEGRIAN_API class App : public IListener
+	class INTEGRIAN_API App : public IListener
 	{
 	public:
 		virtual ~App();

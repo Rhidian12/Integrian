@@ -13,16 +13,16 @@ bool Integrian::LoggedAudioSystem::OnEvent(const Event& event)
 	return m_pAudioSystem->OnEvent(event);
 }
 
-Integrian::AudioSystem::SoundID Integrian::LoggedAudioSystem::AddSound(const std::string& filePath)
+Integrian::AudioSystem::SoundID Integrian::LoggedAudioSystem::AddSound(const char* pFilePath)
 {
 	Logger::LogNoWarning("A sound was added\n");
-	return m_pAudioSystem->AddSound(filePath);
+	return m_pAudioSystem->AddSound(pFilePath);
 }
 
-Integrian::AudioSystem::MusicID Integrian::LoggedAudioSystem::AddMusic(const std::string& filePath)
+Integrian::AudioSystem::MusicID Integrian::LoggedAudioSystem::AddMusic(const char* pFilePath)
 {
 	Logger::LogNoWarning("A music file was added\n");
-	return m_pAudioSystem->AddMusic(filePath);
+	return m_pAudioSystem->AddMusic(pFilePath);
 }
 
 void Integrian::LoggedAudioSystem::Update(const float dt)

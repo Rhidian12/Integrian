@@ -54,7 +54,7 @@ bool Integrian::SDLAudioSystem::OnEvent(const Event& event)
 		return false;
 }
 
-Integrian::AudioSystem::SoundID Integrian::SDLAudioSystem::AddSound(const std::string& filePath)
+Integrian::AudioSystem::SoundID Integrian::SDLAudioSystem::AddSound(const char* pFilePath)
 {
 #ifdef _DEBUG
 	SoundID newSoundID{};
@@ -64,10 +64,10 @@ Integrian::AudioSystem::SoundID Integrian::SDLAudioSystem::AddSound(const std::s
 	else
 		newSoundID = ((m_Sounds.end()--)->first) + 1;
 
-	Mix_Chunk* pTemp{ Mix_LoadWAV(filePath.c_str()) };
+	Mix_Chunk* pTemp{ Mix_LoadWAV(pFilePath) };
 	if (pTemp == nullptr)
 	{
-		Logger::LogError(filePath + " did not contain a sound file\n" + Mix_GetError());
+		Logger::LogError(std::string{ pFilePath } + " did not contain a sound file\n" + Mix_GetError());
 		return -1;
 	}
 	else
@@ -84,15 +84,15 @@ Integrian::AudioSystem::SoundID Integrian::SDLAudioSystem::AddSound(const std::s
 		newSoundID = ((m_Sounds.end()--)->first) + 1;
 
 	if (m_Sounds.empty())
-		m_Sounds.insert(std::make_pair(newSoundID, Mix_LoadWAV(filePath.c_str())));
+		m_Sounds.insert(std::make_pair(newSoundID, Mix_LoadWAV(pFilePath)));
 	else
-		m_Sounds.insert(std::make_pair(newSoundID, Mix_LoadWAV(filePath.c_str())));
+		m_Sounds.insert(std::make_pair(newSoundID, Mix_LoadWAV(pFilePath)));
 
 	return newSoundID;
 #endif // _DEBUG
 }
 
-Integrian::AudioSystem::MusicID Integrian::SDLAudioSystem::AddMusic(const std::string& filePath)
+Integrian::AudioSystem::MusicID Integrian::SDLAudioSystem::AddMusic(const char* pFilePath)
 {
 #ifdef _DEBUG
 	MusicID newMusicID{};
@@ -102,10 +102,10 @@ Integrian::AudioSystem::MusicID Integrian::SDLAudioSystem::AddMusic(const std::s
 	else
 		newMusicID = ((m_Music.end()--)->first) + 1;
 
-	Mix_Music* pTemp{ Mix_LoadMUS(filePath.c_str()) };
+	Mix_Music* pTemp{ Mix_LoadMUS(pFilePath) };
 	if (pTemp == nullptr)
 	{
-		Logger::LogError(filePath + " did not contain a music file\n");
+		Logger::LogError(std::string{ pFilePath } + " did not contain a music file\n");
 		return -1;
 	}
 	else
@@ -122,9 +122,9 @@ Integrian::AudioSystem::MusicID Integrian::SDLAudioSystem::AddMusic(const std::s
 		newMusicID = ((m_Music.end()--)->first) + 1;
 
 	if (m_Music.empty())
-		m_Music.insert(std::make_pair(newMusicID, Mix_LoadMUS(filePath.c_str())));
+		m_Music.insert(std::make_pair(newMusicID, Mix_LoadMUS(pFilePath)));
 	else
-		m_Music.insert(std::make_pair(newMusicID, Mix_LoadMUS(filePath.c_str())));
+		m_Music.insert(std::make_pair(newMusicID, Mix_LoadMUS(pFilePath)));
 
 	return newMusicID;
 #endif // _DEBUG

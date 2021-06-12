@@ -20,7 +20,7 @@ namespace Integrian
 
 		virtual void Render() const override;
 
-		virtual Rectf GetLevelBoundaries() const override { return Rectf{ 0.f,0.f,float(m_WindowWidth),float(m_WindowHeight)}; };
+		virtual Rectf GetLevelBoundaries() const override { return Rectf{ 0.f,0.f,float(GetWindowWidth()),float(GetWindowHeight())}; };
 		virtual Rectf GetTarget() const override { return Rectf{}; };
 
 	private:

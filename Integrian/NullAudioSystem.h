@@ -14,8 +14,8 @@ namespace Integrian
 
 		virtual void Update(const float) override {}
 
-		SoundID AddSound(const std::string&) override { return -1; }
-		MusicID AddMusic(const std::string&) override { return -1; }
+		SoundID AddSound(const char*) override { return -1; }
+		MusicID AddMusic(const char*) override { return -1; }
 
 		virtual void PlaySound(const SoundID, const bool = false, const int = 0, const int = 100) override {}
 		virtual void PlayMusic(const MusicID, const bool = false, const int = 0, const int = 100) override {}
