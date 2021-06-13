@@ -347,7 +347,7 @@
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="App_Selector.cpp" />
+    <ClCompile Include="App_Manager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
@@ -396,7 +396,7 @@
   <ItemGroup>
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="App.h" />
-    <ClInclude Include="App_Selector.h" />
+    <ClInclude Include="App_Manager.h" />
     <ClInclude Include="Blackboard.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Connection.h" />

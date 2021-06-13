@@ -7,7 +7,7 @@
 namespace Integrian
 {
 	template<typename Type>
-	class Singleton
+	class INTEGRIAN_API Singleton
 	{
 	public:
 		virtual ~Singleton() = default;

@@ -3,6 +3,7 @@
 #include <AudioSystem.h>
 #include <SDLAudioSystem.h>
 #include <App_Selector.h>
+#include <EventQueue.h>
 
 int main(int, char**)
 {
@@ -25,7 +26,7 @@ int main(int, char**)
 
 	App* pFoo{ new Foo{} };
 
-	App_Selector::GetInstance().AddApplication(pFoo);
+	App_Manager::GetInstance().AddApplication(pFoo);
 
 	delete pFoo;
 

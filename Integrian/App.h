@@ -147,7 +147,7 @@ namespace Integrian
 		class AppImplementation;
 		AppImplementation* m_pAppImplementation;
 
-		friend class App_Selector;
+		friend class App_Manager;
 		void TransformCameraAndRender() const;
 		void UpdateApplication();
 

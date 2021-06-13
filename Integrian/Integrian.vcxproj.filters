@@ -281,7 +281,7 @@
     <ClCompile Include="ThreadManager.cpp">
       <Filter>Engine\Managers\ThreadManager</Filter>
     </ClCompile>
-    <ClCompile Include="App_Selector.cpp">
+    <ClCompile Include="App_Manager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectInformation.cpp">
@@ -367,7 +367,7 @@
     <ClInclude Include="TextureManager.h">
       <Filter>Engine\Managers\TextureManager</Filter>
     </ClInclude>
-    <ClInclude Include="App_Selector.h">
+    <ClInclude Include="App_Manager.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
