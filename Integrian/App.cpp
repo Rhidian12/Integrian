@@ -8,7 +8,7 @@
 #include "EventQueue.h" // EventQueue
 #include "ThreadManager.h" // ThreadManager
 #include "AudioLocator.h" // AudioLocator
-#include "App_Selector.h" // App_Selector
+#include "App_Manager.h" // App_Selector
 #include "Renderer.h" // Renderer
 
 // == Global Variables ==
@@ -105,6 +105,17 @@ namespace Integrian
 			Logger::LogError("GameObject with name: " + name + " was not found and returned a nullptr!\n");
 
 			return nullptr;
+		}
+
+		[[nodiscard]] std::vector<GameObject*>&& GetGameObjectsWithTag(const std::string& tag) const noexcept
+		{
+			std::vector<GameObject*> gameObjectsWithTag{};
+
+			for (const std::pair<GameObjectInformation, GameObject*>& pGameObject : m_pGameObjects)
+				if (pGameObject.second->GetTag() == tag)
+					gameObjectsWithTag.push_back(pGameObject.second);
+
+			return std::move(gameObjectsWithTag);
 		}
 
 		[[nodiscard]] bool GetIsInitialisationFinished() const noexcept
@@ -414,6 +425,11 @@ const char* Integrian::App::GetAppName() const
 Integrian::GameObject* Integrian::App::GetGameObject(const char* pName) const
 {
 	return m_pAppImplementation->GetGameObject(pName);
+}
+
+std::vector<Integrian::GameObject*>&& Integrian::App::GetGameObjectsWithTag(const char* pTag) const noexcept
+{
+	return std::move(m_pAppImplementation->GetGameObjectsWithTag(pTag));
 }
 
 void Integrian::App::AddGameObject(const char* pName, GameObject* pGameObject)

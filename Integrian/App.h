@@ -128,6 +128,13 @@ namespace Integrian
 		[[nodiscard]] GameObject* GetGameObject(const char* pName) const;
 
 		/*
+		Returns a vector of all GameObjects with the given Tag. Tags are not set by default to anything.
+		Parameters:
+		1 > const char* pTag > User-defined tag given to the GameObject.
+		*/
+		[[nodiscard]] std::vector<GameObject*>&& GetGameObjectsWithTag(const char* pTag) const noexcept;
+
+		/*
 		Removes a GameObject with ID Name, which was added to this Application by using App::AddGameObject()
 		Parameters:
 		1 > const char* pName > User-Defined Name given to the GameObject
