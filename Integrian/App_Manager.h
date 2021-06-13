@@ -20,7 +20,7 @@ namespace Integrian
 		App_Manager& operator=(App_Manager&&) = delete;
 
 		/*
-		This class is a Singleton, and thus the only way to call functions is through calling AppSelector::GetInstance()
+		This class is a Singleton, and thus the only way to call functions is through calling App_Manager::GetInstance()
 		*/
 		static App_Manager& GetInstance();
 		
